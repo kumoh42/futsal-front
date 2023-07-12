@@ -25,7 +25,7 @@
   - dio: ^5.2.1+1
   - retrofit: ^4.0.1
   - logger: ^1.4.0
-  - DI
+* DI
   - flutter_riverpod: ^2.3.6 
 * Internationalization
   - intl: ^0.18.1

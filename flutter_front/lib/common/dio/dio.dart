@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_front/auth/provider/auth_provider.dart';
-import 'package:flutter_front/common/const/data.dart';
 import 'package:flutter_front/common/secure_storage/secure_storage.dart';
 import 'package:flutter_front/common/utils/data_utils.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -27,7 +27,7 @@ class CustomInterceptor extends Interceptor {
 
     if (options.headers['accessToken'] == 'true') {
       options.headers.remove('accessToken');
-      final token = await storage.read(key: ACCESS_TOKEN_KEY);
+      final token = await storage.read(key: dotenv.env['ACCESS_TOKEN_KEY']!);
       options.headers.addAll({
         'authorization': 'Bearer $token',
       });
@@ -35,7 +35,7 @@ class CustomInterceptor extends Interceptor {
 
     if (options.headers['refreshToken'] == 'true') {
       options.headers.remove('accessToken');
-      final token = await storage.read(key: REFRESH_TOKEN_KEY);
+      final token = await storage.read(key: dotenv.env['REFRESH_TOKEN_KEY']!);
       options.headers.addAll({
         'authorization': 'Bearer $token',
       });
@@ -57,7 +57,8 @@ class CustomInterceptor extends Interceptor {
   void onError(DioException err, ErrorInterceptorHandler handler) async {
     print('[ERR] [${err.requestOptions.method}] ${err.requestOptions.uri}');
 
-    final refreshToken = await storage.read(key: REFRESH_TOKEN_KEY);
+    final refreshToken =
+        await storage.read(key: dotenv.env['REFRESH_TOKEN_KEY']!);
 
     if (refreshToken == null) return handler.reject(err);
 
@@ -77,7 +78,11 @@ class CustomInterceptor extends Interceptor {
 
         final accessToken = resp.data['accessToken'];
 
-        await storage.write(key: ACCESS_TOKEN_KEY, value: accessToken);
+        await storage.write(
+          key: dotenv.env['ACCESS_TOKEN_KEY']!,
+          value: accessToken,
+        );
+
         final options = err.requestOptions;
         options.headers.addAll({
           'authorization': 'Bearer $accessToken',

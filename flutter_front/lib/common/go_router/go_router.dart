@@ -8,25 +8,25 @@ import 'package:go_router/go_router.dart';
 final routerProvider = Provider<GoRouter>((ref) {
   final provider = ref.read(authProvider);
   return GoRouter(
-      initialLocation: '/splash',
-      routes: [
-        GoRoute(
-          path: '/',
-          name: RootTab.routeName,
-          builder: (context, state) => const RootTab(),
-        ),
-        GoRoute(
-          path: '/splash',
-          name: SplashScreen.routeName,
-          builder: (context, state) => const SplashScreen(),
-        ),
-        GoRoute(
-          path: '/login',
-          name: LoginScreen.routeName,
-          builder: (context, state) => const LoginScreen(),
-        ),
-      ],
-      refreshListenable: provider,
-      redirect: provider.redirectLogic,
+    initialLocation: '/splash',
+    routes: [
+      GoRoute(
+        path: '/',
+        name: RootTab.routeName,
+        builder: (context, state) => const RootTab(),
+      ),
+      GoRoute(
+        path: '/splash',
+        name: SplashScreen.routeName,
+        builder: (context, state) => const SplashScreen(),
+      ),
+      GoRoute(
+        path: '/login',
+        name: LoginScreen.routeName,
+        builder: (context, state) => const LoginScreen(),
+      ),
+    ],
+    refreshListenable: provider,
+    redirect: provider.redirectLogic,
   );
 });

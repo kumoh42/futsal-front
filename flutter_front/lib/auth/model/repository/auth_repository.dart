@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_front/auth/model/entity/user_entity.dart';
 import 'package:flutter_front/common/dio/dio.dart';
-import 'package:flutter_front/user/model/entity/login_response_entity.dart';
+import 'package:flutter_front/auth/model/entity/login_response_entity.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final authRepositoryProvider = Provider((ref) {
@@ -14,14 +15,15 @@ class AuthRepository {
   AuthRepository(this.dio);
 
   Future<LoginResponseEntity> login(String id, String password) async {
-    print("$id, $password");
     return LoginResponseEntity(
       accessToken: 'accessToken',
       refreshToken: 'refreshToken',
     );
   }
 
-  Future logout() async {
+  Future logout() async {}
 
+  Future<UserEntity> getUserInfo() async {
+    return UserEntity();
   }
 }

@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_front/auth/provider/auth_provider.dart';
 import 'package:flutter_front/common/const/data.dart';
 import 'package:flutter_front/common/secure_storage/secure_storage.dart';
 import 'package:flutter_front/common/utils/data_utils.dart';
@@ -8,14 +9,15 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 final dioProvider = Provider((ref) {
   final dio = Dio();
   final storage = ref.watch(secureStorageProvider);
-  dio.interceptors.add(CustomInterceptor(storage: storage));
+  dio.interceptors.add(CustomInterceptor(storage: storage, ref: ref));
   return dio;
 });
 
 class CustomInterceptor extends Interceptor {
   final FlutterSecureStorage storage;
+  final Ref ref;
 
-  CustomInterceptor({required this.storage});
+  CustomInterceptor({required this.storage, required this.ref});
 
   // 1) 요청을 보낼때
   @override
@@ -45,7 +47,8 @@ class CustomInterceptor extends Interceptor {
   // 2) 응답을 받을때
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) {
-    print('[RES] [${response.requestOptions.method}] ${response.requestOptions.uri}');
+    print(
+        '[RES] [${response.requestOptions.method}] ${response.requestOptions.uri}');
     super.onResponse(response, handler);
   }
 
@@ -83,6 +86,7 @@ class CustomInterceptor extends Interceptor {
         final response = await dio.fetch(options);
         handler.resolve(response);
       } on DioException catch (e) {
+        ref.read(authProvider.notifier).logout();
         return handler.reject(e);
       }
     }

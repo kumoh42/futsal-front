@@ -5,10 +5,12 @@ import 'package:flutter_front/common/layout/default_layout.dart';
 import 'package:flutter_front/common/state/state.dart';
 import 'package:flutter_front/common/styles/colors.dart';
 import 'package:flutter_front/common/styles/sizes.dart';
-import 'package:flutter_front/user/viewmodel/login_viewmodel.dart';
+import 'package:flutter_front/auth/viewmodel/login_viewmodel.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class LoginScreen extends ConsumerWidget {
+  static String get routeName => 'login';
+
   const LoginScreen({super.key});
 
   @override
@@ -148,7 +150,7 @@ class _Title extends StatelessWidget {
             width: 100,
             height: 100,
             child: Image(
-              image: AssetImage("assets/image/logo.png"),
+              image: AssetImage("assets/image/black_logo.png"),
               fit: BoxFit.cover,
             )),
         Expanded(

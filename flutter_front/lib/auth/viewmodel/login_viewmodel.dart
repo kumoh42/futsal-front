@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_front/user/model/service/auth_service.dart';
-import 'package:flutter_front/user/model/state/auth_state.dart';
+import 'package:flutter_front/auth/model/service/auth_service.dart';
+import 'package:flutter_front/auth/model/state/auth_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final loginViewModelProvider =

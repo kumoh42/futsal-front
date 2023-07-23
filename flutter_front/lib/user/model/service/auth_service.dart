@@ -1,4 +1,3 @@
-import 'package:flutter_front/user/model/datasource/login_datasource.dart';
 import 'package:flutter_front/user/model/repository/auth_repository.dart';
 import 'package:flutter_front/user/model/state/auth_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -10,7 +9,7 @@ final authServiceProvider =
 });
 
 class AuthService extends StateNotifier<AuthState> {
-  final AuthDataSource authDataSource;
+  final AuthRepository authDataSource;
 
   // TODO : add secure storage
   AuthService(this.authDataSource) : super(AuthStateNone());

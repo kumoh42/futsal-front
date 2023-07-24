@@ -17,10 +17,22 @@ dependencies:
   # Navigator
   go_router: ^9.0.3
 
+  # Json Annotation
+  json_annotation: ^4.8.0
+
   # REST Api
   dio: ^5.2.1+1
   retrofit: ^4.0.1
   logger: ^1.4.0
+
+  # Secure Storage
+  flutter_secure_storage: ^8.0.0
+
+  # Local Storage
+  universal_html: ^2.2.3
+
+  # dotenv
+  flutter_dotenv: ^5.1.0
 
   # DI
   flutter_riverpod: ^2.3.6
@@ -45,3 +57,7 @@ dev_dependencies:
 flutter:
 
   uses-material-design: true
+
+  assets:
+    - assets/image/
+    - .env

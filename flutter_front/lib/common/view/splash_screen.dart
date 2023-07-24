@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_front/common/layout/default_layout.dart';
 import 'package:flutter_front/common/styles/colors.dart';
@@ -19,7 +21,11 @@ class SplashScreen extends StatelessWidget {
           children: [
             Image.asset(
               'assets/image/white_logo.png',
-              width: MediaQuery.of(context).size.width / 2,
+              width: min(
+                    MediaQuery.of(context).size.width,
+                    MediaQuery.of(context).size.height,
+                  ) /
+                  2,
             ),
             const SizedBox(height: 16.0),
             const CircularProgressIndicator(color: Colors.white),

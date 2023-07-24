@@ -28,6 +28,9 @@ dependencies:
   # Secure Storage
   flutter_secure_storage: ^8.0.0
 
+  # Local Storage
+  universal_html: ^2.2.3
+
   # dotenv
   flutter_dotenv: ^5.1.0
 

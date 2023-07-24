@@ -61,6 +61,7 @@ class AuthService extends StateNotifier<AuthState> {
     try {
       final data = await authRepository.getUserInfo();
       state = AuthStateSuccess(data);
+      throw Exception("에러");
     } catch (e) {
       state = AuthStateError(e.toString());
     }

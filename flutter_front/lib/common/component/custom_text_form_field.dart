@@ -40,7 +40,7 @@ class CustomTextFormField extends StatelessWidget {
                   child: Icon(
                     prefixIcon,
                     size: kIconMiddleSize,
-                    color: CustomColor.itemSubColor,
+                    color: CustomColor.subColor,
                   ),
                 ),
               Padding(

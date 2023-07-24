@@ -1,19 +1,23 @@
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_front/auth/model/entity/login_response_entity.dart';
 import 'package:flutter_front/auth/model/repository/auth_repository.dart';
 import 'package:flutter_front/auth/model/state/auth_state.dart';
+import 'package:flutter_front/common/secure_storage/secure_storage.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 final authServiceProvider =
     StateNotifierProvider<AuthService, AuthState>((ref) {
   final authDataSource = ref.watch(authRepositoryProvider);
-  return AuthService(authDataSource);
+  final storage = ref.watch(secureStorageProvider);
+  return AuthService(authDataSource, storage);
 });
 
 class AuthService extends StateNotifier<AuthState> {
   final AuthRepository authRepository;
+  final FlutterSecureStorage storage;
 
-  // TODO : add secure storage
-  AuthService(this.authRepository) : super(AuthStateLoading()) {
+  AuthService(this.authRepository, this.storage) : super(AuthStateLoading()) {
     _getUserInfo();
   }
 
@@ -22,7 +26,10 @@ class AuthService extends StateNotifier<AuthState> {
     required String password,
   }) async {
     state = AuthStateLoading();
+
+    // TODO : remove delay for test
     await Future.delayed(const Duration(seconds: 3));
+
     try {
       final resp = await authRepository.login(id, password);
       await _saveToken(resp);
@@ -40,8 +47,19 @@ class AuthService extends StateNotifier<AuthState> {
   }
 
   Future _getUserInfo() async {
-    // TODO: check token is null. if token is null set state None
+    final accessToken = await storage.read(key: dotenv.get('ACCESS_TOKEN_KEY'));
+    final refreshToken = await storage.read(key: dotenv.get('REFRESH_TOKEN_KEY'));
+
+    print('$accessToken, $refreshToken');
+
+    if(accessToken == null || refreshToken == null) {
+      state = AuthStateNone();
+      return;
+    }
+
+    // TODO : remove delay for test
     await Future.delayed(const Duration(seconds: 3));
+
     try {
       final data = await authRepository.getUserInfo();
       state = AuthStateSuccess(data);
@@ -51,10 +69,22 @@ class AuthService extends StateNotifier<AuthState> {
   }
 
   Future _removeToken() async {
-    // TODO: remove token from secure storage
+    Future.wait([
+      storage.delete(key: dotenv.get('ACCESS_TOKEN_KEY')),
+      storage.delete(key: dotenv.get('REFRESH_TOKEN_KEY')),
+    ]);
   }
 
   Future _saveToken(LoginResponseEntity entity) async {
-    // TODO: save token to secure storage
+    Future.wait([
+      storage.write(
+        key: dotenv.get('ACCESS_TOKEN_KEY'),
+        value: entity.accessToken,
+      ),
+      storage.write(
+        key: dotenv.get('REFRESH_TOKEN_KEY'),
+        value: entity.refreshToken,
+      ),
+    ]);
   }
 }

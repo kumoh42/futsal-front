@@ -4,7 +4,6 @@ import 'package:flutter_front/auth/model/repository/auth_repository.dart';
 import 'package:flutter_front/auth/model/state/auth_state.dart';
 import 'package:flutter_front/common/local_storage/local_storage.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:universal_html/html.dart';
 
 final authServiceProvider =
     StateNotifierProvider<AuthService, AuthState>((ref) {
@@ -15,7 +14,7 @@ final authServiceProvider =
 
 class AuthService extends StateNotifier<AuthState> {
   final AuthRepository authRepository;
-  final Storage storage;
+  final LocalStorage storage;
 
   AuthService(this.authRepository, this.storage) : super(AuthStateLoading()) {
     _getUserInfo();
@@ -47,10 +46,11 @@ class AuthService extends StateNotifier<AuthState> {
   }
 
   Future _getUserInfo() async {
-    final accessToken = storage[dotenv.get('ACCESS_TOKEN_KEY')];
-    final refreshToken = storage[dotenv.get('REFRESH_TOKEN_KEY')];
+    final accessToken = await storage.read(key: dotenv.get('ACCESS_TOKEN_KEY'));
+    final refreshToken =
+        await storage.read(key: dotenv.get('REFRESH_TOKEN_KEY'));
 
-    if(accessToken == null || refreshToken == null) {
+    if (accessToken == null || refreshToken == null) {
       state = AuthStateNone();
       return;
     }
@@ -67,12 +67,22 @@ class AuthService extends StateNotifier<AuthState> {
   }
 
   Future _removeToken() async {
-    storage.remove(dotenv.get('ACCESS_TOKEN_KEY'));
-    storage.remove(dotenv.get('REFRESH_TOKEN_KEY'));
+    Future.wait([
+      storage.delete(key: dotenv.get('ACCESS_TOKEN_KEY')),
+      storage.delete(key: dotenv.get('REFRESH_TOKEN_KEY')),
+    ]);
   }
 
   Future _saveToken(LoginResponseEntity entity) async {
-    storage[dotenv.get('ACCESS_TOKEN_KEY')] = entity.accessToken;
-    storage[dotenv.get('REFRESH_TOKEN_KEY')] = entity.refreshToken;
+    Future.wait([
+      storage.write(
+        key: dotenv.get('ACCESS_TOKEN_KEY'),
+        value: entity.accessToken,
+      ),
+      storage.write(
+        key: dotenv.get('REFRESH_TOKEN_KEY'),
+        value: entity.refreshToken,
+      ),
+    ]);
   }
 }

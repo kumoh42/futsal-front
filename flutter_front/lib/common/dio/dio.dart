@@ -4,7 +4,6 @@ import 'package:flutter_front/auth/provider/auth_provider.dart';
 import 'package:flutter_front/common/local_storage/local_storage.dart';
 import 'package:flutter_front/common/utils/data_utils.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:universal_html/html.dart';
 
 final dioProvider = Provider((ref) {
   final dio = Dio();
@@ -14,7 +13,7 @@ final dioProvider = Provider((ref) {
 });
 
 class CustomInterceptor extends Interceptor {
-  final Storage storage;
+  final LocalStorage storage;
   final Ref ref;
 
   CustomInterceptor({required this.storage, required this.ref});
@@ -27,7 +26,7 @@ class CustomInterceptor extends Interceptor {
 
     if (options.headers['accessToken'] == 'true') {
       options.headers.remove('accessToken');
-      final token = storage[dotenv.get('ACCESS_TOKEN_KEY')];
+      final token = await storage.read(key: dotenv.get('ACCESS_TOKEN_KEY'));
       options.headers.addAll({
         'authorization': 'Bearer $token',
       });
@@ -35,7 +34,7 @@ class CustomInterceptor extends Interceptor {
 
     if (options.headers['refreshToken'] == 'true') {
       options.headers.remove('accessToken');
-      final token = storage[dotenv.get('REFRESH_TOKEN_KEY')];
+      final token = await storage.read(key: dotenv.get('REFRESH_TOKEN_KEY'));
       options.headers.addAll({
         'authorization': 'Bearer $token',
       });
@@ -57,7 +56,8 @@ class CustomInterceptor extends Interceptor {
   void onError(DioException err, ErrorInterceptorHandler handler) async {
     print('[ERR] [${err.requestOptions.method}] ${err.requestOptions.uri}');
 
-    final refreshToken = storage[dotenv.get('REFRESH_TOKEN_KEY')];
+    final refreshToken =
+        await storage.read(key: dotenv.get('REFRESH_TOKEN_KEY'));
 
     if (refreshToken == null) return handler.reject(err);
 
@@ -77,7 +77,10 @@ class CustomInterceptor extends Interceptor {
 
         final accessToken = resp.data['accessToken'];
 
-        storage[dotenv.get('REFRESH_TOKEN_KEY')] = accessToken;
+        await storage.write(
+          key: dotenv.get('REFRESH_TOKEN_KEY'),
+          value: accessToken,
+        );
 
         final options = err.requestOptions;
         options.headers.addAll({

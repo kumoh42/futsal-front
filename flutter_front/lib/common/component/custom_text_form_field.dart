@@ -25,10 +25,7 @@ class CustomTextFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-        color: CustomColor.backGroundSubColor,
-        borderRadius: BorderRadius.circular(kBorderRadiusSize),
-      ),
+      decoration: const BoxDecoration(color: CustomColor.backGroundSubColor),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -45,7 +42,7 @@ class CustomTextFormField extends StatelessWidget {
                 ),
               Padding(
                 padding:
-                    const EdgeInsets.symmetric(vertical: kPaddingMiddleSize),
+                    const EdgeInsets.only(bottom: kPaddingMiddleSize),
                 child: Text(
                   labelText ?? "",
                   style: kTextMainStyleSmall,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_front/common/const/tabs.dart';
 import 'package:flutter_front/common/layout/default_layout.dart';
 import 'package:flutter_front/common/styles/colors.dart';
+import 'package:flutter_front/reservation_status/view/reservation_status_screen.dart';
 
 class RootTab extends StatefulWidget {
   static String get routeName => 'home';
@@ -72,11 +73,11 @@ class _RootTabState extends State<RootTab> with TickerProviderStateMixin {
               controller: controller,
               physics: const NeverScrollableScrollPhysics(),
               // TODO : Add Tab Screen
-              children: TABS
-                  .map((e) => Center(
-                        child: Icon(e.icon),
-                      ))
-                  .toList(),
+              children: [
+                ReservationStatusScreen(),
+                ReservationStatusScreen(),
+                ReservationStatusScreen(),
+              ],
             ),
           ),
         ],

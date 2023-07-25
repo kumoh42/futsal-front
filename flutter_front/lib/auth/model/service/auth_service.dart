@@ -27,7 +27,7 @@ class AuthService extends StateNotifier<AuthState> {
     state = AuthStateLoading();
 
     // TODO : remove delay for test
-    await Future.delayed(const Duration(seconds: 3));
+//    await Future.delayed(const Duration(seconds: 3));
 
     try {
       final resp = await authRepository.login(id, password);
@@ -56,7 +56,7 @@ class AuthService extends StateNotifier<AuthState> {
     }
 
     // TODO : remove delay for test
-    await Future.delayed(const Duration(seconds: 3));
+//    await Future.delayed(const Duration(seconds: 3));
 
     try {
       final data = await authRepository.getUserInfo();

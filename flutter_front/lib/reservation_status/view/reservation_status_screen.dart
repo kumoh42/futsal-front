@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_front/common/layout/default_layout.dart';
 import 'package:flutter_front/common/styles/colors.dart';
-import 'package:flutter_front/reservation_status/component/custom_container.dart';
+import 'package:flutter_front/common/styles/sizes.dart';
+import 'package:flutter_front/reservation_status/view/reservation_emergency_view.dart';
 import 'package:flutter_front/reservation_status/view/reservation_status_view.dart';
 
 class ReservationStatusScreen extends StatelessWidget {
@@ -15,15 +16,21 @@ class ReservationStatusScreen extends StatelessWidget {
         final height = constraints.maxHeight;
         return DefaultLayout(
           child: SingleChildScrollView(
-            child: CustomContainer(
+            child: Container(
               width: width,
-              minHeight: height,
+              constraints: BoxConstraints(minHeight: height),
               color: CustomColor.disabledColor,
-              child: const Wrap(
-                direction: Axis.horizontal,
-                children: [
-                  ReservationStatusView(),
-                ],
+              child: const Padding(
+                padding: EdgeInsets.all(kPaddingMiddleSize),
+                child: Wrap(
+                  direction: Axis.horizontal,
+                  spacing: kPaddingMiddleSize,
+                  runSpacing: kPaddingMiddleSize,
+                  children: [
+                    ReservationStatusView(),
+                    ReservationEmergencyView(),
+                  ],
+                ),
               ),
             ),
           ),

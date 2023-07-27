@@ -7,7 +7,10 @@ class CustomContainer extends StatelessWidget {
   final double? height;
   final double? minWidth;
   final double? minHeight;
+  final double? maxWidth;
+  final double? maxHeight;
   final Color? color;
+  final bool isBackground;
   final Widget child;
 
   const CustomContainer({
@@ -17,7 +20,10 @@ class CustomContainer extends StatelessWidget {
     this.height,
     this.minWidth,
     this.minHeight,
+    this.maxWidth,
+    this.maxHeight,
     this.color,
+    this.isBackground = false,
     required this.child,
   }) : super(key: key);
 
@@ -29,22 +35,26 @@ class CustomContainer extends StatelessWidget {
       constraints: BoxConstraints(
         minWidth: minWidth ?? 500,
         minHeight: minHeight ?? 0,
+        maxWidth: maxWidth ?? double.infinity,
+        maxHeight: maxHeight ?? double.infinity,
       ),
       child: Card(
-        elevation: 5,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(kBorderRadiusSize)),
+        elevation: isBackground ? 0 : 5,
+        shape: isBackground
+            ? null
+            : const RoundedRectangleBorder(
+          borderRadius:
+          BorderRadius.all(Radius.circular(kBorderRadiusSize)),
         ),
         color: color,
         child: Padding(
-          padding: const EdgeInsets.all(kPaddingMiddleSize),
+          padding: EdgeInsets.all(isBackground ? 0 : kPaddingMiddleSize),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              title != null
-                  ? Text(title!, style: kTextMainStyleLarge)
-                  : Container(),
+              if(title != null) Text(title!, style: kTextMainStyleLarge),
+              if(title != null) const SizedBox(height: kPaddingMiddleSize),
               child,
             ],
           ),

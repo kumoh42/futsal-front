@@ -10,20 +10,20 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultLayout(
-      backgroundColor: CustomColor.buttonSubColor,
-      child: SizedBox.expand(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset(
-                'assets/image/white_logo.png',
-                height: MediaQuery.of(context).size.height / 2,
-              ),
-              const SizedBox(height: 16.0),
-              const CircularProgressIndicator(color: Colors.white),
-            ],
-          ),
+      backgroundColor: CustomColor.subColor,
+      child: SizedBox(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              'assets/image/white_logo.png',
+              width: MediaQuery.of(context).size.width / 2,
+            ),
+            const SizedBox(height: 16.0),
+            const CircularProgressIndicator(color: Colors.white),
+          ],
         ),
       ),
     );

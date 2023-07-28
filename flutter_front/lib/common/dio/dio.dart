@@ -82,16 +82,22 @@ class CustomInterceptor extends Interceptor {
           }),
         );
 
-        final accessToken = resp.data['accessToken'];
+        final newAccessToken = resp.data['accessToken'];
+        final newRefreshToken = resp.data['accessToken'];
+
+        await storage.write(
+          key: dotenv.get('ACCESS_TOKEN_KEY'),
+          value: newAccessToken,
+        );
 
         await storage.write(
           key: dotenv.get('REFRESH_TOKEN_KEY'),
-          value: accessToken,
+          value: newRefreshToken,
         );
 
         final options = err.requestOptions;
         options.headers.addAll({
-          'authorization': 'Bearer $accessToken',
+          'authorization': 'Bearer $newAccessToken',
         });
 
         final response = await dio.fetch(options);

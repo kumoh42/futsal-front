@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_front/common/styles/sizes.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class CustomTimeTable extends ConsumerStatefulWidget {
   late final ChangeNotifierProvider<CustomTimeTableController> provider;
-  final double width;
+  final double rowHeight;
 
   CustomTimeTable({
     Key? key,
     required CustomTimeTableController controller,
-    required this.width,
+    required this.rowHeight,
   }) : super(key: key) {
     provider = ChangeNotifierProvider((ref) => controller);
   }
@@ -25,24 +24,27 @@ class _CustomTimeTableState extends ConsumerState<CustomTimeTable> {
   @override
   Widget build(BuildContext context) {
     controller = ref.watch(widget.provider);
-    return Container(
-      width: widget.width,
-      constraints: const BoxConstraints(minWidth: 500),
-      child: TableCalendar(
-        locale: 'ko_KR',
-        headerStyle: const HeaderStyle(
-          titleCentered: true,
-          formatButtonVisible: false,
-          titleTextStyle: TextStyle(fontSize: kTextMiddleSize),
-        ),
-        rowHeight: 50,
-        daysOfWeekHeight: 50,
-        firstDay: controller.firstDay,
-        lastDay: controller.lastDay,
-        focusedDay: controller.focusedDay,
-        onDaySelected: controller.onDaySelected,
-        selectedDayPredicate: controller.selectedDayPredicate,
+    return TableCalendar(
+      locale: 'ko_KR',
+      headerStyle: const HeaderStyle(
+        titleCentered: true,
+        formatButtonVisible: false,
+        // TODO : TimeTable Header 디자인 변경
+        // titleTextStyle: kTextReverseStyleMiddle,
+        // decoration: BoxDecoration(
+        //   color: CustomColor.mainColor,
+        //   borderRadius: BorderRadius.vertical(
+        //     top: Radius.circular(kBorderRadiusSize),
+        //   ),
+        // ),
       ),
+      rowHeight: widget.rowHeight < 50 ? 50 : widget.rowHeight,
+      daysOfWeekHeight: widget.rowHeight < 50 ? 50 : widget.rowHeight,
+      firstDay: controller.firstDay,
+      lastDay: controller.lastDay,
+      focusedDay: controller.focusedDay,
+      onDaySelected: controller.onDaySelected,
+      selectedDayPredicate: controller.selectedDayPredicate,
     );
   }
 }

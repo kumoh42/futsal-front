@@ -16,29 +16,34 @@ class ReservationStatusView extends ConsumerWidget {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
         final width = constraints.maxWidth;
-        final height = constraints.maxHeight;
+        final height = MediaQuery.of(context).size.height;
         return CustomContainer(
           width: width,
           title: "예약 현황 조회",
-          child: Wrap(
-            direction: Axis.horizontal,
-            crossAxisAlignment: WrapCrossAlignment.start,
-            spacing: kPaddingMiddleSize,
-            runSpacing: kPaddingMiddleSize,
-            children: [
-              CustomTimeTable(
-                controller: viewmodel.customTimeTableController,
-                width: width - 500 - 40 - kPaddingMiddleSize,
-              ),
-              SizedBox(
-                width: 500,
-                height: 415,
-                child: Card(
-                  shape: const RoundedRectangleBorder(
-                    borderRadius:
-                        BorderRadius.all(Radius.circular(kBorderRadiusSize)),
-                  ),
+          child: Center(
+            child: Wrap(
+              direction: Axis.horizontal,
+              crossAxisAlignment: WrapCrossAlignment.center,
+              spacing: kPaddingMiddleSize,
+              runSpacing: kPaddingMiddleSize,
+              children: [
+                CustomContainer(
+                  width: width - 500 - 40 - kPaddingMiddleSize,
+                  height: height / 2,
+                  minHeight: 422,
+                  isBackground: true,
                   color: CustomColor.disabledColor,
+                  child: CustomTimeTable(
+                    controller: viewmodel.customTimeTableController,
+                    rowHeight: (height / 2 - 72) / 7,
+                  ),
+                ),
+                CustomContainer(
+                  width: 500,
+                  height: height / 2,
+                  minHeight: 422,
+                  color: CustomColor.disabledColor,
+                  isBackground: true,
                   child: viewmodel.state is LoadingState
                       ? const Center(child: CircularProgressIndicator())
                       : Padding(
@@ -54,9 +59,9 @@ class ReservationStatusView extends ConsumerWidget {
                             ),
                           ),
                         ),
-                ),
-              )
-            ],
+                )
+              ],
+            ),
           ),
         );
       },

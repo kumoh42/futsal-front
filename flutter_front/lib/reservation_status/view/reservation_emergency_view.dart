@@ -13,30 +13,34 @@ class ReservationEmergencyView extends ConsumerWidget {
     final viewmodel = ref.watch(reservationEmergencyViewModelProvider);
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
-        final double width = constraints.maxWidth <= 700 ? 700 : constraints.maxWidth * 0.3;
+        final width = constraints.maxWidth;
+        final height = MediaQuery.of(context).size.height;
         return CustomContainer(
-          width: width,
+          width: width / 4,
+          height: height / 3,
+          maxWidth: 700,
+          minHeight: 275,
           title: "Emergency",
-          child: Wrap(
-            direction: Axis.horizontal,
-            crossAxisAlignment: WrapCrossAlignment.start,
-            spacing: kPaddingMiddleSize,
-            runSpacing: kPaddingMiddleSize,
-            // TODO : 버튼 디자인 변경
-            children: [
-              CustomOutlinedButton(
-                onPressed: viewmodel.stopAllReservationSetting,
-                text: "예약 긴급 중단",
-              ),
-              CustomOutlinedButton(
-                onPressed: viewmodel.cancelAllReservation,
-                text: "전체 예약 취소",
-              ),
-              CustomOutlinedButton(
-                onPressed: viewmodel.startAllReservationSetting,
-                text: "예약 제개",
-              ),
-            ],
+          child: Center(
+            child: Column(
+              // TODO : 버튼 디자인 변경
+              children: [
+                CustomOutlinedButton(
+                  onPressed: viewmodel.stopAllReservationSetting,
+                  text: "예약 긴급 중단",
+                ),
+                const SizedBox(height: kPaddingMiddleSize),
+                CustomOutlinedButton(
+                  onPressed: viewmodel.cancelAllReservation,
+                  text: "전체 예약 취소",
+                ),
+                const SizedBox(height: kPaddingMiddleSize),
+                CustomOutlinedButton(
+                  onPressed: viewmodel.startAllReservationSetting,
+                  text: "예약 제개",
+                ),
+              ],
+            ),
           ),
         );
       },

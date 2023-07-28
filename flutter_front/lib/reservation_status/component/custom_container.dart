@@ -40,11 +40,8 @@ class CustomContainer extends StatelessWidget {
       ),
       child: Card(
         elevation: isBackground ? 0 : 5,
-        shape: isBackground
-            ? null
-            : const RoundedRectangleBorder(
-          borderRadius:
-          BorderRadius.all(Radius.circular(kBorderRadiusSize)),
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(kBorderRadiusSize)),
         ),
         color: color,
         child: Padding(
@@ -53,8 +50,8 @@ class CustomContainer extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              if(title != null) Text(title!, style: kTextMainStyleLarge),
-              if(title != null) const SizedBox(height: kPaddingMiddleSize),
+              if (title != null) Text(title!, style: kTextMainStyleLarge),
+              if (title != null) const SizedBox(height: kPaddingMiddleSize),
               child,
             ],
           ),

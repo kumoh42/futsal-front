@@ -6,7 +6,11 @@ part of 'user_entity.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-UserEntity _$UserEntityFromJson(Map<String, dynamic> json) => UserEntity();
+UserEntity _$UserEntityFromJson(Map<String, dynamic> json) => UserEntity(
+      name: json['name'] as String,
+    );
 
 Map<String, dynamic> _$UserEntityToJson(UserEntity instance) =>
-    <String, dynamic>{};
+    <String, dynamic>{
+      'name': instance.name,
+    };

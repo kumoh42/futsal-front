@@ -24,6 +24,6 @@ class AuthRepository {
   Future logout() async {}
 
   Future<UserEntity> getUserInfo() async {
-    return UserEntity();
+    return UserEntity(name: 'name');
   }
 }

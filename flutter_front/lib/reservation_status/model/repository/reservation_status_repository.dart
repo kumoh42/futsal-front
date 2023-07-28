@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_front/common/dio/dio.dart';
 import 'package:flutter_front/reservation_status/model/entity/reservation_entity.dart';
+import 'package:flutter_front/reservation_status/model/entity/reservation_member_entity.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final reservationStatusRepositoryProvider = Provider((ref) {
@@ -20,24 +21,39 @@ class ReservationStatusRepository {
         date: date,
         time: '08:00 ~ 10:00',
         reservationId: '1',
-        member: "개인 (토목공학과)",
+        member: ReservationMemberEntity(
+          id: 'id',
+          name: 'name',
+          phone: 'phone',
+          email: 'email',
+        ),
       ),
       ReservationStatusEntity(
         date: date,
-        time: '10:00 ~ 12:00',
-        reservationId: '2',
-        member: "개인 (토목공학과)",
+        time: '08:00 ~ 10:00',
+        reservationId: '1',
+        member: ReservationMemberEntity(
+          id: 'id',
+          name: 'name',
+          phone: 'phone',
+          email: 'email',
+        ),
       ),
       ReservationStatusEntity(
         date: date,
-        time: '12:00 ~ 14:00',
-        reservationId: '3',
-        member: "개인 (토목공학과)",
+        time: '08:00 ~ 10:00',
+        reservationId: '1',
+        member: ReservationMemberEntity(
+          id: 'id',
+          name: 'name',
+          phone: 'phone',
+          email: 'email',
+        ),
       ),
     ];
   }
 
-  Future cancelReservationStatus(String reservationId) async {}
+  Future cancelReservation(String reservationId) async {}
 
-  Future cancelAllReservationStatus() async {}
+  Future cancelAllReservation() async {}
 }

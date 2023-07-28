@@ -12,7 +12,8 @@ ReservationStatusEntity _$ReservationStatusEntityFromJson(
       date: DateTime.parse(json['date'] as String),
       time: json['time'] as String,
       reservationId: json['reservationId'] as String,
-      member: json['member'] as String,
+      member: ReservationMemberEntity.fromJson(
+          json['member'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$ReservationStatusEntityToJson(

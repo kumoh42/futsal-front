@@ -54,8 +54,8 @@ class ReservationStatusView extends ConsumerWidget {
                                 (viewmodel.state as SuccessState).data.length,
                             itemBuilder: (context, i) => ReservationStateItem(
                               entity: (viewmodel.state as SuccessState).data[i],
-                              onCancelClicked:
-                                  viewmodel.cancelReservationStatus,
+                              onCancelClicked: (entity) => viewmodel
+                                  .cancelReservationStatus(context, entity),
                             ),
                           ),
                         ),

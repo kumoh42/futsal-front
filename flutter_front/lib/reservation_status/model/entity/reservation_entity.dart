@@ -1,3 +1,4 @@
+import 'package:flutter_front/reservation_status/model/entity/reservation_member_entity.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'reservation_entity.g.dart';
@@ -7,7 +8,7 @@ class ReservationStatusEntity {
   final DateTime date;
   final String time;
   final String reservationId;
-  final String member;
+  final ReservationMemberEntity member;
 
   ReservationStatusEntity({
     required this.date,

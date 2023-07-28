@@ -29,11 +29,10 @@ class ReservationStatusService
     }
   }
 
-  Future cancelReservationStatus(
-      {required ReservationStatusEntity entity}) async {
+  Future cancelReservation({required ReservationStatusEntity entity}) async {
     try {
       state = ReservationStatusListStateLoading();
-      await repository.cancelReservationStatus(entity.reservationId);
+      await repository.cancelReservation(entity.reservationId);
       final data = await repository.getReservationStatusList(entity.date);
       state = ReservationStatusListStateSuccess(data);
     } catch (e) {
@@ -41,10 +40,10 @@ class ReservationStatusService
     }
   }
 
-  Future cancelAllReservationStatus() async {
+  Future cancelAllReservation() async {
     try {
       state = ReservationStatusListStateLoading();
-      await repository.cancelAllReservationStatus();
+      await repository.cancelAllReservation();
       state = ReservationStatusListStateSuccess([]);
     } catch (e) {
       state = ReservationStatusListStateError(e.toString());

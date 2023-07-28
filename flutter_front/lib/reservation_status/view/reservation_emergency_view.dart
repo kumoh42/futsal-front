@@ -26,17 +26,17 @@ class ReservationEmergencyView extends ConsumerWidget {
               // TODO : 버튼 디자인 변경
               children: [
                 CustomOutlinedButton(
-                  onPressed: viewmodel.stopAllReservationSetting,
+                  onPressed: () => viewmodel.stopAllReservationSetting(context),
                   text: "예약 긴급 중단",
                 ),
                 const SizedBox(height: kPaddingMiddleSize),
                 CustomOutlinedButton(
-                  onPressed: viewmodel.cancelAllReservation,
+                  onPressed: () => viewmodel.cancelAllReservation(context),
                   text: "전체 예약 취소",
                 ),
                 const SizedBox(height: kPaddingMiddleSize),
                 CustomOutlinedButton(
-                  onPressed: viewmodel.startAllReservationSetting,
+                  onPressed: () => viewmodel.startAllReservationSetting(context),
                   text: "예약 제개",
                 ),
               ],

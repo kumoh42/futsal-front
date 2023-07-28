@@ -46,7 +46,7 @@ class ReservationStateItem extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Text(
-                          entity.member,
+                          entity.member.name,
                           textAlign: TextAlign.center,
                           style: kTextMainStyleSmall,
                         ),

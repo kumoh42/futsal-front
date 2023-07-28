@@ -1,4 +1,6 @@
+import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_front/auth/model/dto/login_request_dto.dart';
 import 'package:flutter_front/auth/model/entity/login_response_entity.dart';
 import 'package:flutter_front/auth/model/repository/auth_repository.dart';
 import 'package:flutter_front/auth/model/state/auth_state.dart';
@@ -26,14 +28,16 @@ class AuthService extends StateNotifier<AuthState> {
   }) async {
     state = AuthStateLoading();
 
-    // TODO : remove delay for test
-    await Future.delayed(const Duration(seconds: 3));
-
     try {
-      final resp = await authRepository.login(id, password);
+      final resp = await authRepository.login(
+        LoginRequestDto(
+          user_id: id,
+          user_password: password,
+        ),
+      );
       await _saveToken(resp);
       await _getUserInfo();
-    } catch (e) {
+    } on DioException catch (e) {
       state = AuthStateError(e.toString());
     }
   }
@@ -55,13 +59,9 @@ class AuthService extends StateNotifier<AuthState> {
       return;
     }
 
-    // TODO : remove delay for test
-    await Future.delayed(const Duration(seconds: 3));
-
     try {
       final data = await authRepository.getUserInfo();
       state = AuthStateSuccess(data);
-      throw Exception("에러");
     } catch (e) {
       state = AuthStateError(e.toString());
     }

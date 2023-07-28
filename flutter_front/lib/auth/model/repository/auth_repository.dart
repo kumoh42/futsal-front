@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_front/auth/model/dto/login_request_dto.dart';
 import 'package:flutter_front/auth/model/entity/user_entity.dart';
 import 'package:flutter_front/common/dio/dio.dart';
 import 'package:flutter_front/auth/model/entity/login_response_entity.dart';
@@ -14,10 +15,11 @@ class AuthRepository {
 
   AuthRepository(this.dio);
 
-  Future<LoginResponseEntity> login(String id, String password) async {
+  Future<LoginResponseEntity> login(LoginRequestDto loginRequestDto) async {
+    final resp = await dio.post('/login');
     return LoginResponseEntity(
-      accessToken: 'accessToken',
-      refreshToken: 'refreshToken',
+      accessToken: resp.headers.value('accessToken')!,
+      refreshToken: resp.headers.value('refreshToken')!,
     );
   }
 

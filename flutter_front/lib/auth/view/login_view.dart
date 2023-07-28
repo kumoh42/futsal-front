@@ -46,7 +46,7 @@ class LoginView extends ConsumerWidget {
                 width: 76,
                 height: 76,
                 child: CircularProgressIndicator(
-                  color: CustomColor.buttonSubColor,
+                  color: CustomColor.subColor,
                 ),
               )
             else
@@ -79,7 +79,7 @@ class LoginView extends ConsumerWidget {
                   ElevatedButton(
                     onPressed: viewModel.login,
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: CustomColor.buttonSubColor,
+                      backgroundColor: CustomColor.subColor,
                       minimumSize: const Size(176, 60),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(

@@ -9,8 +9,13 @@ final dioProvider = Provider((ref) {
   final dio = Dio();
   final storage = ref.watch(localStorageProvider);
   dio.interceptors.add(CustomInterceptor(storage: storage, ref: ref));
+  dio.options = options;
   return dio;
 });
+
+final options = BaseOptions(
+  baseUrl: dotenv.get("IP"),
+);
 
 class CustomInterceptor extends Interceptor {
   final LocalStorage storage;
@@ -21,7 +26,9 @@ class CustomInterceptor extends Interceptor {
   // 1) 요청을 보낼때
   @override
   void onRequest(
-      RequestOptions options, RequestInterceptorHandler handler) async {
+    RequestOptions options,
+    RequestInterceptorHandler handler,
+  ) async {
     print('[REQ] [${options.method}] ${options.uri}');
 
     if (options.headers['accessToken'] == 'true') {

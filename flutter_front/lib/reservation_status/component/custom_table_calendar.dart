@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_front/common/styles/styles.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -30,16 +31,10 @@ class _CustomTimeTableState extends ConsumerState<CustomTimeTable> {
         titleCentered: true,
         formatButtonVisible: false,
         // TODO : TimeTable Header 디자인 변경
-        // titleTextStyle: kTextReverseStyleMiddle,
-        // decoration: BoxDecoration(
-        //   color: CustomColor.mainColor,
-        //   borderRadius: BorderRadius.vertical(
-        //     top: Radius.circular(kBorderRadiusSize),
-        //   ),
-        // ),
+        titleTextStyle: kTextMainStyleMiddle,
       ),
-      rowHeight: widget.rowHeight ,
-      daysOfWeekHeight: widget.rowHeight ,
+      rowHeight: widget.rowHeight,
+      daysOfWeekHeight: widget.rowHeight,
       firstDay: controller.firstDay,
       lastDay: controller.lastDay,
       focusedDay: controller.focusedDay,

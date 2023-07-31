@@ -5,6 +5,8 @@ part 'reservation_entity.g.dart';
 
 @JsonSerializable()
 class ReservationStatusEntity {
+  // TODO : ReservationStatusEntity 수정
+  
   final DateTime date;
   final String time;
   final String reservationId;

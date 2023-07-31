@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_front/common/styles/sizes.dart';
-import 'package:flutter_front/reservation_status/view/reservation_member_view.dart';
 import 'package:flutter_front/reservation_status/view/reservation_setting_view.dart';
 import 'package:flutter_front/reservation_status/view/reservation_status_view.dart';
 
@@ -26,16 +25,11 @@ class ReservationStatusScreen extends StatelessWidget {
                 children: [
                   SizedBox(
                     height: kContainerHeightSize,
-                    child: Row(
-                      children: [
-                        Expanded(flex: 1, child: ReservationSettingView()),
-                        Expanded(flex: 2, child: ReservationStatusView()),
-                      ],
-                    ),
+                    child: ReservationStatusView(),
                   ),
                   SizedBox(
-                    height: kContainerHeightSize,
-                    child: ReservationMemberView(),
+                    height: kContainerHeightSize * 0.7,
+                    child: ReservationSettingView(),
                   ),
                 ],
               ),

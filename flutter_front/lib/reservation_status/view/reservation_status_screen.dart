@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_front/common/layout/default_layout.dart';
-import 'package:flutter_front/common/styles/colors.dart';
 import 'package:flutter_front/common/styles/sizes.dart';
-import 'package:flutter_front/reservation_status/view/reservation_emergency_view.dart';
+import 'package:flutter_front/reservation_status/view/reservation_member_view.dart';
+import 'package:flutter_front/reservation_status/view/reservation_setting_view.dart';
 import 'package:flutter_front/reservation_status/view/reservation_status_view.dart';
 
 class ReservationStatusScreen extends StatelessWidget {
@@ -10,32 +9,49 @@ class ReservationStatusScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final width = constraints.maxWidth;
-        final height = constraints.maxHeight;
-        return DefaultLayout(
-          child: SingleChildScrollView(
-            child: Container(
-              width: width,
-              constraints: BoxConstraints(minHeight: height),
-              color: CustomColor.disabledColor,
-              child: const Padding(
-                padding: EdgeInsets.all(kPaddingMiddleSize),
-                child: Wrap(
-                  direction: Axis.horizontal,
-                  spacing: kPaddingMiddleSize,
-                  runSpacing: kPaddingMiddleSize,
-                  children: [
-                    ReservationStatusView(),
-                    ReservationEmergencyView(),
-                  ],
-                ),
+    final height = MediaQuery.of(context).size.height;
+    final horizontalScrollController = ScrollController();
+    return Scrollbar(
+      controller: horizontalScrollController,
+      child: SingleChildScrollView(
+        controller: horizontalScrollController,
+        scrollDirection: Axis.horizontal,
+        child: SingleChildScrollView(
+          child: Container(
+            width: kLayoutWidthSize - kNavigationRailSize,
+            constraints: BoxConstraints(minHeight: height),
+            child: const Padding(
+              padding: EdgeInsets.all(kPaddingMiddleSize),
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: kContainerHeightSize,
+                    child: Row(
+                      children: [
+                        Expanded(flex: 1, child: ReservationSettingView()),
+                        Expanded(flex: 2, child: ReservationStatusView()),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: kContainerHeightSize,
+                    child: ReservationMemberView(),
+                  ),
+                ],
               ),
+              // child: Wrap(
+              //   direction: Axis.horizontal,
+              //   spacing: kPaddingMiddleSize,
+              //   runSpacing: kPaddingMiddleSize,
+              //   children: [
+              //     ReservationSettingView(),
+              //     ReservationStatusView(),
+              //   ],
+              // ),
             ),
           ),
-        );
-      },
+        ),
+      ),
     );
   }
 }

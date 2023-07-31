@@ -30,7 +30,7 @@ class ReservationStatusRepository {
       ),
       ReservationStatusEntity(
         date: date,
-        time: '08:00 ~ 10:00',
+        time: '10:00 ~ 12:00',
         reservationId: '1',
         member: ReservationMemberEntity(
           id: 'id',
@@ -41,7 +41,51 @@ class ReservationStatusRepository {
       ),
       ReservationStatusEntity(
         date: date,
-        time: '08:00 ~ 10:00',
+        time: '12:00 ~ 14:00',
+        reservationId: '1',
+        member: ReservationMemberEntity(
+          id: 'id',
+          name: 'name',
+          phone: 'phone',
+          email: 'email',
+        ),
+      ),
+      ReservationStatusEntity(
+        date: date,
+        time: '14:00 ~ 16:00',
+        reservationId: '1',
+        member: ReservationMemberEntity(
+          id: 'id',
+          name: 'name',
+          phone: 'phone',
+          email: 'email',
+        ),
+      ),
+      ReservationStatusEntity(
+        date: date,
+        time: '16:00 ~ 18:00',
+        reservationId: '1',
+        member: ReservationMemberEntity(
+          id: 'id',
+          name: 'name',
+          phone: 'phone',
+          email: 'email',
+        ),
+      ),
+      ReservationStatusEntity(
+        date: date,
+        time: '18:00 ~ 20:00',
+        reservationId: '1',
+        member: ReservationMemberEntity(
+          id: 'id',
+          name: 'name',
+          phone: 'phone',
+          email: 'email',
+        ),
+      ),
+      ReservationStatusEntity(
+        date: date,
+        time: '20:00 ~ 22:00',
         reservationId: '1',
         member: ReservationMemberEntity(
           id: 'id',

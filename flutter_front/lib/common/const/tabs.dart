@@ -11,5 +11,5 @@ class TabInfo {
 const TABS = [
   TabInfo(icon: Icons.search, label: '예약 현황 조회'),
   TabInfo(icon: Icons.settings, label: '예약 설정'),
-  TabInfo(icon: Icons.person, label: "사용자 설정"),
+  // TabInfo(icon: Icons.person, label: "사용자 설정"),
 ];

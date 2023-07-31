@@ -9,6 +9,7 @@ class CustomContainer extends StatelessWidget {
   final double? minHeight;
   final double? maxWidth;
   final double? maxHeight;
+  final double? boarderRadius;
   final Color? color;
   final bool isBackground;
   final Widget child;
@@ -22,6 +23,7 @@ class CustomContainer extends StatelessWidget {
     this.minHeight,
     this.maxWidth,
     this.maxHeight,
+    this.boarderRadius,
     this.color,
     this.isBackground = false,
     required this.child,
@@ -40,8 +42,10 @@ class CustomContainer extends StatelessWidget {
       ),
       child: Card(
         elevation: isBackground ? 0 : 5,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(kBorderRadiusSize)),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(boarderRadius ?? kBorderRadiusSize),
+          ),
         ),
         color: color,
         child: Padding(
@@ -52,7 +56,7 @@ class CustomContainer extends StatelessWidget {
             children: [
               if (title != null) Text(title!, style: kTextMainStyleLarge),
               if (title != null) const SizedBox(height: kPaddingMiddleSize),
-              child,
+              Expanded(child: child),
             ],
           ),
         ),

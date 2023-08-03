@@ -15,6 +15,7 @@ final dioProvider = Provider((ref) {
 
 final options = BaseOptions(
   baseUrl: dotenv.get("IP"),
+  headers: {'ngrok-skip-browser-warning' : true}
 );
 
 class CustomInterceptor extends Interceptor {
@@ -56,7 +57,7 @@ class CustomInterceptor extends Interceptor {
     print(
         '[RES] [${response.requestOptions.method}] ${response.requestOptions.uri}');
 
-    if (response.requestOptions.path == DataUtils.pathToUrl('/login')) {
+    if (response.requestOptions.path == '/auth') {
       _saveToken(response);
     }
 
@@ -110,6 +111,8 @@ class CustomInterceptor extends Interceptor {
         response.headers.value(dotenv.get('ACCESS_TOKEN_KEY'));
     final newRefreshToken =
         response.headers.value(dotenv.get('REFRESH_TOKEN_KEY'));
+
+    print("$newAccessToken, $newRefreshToken");
 
     try {
       Future.wait([

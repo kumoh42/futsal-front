@@ -16,5 +16,6 @@ abstract class ReservationSettingRepository {
   _ReservationSettingRepository;
 
   @PUT('/reservation/pre')
+  @Headers({'accessToken' : 'true'})
   Future setPreReservationState(@Query("state") String state);
 }

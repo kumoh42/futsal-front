@@ -22,7 +22,8 @@ class _ReservationSettingRepository implements ReservationSettingRepository {
   Future<dynamic> setPreReservationState(String state) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'state': state};
-    final _headers = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'accessToken': 'true'};
+    _headers.removeWhere((k, v) => v == null);
     final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch(_setStreamType<dynamic>(Options(
       method: 'PUT',

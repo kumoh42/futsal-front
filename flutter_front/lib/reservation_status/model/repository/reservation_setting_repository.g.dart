@@ -31,7 +31,7 @@ class _ReservationSettingRepository implements ReservationSettingRepository {
     )
         .compose(
           _dio.options,
-          '/pre',
+          '/reservation/pre',
           queryParameters: queryParameters,
           data: _data,
         )

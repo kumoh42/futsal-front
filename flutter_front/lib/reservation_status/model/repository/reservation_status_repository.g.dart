@@ -34,7 +34,7 @@ class _ReservationStatusRepository implements ReservationStatusRepository {
     )
             .compose(
               _dio.options,
-              '/${date}',
+              '/reservation/${date}',
               queryParameters: queryParameters,
               data: _data,
             )

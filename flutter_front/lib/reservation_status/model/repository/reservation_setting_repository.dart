@@ -7,7 +7,7 @@ part 'reservation_setting_repository.g.dart';
 
 final reservationSettingRepositoryProvider = Provider((ref) {
   final dio = ref.watch(dioProvider);
-  return ReservationSettingRepository(dio, baseUrl: '/reservation');
+  return ReservationSettingRepository(dio);
 });
 
 @RestApi()
@@ -15,6 +15,6 @@ abstract class ReservationSettingRepository {
   factory ReservationSettingRepository(Dio dio, {String baseUrl}) =
   _ReservationSettingRepository;
 
-  @PUT('/pre')
+  @PUT('/reservation/pre')
   Future setPreReservationState(@Query("state") String state);
 }

@@ -8,7 +8,7 @@ part 'reservation_status_repository.g.dart';
 
 final reservationStatusRepositoryProvider = Provider((ref) {
   final dio = ref.watch(dioProvider);
-  return ReservationStatusRepository(dio, baseUrl: '/reservation');
+  return ReservationStatusRepository(dio);
 });
 
 @RestApi()
@@ -16,7 +16,7 @@ abstract class ReservationStatusRepository {
   factory ReservationStatusRepository(Dio dio, {String baseUrl}) =
   _ReservationStatusRepository;
 
-  @GET('/{date}')
+  @GET('/reservation/{date}')
   @Headers({'accessToken' : 'true'})
   Future<List<ReservationStatusEntity>> getReservationStatusList(@Path() String date);
 

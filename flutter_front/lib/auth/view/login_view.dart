@@ -79,7 +79,7 @@ class LoginView extends ConsumerWidget {
                   ElevatedButton(
                     onPressed: viewModel.login,
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: CustomColor.subColor,
+                      backgroundColor: CustomColor.mainColor,
                       minimumSize: const Size(176, 60),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(

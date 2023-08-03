@@ -27,7 +27,7 @@ class CustomTextButton extends StatelessWidget {
       child: Text(
         text,
         textAlign: textAlign,
-        style: kTextMainStyleSmall,
+        style: kTextSubStyleSmall,
       ),
     );
   }

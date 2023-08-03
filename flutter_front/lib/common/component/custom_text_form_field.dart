@@ -25,7 +25,7 @@ class CustomTextFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(color: CustomColor.backGroundSubColor),
+      decoration: const BoxDecoration(color: CustomColor.backgroundMainColor),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -67,7 +67,7 @@ class CustomTextFormField extends StatelessWidget {
                 color: CustomColor.textMainColor.withOpacity(0.5),
               ),
               filled: true,
-              fillColor: CustomColor.backGroundSubColor,
+              fillColor: CustomColor.backgroundMainColor,
             ),
           ),
         ],

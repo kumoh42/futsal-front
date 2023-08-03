@@ -1,103 +1,26 @@
-import 'package:dio/dio.dart';
+import 'package:dio/dio.dart' hide Headers;
+import 'package:retrofit/retrofit.dart';
 import 'package:flutter_front/common/dio/dio.dart';
 import 'package:flutter_front/reservation_status/model/entity/reservation_entity.dart';
-import 'package:flutter_front/reservation_status/model/entity/reservation_member_entity.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+part 'reservation_status_repository.g.dart';
 
 final reservationStatusRepositoryProvider = Provider((ref) {
   final dio = ref.watch(dioProvider);
-  return ReservationStatusRepository(dio);
+  return ReservationStatusRepository(dio, baseUrl: '/reservation');
 });
 
-class ReservationStatusRepository {
-  final Dio dio;
+@RestApi()
+abstract class ReservationStatusRepository {
+  factory ReservationStatusRepository(Dio dio, {String baseUrl}) =
+  _ReservationStatusRepository;
 
-  ReservationStatusRepository(this.dio);
+  @GET('/{date}')
+  @Headers({'accessToken' : 'true'})
+  Future<List<ReservationStatusEntity>> getReservationStatusList(@Path() String date);
 
-  Future<List<ReservationStatusEntity>> getReservationStatusList(
-      DateTime date) async {
-    return [
-      ReservationStatusEntity(
-        date: date,
-        time: '08:00 ~ 10:00',
-        reservationId: '1',
-        member: ReservationMemberEntity(
-          id: 'id',
-          name: 'name',
-          phone: 'phone',
-          email: 'email',
-        ),
-      ),
-      ReservationStatusEntity(
-        date: date,
-        time: '10:00 ~ 12:00',
-        reservationId: '1',
-        member: ReservationMemberEntity(
-          id: 'id',
-          name: 'name',
-          phone: 'phone',
-          email: 'email',
-        ),
-      ),
-      ReservationStatusEntity(
-        date: date,
-        time: '12:00 ~ 14:00',
-        reservationId: '1',
-        member: ReservationMemberEntity(
-          id: 'id',
-          name: 'name',
-          phone: 'phone',
-          email: 'email',
-        ),
-      ),
-      ReservationStatusEntity(
-        date: date,
-        time: '14:00 ~ 16:00',
-        reservationId: '1',
-        member: ReservationMemberEntity(
-          id: 'id',
-          name: 'name',
-          phone: 'phone',
-          email: 'email',
-        ),
-      ),
-      ReservationStatusEntity(
-        date: date,
-        time: '16:00 ~ 18:00',
-        reservationId: '1',
-        member: ReservationMemberEntity(
-          id: 'id',
-          name: 'name',
-          phone: 'phone',
-          email: 'email',
-        ),
-      ),
-      ReservationStatusEntity(
-        date: date,
-        time: '18:00 ~ 20:00',
-        reservationId: '1',
-        member: ReservationMemberEntity(
-          id: 'id',
-          name: 'name',
-          phone: 'phone',
-          email: 'email',
-        ),
-      ),
-      ReservationStatusEntity(
-        date: date,
-        time: '20:00 ~ 22:00',
-        reservationId: '1',
-        member: ReservationMemberEntity(
-          id: 'id',
-          name: 'name',
-          phone: 'phone',
-          email: 'email',
-        ),
-      ),
-    ];
-  }
+// Future cancelReservation(String reservationId);
 
-  Future cancelReservation(String reservationId) async {}
-
-  Future cancelAllReservation() async {}
+// Future cancelAllReservation();
 }

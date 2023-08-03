@@ -1,3 +1,4 @@
+import 'package:flutter_front/common/utils/date_utils.dart';
 import 'package:flutter_front/reservation_status/model/entity/reservation_entity.dart';
 import 'package:flutter_front/reservation_status/model/repository/reservation_status_repository.dart';
 import 'package:flutter_front/reservation_status/model/state/reservation_list_state.dart';
@@ -22,7 +23,9 @@ class ReservationStatusService
   Future getReservationStatusList({required DateTime date}) async {
     try {
       state = ReservationStatusListStateLoading();
-      final data = await repository.getReservationStatusList(date);
+      final data = await repository.getReservationStatusList(
+        defaultDateFormat.format(date),
+      );
       state = ReservationStatusListStateSuccess(data);
     } catch (e) {
       state = ReservationStatusListStateError(e.toString());
@@ -32,8 +35,10 @@ class ReservationStatusService
   Future cancelReservation({required ReservationStatusEntity entity}) async {
     try {
       state = ReservationStatusListStateLoading();
-      await repository.cancelReservation(entity.reservationId);
-      final data = await repository.getReservationStatusList(entity.date);
+//      await repository.cancelReservation(entity.reservationId);
+      final data = await repository.getReservationStatusList(
+        defaultDateFormat.format(entity.date),
+      );
       state = ReservationStatusListStateSuccess(data);
     } catch (e) {
       state = ReservationStatusListStateError(e.toString());
@@ -43,7 +48,7 @@ class ReservationStatusService
   Future cancelAllReservation() async {
     try {
       state = ReservationStatusListStateLoading();
-      await repository.cancelAllReservation();
+//      await repository.cancelAllReservation();
       state = ReservationStatusListStateSuccess([]);
     } catch (e) {
       state = ReservationStatusListStateError(e.toString());

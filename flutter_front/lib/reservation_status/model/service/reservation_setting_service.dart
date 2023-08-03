@@ -19,7 +19,7 @@ class ReservationSettingService extends StateNotifier<ReservationSettingState> {
   Future startReservation() async {
     try {
       state = ReservationSettingStateLoading();
-      await repository.startReservation();
+      await repository.setPreReservationState("start");
       state = ReservationSettingStateSuccess(ReservationSettingType.started);
     } catch (e) {
       state = ReservationSettingStateError(e.toString());
@@ -29,7 +29,7 @@ class ReservationSettingService extends StateNotifier<ReservationSettingState> {
   Future closeReservation() async {
     try {
       state = ReservationSettingStateLoading();
-      await repository.closeReservation();
+      await repository.setPreReservationState("close");
       state = ReservationSettingStateSuccess(ReservationSettingType.closed);
     } catch (e) {
       state = ReservationSettingStateError(e.toString());

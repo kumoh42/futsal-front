@@ -19,8 +19,8 @@ class ReservationStatusViewModel extends ChangeNotifier {
           as ReservationStatusListStateSuccess)
       .data
       .where((element) =>
-          compareDayDateFormat.format(element.date) ==
-          compareDayDateFormat.format(customTimeTableController.selectedDay))
+          defaultDateFormat.format(element.date) ==
+          defaultDateFormat.format(customTimeTableController.selectedDay))
       .toList();
 
   ReservationStatusViewModel(this.ref) {

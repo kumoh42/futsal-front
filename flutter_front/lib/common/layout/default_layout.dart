@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_front/common/styles/colors.dart';
 
 class DefaultLayout extends StatelessWidget {
   final String? title;
   final Widget? leading;
+  final double? leadingWidth;
   final Widget? drawer;
   final Color backgroundColor;
   final Widget? bottomNavigationBar;
@@ -12,6 +14,7 @@ class DefaultLayout extends StatelessWidget {
     Key? key,
     this.title,
     this.leading,
+    this.leadingWidth,
     this.drawer,
     this.backgroundColor = Colors.white,
     this.bottomNavigationBar,
@@ -35,8 +38,9 @@ class DefaultLayout extends StatelessWidget {
       ? null
       : AppBar(
           centerTitle: true,
-          backgroundColor: Colors.white,
+          backgroundColor: CustomColor.mainColor,
           leading: leading,
+          leadingWidth: leadingWidth,
           elevation: 0,
           title: Text(
             title!,

@@ -40,6 +40,12 @@ class _RootTabState extends State<RootTab> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return DefaultLayout(
+      title: '',
+      leading: Image.asset(
+        'assets/image/text_logo.png',
+        fit: BoxFit.cover,
+      ),
+      leadingWidth: 200,
       backgroundColor: CustomColor.backgroundMainColor,
       /*bottomNavigationBar: MediaQuery.of(context).size.width > 700 ? null : BottomNavigationBar(
         backgroundColor: CustomColor.mainColor,
@@ -60,13 +66,17 @@ class _RootTabState extends State<RootTab> with TickerProviderStateMixin {
           /*if(MediaQuery.of(context).size.width > 700)*/ SizedBox(
             width: kNavigationRailSize,
             child: NavigationRail(
-              backgroundColor: CustomColor.mainColor,
+              backgroundColor: CustomColor.subColor,
               useIndicator: true,
-              indicatorColor: CustomColor.subColor,
-              selectedLabelTextStyle: const TextStyle(color: CustomColor.backgroundMainColor),
-              unselectedLabelTextStyle: TextStyle(color: CustomColor.disabledColor.withOpacity(0.5)),
-              selectedIconTheme: const IconThemeData(color: CustomColor.mainColor),
-              unselectedIconTheme: IconThemeData(color: CustomColor.disabledColor.withOpacity(0.5)),
+              indicatorColor: CustomColor.backgroundMainColor,
+              selectedLabelTextStyle:
+                  const TextStyle(color: CustomColor.backgroundMainColor),
+              unselectedLabelTextStyle:
+                  TextStyle(color: CustomColor.disabledColor.withOpacity(0.5)),
+              selectedIconTheme:
+                  const IconThemeData(color: CustomColor.subColor),
+              unselectedIconTheme: IconThemeData(
+                  color: CustomColor.disabledColor.withOpacity(0.5)),
               destinations: TABS.map((e) => _destination(e)).toList(),
               selectedIndex: index,
               onDestinationSelected: controller.animateTo,

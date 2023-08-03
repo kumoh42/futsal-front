@@ -19,7 +19,7 @@ class ReservationSettingService extends StateNotifier<ReservationSettingState> {
   Future startReservation() async {
     try {
       state = ReservationSettingStateLoading();
-      await repository.setPreReservationState("start");
+      await repository.setPreReservationState("open");
       state = ReservationSettingStateSuccess(
         ReservationSettingType.started,
         message: "사전예약이 오픈되었습니다.",

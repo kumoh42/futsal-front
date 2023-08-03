@@ -36,8 +36,11 @@ class TitledText extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(
                     vertical: kPaddingMiddleSize,
                   ),
-                  child: Icon(prefixIcon,
-                      size: kIconMiddleSize, color: CustomColor.itemSubColor),
+                  child: Icon(
+                    prefixIcon,
+                    size: kIconMiddleSize,
+                    color: CustomColor.mainColor,
+                  ),
                 ),
               Text(title ?? "", style: kTextMainStyleSmall),
             ],

@@ -62,8 +62,8 @@ class _RootTabState extends State<RootTab> with TickerProviderStateMixin {
             child: NavigationRail(
               backgroundColor: CustomColor.mainColor,
               useIndicator: true,
-              indicatorColor: CustomColor.backGroundSubColor,
-              selectedLabelTextStyle: const TextStyle(color: CustomColor.backGroundSubColor),
+              indicatorColor: CustomColor.subColor,
+              selectedLabelTextStyle: const TextStyle(color: CustomColor.backgroundMainColor),
               unselectedLabelTextStyle: TextStyle(color: CustomColor.disabledColor.withOpacity(0.5)),
               selectedIconTheme: const IconThemeData(color: CustomColor.mainColor),
               unselectedIconTheme: IconThemeData(color: CustomColor.disabledColor.withOpacity(0.5)),

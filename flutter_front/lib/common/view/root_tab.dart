@@ -3,6 +3,8 @@ import 'package:flutter_front/common/const/tabs.dart';
 import 'package:flutter_front/common/layout/default_layout.dart';
 import 'package:flutter_front/common/styles/colors.dart';
 import 'package:flutter_front/common/styles/sizes.dart';
+import 'package:flutter_front/common/styles/styles.dart';
+import 'package:flutter_front/common/view/construction_screen.dart';
 import 'package:flutter_front/reservation_status/view/reservation_status_screen.dart';
 
 class RootTab extends StatefulWidget {
@@ -88,9 +90,9 @@ class _RootTabState extends State<RootTab> with TickerProviderStateMixin {
               controller: controller,
               physics: const NeverScrollableScrollPhysics(),
               // TODO : Add Tab Screen
-              children: [
+              children: const [
                 ReservationStatusScreen(),
-                Container(),
+                ConstructionScreen(),
               ],
             ),
           ),

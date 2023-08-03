@@ -12,7 +12,7 @@ class ReservationSettingStateLoading extends LoadingState
 class ReservationSettingStateSuccess
     extends SuccessState<ReservationSettingType>
     implements ReservationSettingState {
-  ReservationSettingStateSuccess(super.data);
+  ReservationSettingStateSuccess(super.data, {super.message});
 }
 
 class ReservationSettingStateError extends ErrorState

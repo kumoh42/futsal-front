@@ -20,7 +20,10 @@ class ReservationSettingService extends StateNotifier<ReservationSettingState> {
     try {
       state = ReservationSettingStateLoading();
       await repository.setPreReservationState("start");
-      state = ReservationSettingStateSuccess(ReservationSettingType.started);
+      state = ReservationSettingStateSuccess(
+        ReservationSettingType.started,
+        message: "사전예약이 오픈되었습니다.",
+      );
     } catch (e) {
       state = ReservationSettingStateError(e.toString());
     }
@@ -30,7 +33,10 @@ class ReservationSettingService extends StateNotifier<ReservationSettingState> {
     try {
       state = ReservationSettingStateLoading();
       await repository.setPreReservationState("close");
-      state = ReservationSettingStateSuccess(ReservationSettingType.closed);
+      state = ReservationSettingStateSuccess(
+        ReservationSettingType.closed,
+        message: "사전예약이 중단되고 기존 예약 내역이 모두 삭제되었습니다.",
+      );
     } catch (e) {
       state = ReservationSettingStateError(e.toString());
     }

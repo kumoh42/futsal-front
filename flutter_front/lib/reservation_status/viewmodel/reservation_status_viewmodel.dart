@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_front/common/state/state.dart';
 import 'package:flutter_front/common/utils/date_utils.dart';
+import 'package:flutter_front/common/utils/snack_bar_util.dart';
 import 'package:flutter_front/reservation_status/component/custom_table_calendar.dart';
 import 'package:flutter_front/reservation_status/component/reservation_cancel_dialog.dart';
 import 'package:flutter_front/reservation_status/model/entity/reservation_entity.dart';
@@ -32,6 +34,9 @@ class ReservationStatusViewModel extends ChangeNotifier {
     ref.listen(reservationStatusServiceProvider, (previous, next) {
       if (previous != next) {
         statusState = next;
+        if (statusState is ErrorState) {
+          SnackBarUtil.showError((statusState as ErrorState).message);
+        }
         notifyListeners();
       }
     });

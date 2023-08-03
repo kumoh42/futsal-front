@@ -4,7 +4,21 @@ part 'user_entity.g.dart';
 
 @JsonSerializable()
 class UserEntity {
-    UserEntity();
+    @JsonKey(name: "member_srl")
+    final String memberSrl;
+    @JsonKey(name: "user_id")
+    final String userId;
+    @JsonKey(name: "user_name")
+    final String userName;
+    @JsonKey(name: "nick_name")
+    final String nickName;
+
+    UserEntity({
+        required this.memberSrl,
+        required this.userId,
+        required this.userName,
+        required this.nickName,
+    });
 
     Map<String, dynamic> toJson() => _$UserEntityToJson(this);
 

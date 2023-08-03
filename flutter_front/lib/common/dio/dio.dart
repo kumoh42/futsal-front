@@ -52,9 +52,14 @@ class CustomInterceptor extends Interceptor {
 
   // 2) 응답을 받을때
   @override
-  void onResponse(Response response, ResponseInterceptorHandler handler) {
+  void onResponse(Response response, ResponseInterceptorHandler handler) async {
     print(
         '[RES] [${response.requestOptions.method}] ${response.requestOptions.uri}');
+
+    if (response.requestOptions.path == DataUtils.pathToUrl('/login')) {
+      _saveToken(response);
+    }
+
     super.onResponse(response, handler);
   }
 
@@ -76,28 +81,18 @@ class CustomInterceptor extends Interceptor {
 
       try {
         final resp = await dio.post(
-          DataUtils.pathToUrl('/auth/token'),
+          DataUtils.pathToUrl('/login/auth/token'),
           options: Options(headers: {
             'authorization': 'Bearer $refreshToken',
           }),
         );
 
-        final newAccessToken = resp.data['accessToken'];
-        final newRefreshToken = resp.data['accessToken'];
+        _saveToken(resp);
 
-        await storage.write(
-          key: dotenv.get('ACCESS_TOKEN_KEY'),
-          value: newAccessToken,
-        );
-
-        await storage.write(
-          key: dotenv.get('REFRESH_TOKEN_KEY'),
-          value: newRefreshToken,
-        );
-
+        final token = await storage.read(key: dotenv.get('ACCESS_TOKEN_KEY'));
         final options = err.requestOptions;
         options.headers.addAll({
-          'authorization': 'Bearer $newAccessToken',
+          'authorization': 'Bearer $token',
         });
 
         final response = await dio.fetch(options);
@@ -107,7 +102,28 @@ class CustomInterceptor extends Interceptor {
         return handler.reject(e);
       }
     }
-
     super.onError(err, handler);
+  }
+
+  Future _saveToken(Response response) async {
+    final newAccessToken =
+        response.headers.value(dotenv.get('ACCESS_TOKEN_KEY'));
+    final newRefreshToken =
+        response.headers.value(dotenv.get('REFRESH_TOKEN_KEY'));
+
+    try {
+      Future.wait([
+        storage.write(
+          key: dotenv.get('ACCESS_TOKEN_KEY'),
+          value: newAccessToken!.replaceFirst("Bearer ", ""),
+        ),
+        storage.write(
+          key: dotenv.get('REFRESH_TOKEN_KEY'),
+          value: newRefreshToken!.replaceFirst("Bearer ", ""),
+        ),
+      ]);
+    } catch (e) {
+      rethrow;
+    }
   }
 }

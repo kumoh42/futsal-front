@@ -15,6 +15,7 @@ final dioProvider = Provider((ref) {
 
 final options = BaseOptions(
   baseUrl: dotenv.get("IP"),
+  headers: {'ngrok-skip-browser-warning' : true}
 );
 
 class CustomInterceptor extends Interceptor {

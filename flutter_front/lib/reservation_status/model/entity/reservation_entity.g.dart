@@ -9,18 +9,28 @@ part of 'reservation_entity.dart';
 ReservationStatusEntity _$ReservationStatusEntityFromJson(
         Map<String, dynamic> json) =>
     ReservationStatusEntity(
-      date: DateTime.parse(json['date'] as String),
+      reservationId: json['reservation_srl'] as String,
+      placeId: json['place_srl'] as String,
+      date: ReservationStatusEntity._dateFromJson(json['date'] as String),
       time: json['time'] as String,
-      reservationId: json['reservationId'] as String,
-      member: ReservationMemberEntity.fromJson(
-          json['member'] as Map<String, dynamic>),
+      isAble: json['is_able'] as String,
+      isHoliday: json['is_holiday'] as String,
+      regDate:
+          ReservationStatusEntity._regDateFromJson(json['regdate'] as String),
+      circle: json['circle'] as String,
+      major: json['major'] as String,
     );
 
 Map<String, dynamic> _$ReservationStatusEntityToJson(
         ReservationStatusEntity instance) =>
     <String, dynamic>{
-      'date': instance.date.toIso8601String(),
+      'reservation_srl': instance.reservationId,
+      'place_srl': instance.placeId,
+      'date': ReservationStatusEntity._dateToJson(instance.date),
       'time': instance.time,
-      'reservationId': instance.reservationId,
-      'member': instance.member,
+      'is_able': instance.isAble,
+      'is_holiday': instance.isHoliday,
+      'regdate': ReservationStatusEntity._regDateToJson(instance.regDate),
+      'circle': instance.circle,
+      'major': instance.major,
     };

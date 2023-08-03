@@ -45,7 +45,7 @@ class ReservationStateItem extends StatelessWidget {
                 horizontal: kPaddingMiddleSize,
               ),
               child: Text(
-                entity.member.name,
+                "${entity.circle} (${entity.major})",
                 style: kTextMainStyleMiddle,
               ),
             ),

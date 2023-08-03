@@ -33,7 +33,7 @@ class ReservationCancelDialog extends StatelessWidget {
           Radius.circular(kBorderRadiusSize),
         ),
       ),
-      content: SingleChildScrollView(
+      /*content: SingleChildScrollView(
         child: Container(
           width: width * 0.3,
           constraints: const BoxConstraints(minWidth: 500, maxWidth: 700),
@@ -67,7 +67,7 @@ class ReservationCancelDialog extends StatelessWidget {
             ],
           ),
         ),
-      ),
+      ),*/
       actions: [
         ElevatedButton(
           onPressed: () async {

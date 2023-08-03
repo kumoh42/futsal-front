@@ -33,7 +33,7 @@ class ReservationStateItem extends StatelessWidget {
                   horizontal: kPaddingMiddleSize,
                 ),
                 child: Text(
-                  entity.time.toString(),
+                  "${entity.time}:00 ~ ${entity.time + 2}:00",
                   textAlign: TextAlign.center,
                   style: kTextMainStyleMiddle,
                 ),
@@ -44,10 +44,34 @@ class ReservationStateItem extends StatelessWidget {
                 vertical: kPaddingSmallSize,
                 horizontal: kPaddingMiddleSize,
               ),
-              child: Text(
-                "${entity.circle} (${entity.major})",
-                style: kTextMainStyleMiddle,
-              ),
+              child: entity.major == null
+                  ? entity.isAble == "N"
+                      ? Row(
+                          children: [
+                            Image.asset(
+                              "assets/image/delete.png",
+                              width: kTextMiddleSize,
+                              height: kTextMiddleSize,
+                            ),
+                            const SizedBox(width: kPaddingSmallSize),
+                            const Text("예약 불가능", style: kTextMainStyleMiddle),
+                          ],
+                        )
+                      : Row(
+                          children: [
+                            Image.asset(
+                              "assets/image/check.png",
+                              width: kTextMiddleSize,
+                              height: kTextMiddleSize,
+                            ),
+                            const SizedBox(width: kPaddingSmallSize),
+                            const Text("예약 가능", style: kTextMainStyleMiddle),
+                          ],
+                        )
+                  : Text(
+                      "${entity.circle ?? "개인"} (${entity.major})",
+                      style: kTextMainStyleMiddle,
+                    ),
             ),
           ],
         ),

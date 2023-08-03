@@ -17,8 +17,8 @@ ReservationStatusEntity _$ReservationStatusEntityFromJson(
       isHoliday: json['is_holiday'] as String,
       regDate:
           ReservationStatusEntity._regDateFromJson(json['regdate'] as String),
-      circle: json['circle'] as String,
-      major: json['major'] as String,
+      circle: json['circle'] as String?,
+      major: json['major'] as String?,
     );
 
 Map<String, dynamic> _$ReservationStatusEntityToJson(

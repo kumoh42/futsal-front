@@ -20,9 +20,9 @@ class ReservationStatusEntity {
   @JsonKey(name: "regdate", fromJson: _regDateFromJson, toJson: _regDateToJson)
   final DateTime regDate;
   @JsonKey(name: "circle")
-  final String circle;
+  final String? circle;
   @JsonKey(name: "major")
-  final String major;
+  final String? major;
 
   static DateTime _dateFromJson(String date) => defaultDateFormat.parse(date);
   static String _dateToJson(DateTime date) => defaultDateFormat.format(date);

@@ -81,7 +81,7 @@ class CustomInterceptor extends Interceptor {
 
       try {
         final resp = await dio.post(
-          DataUtils.pathToUrl('/login/auth/token'),
+          DataUtils.pathToUrl('/auth/token'),
           options: Options(headers: {
             'authorization': 'Bearer $refreshToken',
           }),

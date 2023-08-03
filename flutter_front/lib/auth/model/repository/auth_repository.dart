@@ -16,7 +16,7 @@ final authRepositoryProvider = Provider((ref) {
 abstract class AuthRepository {
   factory AuthRepository(Dio dio, {String baseUrl}) = _AuthRepository;
 
-  @POST('/login')
+  @POST('/auth')
   Future login(@Body() LoginRequestDto loginRequestDto);
 
   @GET('/user')

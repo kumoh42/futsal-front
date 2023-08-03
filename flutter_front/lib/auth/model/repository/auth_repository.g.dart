@@ -32,7 +32,7 @@ class _AuthRepository implements AuthRepository {
     )
         .compose(
           _dio.options,
-          '/login',
+          '/auth',
           queryParameters: queryParameters,
           data: _data,
         )

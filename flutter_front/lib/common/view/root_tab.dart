@@ -80,8 +80,7 @@ class _RootTabState extends State<RootTab> with TickerProviderStateMixin {
               // TODO : Add Tab Screen
               children: [
                 ReservationStatusScreen(),
-                ReservationStatusScreen(),
-                ReservationStatusScreen(),
+                Container(),
               ],
             ),
           ),

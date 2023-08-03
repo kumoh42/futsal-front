@@ -40,8 +40,36 @@ class _CustomTimeTableState extends ConsumerState<CustomTimeTable> {
       focusedDay: controller.focusedDay,
       onDaySelected: controller.onDaySelected,
       selectedDayPredicate: controller.selectedDayPredicate,
+      calendarBuilders: CalendarBuilders(
+        defaultBuilder: (context, dateTime, _) => _cellBuilder(
+          date: dateTime.day.toString(),
+        ),
+        todayBuilder: (context, dateTime, _) => _cellBuilder(
+          color: CustomColor.mainColor.withOpacity(0.3),
+          date: dateTime.day.toString(),
+        ),
+        selectedBuilder: (context, dateTime, _) => _cellBuilder(
+          color: CustomColor.mainColor,
+          date: dateTime.day.toString(),
+        ),
+      ),
     );
   }
+
+  Widget _cellBuilder({Color? color, required String date}) => Container(
+        color: color,
+        width: widget.rowHeight - 2,
+        height: widget.rowHeight - 2,
+        child: Center(
+          child: Text(
+            date,
+            style: kTextMainStyleSmall.copyWith(
+              fontWeight: FontWeight.normal,
+            ),
+            softWrap: false,
+          ),
+        ),
+      );
 }
 
 class CustomTimeTableController extends ChangeNotifier {

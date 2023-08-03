@@ -33,7 +33,7 @@ class ReservationStateItem extends StatelessWidget {
                   horizontal: kPaddingMiddleSize,
                 ),
                 child: Text(
-                  entity.time,
+                  entity.time.toString(),
                   textAlign: TextAlign.center,
                   style: kTextMainStyleMiddle,
                 ),

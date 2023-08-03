@@ -6,13 +6,13 @@ part 'reservation_entity.g.dart';
 @JsonSerializable()
 class ReservationStatusEntity {
   @JsonKey(name: "reservation_srl")
-  final String reservationId;
+  final int reservationId;
   @JsonKey(name: "place_srl")
-  final String placeId;
+  final int? placeId;
   @JsonKey(name: "date", fromJson: _dateFromJson, toJson: _dateToJson)
   final DateTime date;
   @JsonKey(name: "time")
-  final String time;
+  final int time;
   @JsonKey(name: "is_able")
   final String isAble;
   @JsonKey(name: "is_holiday")

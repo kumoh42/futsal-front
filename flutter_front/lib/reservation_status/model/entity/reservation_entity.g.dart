@@ -9,10 +9,10 @@ part of 'reservation_entity.dart';
 ReservationStatusEntity _$ReservationStatusEntityFromJson(
         Map<String, dynamic> json) =>
     ReservationStatusEntity(
-      reservationId: json['reservation_srl'] as String,
-      placeId: json['place_srl'] as String,
+      reservationId: json['reservation_srl'] as int,
+      placeId: json['place_srl'] as int?,
       date: ReservationStatusEntity._dateFromJson(json['date'] as String),
-      time: json['time'] as String,
+      time: json['time'] as int,
       isAble: json['is_able'] as String,
       isHoliday: json['is_holiday'] as String,
       regDate:

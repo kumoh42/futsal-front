@@ -9,6 +9,11 @@ class CustomOutlinedButton extends StatelessWidget {
   final Color color;
 
   final double? width;
+  final double? height;
+  final double? borderRadius;
+  final double? elevation;
+
+  final bool withSide;
 
   const CustomOutlinedButton({
     Key? key,
@@ -16,21 +21,27 @@ class CustomOutlinedButton extends StatelessWidget {
     required this.text,
     this.color = CustomColor.buttonMainColor,
     this.width,
+    this.height,
+    this.borderRadius,
+    this.elevation,
+    this.withSide = false,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: width,
+      height: height,
       child: OutlinedButton(
         onPressed: onPressed,
         style: OutlinedButton.styleFrom(
           backgroundColor: color,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(kBorderRadiusSize),
+            borderRadius: BorderRadius.circular(borderRadius ?? kBorderRadiusSize),
           ),
           minimumSize: kOutlinedButtonSize,
-          side: const BorderSide(color: Colors.white, width: 1),
+          side: withSide ? const BorderSide(color: Colors.white, width: 1) : null,
+          elevation: elevation ?? 0,
         ),
         child: Text(
           text,

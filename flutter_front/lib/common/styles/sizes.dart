@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 
+const double kLayoutWidthSize = 1440;
+const double kNavigationRailSize = 257;
+
+const double kContainerHeightSize = 461;
+
 const double kBorderRadiusSize = 12.0;
 
 const Size kOutlinedButtonSize = Size.fromHeight(kTextLargeSize * 2);
@@ -16,6 +21,7 @@ const double kPaddingMiddleSize = 16.0;
 const double kPaddingSmallSize = 8.0;
 const double kPaddingMiniSize = 4.0;
 
+const double kTextXLargeSize = 44.0;
 const double kTextLargeSize = 28.0;
 const double kTextMiddleSize = 21.0;
 const double kTextSmallSize = 14.0;

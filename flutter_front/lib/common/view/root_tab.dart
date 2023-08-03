@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_front/auth/model/service/auth_service.dart';
-import 'package:flutter_front/common/component/profile_item.dart';
 import 'package:flutter_front/common/const/tabs.dart';
 import 'package:flutter_front/common/layout/default_layout.dart';
-import 'package:flutter_front/common/state/state.dart';
 import 'package:flutter_front/common/styles/colors.dart';
 import 'package:flutter_front/common/styles/sizes.dart';
 import 'package:flutter_front/reservation_status/view/reservation_status_screen.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class RootTab extends StatefulWidget {
   static String get routeName => 'home';
@@ -44,60 +40,39 @@ class _RootTabState extends State<RootTab> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return DefaultLayout(
-      bottomNavigationBar: MediaQuery.of(context).size.width > 700
-          ? null
-          : BottomNavigationBar(
-              backgroundColor: CustomColor.mainColor,
-              selectedItemColor: CustomColor.backGroundSubColor,
-              unselectedItemColor: CustomColor.disabledColor.withOpacity(0.5),
-              type: BottomNavigationBarType.fixed,
-              onTap: (int index) => setState(() => controller.animateTo(index)),
-              currentIndex: index,
-              items: TABS
-                  .map((e) => BottomNavigationBarItem(
-                        icon: Icon(e.icon),
-                        label: e.label,
-                      ))
-                  .toList(),
-            ),
+      backgroundColor: CustomColor.backgroundMainColor,
+      /*bottomNavigationBar: MediaQuery.of(context).size.width > 700 ? null : BottomNavigationBar(
+        backgroundColor: CustomColor.mainColor,
+        selectedItemColor: CustomColor.backGroundSubColor,
+        unselectedItemColor: CustomColor.disabledColor.withOpacity(0.5),
+        type: BottomNavigationBarType.fixed,
+        onTap: (int index) => setState(() => controller.animateTo(index)),
+        currentIndex: index,
+        items: TABS
+            .map((e) => BottomNavigationBarItem(
+          icon: Icon(e.icon),
+          label: e.label,
+        ))
+            .toList(),
+      ),*/
       child: Row(
         children: [
-          if (MediaQuery.of(context).size.width > 700)
-            NavigationRail(
-              extended: true,
+          /*if(MediaQuery.of(context).size.width > 700)*/ SizedBox(
+            width: kNavigationRailSize,
+            child: NavigationRail(
               backgroundColor: CustomColor.mainColor,
               useIndicator: true,
               indicatorColor: CustomColor.backGroundSubColor,
-              selectedLabelTextStyle:
-                  const TextStyle(color: CustomColor.backGroundSubColor),
-              unselectedLabelTextStyle:
-                  TextStyle(color: CustomColor.disabledColor.withOpacity(0.5)),
-              selectedIconTheme:
-                  const IconThemeData(color: CustomColor.mainColor),
-              unselectedIconTheme: IconThemeData(
-                  color: CustomColor.disabledColor.withOpacity(0.5)),
+              selectedLabelTextStyle: const TextStyle(color: CustomColor.backGroundSubColor),
+              unselectedLabelTextStyle: TextStyle(color: CustomColor.disabledColor.withOpacity(0.5)),
+              selectedIconTheme: const IconThemeData(color: CustomColor.mainColor),
+              unselectedIconTheme: IconThemeData(color: CustomColor.disabledColor.withOpacity(0.5)),
               destinations: TABS.map((e) => _destination(e)).toList(),
               selectedIndex: index,
               onDestinationSelected: controller.animateTo,
-              trailing: Expanded(
-                child: Align(
-                  alignment: Alignment.bottomCenter,
-                  child: SizedBox(
-                    width: 240,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: kPaddingSmallSize),
-                      child: Consumer(
-                        builder: (_, ref, __) => ProfileItem(
-                          entity:
-                          (ref.read(authServiceProvider) as SuccessState).data,
-                          logout: ref.read(authServiceProvider.notifier).logout,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+              extended: true,
             ),
+          ),
           Expanded(
             child: TabBarView(
               controller: controller,

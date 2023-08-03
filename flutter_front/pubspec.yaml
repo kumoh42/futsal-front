@@ -43,6 +43,9 @@ dependencies:
   # Calender
   table_calendar: ^3.0.9
 
+  # Time Builder
+  timer_builder: ^2.0.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

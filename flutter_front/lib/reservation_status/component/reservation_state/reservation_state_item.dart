@@ -15,67 +15,41 @@ class ReservationStateItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraints) {
-      return SizedBox(
+      return Container(
         width: constraints.maxWidth,
-        child: Card(
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(kBorderRadiusSize)),
-          ),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Padding(
+        decoration: const BoxDecoration(
+          border: Border(bottom: BorderSide(width: 1)),
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              decoration: const BoxDecoration(
+                border: Border(right: BorderSide(width: 0.5)),
+              ),
+              child: Padding(
                 padding: const EdgeInsets.symmetric(
+                  vertical: kPaddingSmallSize,
                   horizontal: kPaddingMiddleSize,
-                  vertical: kPaddingMiniSize,
                 ),
                 child: Text(
                   entity.time,
                   textAlign: TextAlign.center,
-                  style: kTextMainStyleSmall,
+                  style: kTextMainStyleMiddle,
                 ),
               ),
-              Expanded(
-                flex: 2,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: kPaddingMiddleSize,
-                    vertical: kPaddingMiniSize,
-                  ),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          entity.member.name,
-                          textAlign: TextAlign.center,
-                          style: kTextMainStyleSmall,
-                        ),
-                      ),
-                      ElevatedButton(
-                        onPressed: onCancelClicked == null
-                            ? null
-                            : () => onCancelClicked!(entity),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: CustomColor.mainColor,
-                          shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(kBorderRadiusSize),
-                            ),
-                          ),
-                        ),
-                        child: Text(
-                          "예약 취소",
-                          style: kTextMainStyleSmall.copyWith(
-                              color: Colors.white,
-                              fontWeight: FontWeight.normal),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                vertical: kPaddingSmallSize,
+                horizontal: kPaddingMiddleSize,
               ),
-            ],
-          ),
+              child: Text(
+                entity.member.name,
+                style: kTextMainStyleMiddle,
+              ),
+            ),
+          ],
         ),
       );
     });

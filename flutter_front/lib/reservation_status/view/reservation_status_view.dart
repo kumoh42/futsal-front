@@ -16,53 +16,61 @@ class ReservationStatusView extends ConsumerWidget {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
         final width = constraints.maxWidth;
-        final height = MediaQuery.of(context).size.height;
+        final height = constraints.maxHeight;
         return CustomContainer(
           width: width,
-          title: "예약 현황 조회",
-          child: Center(
-            child: Wrap(
-              direction: Axis.horizontal,
-              crossAxisAlignment: WrapCrossAlignment.center,
-              spacing: kPaddingMiddleSize,
-              runSpacing: kPaddingMiddleSize,
-              children: [
-                CustomContainer(
-                  width: width - 500 - 40 - kPaddingMiddleSize,
-                  height: height / 2,
-                  minHeight: 422,
-                  isBackground: true,
-                  color: CustomColor.disabledColor,
-                  child: CustomTimeTable(
-                    controller: viewmodel.customTimeTableController,
-                    rowHeight: (height / 2 - 72) / 7,
+          height: height,
+          title: "예약 확인",
+          child: LayoutBuilder(builder: (context, constraints) {
+            final width = constraints.maxWidth;
+            final height = constraints.maxHeight;
+            return Center(
+              child: Row(
+                children: [
+                  Expanded(
+                    child: CustomContainer(
+                      height: height,
+                      isBackground: true,
+                      boarderRadius: 0,
+                      color: CustomColor.disabledColor,
+                      child: CustomTimeTable(
+                        controller: viewmodel.customTimeTableController,
+                        rowHeight: 41,
+                      ),
+                    ),
                   ),
-                ),
-                CustomContainer(
-                  width: 500,
-                  height: height / 2,
-                  minHeight: 422,
-                  color: CustomColor.disabledColor,
-                  isBackground: true,
-                  child: viewmodel.state is LoadingState
-                      ? const Center(child: CircularProgressIndicator())
-                      : Padding(
-                          padding: const EdgeInsets.all(kPaddingSmallSize),
-                          child: ListView.builder(
-                            shrinkWrap: true,
-                            itemCount:
-                                (viewmodel.state as SuccessState).data.length,
-                            itemBuilder: (context, i) => ReservationStateItem(
-                              entity: (viewmodel.state as SuccessState).data[i],
-                              onCancelClicked: (entity) => viewmodel
-                                  .cancelReservationStatus(context, entity),
-                            ),
-                          ),
-                        ),
-                )
-              ],
-            ),
-          ),
+                  Expanded(
+                    child: CustomContainer(
+                      height: height,
+                      color: CustomColor.disabledColor,
+                      isBackground: true,
+                      boarderRadius: 0,
+                      child: viewmodel.statusState is LoadingState
+                          ? const Center(child: CircularProgressIndicator())
+                          : viewmodel.statusState is SuccessState
+                              ? Padding(
+                                  padding: const EdgeInsets.all(0),
+                                  child: ListView.builder(
+                                    shrinkWrap: true,
+                                    itemCount:
+                                        viewmodel.reservationStatusList.length,
+                                    itemBuilder: (context, i) =>
+                                        ReservationStateItem(
+                                      entity:
+                                          viewmodel.reservationStatusList[i],
+                                      onCancelClicked: (entity) =>
+                                          viewmodel.cancelReservationStatus(
+                                              context, entity),
+                                    ),
+                                  ),
+                                )
+                              : Container(),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          }),
         );
       },
     );

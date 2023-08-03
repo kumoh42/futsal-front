@@ -2,6 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_front/common/styles/sizes.dart';
 import 'colors.dart';
 
+const TextStyle kTextMainStyleXLarge = TextStyle(
+  color: CustomColor.textMainColor,
+  fontSize: kTextXLargeSize,
+  fontWeight: FontWeight.bold,
+  overflow: TextOverflow.ellipsis,
+  height: kTextHeight,
+);
+
 const TextStyle kTextMainStyleLarge = TextStyle(
   color: CustomColor.textMainColor,
   fontSize: kTextLargeSize,

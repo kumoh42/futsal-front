@@ -46,6 +46,7 @@ class ReservationStatusViewModel extends ChangeNotifier {
     await ref
         .read(reservationStatusServiceProvider.notifier)
         .getReservationStatusList(date: customTimeTableController.selectedDay);
+    notifyListeners();
   }
 
   Future cancelReservationStatus(

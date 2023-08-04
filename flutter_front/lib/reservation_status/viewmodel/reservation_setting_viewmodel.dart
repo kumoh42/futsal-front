@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_front/common/state/state.dart';
 import 'package:flutter_front/common/utils/snack_bar_util.dart';
 import 'package:flutter_front/reservation_status/model/service/reservation_setting_service.dart';
+import 'package:flutter_front/reservation_status/model/service/reservation_status_service.dart';
 import 'package:flutter_front/reservation_status/model/state/reservation_setting_status.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -22,7 +23,7 @@ class ReservationSettingViewModel extends ChangeNotifier {
         }
         if (settingState is SuccessState) {
           String? message = (settingState as SuccessState).message;
-          if(message != null) SnackBarUtil.showSuccess(message);
+          if (message != null) SnackBarUtil.showSuccess(message);
         }
         notifyListeners();
       }
@@ -33,11 +34,17 @@ class ReservationSettingViewModel extends ChangeNotifier {
     await ref
         .read(reservationSettingServiceProvider.notifier)
         .startReservation();
+    await ref
+        .read(reservationStatusServiceProvider.notifier)
+        .getReservationStatusList();
   }
 
   Future closeReservation() async {
     await ref
         .read(reservationSettingServiceProvider.notifier)
         .closeReservation();
+    await ref
+        .read(reservationStatusServiceProvider.notifier)
+        .getReservationStatusList();
   }
 }

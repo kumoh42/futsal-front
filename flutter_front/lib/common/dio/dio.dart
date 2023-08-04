@@ -68,10 +68,10 @@ class CustomInterceptor extends Interceptor {
   // 3) 에러가 났을떄
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) async {
-    print('[ERR] [${err.requestOptions.method}] ${err.requestOptions.uri}');
+    print('[ERR] [${err.requestOptions.method}] ${err.requestOptions.uri} ${err.message}');
 
     final refreshToken =
-        await storage.read(key: dotenv.get('REFRESH_TOKEN_KEY'));
+    await storage.read(key: dotenv.get('REFRESH_TOKEN_KEY'));
 
     if (refreshToken == null) return handler.reject(err);
 
@@ -88,7 +88,6 @@ class CustomInterceptor extends Interceptor {
             'authorization': 'Bearer $refreshToken',
           }),
         );
-
         _saveToken(resp);
 
         final token = await storage.read(key: dotenv.get('ACCESS_TOKEN_KEY'));

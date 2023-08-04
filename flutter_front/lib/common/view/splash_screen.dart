@@ -14,7 +14,7 @@ class SplashScreen extends StatelessWidget {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
     return DefaultLayout(
-      backgroundColor: CustomColor.subColor,
+      backgroundColor: CustomColor.mainColor,
       child: SizedBox(
         width: width,
         height: height,
@@ -23,7 +23,11 @@ class SplashScreen extends StatelessWidget {
           children: [
             Image.asset(
               'assets/image/white_logo.png',
-              width: min(width, height) / 2,
+              width: min(
+                    MediaQuery.of(context).size.width,
+                    MediaQuery.of(context).size.height,
+                  ) /
+                  2,
             ),
             const SizedBox(height: 16.0),
             const CircularProgressIndicator(color: Colors.white),

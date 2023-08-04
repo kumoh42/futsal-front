@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_front/common/styles/styles.dart';
 
 class DefaultLayout extends StatelessWidget {
   final String? title;
+  final Widget? leading;
+  final double? leadingWidth;
+  final double? appbarHeight;
+  final Widget? drawer;
   final Color backgroundColor;
   final Widget? bottomNavigationBar;
   final Widget child;
@@ -9,6 +14,10 @@ class DefaultLayout extends StatelessWidget {
   const DefaultLayout({
     Key? key,
     this.title,
+    this.leading,
+    this.leadingWidth,
+    this.appbarHeight,
+    this.drawer,
     this.backgroundColor = Colors.white,
     this.bottomNavigationBar,
     required this.child,
@@ -19,9 +28,8 @@ class DefaultLayout extends StatelessWidget {
     return Scaffold(
       appBar: _appBar(),
       backgroundColor: backgroundColor,
-      body: SafeArea(
-        child: child,
-      ),
+      drawer: drawer,
+      body: SafeArea(child: child),
       bottomNavigationBar: bottomNavigationBar,
     );
   }
@@ -29,12 +37,15 @@ class DefaultLayout extends StatelessWidget {
   AppBar? _appBar() => title == null
       ? null
       : AppBar(
-          centerTitle: true,
-          backgroundColor: Colors.white,
+          toolbarHeight: appbarHeight,
+          centerTitle: false,
+          backgroundColor: CustomColor.mainColor,
+          leading: leading,
+          leadingWidth: leadingWidth,
           elevation: 0,
           title: Text(
             title!,
-            style: const TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+            style: kTextReverseStyleMiddle,
           ),
           foregroundColor: Colors.black,
         );

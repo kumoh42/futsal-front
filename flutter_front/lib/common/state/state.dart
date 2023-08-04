@@ -4,10 +4,13 @@ abstract class LoadingState {}
 
 abstract class SuccessState<T> {
   T data;
-  SuccessState(this.data);
+  String? message;
+
+  SuccessState(this.data, {this.message});
 }
 
 abstract class ErrorState {
   String message;
+
   ErrorState(this.message);
 }

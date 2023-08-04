@@ -20,7 +20,7 @@ class SnackBarUtil {
   static void showSuccess(String message) {
     key.currentState!
       ..hideCurrentSnackBar()
-      ..showSnackBar(drawSnackBar(message, CustomColor.subColor));
+      ..showSnackBar(drawSnackBar(message, CustomColor.mainColor));
   }
 
   static SnackBar drawSnackBar(String message, Color color) {

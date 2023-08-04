@@ -37,7 +37,7 @@ class ProfileItem extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(entity.name, style: kTextMainStyleMiddle),
+                  Text(entity.userName, style: kTextMainStyleMiddle),
                   const SizedBox(height: kPaddingSmallSize),
                   Row(
                     mainAxisSize: MainAxisSize.min,

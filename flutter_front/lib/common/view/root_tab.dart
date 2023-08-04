@@ -118,7 +118,7 @@ class _RootTabState extends ConsumerState<RootTab>
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: kPaddingSmallSize),
                                     child: Text(
-                                      "${(ref.read(authServiceProvider) as AuthStateSuccess).data.name}님 안녕하세요!",
+                                      "${(ref.read(authServiceProvider) as AuthStateSuccess).data.userName}님 안녕하세요!",
                                       style: kTextReverseStyleSmall,
                                     ),
                                   ),

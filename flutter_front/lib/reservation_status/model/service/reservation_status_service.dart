@@ -28,10 +28,10 @@ class ReservationStatusService
             date.month) return;
     try {
       state = ReservationStatusListStateLoading();
-      // final data = await repository.getReservationStatusList(
-      //   defaultDateFormat.format(date),
-      // );
-      state = ReservationStatusListStateSuccess([]);
+      final data = await repository.getReservationStatusList(
+        defaultDateFormat.format(date),
+      );
+      state = ReservationStatusListStateSuccess(data);
     } on DioException catch (e) {
       state = ReservationStatusListStateError("서버에서 예약 정보를 가져올 수 없습니다.");
     } catch (e) {

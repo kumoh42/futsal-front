@@ -27,9 +27,88 @@ class ReservationStatusService
             date.month) return;
     try {
       state = ReservationStatusListStateLoading();
-      final data = await repository.getReservationStatusList(
-        defaultDateFormat.format(date),
-      );
+      // final data = await repository.getReservationStatusList(
+      //   defaultDateFormat.format(date),
+      // );
+      final data = [
+        ReservationStatusEntity(
+          reservationId: 1,
+          placeId: null,
+          date: date,
+          time: 8,
+          isAble: "N",
+          isHoliday: "N",
+          regDate: date,
+          circle: null,
+          major: "컴퓨터공학과컴퓨터공학과컴퓨터공학과컴퓨터공학과",
+        ),
+        ReservationStatusEntity(
+          reservationId: 1,
+          placeId: null,
+          date: date,
+          time: 10,
+          isAble: "N",
+          isHoliday: "N",
+          regDate: date,
+          circle: null,
+          major: "컴퓨터공학과",
+        ),
+        ReservationStatusEntity(
+          reservationId: 1,
+          placeId: null,
+          date: date,
+          time: 12,
+          isAble: "N",
+          isHoliday: "N",
+          regDate: date,
+          circle: null,
+          major: "컴퓨터공학과",
+        ),
+        ReservationStatusEntity(
+          reservationId: 1,
+          placeId: null,
+          date: date,
+          time: 14,
+          isAble: "N",
+          isHoliday: "N",
+          regDate: date,
+          circle: null,
+          major: "컴퓨터공학과",
+        ),
+        ReservationStatusEntity(
+          reservationId: 1,
+          placeId: null,
+          date: date,
+          time: 16,
+          isAble: "N",
+          isHoliday: "N",
+          regDate: date,
+          circle: null,
+          major: "컴퓨터공학과",
+        ),
+        ReservationStatusEntity(
+          reservationId: 1,
+          placeId: null,
+          date: date,
+          time: 18,
+          isAble: "N",
+          isHoliday: "N",
+          regDate: date,
+          circle: null,
+          major: "컴퓨터공학과",
+        ),
+        ReservationStatusEntity(
+          reservationId: 1,
+          placeId: null,
+          date: date,
+          time: 20,
+          isAble: "N",
+          isHoliday: "N",
+          regDate: date,
+          circle: null,
+          major: "컴퓨터공학과",
+        ),
+      ];
       state = ReservationStatusListStateSuccess(data);
     } catch (e) {
       state = ReservationStatusListStateError(e.toString());

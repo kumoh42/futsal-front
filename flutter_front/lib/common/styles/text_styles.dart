@@ -81,6 +81,14 @@ const TextStyle kTextMainStyleSmall = TextStyle(
   height: kTextHeight,
 );
 
+const TextStyle kTextSubStyleSmall = TextStyle(
+  color: CustomColor.textSubColor,
+  fontSize: kTextSmallSize,
+  fontWeight: FontWeight.bold,
+  overflow: TextOverflow.ellipsis,
+  height: kTextHeight,
+);
+
 const TextStyle kTextReverseStyleSmall = TextStyle(
   color: CustomColor.textReverseColor,
   fontSize: kTextSmallSize,

@@ -41,8 +41,7 @@ class CustomTextFormField extends StatelessWidget {
                   ),
                 ),
               Padding(
-                padding:
-                const EdgeInsets.only(bottom: kPaddingMiddleSize),
+                padding: const EdgeInsets.only(bottom: kPaddingMiddleSize),
                 child: Text(
                   labelText ?? "",
                   style: kTextMainStyleSmall,

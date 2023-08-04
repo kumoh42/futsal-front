@@ -3,7 +3,7 @@ import 'package:flutter_front/common/styles/styles.dart';
 
 class SnackBarUtil {
   static GlobalKey<ScaffoldMessengerState> key =
-  GlobalKey<ScaffoldMessengerState>();
+      GlobalKey<ScaffoldMessengerState>();
 
   static void showError(String message) {
     key.currentState!

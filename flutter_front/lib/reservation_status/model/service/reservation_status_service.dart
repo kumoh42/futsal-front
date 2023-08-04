@@ -22,16 +22,22 @@ class ReservationStatusService
     getReservationStatusList(date: DateTime.now());
   }
 
-  Future getReservationStatusList({required DateTime date}) async {
+  Future getReservationStatusList({DateTime? date}) async {
     if (state is SuccessState &&
         (state as ReservationStatusListStateSuccess).data.first.date.month ==
-            date.month) return;
+            date?.month) return;
     try {
       state = ReservationStatusListStateLoading();
       final data = await repository.getReservationStatusList(
-        defaultDateFormat.format(date),
+        defaultDateFormat.format(
+          date ?? (state as ReservationStatusListStateSuccess).data.first.date,
+        ),
       );
-      state = ReservationStatusListStateSuccess(data);
+      if(data.isEmpty) {
+        state = ReservationStatusListStateNone();
+      } else {
+        state = ReservationStatusListStateSuccess(data);
+      }
     } on DioException catch (e) {
       state = ReservationStatusListStateError("서버에서 예약 정보를 가져올 수 없습니다.");
     } catch (e) {

@@ -48,20 +48,17 @@ class ReservationStatusView extends ConsumerWidget {
                       child: viewmodel.statusState is LoadingState
                           ? const Center(child: CircularProgressIndicator())
                           : viewmodel.statusState is SuccessState
-                              ? Padding(
-                                  padding: const EdgeInsets.all(0),
-                                  child: ListView.builder(
-                                    shrinkWrap: true,
-                                    itemCount:
-                                        viewmodel.reservationStatusList.length,
-                                    itemBuilder: (context, i) =>
-                                        ReservationStateItem(
-                                      entity:
-                                          viewmodel.reservationStatusList[i],
-                                      onCancelClicked: (entity) =>
-                                          viewmodel.cancelReservationStatus(
-                                              context, entity),
-                                    ),
+                              ? ListView.builder(
+                                  shrinkWrap: true,
+                                  itemCount:
+                                      viewmodel.reservationStatusList.length,
+                                  itemBuilder: (context, i) =>
+                                      ReservationStateItem(
+                                    height: height / 7 - 1.145,
+                                    entity: viewmodel.reservationStatusList[i],
+                                    onCancelClicked: (entity) =>
+                                        viewmodel.cancelReservationStatus(
+                                            context, entity),
                                   ),
                                 )
                               : Container(),

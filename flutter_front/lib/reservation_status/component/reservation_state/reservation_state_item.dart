@@ -7,10 +7,11 @@ import 'package:flutter_front/reservation_status/model/entity/reservation_entity
 
 class ReservationStateItem extends StatelessWidget {
   final ReservationStatusEntity entity;
+  final double? height;
   final Function(ReservationStatusEntity)? onCancelClicked;
 
   const ReservationStateItem(
-      {Key? key, required this.entity, this.onCancelClicked})
+      {Key? key, this.height, required this.entity, this.onCancelClicked})
       : super(key: key);
 
   @override
@@ -18,6 +19,7 @@ class ReservationStateItem extends StatelessWidget {
     return LayoutBuilder(builder: (context, constraints) {
       return Container(
         width: constraints.maxWidth,
+        height: height,
         decoration: const BoxDecoration(
           border: Border(bottom: BorderSide(width: 0.5)),
         ),

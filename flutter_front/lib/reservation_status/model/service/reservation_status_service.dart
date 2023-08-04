@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter_front/common/state/state.dart';
 import 'package:flutter_front/common/utils/date_utils.dart';
 import 'package:flutter_front/reservation_status/model/entity/reservation_entity.dart';
@@ -31,8 +32,10 @@ class ReservationStatusService
         defaultDateFormat.format(date),
       );
       state = ReservationStatusListStateSuccess(data);
+    } on DioException catch (e) {
+      state = ReservationStatusListStateError("서버에서 예약 정보를 가져올 수 없습니다.");
     } catch (e) {
-      state = ReservationStatusListStateError(e.toString());
+      state = ReservationStatusListStateError("알 수 없는 에러가 발생했습니다.");
     }
   }
 

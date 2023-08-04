@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter_front/reservation_status/model/repository/reservation_setting_repository.dart';
 import 'package:flutter_front/reservation_status/model/state/reservation_setting_status.dart';
 import 'package:flutter_front/reservation_status/type/reservation_setting_type.dart';
@@ -24,8 +25,10 @@ class ReservationSettingService extends StateNotifier<ReservationSettingState> {
         ReservationSettingType.started,
         message: "사전예약이 오픈되었습니다.",
       );
+    } on DioException catch (e) {
+      state = ReservationSettingStateError("사전예약 오픈에 실패하였습니다.");
     } catch (e) {
-      state = ReservationSettingStateError(e.toString());
+      state = ReservationSettingStateError("알 수 없는 에러가 발생했습니다.");
     }
   }
 
@@ -37,8 +40,10 @@ class ReservationSettingService extends StateNotifier<ReservationSettingState> {
         ReservationSettingType.closed,
         message: "사전예약이 중단되고 기존 예약 내역이 모두 삭제되었습니다.",
       );
+    } on DioException catch (e) {
+      state = ReservationSettingStateError("사전예약 중단에 실패하였습니다.");
     } catch (e) {
-      state = ReservationSettingStateError(e.toString());
+      state = ReservationSettingStateError("알 수 없는 에러가 발생했습니다.");
     }
   }
 }

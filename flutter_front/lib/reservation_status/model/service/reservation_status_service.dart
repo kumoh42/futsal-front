@@ -1,3 +1,4 @@
+import 'package:flutter_front/common/state/state.dart';
 import 'package:flutter_front/common/utils/date_utils.dart';
 import 'package:flutter_front/reservation_status/model/entity/reservation_entity.dart';
 import 'package:flutter_front/reservation_status/model/repository/reservation_status_repository.dart';
@@ -21,6 +22,9 @@ class ReservationStatusService
   }
 
   Future getReservationStatusList({required DateTime date}) async {
+    if (state is SuccessState &&
+        (state as ReservationStatusListStateSuccess).data.first.date.month ==
+            date.month) return;
     try {
       state = ReservationStatusListStateLoading();
       final data = await repository.getReservationStatusList(

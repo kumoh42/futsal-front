@@ -27,9 +27,7 @@ class DefaultLayout extends StatelessWidget {
       appBar: _appBar(),
       backgroundColor: backgroundColor,
       drawer: drawer,
-      body: SafeArea(
-        child: child,
-      ),
+      body: SafeArea(child: child),
       bottomNavigationBar: bottomNavigationBar,
     );
   }

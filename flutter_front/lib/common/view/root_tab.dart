@@ -1,22 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_front/auth/model/service/auth_service.dart';
+import 'package:flutter_front/auth/model/state/auth_state.dart';
 import 'package:flutter_front/common/const/tabs.dart';
 import 'package:flutter_front/common/layout/default_layout.dart';
-import 'package:flutter_front/common/styles/colors.dart';
-import 'package:flutter_front/common/styles/sizes.dart';
 import 'package:flutter_front/common/styles/styles.dart';
 import 'package:flutter_front/common/view/construction_screen.dart';
 import 'package:flutter_front/reservation_status/view/reservation_status_screen.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class RootTab extends StatefulWidget {
+class RootTab extends ConsumerStatefulWidget {
   static String get routeName => 'home';
 
   const RootTab({Key? key}) : super(key: key);
 
   @override
-  State<RootTab> createState() => _RootTabState();
+  ConsumerState<RootTab> createState() => _RootTabState();
 }
 
-class _RootTabState extends State<RootTab> with TickerProviderStateMixin {
+class _RootTabState extends ConsumerState<RootTab>
+    with TickerProviderStateMixin {
   late TabController controller;
   int index = 0;
 
@@ -63,40 +65,104 @@ class _RootTabState extends State<RootTab> with TickerProviderStateMixin {
         ))
             .toList(),
       ),*/
-      child: Row(
-        children: [
-          /*if(MediaQuery.of(context).size.width > 700)*/ SizedBox(
-            width: kNavigationRailSize,
-            child: NavigationRail(
-              backgroundColor: CustomColor.subColor,
-              useIndicator: true,
-              indicatorColor: CustomColor.backgroundMainColor,
-              selectedLabelTextStyle:
-                  const TextStyle(color: CustomColor.backgroundMainColor),
-              unselectedLabelTextStyle:
-                  TextStyle(color: CustomColor.disabledColor.withOpacity(0.5)),
-              selectedIconTheme:
-                  const IconThemeData(color: CustomColor.subColor),
-              unselectedIconTheme: IconThemeData(
-                  color: CustomColor.disabledColor.withOpacity(0.5)),
-              destinations: TABS.map((e) => _destination(e)).toList(),
-              selectedIndex: index,
-              onDestinationSelected: controller.animateTo,
-              extended: true,
+      child: LayoutBuilder(
+        builder: (context, constraints) => Row(
+          children: [
+            /*if(MediaQuery.of(context).size.width > 700)*/
+            SingleChildScrollView(
+              child: Container(
+                constraints: BoxConstraints(
+                  minHeight: constraints.maxHeight,
+                ),
+                width: kNavigationRailSize,
+                child: IntrinsicHeight(
+                  child: NavigationRail(
+                    backgroundColor: CustomColor.subColor,
+                    useIndicator: true,
+                    indicatorColor: CustomColor.backgroundMainColor,
+                    selectedLabelTextStyle:
+                        const TextStyle(color: CustomColor.backgroundMainColor),
+                    unselectedLabelTextStyle: TextStyle(
+                        color: CustomColor.disabledColor.withOpacity(0.5)),
+                    selectedIconTheme:
+                        const IconThemeData(color: CustomColor.subColor),
+                    unselectedIconTheme: IconThemeData(
+                        color: CustomColor.disabledColor.withOpacity(0.5)),
+                    destinations: TABS.map((e) => _destination(e)).toList(),
+                    selectedIndex: index,
+                    onDestinationSelected: controller.animateTo,
+                    extended: true,
+                    trailing: Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.all(kPaddingSmallSize),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            const Padding(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: kPaddingSmallSize,
+                                vertical: kPaddingXLargeSize,
+                              ),
+                              child: Text(
+                                "기술 문의\n\nTeam Kumoh-42",
+                                style: kTextReverseStyleSmall,
+                              ),
+                            ),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: kPaddingSmallSize),
+                                    child: Text(
+                                      "${(ref.read(authServiceProvider) as AuthStateSuccess).data.name}님 안녕하세요!",
+                                      style: kTextReverseStyleSmall,
+                                    ),
+                                  ),
+                                  const SizedBox(height: kPaddingMiddleSize),
+                                  OutlinedButton(
+                                    onPressed: ref
+                                        .read(authServiceProvider.notifier)
+                                        .logout,
+                                    style: OutlinedButton.styleFrom(
+                                      backgroundColor: Colors.black,
+                                      padding: const EdgeInsets.symmetric(
+                                        vertical: kPaddingMiddleSize,
+                                      ),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(50),
+                                      ),
+                                    ),
+                                    child: const Text(
+                                      "로그아웃",
+                                      style: kTextReverseStyleMiddle,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
             ),
-          ),
-          Expanded(
-            child: TabBarView(
-              controller: controller,
-              physics: const NeverScrollableScrollPhysics(),
-              // TODO : Add Tab Screen
-              children: const [
-                ReservationStatusScreen(),
-                ConstructionScreen(),
-              ],
+            Expanded(
+              child: TabBarView(
+                controller: controller,
+                physics: const NeverScrollableScrollPhysics(),
+                children: const [
+                  ReservationStatusScreen(),
+                  ConstructionScreen(),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

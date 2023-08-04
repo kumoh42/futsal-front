@@ -44,12 +44,13 @@ class _RootTabState extends ConsumerState<RootTab>
   @override
   Widget build(BuildContext context) {
     return DefaultLayout(
-      title: '',
+      title: '풋살장 예약 시스템 관리자 페이지',
       leading: Image.asset(
         'assets/image/text_logo.png',
-        fit: BoxFit.cover,
+        fit: BoxFit.fitWidth,
       ),
-      leadingWidth: 200,
+      appbarHeight: kAppbarHeight,
+      leadingWidth: kNavigationRailSize,
       backgroundColor: CustomColor.backgroundMainColor,
       /*bottomNavigationBar: MediaQuery.of(context).size.width > 700 ? null : BottomNavigationBar(
         backgroundColor: CustomColor.mainColor,

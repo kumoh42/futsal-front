@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_front/common/styles/colors.dart';
+import 'package:flutter_front/common/styles/styles.dart';
 
 class DefaultLayout extends StatelessWidget {
   final String? title;
   final Widget? leading;
   final double? leadingWidth;
+  final double? appbarHeight;
   final Widget? drawer;
   final Color backgroundColor;
   final Widget? bottomNavigationBar;
@@ -15,6 +16,7 @@ class DefaultLayout extends StatelessWidget {
     this.title,
     this.leading,
     this.leadingWidth,
+    this.appbarHeight,
     this.drawer,
     this.backgroundColor = Colors.white,
     this.bottomNavigationBar,
@@ -35,14 +37,15 @@ class DefaultLayout extends StatelessWidget {
   AppBar? _appBar() => title == null
       ? null
       : AppBar(
-          centerTitle: true,
+          toolbarHeight: appbarHeight,
+          centerTitle: false,
           backgroundColor: CustomColor.mainColor,
           leading: leading,
           leadingWidth: leadingWidth,
           elevation: 0,
           title: Text(
             title!,
-            style: const TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+            style: kTextReverseStyleMiddle,
           ),
           foregroundColor: Colors.black,
         );

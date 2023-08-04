@@ -16,11 +16,11 @@ class DefaultTabBarView extends StatelessWidget {
     final horizontalScrollController = ScrollController();
     return LayoutBuilder(
       builder: (context, constrains) => SingleChildScrollView(
-        child: SingleChildScrollView(
+        child: Scrollbar(
           controller: horizontalScrollController,
-          scrollDirection: Axis.horizontal,
-          child: Scrollbar(
+          child: SingleChildScrollView(
             controller: horizontalScrollController,
+            scrollDirection: Axis.horizontal,
             child: Container(
               width: isExpanded
                   ? constrains.maxWidth

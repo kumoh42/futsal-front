@@ -17,13 +17,12 @@ class LoginScreen extends StatelessWidget {
         child: Container(
           width: width,
           constraints: BoxConstraints(minHeight: height),
-          // TODO : 이미지 추가
-          // decoration: const BoxDecoration(
-          //   image: DecorationImage(
-          //     fit: BoxFit.cover,
-          //     image: AssetImage('assets/image/background.png'),
-          //   ),
-          // ),
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              fit: BoxFit.cover,
+              image: AssetImage('assets/image/login_background.png'),
+            ),
+          ),
           child: const Center(child: LoginView()),
         ),
       ),

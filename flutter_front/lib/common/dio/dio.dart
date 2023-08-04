@@ -3,6 +3,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_front/auth/provider/auth_provider.dart';
 import 'package:flutter_front/common/local_storage/local_storage.dart';
 import 'package:flutter_front/common/utils/data_utils.dart';
+import 'package:flutter_front/common/utils/snack_bar_util.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final dioProvider = Provider((ref) {
@@ -100,6 +101,7 @@ class CustomInterceptor extends Interceptor {
         handler.resolve(response);
       } on DioException catch (e) {
         ref.read(authProvider.notifier).logout();
+        SnackBarUtil.showError("로그인 인증이 만료되었습니다. 다시 로그인 해 주세요");
         return handler.reject(e);
       }
     }

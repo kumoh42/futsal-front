@@ -12,21 +12,26 @@ class LoginViewModel extends ChangeNotifier {
   final Ref ref;
   late AuthState state;
 
-  final idTextController = TextEditingController(text: '');
-  final passwordTextController = TextEditingController(text: '');
+  final idTextController = TextEditingController();
+  final passwordTextController = TextEditingController();
+
+  final loginKey = GlobalKey<FormState>();
 
   LoginViewModel(this.ref) {
     state = ref.read(authServiceProvider);
     ref.listen<AuthState>(authServiceProvider, (previous, next) {
       if (previous != next) {
         state = next;
-        if(state is ErrorState) SnackBarUtil.showError((state as ErrorState).message);
+        if (state is ErrorState) {
+          SnackBarUtil.showError((state as ErrorState).message);
+        }
         notifyListeners();
       }
     });
   }
 
   Future login() async {
+    if(!(loginKey.currentState?.validate() ?? false)) return;
     await ref.read(authServiceProvider.notifier).login(
           id: idTextController.text,
           password: passwordTextController.text,

@@ -27,7 +27,13 @@ class AuthService extends StateNotifier<AuthState> {
       await authRepository.login(LoginRequestDto(id: id, password: password));
       await _getUserInfo();
     } on DioException catch (e) {
-      state = AuthStateError(e.toString());
+      if (e.response != null && e.response!.statusCode == 400) {
+        state = AuthStateError("id 또는 password가 틀렸습니다.");
+        return;
+      }
+      state = AuthStateError("서버와 연결할 수 없습니다.");
+    } catch (e) {
+      state = AuthStateError("알 수 없는 에러가 발생했습니다.");
     }
   }
 
@@ -51,8 +57,13 @@ class AuthService extends StateNotifier<AuthState> {
     try {
       final data = await authRepository.getUserInfo();
       state = AuthStateSuccess(data);
+    } on DioException catch (e) {
+      if (e.response != null && e.response!.statusCode == 400) {
+        state = AuthStateError(e.response!.data["message"]?.toString() ?? "알 수 없는 에러가 발생했습니다.");
+      }
+      state = AuthStateError("사용자 정보를 가져올 수 없습니다.");
     } catch (e) {
-      state = AuthStateError(e.toString());
+      state = AuthStateError("알 수 없는 에러가 발생했습니다.");
     }
   }
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_front/auth/component/custom_container.dart';
+import 'package:flutter_front/auth/util/validation_util.dart';
 import 'package:flutter_front/common/component/custom_text_button.dart';
 import 'package:flutter_front/common/component/custom_text_form_field.dart';
 import 'package:flutter_front/common/state/state.dart';
@@ -8,13 +9,18 @@ import 'package:flutter_front/common/styles/sizes.dart';
 import 'package:flutter_front/auth/viewmodel/login_viewmodel.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class LoginView extends ConsumerWidget {
+class LoginView extends ConsumerStatefulWidget {
   static String get routeName => 'login';
 
   const LoginView({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<LoginView> createState() => _LoginViewState();
+}
+
+class _LoginViewState extends ConsumerState<LoginView> {
+  @override
+  Widget build(BuildContext context) {
     final viewModel = ref.watch(loginViewModelProvider);
     return CustomContainer(
       minWidth: MediaQuery.of(context).size.width * 0.25 >= 500 ? 500 : MediaQuery.of(context).size.width * 0.25,
@@ -23,75 +29,80 @@ class LoginView extends ConsumerWidget {
       maxHeight: MediaQuery.of(context).size.height * 0.6 >= 600 ? MediaQuery.of(context).size.height * 0.6 : 600,
       child: Padding(
         padding: const EdgeInsets.all(kPaddingLargeSize).copyWith(top: 0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const _Title(),
-            const SizedBox(height: kPaddingLargeSize),
-            CustomTextFormField(
-              labelText: "아이디",
-              hintText: '아이디를 입력해주세요',
-              controller: viewModel.idTextController,
-            ),
-            const SizedBox(height: kPaddingLargeSize),
-            CustomTextFormField(
-              labelText: "비밀번호",
-              hintText: '비밀번호를 입력해주세요',
-              keyboardType: TextInputType.visiblePassword,
-              controller: viewModel.passwordTextController,
-            ),
-            const SizedBox(height: kPaddingXLargeSize),
-            if (viewModel.state is LoadingState)
-              const SizedBox(
-                width: 76,
-                height: 76,
-                child: CircularProgressIndicator(
-                  color: CustomColor.subColor,
-                ),
-              )
-            else
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Expanded(
-                    child: Column(
-                      children: [
-                        CustomTextButton(
-                          onPressed: () {},
-                          text: 'ID / PW 찾기',
-                          textAlign: TextAlign.left,
-                        ),
-                        const SizedBox(height: kPaddingSmallSize),
-                        CustomTextButton(
-                          onPressed: () {},
-                          text: '금오사이 회원가입',
-                          textAlign: TextAlign.left,
-                        ),
-                        const SizedBox(height: kPaddingSmallSize),
-                        CustomTextButton(
-                          onPressed: () {},
-                          text: '관리자 권한 요청',
-                          textAlign: TextAlign.left,
-                        ),
-                      ],
-                    ),
+        child: Form(
+          key: viewModel.loginKey,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const _Title(),
+              const SizedBox(height: kPaddingLargeSize),
+              CustomTextFormField(
+                labelText: "아이디",
+                hintText: '아이디를 입력해주세요',
+                controller: viewModel.idTextController,
+                validator: validateId,
+              ),
+              const SizedBox(height: kPaddingLargeSize),
+              CustomTextFormField(
+                labelText: "비밀번호",
+                hintText: '비밀번호를 입력해주세요',
+                keyboardType: TextInputType.visiblePassword,
+                controller: viewModel.passwordTextController,
+                validator: validatePassword,
+              ),
+              const SizedBox(height: kPaddingXLargeSize),
+              if (viewModel.state is LoadingState)
+                const SizedBox(
+                  width: 76,
+                  height: 76,
+                  child: CircularProgressIndicator(
+                    color: CustomColor.subColor,
                   ),
-                  ElevatedButton(
-                    onPressed: viewModel.login,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: CustomColor.mainColor,
-                      minimumSize: const Size(176, 60),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(
-                          kBorderRadiusSize,
-                        ),
+                )
+              else
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Expanded(
+                      child: Column(
+                        children: [
+                          CustomTextButton(
+                            onPressed: () {},
+                            text: 'ID / PW 찾기',
+                            textAlign: TextAlign.left,
+                          ),
+                          const SizedBox(height: kPaddingSmallSize),
+                          CustomTextButton(
+                            onPressed: () {},
+                            text: '금오사이 회원가입',
+                            textAlign: TextAlign.left,
+                          ),
+                          const SizedBox(height: kPaddingSmallSize),
+                          CustomTextButton(
+                            onPressed: () {},
+                            text: '관리자 권한 요청',
+                            textAlign: TextAlign.left,
+                          ),
+                        ],
                       ),
                     ),
-                    child: const Text('로그인'),
-                  ),
-                ],
-              ),
-          ],
+                    ElevatedButton(
+                      onPressed: viewModel.login,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: CustomColor.mainColor,
+                        minimumSize: const Size(176, 60),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(
+                            kBorderRadiusSize,
+                          ),
+                        ),
+                      ),
+                      child: const Text('로그인'),
+                    ),
+                  ],
+                ),
+            ],
+          ),
         ),
       ),
     );

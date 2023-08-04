@@ -41,8 +41,7 @@ class CustomTextFormField extends StatelessWidget {
                   ),
                 ),
               Padding(
-                padding:
-                    const EdgeInsets.only(bottom: kPaddingMiddleSize),
+                padding: const EdgeInsets.only(bottom: kPaddingMiddleSize),
                 child: Text(
                   labelText ?? "",
                   style: kTextMainStyleSmall,
@@ -57,6 +56,7 @@ class CustomTextFormField extends StatelessWidget {
             keyboardType: keyboardType,
             obscureText: keyboardType == TextInputType.visiblePassword,
             style: kTextMainStyleMiddle,
+//            autovalidateMode: AutovalidateMode.onUserInteraction,
             decoration: InputDecoration(
               isDense: true,
               contentPadding: const EdgeInsets.only(

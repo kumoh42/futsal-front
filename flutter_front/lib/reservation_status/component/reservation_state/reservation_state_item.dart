@@ -8,7 +8,7 @@ import 'package:flutter_front/reservation_status/model/entity/reservation_entity
 class ReservationStateItem extends StatelessWidget {
   final ReservationStatusEntity entity;
   final double? height;
-  final Function(ReservationStatusEntity)? onCancelClicked;
+  final void Function(ReservationStatusEntity)? onCancelClicked;
 
   const ReservationStateItem(
       {Key? key, this.height, required this.entity, this.onCancelClicked})
@@ -49,7 +49,7 @@ class ReservationStateItem extends StatelessWidget {
                   horizontal: kPaddingMiddleSize,
                 ),
                 child: entity.major == null
-                    ? entity.isAble == "N"
+                    ? entity.date.compareTo(DateTime.now()) == -1
                         ? Row(
                             children: [
                               Image.asset(

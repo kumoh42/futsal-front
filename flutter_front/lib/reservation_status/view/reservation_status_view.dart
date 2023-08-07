@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_front/common/state/state.dart';
 import 'package:flutter_front/common/styles/styles.dart';
 import 'package:flutter_front/reservation_status/component/custom_table_calendar.dart';
 import 'package:flutter_front/reservation_status/component/custom_container.dart';
-import 'package:flutter_front/reservation_status/component/reservation_state/reservation_state_item.dart';
+import 'package:flutter_front/reservation_status/component/reservation_state/reservation_state_list.dart';
 import 'package:flutter_front/reservation_status/viewmodel/reservation_status_viewmodel.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -45,23 +44,12 @@ class ReservationStatusView extends ConsumerWidget {
                       color: CustomColor.disabledColor,
                       isBackground: true,
                       boarderRadius: 0,
-                      child: viewmodel.statusState is LoadingState
-                          ? const Center(child: CircularProgressIndicator())
-                          : viewmodel.statusState is SuccessState
-                              ? ListView.builder(
-                                  shrinkWrap: true,
-                                  itemCount:
-                                      viewmodel.reservationStatusList.length,
-                                  itemBuilder: (context, i) =>
-                                      ReservationStateItem(
-                                    height: height / 7 - 1.145,
-                                    entity: viewmodel.reservationStatusList[i],
-                                    onCancelClicked: (entity) =>
-                                        viewmodel.cancelReservationStatus(
-                                            context, entity),
-                                  ),
-                                )
-                              : Container(),
+                      child: ReservationStateList(
+                        state: viewmodel.statusState,
+                        reservationStatusList: viewmodel.reservationStatusList,
+                        onCancelClicked: (entity) => viewmodel.cancelReservationStatus(context, entity),
+                        height: height,
+                      ),
                     ),
                   ),
                 ],

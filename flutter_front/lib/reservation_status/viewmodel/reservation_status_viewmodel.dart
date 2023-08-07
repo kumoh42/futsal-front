@@ -17,13 +17,14 @@ class ReservationStatusViewModel extends ChangeNotifier {
   late ReservationStatusListState statusState;
   late final CustomTimeTableController customTimeTableController;
 
-  get reservationStatusList => (statusState
+  get reservationStatusList => statusState
+  is ReservationStatusListStateSuccess ? (statusState
           as ReservationStatusListStateSuccess)
       .data
       .where((element) =>
           defaultDateFormat.format(element.date) ==
           defaultDateFormat.format(customTimeTableController.selectedDay))
-      .toList();
+      .toList() : null;
 
   ReservationStatusViewModel(this.ref) {
     customTimeTableController = CustomTimeTableController(
@@ -42,14 +43,14 @@ class ReservationStatusViewModel extends ChangeNotifier {
     });
   }
 
-  Future getReservationStatusList() async {
+  void getReservationStatusList() async {
     await ref
         .read(reservationStatusServiceProvider.notifier)
         .getReservationStatusList(date: customTimeTableController.selectedDay);
     notifyListeners();
   }
 
-  Future cancelReservationStatus(
+  void cancelReservationStatus(
     BuildContext context,
     ReservationStatusEntity entity,
   ) async {

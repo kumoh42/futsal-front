@@ -16,7 +16,6 @@ final dioProvider = Provider((ref) {
 
 final options = BaseOptions(
   baseUrl: dotenv.get("IP"),
-  headers: {'ngrok-skip-browser-warning' : true}
 );
 
 class CustomInterceptor extends Interceptor {
@@ -31,8 +30,6 @@ class CustomInterceptor extends Interceptor {
     RequestOptions options,
     RequestInterceptorHandler handler,
   ) async {
-    print('[REQ] [${options.method}] ${options.uri}');
-
     if (options.headers['accessToken'] == 'true') {
       options.headers.remove('accessToken');
       final token = await storage.read(key: dotenv.get('ACCESS_TOKEN_KEY'));
@@ -55,11 +52,12 @@ class CustomInterceptor extends Interceptor {
   // 2) 응답을 받을때
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) async {
-    print(
-        '[RES] [${response.requestOptions.method}] ${response.requestOptions.uri}');
-
     if (response.requestOptions.path == '/auth') {
-      _saveToken(response);
+      try {
+        await _saveToken(response);
+      } on DioException catch (e) {
+        return handler.reject(e);
+      }
     }
 
     super.onResponse(response, handler);
@@ -68,10 +66,8 @@ class CustomInterceptor extends Interceptor {
   // 3) 에러가 났을떄
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) async {
-    print('[ERR] [${err.requestOptions.method}] ${err.requestOptions.uri} ${err.message}');
-
     final refreshToken =
-    await storage.read(key: dotenv.get('REFRESH_TOKEN_KEY'));
+        await storage.read(key: dotenv.get('REFRESH_TOKEN_KEY'));
 
     if (refreshToken == null) return handler.reject(err);
 
@@ -82,13 +78,14 @@ class CustomInterceptor extends Interceptor {
       final dio = Dio();
 
       try {
-        final resp = await dio.post(
+        final refreshResponse = await dio.post(
           DataUtils.pathToUrl('/auth/token'),
           options: Options(headers: {
             'authorization': 'Bearer $refreshToken',
           }),
         );
-        _saveToken(resp);
+
+        await _saveToken(refreshResponse);
 
         final token = await storage.read(key: dotenv.get('ACCESS_TOKEN_KEY'));
         final options = err.requestOptions;
@@ -108,22 +105,29 @@ class CustomInterceptor extends Interceptor {
   }
 
   Future _saveToken(Response response) async {
-    final newAccessToken =
-        response.headers.value(dotenv.get('ACCESS_TOKEN_KEY'));
-    final newRefreshToken =
-        response.headers.value(dotenv.get('REFRESH_TOKEN_KEY'));
+    final accessToken = response.headers.value(dotenv.get('ACCESS_TOKEN_KEY'));
+    final refreshToken = response.headers.value(
+      dotenv.get('REFRESH_TOKEN_KEY'),
+    );
 
-    print("$newAccessToken, $newRefreshToken");
+    if (accessToken == null || refreshToken == null) {
+      throw DioException(
+        requestOptions: response.requestOptions,
+        type: DioExceptionType.badResponse,
+        message: "토큰 정보를 가져오지 못했습니다.",
+        response: response,
+      );
+    }
 
     try {
       Future.wait([
         storage.write(
           key: dotenv.get('ACCESS_TOKEN_KEY'),
-          value: newAccessToken!.replaceFirst("Bearer ", ""),
+          value: accessToken.replaceFirst("Bearer ", ""),
         ),
         storage.write(
           key: dotenv.get('REFRESH_TOKEN_KEY'),
-          value: newRefreshToken!.replaceFirst("Bearer ", ""),
+          value: refreshToken.replaceFirst("Bearer ", ""),
         ),
       ]);
     } catch (e) {

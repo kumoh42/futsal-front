@@ -27,8 +27,7 @@ class ReservationSettingService extends StateNotifier<ReservationSettingState> {
       );
     } on DioException catch (e) {
       if(e.response?.statusCode == 400) {
-        state = ReservationSettingStateError("이미 사전예약이 진행중입니다.");
-        return;
+        return state = ReservationSettingStateError("이미 사전예약이 진행중입니다.");
       }
       state = ReservationSettingStateError("사전예약 오픈에 실패하였습니다.");
     } catch (e) {

@@ -32,6 +32,9 @@ class _CustomTimeTableState extends ConsumerState<CustomTimeTable> {
         formatButtonVisible: false,
         // TODO : TimeTable Header 디자인 변경
         titleTextStyle: kTextMainStyleMiddle,
+        decoration: BoxDecoration(
+          color: CustomColor.disabledColor
+        )
       ),
       rowHeight: widget.rowHeight,
       daysOfWeekHeight: widget.rowHeight,
@@ -53,6 +56,7 @@ class _CustomTimeTableState extends ConsumerState<CustomTimeTable> {
           date: dateTime.day.toString(),
         ),
       ),
+      onPageChanged: controller.onPageChanged,
     );
   }
 
@@ -105,4 +109,6 @@ class CustomTimeTableController extends ChangeNotifier {
   }
 
   bool selectedDayPredicate(DateTime? day) => isSameDay(_selectedDay, day);
+
+  void onPageChanged(DateTime dateTime) => onDaySelected(dateTime, dateTime);
 }

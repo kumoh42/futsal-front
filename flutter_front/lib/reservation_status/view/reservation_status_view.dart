@@ -31,7 +31,9 @@ class ReservationStatusView extends ConsumerWidget {
                       height: height,
                       isBackground: true,
                       boarderRadius: 0,
-                      color: CustomColor.disabledColor,
+                      boarderColor: CustomColor.disabledColor,
+                      boarderWidth: kBorderSideWidth * 10,
+                      color: CustomColor.backgroundMainColor,
                       child: CustomTimeTable(
                         controller: viewmodel.customTimeTableController,
                         rowHeight: 41,
@@ -41,9 +43,11 @@ class ReservationStatusView extends ConsumerWidget {
                   Expanded(
                     child: CustomContainer(
                       height: height,
-                      color: CustomColor.disabledColor,
+                      color: CustomColor.backgroundMainColor,
                       isBackground: true,
                       boarderRadius: 0,
+                      boarderColor: CustomColor.disabledColor,
+                      boarderWidth: kBorderSideWidth * 10,
                       child: ReservationStateList(
                         state: viewmodel.statusState,
                         reservationStatusList: viewmodel.reservationStatusList,

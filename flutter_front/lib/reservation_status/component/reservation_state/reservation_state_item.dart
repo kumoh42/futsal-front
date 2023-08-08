@@ -21,14 +21,14 @@ class ReservationStateItem extends StatelessWidget {
         width: constraints.maxWidth,
         height: height,
         decoration: const BoxDecoration(
-          border: Border(bottom: BorderSide(width: 0.5)),
+          border: Border(bottom: BorderSide(width: kBorderSideWidth)),
         ),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
               decoration: const BoxDecoration(
-                border: Border(right: BorderSide(width: 0.5)),
+                border: Border(right: BorderSide(width: kBorderSideWidth)),
               ),
               child: Padding(
                 padding: const EdgeInsets.symmetric(
@@ -49,7 +49,7 @@ class ReservationStateItem extends StatelessWidget {
                   horizontal: kPaddingMiddleSize,
                 ),
                 child: entity.major == null
-                    ? entity.date.compareTo(DateTime.now()) == -1
+                    ? entity.date.copyWith(hour:entity.time).compareTo(DateTime.now()) == -1
                         ? Row(
                             children: [
                               Image.asset(

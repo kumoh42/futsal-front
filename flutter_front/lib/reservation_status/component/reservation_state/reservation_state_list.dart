@@ -46,7 +46,7 @@ class ReservationStateList extends StatelessWidget {
           shrinkWrap: true,
           itemCount: reservationStatusList!.length,
           itemBuilder: (context, i) => ReservationStateItem(
-            height: (height / reservationStatusList!.length - 0.5).floorToDouble(),
+            height: (height / reservationStatusList!.length - kBorderSideWidth).floorToDouble(),
             entity: reservationStatusList![i],
             onCancelClicked: onCancelClicked,
           ),

@@ -10,6 +10,8 @@ class CustomContainer extends StatelessWidget {
   final double? maxWidth;
   final double? maxHeight;
   final double? boarderRadius;
+  final double? boarderWidth;
+  final Color? boarderColor;
   final Color? color;
   final bool isBackground;
   final Widget child;
@@ -24,6 +26,8 @@ class CustomContainer extends StatelessWidget {
     this.maxWidth,
     this.maxHeight,
     this.boarderRadius,
+    this.boarderWidth,
+    this.boarderColor,
     this.color,
     this.isBackground = false,
     required this.child,
@@ -46,6 +50,9 @@ class CustomContainer extends StatelessWidget {
           borderRadius: BorderRadius.all(
             Radius.circular(boarderRadius ?? kBorderRadiusSize),
           ),
+          side: boarderColor != null
+              ? BorderSide(width: boarderWidth ?? 0, color: boarderColor!)
+              : BorderSide.none,
         ),
         color: color,
         child: Padding(

@@ -18,7 +18,7 @@ class ReservationStatusService
   final ReservationStatusRepository repository;
 
   ReservationStatusService(this.repository)
-      : super(ReservationStatusListStateLoading()) {
+      : super(ReservationStatusListStateNone()) {
     getReservationStatusList(date: DateTime.now());
   }
 
@@ -26,11 +26,13 @@ class ReservationStatusService
     if (state is SuccessState &&
         (state as ReservationStatusListStateSuccess).data.first.date.month ==
             date?.month) return;
+    if(date == null && state is NoneState) return;
     try {
+      final temp = state;
       state = ReservationStatusListStateLoading();
       final data = await repository.getReservationStatusList(
         defaultDateFormat.format(
-          date ?? (state as ReservationStatusListStateSuccess).data.first.date,
+          date ?? (temp as ReservationStatusListStateSuccess).data.first.date,
         ),
       );
       if(data.isEmpty) {

@@ -73,7 +73,10 @@ class CustomMenuItem extends StatelessWidget {
         children: [
           Text(
             text,
-            style: kTextMainStyleSmall,
+            style: kTextMainStyleSmall.copyWith(
+              fontWeight: FontWeight.w200,
+              fontSize: 18,
+            ),
           ),
         ],
       ),
@@ -135,6 +138,7 @@ class _CustomAppBar extends ConsumerWidget implements PreferredSizeWidget {
             icon: const Icon(
               Icons.person,
               color: CustomColor.textReverseColor,
+              size: kIconMainSize,
             ),
             itemBuilder: (BuildContext context) {
               return valueList.map(

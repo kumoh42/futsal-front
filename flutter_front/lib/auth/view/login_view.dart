@@ -7,6 +7,7 @@ import 'package:flutter_front/common/state/state.dart';
 import 'package:flutter_front/common/styles/colors.dart';
 import 'package:flutter_front/common/styles/sizes.dart';
 import 'package:flutter_front/auth/viewmodel/login_viewmodel.dart';
+import 'package:flutter_front/common/styles/text_styles.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class LoginView extends ConsumerStatefulWidget {
@@ -23,10 +24,18 @@ class _LoginViewState extends ConsumerState<LoginView> {
   Widget build(BuildContext context) {
     final viewModel = ref.watch(loginViewModelProvider);
     return CustomContainer(
-      minWidth: MediaQuery.of(context).size.width * 0.25 >= 500 ? 500 : MediaQuery.of(context).size.width * 0.25,
-      maxWidth: MediaQuery.of(context).size.width * 0.25 >= 550 ? MediaQuery.of(context).size.width * 0.25 : 550,
-      minHeight: MediaQuery.of(context).size.height * 0.6 >= 550 ? 550 : MediaQuery.of(context).size.height * 0.6,
-      maxHeight: MediaQuery.of(context).size.height * 0.6 >= 600 ? MediaQuery.of(context).size.height * 0.6 : 600,
+      minWidth: MediaQuery.of(context).size.width * 0.25 >= 500
+          ? 500
+          : MediaQuery.of(context).size.width * 0.25,
+      maxWidth: MediaQuery.of(context).size.width * 0.25 >= 550
+          ? MediaQuery.of(context).size.width * 0.25
+          : 550,
+      minHeight: MediaQuery.of(context).size.height * 0.6 >= 550
+          ? 550
+          : MediaQuery.of(context).size.height * 0.6,
+      maxHeight: MediaQuery.of(context).size.height * 0.6 >= 600
+          ? MediaQuery.of(context).size.height * 0.6
+          : 600,
       child: Padding(
         padding: const EdgeInsets.all(kPaddingLargeSize).copyWith(top: 0),
         child: Form(
@@ -97,7 +106,10 @@ class _LoginViewState extends ConsumerState<LoginView> {
                           ),
                         ),
                       ),
-                      child: const Text('로그인'),
+                      child: const Text(
+                        '로그인',
+                        style: kTextReverseStyleMiddle,
+                      ),
                     ),
                   ],
                 ),

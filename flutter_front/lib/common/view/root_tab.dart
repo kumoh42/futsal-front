@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_front/auth/model/service/auth_service.dart';
-import 'package:flutter_front/auth/model/state/auth_state.dart';
 import 'package:flutter_front/common/const/tabs.dart';
 import 'package:flutter_front/common/layout/default_layout.dart';
 import 'package:flutter_front/common/styles/styles.dart';
@@ -99,49 +97,16 @@ class _RootTabState extends ConsumerState<RootTab>
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
-                            const Padding(
-                              padding: EdgeInsets.symmetric(
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
                                 horizontal: kPaddingSmallSize,
                                 vertical: kPaddingXLargeSize,
                               ),
                               child: Text(
                                 "기술 문의\n\nTeam Kumoh-42",
-                                style: kTextReverseStyleSmall,
-                              ),
-                            ),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.stretch,
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: kPaddingSmallSize),
-                                    child: Text(
-                                      "${(ref.read(authServiceProvider) as AuthStateSuccess).data.userName}님 안녕하세요!",
-                                      style: kTextReverseStyleSmall,
-                                    ),
-                                  ),
-                                  const SizedBox(height: kPaddingMiddleSize),
-                                  OutlinedButton(
-                                    onPressed: ref
-                                        .read(authServiceProvider.notifier)
-                                        .logout,
-                                    style: OutlinedButton.styleFrom(
-                                      backgroundColor: Colors.black,
-                                      padding: const EdgeInsets.symmetric(
-                                        vertical: kPaddingMiddleSize,
-                                      ),
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(50),
-                                      ),
-                                    ),
-                                    child: const Text(
-                                      "로그아웃",
-                                      style: kTextReverseStyleMiddle,
-                                    ),
-                                  ),
-                                ],
+                                style: kTextReverseStyleMiddle.copyWith(
+                                  fontSize: 16,
+                                ),
                               ),
                             ),
                           ],
@@ -172,7 +137,10 @@ class _RootTabState extends ConsumerState<RootTab>
     return NavigationRailDestination(
       indicatorShape: const RoundedRectangleBorder(),
       icon: Icon(info.icon),
-      label: Text(info.label),
+      label: Text(
+        info.label,
+        style: kTextReverseStyleMiddle.copyWith(fontSize: 18),
+      ),
     );
   }
 }

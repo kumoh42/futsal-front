@@ -23,40 +23,48 @@ class ReservationStatusView extends ConsumerWidget {
           child: LayoutBuilder(builder: (context, constraints) {
             final width = constraints.maxWidth;
             final height = constraints.maxHeight;
-            return Center(
-              child: Row(
-                children: [
-                  Expanded(
-                    child: CustomContainer(
-                      height: height,
-                      isBackground: true,
-                      boarderRadius: 0,
-                      boarderColor: CustomColor.disabledColor,
-                      boarderWidth: kBorderSideWidth * 10,
-                      color: CustomColor.backgroundMainColor,
-                      child: CustomTimeTable(
-                        controller: viewmodel.customTimeTableController,
-                        rowHeight: 41,
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: CustomContainer(
-                      height: height,
-                      color: CustomColor.backgroundMainColor,
-                      isBackground: true,
-                      boarderRadius: 0,
-                      boarderColor: CustomColor.disabledColor,
-                      boarderWidth: kBorderSideWidth * 10,
-                      child: ReservationStateList(
-                        state: viewmodel.statusState,
-                        reservationStatusList: viewmodel.reservationStatusList,
-                        onCancelClicked: (entity) => viewmodel.cancelReservationStatus(context, entity),
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Center(
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: CustomContainer(
                         height: height,
+                        isBackground: true,
+                        boarderRadius: 0,
+                        boarderColor: CustomColor.disabledColor,
+                        boarderWidth: kBorderSideWidth * 10,
+                        color: CustomColor.backgroundMainColor,
+                        child: CustomTimeTable(
+                          controller: viewmodel.customTimeTableController,
+                          rowHeight: 41,
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Expanded(
+                      child: CustomContainer(
+                        height: height,
+                        color: CustomColor.backgroundMainColor,
+                        isBackground: true,
+                        boarderRadius: 0,
+                        boarderColor: CustomColor.disabledColor,
+                        boarderWidth: kBorderSideWidth * 10,
+                        child: ReservationStateList(
+                          state: viewmodel.statusState,
+                          reservationStatusList:
+                              viewmodel.reservationStatusList,
+                          onCancelClicked: (entity) => viewmodel
+                              .cancelReservationStatus(context, entity),
+                          height: height,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             );
           }),

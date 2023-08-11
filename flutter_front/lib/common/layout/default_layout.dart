@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_front/auth/model/service/auth_service.dart';
 import 'package:flutter_front/auth/model/state/auth_state.dart';
 import 'package:flutter_front/common/styles/styles.dart';
+import 'package:flutter_front/common/utils/custom_dialog_utils.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class DefaultLayout extends StatelessWidget {
@@ -54,36 +55,6 @@ class DefaultLayout extends StatelessWidget {
   //       );
 }
 
-class CustomMenuItem extends StatelessWidget {
-  final String text;
-  final VoidCallback onPressed;
-  const CustomMenuItem({
-    super.key,
-    required this.text,
-    required this.onPressed,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => onPressed(),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            text,
-            style: kTextMainStyleSmall.copyWith(
-              fontWeight: FontWeight.w200,
-              fontSize: 18,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
 class _CustomAppBar extends ConsumerWidget implements PreferredSizeWidget {
   final String title;
   final Widget leading;
@@ -98,14 +69,6 @@ class _CustomAppBar extends ConsumerWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final valueList = [
-      PopupMenuItem<String>(
-        child: CustomMenuItem(
-          text: "logout",
-          onPressed: ref.read(authServiceProvider.notifier).logout,
-        ),
-      ),
-    ];
     return AppBar(
       toolbarHeight: appbarHeight,
       centerTitle: false,
@@ -133,21 +96,32 @@ class _CustomAppBar extends ConsumerWidget implements PreferredSizeWidget {
         Padding(
           padding: const EdgeInsets.only(
             right: 15,
+            top: 2,
           ),
-          child: PopupMenuButton<String>(
-            icon: const Icon(
-              Icons.person,
+          child: IconButton(
+              icon: const Icon(
+                Icons.logout,
+              ),
+              iconSize: 20,
+              splashRadius: 25,
               color: CustomColor.textReverseColor,
-              size: kIconMainSize,
-            ),
-            itemBuilder: (BuildContext context) {
-              return valueList.map(
-                (PopupMenuItem<String> choice) {
-                  return choice;
-                },
-              ).toList();
-            },
-          ),
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return CustomDialog(
+                      onPressed: ref.read(authServiceProvider.notifier).logout,
+                      accept: "logout",
+                      content: const Text(
+                        "정말 로그아웃 하시겠습니까?",
+                        style: TextStyle(
+                          fontSize: 20,
+                        ),
+                      ),
+                    );
+                  },
+                );
+              }),
         ),
       ],
       foregroundColor: Colors.black,

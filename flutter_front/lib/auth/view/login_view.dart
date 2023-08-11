@@ -9,6 +9,7 @@ import 'package:flutter_front/common/styles/sizes.dart';
 import 'package:flutter_front/auth/viewmodel/login_viewmodel.dart';
 import 'package:flutter_front/common/styles/text_styles.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class LoginView extends ConsumerStatefulWidget {
   static String get routeName => 'login';
@@ -76,20 +77,32 @@ class _LoginViewState extends ConsumerState<LoginView> {
                       child: Column(
                         children: [
                           CustomTextButton(
-                            onPressed: () {},
+                            onPressed: () async {
+                              final Uri url = Uri.parse(
+                                  'https://kumoh42.com/index.php?mid=main&act=dispMemberFindAccount');
+                              if (!await launchUrl(url)) {
+                                throw Exception('Could not launch $url');
+                              }
+                            },
                             text: 'ID / PW 찾기',
                             textAlign: TextAlign.left,
                           ),
                           const SizedBox(height: kPaddingSmallSize),
                           CustomTextButton(
-                            onPressed: () {},
+                            onPressed: () async {
+                              final Uri url = Uri.parse(
+                                  'https://kumoh42.com/index.php?mid=main&act=dispMemberSignUpForm');
+                              if (!await launchUrl(url)) {
+                                throw Exception('Could not launch $url');
+                              }
+                            },
                             text: '금오사이 회원가입',
                             textAlign: TextAlign.left,
                           ),
                           const SizedBox(height: kPaddingSmallSize),
                           CustomTextButton(
                             onPressed: () {},
-                            text: '관리자 권한 요청',
+                            text: 'EMPTY',
                             textAlign: TextAlign.left,
                           ),
                         ],

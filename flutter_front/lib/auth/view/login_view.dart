@@ -102,7 +102,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
                           const SizedBox(height: kPaddingSmallSize),
                           CustomTextButton(
                             onPressed: () {},
-                            text: 'EMPTY',
+                            text: '관리자에게 문의하기',
                             textAlign: TextAlign.left,
                           ),
                         ],

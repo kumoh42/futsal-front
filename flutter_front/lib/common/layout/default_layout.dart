@@ -114,9 +114,7 @@ class _CustomAppBar extends ConsumerWidget implements PreferredSizeWidget {
                       accept: "logout",
                       content: const Text(
                         "정말 로그아웃 하시겠습니까?",
-                        style: TextStyle(
-                          fontSize: 20,
-                        ),
+                        style: kTextNormalStyleMiddle,
                       ),
                     );
                   },

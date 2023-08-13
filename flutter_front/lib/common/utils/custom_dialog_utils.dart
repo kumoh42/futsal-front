@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_front/common/styles/text_styles.dart';
 
 class CustomDialog extends StatelessWidget {
   final Widget? title;
@@ -25,11 +26,17 @@ class CustomDialog extends StatelessWidget {
           onPressed: () {
             Navigator.of(context).pop();
           },
-          child: Text(cancel ?? "cancel"),
+          child: Text(
+            cancel ?? "cancel",
+            style: kTextMainStyleSmall,
+          ),
         ),
         TextButton(
           onPressed: onPressed,
-          child: Text(accept ?? "ok"),
+          child: Text(
+            accept ?? "ok",
+            style: kTextMainStyleSmall,
+          ),
         ),
       ],
     );

@@ -4,6 +4,7 @@ import 'package:flutter_front/auth/model/state/auth_state.dart';
 import 'package:flutter_front/common/state/state.dart';
 import 'package:flutter_front/common/utils/snack_bar_util.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 final loginViewModelProvider =
     ChangeNotifierProvider((ref) => LoginViewModel(ref));
@@ -31,7 +32,7 @@ class LoginViewModel extends ChangeNotifier {
   }
 
   Future login() async {
-    if(!(loginKey.currentState?.validate() ?? false)) return;
+    if (!(loginKey.currentState?.validate() ?? false)) return;
     await ref.read(authServiceProvider.notifier).login(
           id: idTextController.text,
           password: passwordTextController.text,
@@ -40,5 +41,12 @@ class LoginViewModel extends ChangeNotifier {
 
   Future logout() async {
     await ref.read(authServiceProvider.notifier).logout();
+  }
+
+  Future<void> launch(String url) async {
+    final Uri uri = Uri.parse(url);
+    if (!await launchUrl(uri)) {
+      SnackBarUtil.showError("$uri에 연결할 수 없습니다.");
+    }
   }
 }

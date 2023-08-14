@@ -8,7 +8,6 @@ import 'package:flutter_front/common/styles/colors.dart';
 import 'package:flutter_front/common/styles/sizes.dart';
 import 'package:flutter_front/auth/viewmodel/login_viewmodel.dart';
 import 'package:flutter_front/common/styles/text_styles.dart';
-import 'package:flutter_front/common/utils/url_launcher_utils.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class LoginView extends ConsumerStatefulWidget {
@@ -78,9 +77,8 @@ class _LoginViewState extends ConsumerState<LoginView> {
                         children: [
                           CustomTextButton(
                             onPressed: () {
-                              UrlLauncher.launch(
-                                'https://kumoh42.com/index.php?mid=main&act=dispMemberFindAccount',
-                              );
+                              viewModel.launch(
+                                  'https://kumoh42.com/index.php?mid=main&act=dispMemberFindAccount');
                             },
                             text: 'ID / PW 찾기',
                             textAlign: TextAlign.left,
@@ -88,9 +86,8 @@ class _LoginViewState extends ConsumerState<LoginView> {
                           const SizedBox(height: kPaddingSmallSize),
                           CustomTextButton(
                             onPressed: () async {
-                              UrlLauncher.launch(
-                                'https://kumoh42.com/index.php?mid=main&act=dispMemberSignUpForm',
-                              );
+                              viewModel.launch(
+                                  'https://kumoh42.com/index.php?mid=main&act=dispMemberSignUpForm');
                             },
                             text: '금오사이 회원가입',
                             textAlign: TextAlign.left,

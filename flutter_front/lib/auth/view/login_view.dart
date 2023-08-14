@@ -8,8 +8,8 @@ import 'package:flutter_front/common/styles/colors.dart';
 import 'package:flutter_front/common/styles/sizes.dart';
 import 'package:flutter_front/auth/viewmodel/login_viewmodel.dart';
 import 'package:flutter_front/common/styles/text_styles.dart';
+import 'package:flutter_front/common/utils/url_launcher_utils.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class LoginView extends ConsumerStatefulWidget {
   static String get routeName => 'login';
@@ -77,12 +77,10 @@ class _LoginViewState extends ConsumerState<LoginView> {
                       child: Column(
                         children: [
                           CustomTextButton(
-                            onPressed: () async {
-                              final Uri url = Uri.parse(
-                                  'https://kumoh42.com/index.php?mid=main&act=dispMemberFindAccount');
-                              if (!await launchUrl(url)) {
-                                throw Exception('Could not launch $url');
-                              }
+                            onPressed: () {
+                              UrlLauncher.launch(
+                                'https://kumoh42.com/index.php?mid=main&act=dispMemberFindAccount',
+                              );
                             },
                             text: 'ID / PW 찾기',
                             textAlign: TextAlign.left,
@@ -90,11 +88,9 @@ class _LoginViewState extends ConsumerState<LoginView> {
                           const SizedBox(height: kPaddingSmallSize),
                           CustomTextButton(
                             onPressed: () async {
-                              final Uri url = Uri.parse(
-                                  'https://kumoh42.com/index.php?mid=main&act=dispMemberSignUpForm');
-                              if (!await launchUrl(url)) {
-                                throw Exception('Could not launch $url');
-                              }
+                              UrlLauncher.launch(
+                                'https://kumoh42.com/index.php?mid=main&act=dispMemberSignUpForm',
+                              );
                             },
                             text: '금오사이 회원가입',
                             textAlign: TextAlign.left,

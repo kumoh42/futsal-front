@@ -99,27 +99,26 @@ class _CustomAppBar extends ConsumerWidget implements PreferredSizeWidget {
             top: 2,
           ),
           child: IconButton(
-              icon: const Icon(
-                Icons.logout,
-              ),
-              iconSize: 20,
-              splashRadius: 25,
-              color: CustomColor.textReverseColor,
-              onPressed: () {
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return CustomDialog(
-                      onPressed: ref.read(authServiceProvider.notifier).logout,
-                      accept: "logout",
-                      content: const Text(
-                        "정말 로그아웃 하시겠습니까?",
-                        style: kTextNormalStyleMiddle,
-                      ),
-                    );
-                  },
-                );
-              }),
+            icon: const Icon(
+              Icons.logout,
+            ),
+            iconSize: 20,
+            splashRadius: 25,
+            color: CustomColor.textReverseColor,
+            onPressed: () {
+              CustomDialogUtil.showCustomDialog(
+                context: context,
+                dialog: CustomDialog(
+                  onPressed: ref.read(authServiceProvider.notifier).logout,
+                  accept: "logout",
+                  content: const Text(
+                    "정말 로그아웃 하시겠습니까?",
+                    style: kTextNormalStyleMiddle,
+                  ),
+                ),
+              );
+            },
+          ),
         ),
       ],
       foregroundColor: Colors.black,

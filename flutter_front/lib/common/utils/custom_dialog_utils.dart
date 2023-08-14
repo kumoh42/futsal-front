@@ -1,6 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_front/common/styles/text_styles.dart';
 
+class CustomDialogUtil {
+  static void showCustomDialog(
+      {required CustomDialog dialog, required BuildContext context}) {
+    showDialog(
+      context: context,
+      builder: (context) => dialog,
+    );
+  }
+}
+
 class CustomDialog extends StatelessWidget {
   final Widget? title;
   final Widget? content;

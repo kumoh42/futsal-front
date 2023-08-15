@@ -42,8 +42,10 @@ class _MessagingBoxState extends ConsumerState<MessagingBox> {
       elevation: 5,
       borderRadius: const BorderRadius.all(Radius.circular(kBorderRadiusSize)),
       child: AnimatedContainer(
-        width: controller.isHorizontalExpanded ? 400 : kNavigationRailSize,
-        height: controller.isVerticalExpanded ? 500 : 70,
+        width: controller.isHorizontalExpanded
+            ? 400
+            : kNavigationRailSize - 2 * kPaddingSmallSize,
+        height: controller.isVerticalExpanded ? kContainerHeightSize : 70,
         duration: controller.duration,
         curve: Curves.fastEaseInToSlowEaseOut,
         decoration: BoxDecoration(
@@ -53,15 +55,24 @@ class _MessagingBoxState extends ConsumerState<MessagingBox> {
           color: widget.backgroundColor,
         ),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             if (controller.isVerticalExpanding)
               _TitleBar(widget.title, widget.bodyTextStyle, controller),
             if (controller.isVerticalExpanded && widget.child != null)
-              Expanded(child: SingleChildScrollView(child: widget.child!)),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: kPaddingMiddleSize,
+                  ),
+                  child: SingleChildScrollView(child: widget.child!),
+                ),
+              ),
             controller.isHorizontalExpanded
                 ? _MessageTextFormField(
                     controller,
+                    widget.backgroundColor,
                     widget.bodyTextStyle,
                     widget.textFieldColor,
                     widget.textFiledTextStyle,
@@ -92,22 +103,22 @@ class _DefaultWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        const SizedBox(width: kPaddingMiddleSize),
-        Expanded(
-          child: Text(
-            title,
-            style: textStyle,
+    return GestureDetector(
+      onTap: () => controller.show(title),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const SizedBox(width: kPaddingMiddleSize),
+          Expanded(
+            child: Text(
+              title,
+              style: textStyle,
+            ),
           ),
-        ),
-        IconButton(
-          icon: Icon(Icons.message, color: textStyle?.color),
-          onPressed: () => controller.show(title),
-        ),
-        const SizedBox(width: kPaddingSmallSize + kPaddingMiniSize),
-      ],
+          Icon(Icons.message, color: textStyle?.color),
+          const SizedBox(width: kPaddingSmallSize + kPaddingMiniSize),
+        ],
+      ),
     );
   }
 }
@@ -141,12 +152,14 @@ class _TitleBar extends StatelessWidget {
 
 class _MessageTextFormField extends StatelessWidget {
   final MessagingBoxController controller;
+  final Color? backgroundColor;
   final TextStyle? bodyTextStyle;
   final Color? textFieldColor;
   final TextStyle? textFiledTextStyle;
 
   const _MessageTextFormField(
     this.controller,
+    this.backgroundColor,
     this.bodyTextStyle,
     this.textFieldColor,
     this.textFiledTextStyle, {
@@ -161,44 +174,149 @@ class _MessageTextFormField extends StatelessWidget {
           : Alignment.centerRight,
       children: [
         SingleChildScrollView(
-          child: TextFormField(
-            controller: controller.messageController,
-            decoration: InputDecoration(
-              filled: true,
-              fillColor: controller.isOpened ? textFieldColor : null,
-              border: const OutlineInputBorder(
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(kBorderRadiusSize),
-                  bottomRight: Radius.circular(kBorderRadiusSize),
-                ),
-                borderSide: BorderSide.none,
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: const BorderRadius.only(
+                bottomLeft: Radius.circular(kBorderRadiusSize),
+                bottomRight: Radius.circular(kBorderRadiusSize),
               ),
-              contentPadding: const EdgeInsets.symmetric(
-                vertical: kPaddingSmallSize,
-                horizontal: kPaddingMiddleSize,
-              ).copyWith(right: kPaddingLargeSize + kPaddingMiniSize),
-              enabled: controller.isOpened,
+              color: controller.isOpened ? backgroundColor : null,
             ),
-            minLines: 1,
-            maxLines: 5,
-            style: controller.isVerticalExpanded
-                ? textFiledTextStyle
-                : bodyTextStyle,
+            child: Column(
+              children: [
+                if (controller.isVerticalExpanding)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: kPaddingMiddleSize,
+                    ),
+                    child: _CustomTextField(
+                      controller: controller,
+                      bodyTextStyle: bodyTextStyle,
+                      textFieldColor: textFieldColor,
+                      textFiledTextStyle: textFiledTextStyle,
+                      labelText: 'email',
+                      prefixIcon: Icons.email,
+                      textController: controller.emailController,
+                    ),
+                  ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: kPaddingMiddleSize,
+                  ),
+                  child: _CustomTextField(
+                    controller: controller,
+                    bodyTextStyle: bodyTextStyle,
+                    textFieldColor: controller.isVerticalExpanding
+                        ? textFieldColor
+                        : backgroundColor,
+                    textFiledTextStyle: controller.isVerticalExpanding
+                        ? textFiledTextStyle
+                        : bodyTextStyle,
+                    labelText: 'message',
+                    prefixIcon: Icons.message,
+                    minLine: controller.isVerticalExpanding ? 11 : 1,
+                    maxLine: 11,
+                    textController: controller.messageController,
+                  ),
+                ),
+                if (controller.isVerticalExpanding)
+                  const SizedBox(height: kPaddingMiddleSize),
+              ],
+            ),
           ),
         ),
         Padding(
-          padding: const EdgeInsets.all(kPaddingMiniSize),
+          padding: const EdgeInsets.all(kPaddingSmallSize).copyWith(
+            bottom: kPaddingSmallSize,
+          ),
           child: controller.isSending
               ? const CircularProgressIndicator()
               : IconButton(
                   icon: Icon(
                     Icons.send,
-                    color: controller.isOpened
-                        ? textFiledTextStyle?.color
-                        : bodyTextStyle?.color,
+                    color: controller.isVerticalExpanding ? backgroundColor : bodyTextStyle?.color,
                   ),
                   onPressed: controller.send,
                 ),
+        ),
+      ],
+    );
+  }
+}
+
+class _CustomTextField extends StatelessWidget {
+  final MessagingBoxController controller;
+  final TextEditingController textController;
+  final TextStyle? bodyTextStyle;
+  final Color? textFieldColor;
+  final TextStyle? textFiledTextStyle;
+
+  final String labelText;
+  final IconData prefixIcon;
+  final int minLine;
+  final int maxLine;
+
+  const _CustomTextField({
+    Key? key,
+    required this.controller,
+    this.bodyTextStyle,
+    this.textFieldColor,
+    this.textFiledTextStyle,
+    required this.labelText,
+    required this.prefixIcon,
+    this.minLine = 1,
+    this.maxLine = 1,
+    required this.textController,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        if (controller.isVerticalExpanding)
+          Column(
+            children: [
+              const SizedBox(height: kPaddingSmallSize),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Icon(
+                    prefixIcon,
+                    size: kIconMiniSize,
+                    color: bodyTextStyle?.color,
+                  ),
+                  const SizedBox(width: kPaddingSmallSize),
+                  Text(
+                    labelText,
+                    style: textFiledTextStyle?.copyWith(
+                      color: bodyTextStyle?.color,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: kPaddingSmallSize),
+            ],
+          ),
+        TextFormField(
+          controller: textController,
+          minLines: minLine,
+          maxLines: maxLine,
+          decoration: InputDecoration(
+            filled: true,
+            fillColor: textFieldColor,
+            border: const OutlineInputBorder(
+              borderSide: BorderSide.none,
+            ),
+            isDense: true,
+            contentPadding: const EdgeInsets.symmetric(
+              vertical: kPaddingSmallSize,
+              horizontal: kPaddingMiniSize,
+            ),
+            enabled: controller.isOpened,
+          ),
+          style: controller.isVerticalExpanded
+              ? textFiledTextStyle
+              : bodyTextStyle,
         ),
       ],
     );
@@ -234,9 +352,8 @@ extension _EnumComparisonOperators<T extends Enum> on T {
 
 class MessagingBoxController extends ChangeNotifier {
   final Duration duration = const Duration(milliseconds: 500);
-  final Duration _duration30 = const Duration(milliseconds: 30);
-  final Duration _duration470 = const Duration(milliseconds: 470);
-  final Future Function(String message) onSendClicked;
+  final Duration _duration250 = const Duration(milliseconds: 250);
+  final Future Function(String email, String message) onSendClicked;
 
   MessagingBoxState get state => _state;
   MessagingBoxState _state = MessagingBoxState.close;
@@ -254,6 +371,7 @@ class MessagingBoxController extends ChangeNotifier {
   bool get isSending => state >= MessagingBoxState.send;
 
   final TextEditingController messageController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
 
   MessagingBoxController({required this.onSendClicked});
 
@@ -261,8 +379,8 @@ class MessagingBoxController extends ChangeNotifier {
     messageController.text = title;
     await _changState(MessagingBoxState.horizontalExpend, duration);
     messageController.clear();
-    await _changState(MessagingBoxState.verticalExpend, _duration30);
-    await _changState(MessagingBoxState.verticalExpanding, _duration470);
+    await _changState(MessagingBoxState.verticalExpend, _duration250);
+    await _changState(MessagingBoxState.verticalExpanding, _duration250);
     await _changState(MessagingBoxState.open, const Duration());
   }
 
@@ -272,7 +390,8 @@ class MessagingBoxController extends ChangeNotifier {
 
   void send() async {
     await _changState(MessagingBoxState.send, const Duration(seconds: 1));
-    await onSendClicked(messageController.text);
+    await onSendClicked(emailController.text, messageController.text);
+    emailController.clear();
     messageController.clear();
     close();
   }

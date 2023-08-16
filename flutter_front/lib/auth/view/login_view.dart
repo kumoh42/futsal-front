@@ -9,6 +9,7 @@ import 'package:flutter_front/common/styles/sizes.dart';
 import 'package:flutter_front/auth/viewmodel/login_viewmodel.dart';
 import 'package:flutter_front/common/styles/text_styles.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class LoginView extends ConsumerStatefulWidget {
   static String get routeName => 'login';
@@ -77,8 +78,8 @@ class _LoginViewState extends ConsumerState<LoginView> {
                         children: [
                           CustomTextButton(
                             onPressed: () {
-                              viewModel.launch(
-                                  'https://kumoh42.com/index.php?mid=main&act=dispMemberFindAccount');
+                              viewModel
+                                  .launch(dotenv.get("KUMOH42_FIND_ACCOUNT"));
                             },
                             text: 'ID / PW 찾기',
                             textAlign: TextAlign.left,
@@ -86,8 +87,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
                           const SizedBox(height: kPaddingSmallSize),
                           CustomTextButton(
                             onPressed: () async {
-                              viewModel.launch(
-                                  'https://kumoh42.com/index.php?mid=main&act=dispMemberSignUpForm');
+                              viewModel.launch(dotenv.get('KUMOH42_REGISTER'));
                             },
                             text: '금오사이 회원가입',
                             textAlign: TextAlign.left,

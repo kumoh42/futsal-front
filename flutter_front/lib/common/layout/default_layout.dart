@@ -44,15 +44,6 @@ class DefaultLayout extends StatelessWidget {
       bottomNavigationBar: bottomNavigationBar,
     );
   }
-
-  // AppBar! _appBar() => title == null
-  //     ? null
-  //     : _CustomAppBar(
-  //         appbarHeight: appbarHeight!,
-  //         leading: leading!,
-  //         leadingWidth: leadingWidth!,
-  //         title: title!,
-  //       );
 }
 
 class _CustomAppBar extends ConsumerWidget implements PreferredSizeWidget {

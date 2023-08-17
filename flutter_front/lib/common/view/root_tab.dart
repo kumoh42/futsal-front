@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_front/auth/model/service/auth_service.dart';
+import 'package:flutter_front/auth/model/state/auth_state.dart';
 import 'package:flutter_front/common/const/tabs.dart';
 import 'package:flutter_front/common/layout/default_layout.dart';
 import 'package:flutter_front/common/styles/styles.dart';
+import 'package:flutter_front/common/utils/custom_dialog_utils.dart';
 import 'package:flutter_front/common/view/construction_screen.dart';
 import 'package:flutter_front/reservation_status/view/reservation_status_screen.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -50,6 +53,47 @@ class _RootTabState extends ConsumerState<RootTab>
       appbarHeight: kAppbarHeight,
       leadingWidth: kNavigationRailSize,
       backgroundColor: CustomColor.backgroundMainColor,
+      actions: [
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              "${(ref.read(authServiceProvider) as AuthStateSuccess).data.userName}님 안녕하세요!",
+              style: kTextReverseStyleMiddle,
+            ),
+          ],
+        ),
+        const SizedBox(
+          width: 5,
+        ),
+        Padding(
+          padding: const EdgeInsets.only(
+            right: 15,
+            top: 2,
+          ),
+          child: IconButton(
+            icon: const Icon(
+              Icons.logout,
+            ),
+            iconSize: 20,
+            splashRadius: 25,
+            color: CustomColor.textReverseColor,
+            onPressed: () {
+              CustomDialogUtil.showCustomDialog(
+                context: context,
+                dialog: CustomDialog(
+                  onPressed: ref.read(authServiceProvider.notifier).logout,
+                  accept: "logout",
+                  content: const Text(
+                    "정말 로그아웃 하시겠습니까?",
+                    style: kTextNormalStyleMiddle,
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
+      ],
       /*bottomNavigationBar: MediaQuery.of(context).size.width > 700 ? null : BottomNavigationBar(
         backgroundColor: CustomColor.mainColor,
         selectedItemColor: CustomColor.backGroundSubColor,

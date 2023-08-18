@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_front/common/styles/styles.dart';
 
 class CustomTextFormField extends StatelessWidget {
@@ -56,6 +57,9 @@ class CustomTextFormField extends StatelessWidget {
             keyboardType: keyboardType,
             obscureText: keyboardType == TextInputType.visiblePassword,
             style: kTextMainStyleMiddle,
+            inputFormatters: [
+              FilteringTextInputFormatter.deny(RegExp(r'\s')), // 공백 입력 방지
+            ],
             decoration: InputDecoration(
               isDense: true,
               contentPadding: const EdgeInsets.only(

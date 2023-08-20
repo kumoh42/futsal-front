@@ -19,6 +19,9 @@ class ReservationStatusScreen extends StatelessWidget {
               child: ReservationStatusView(),
             ),
             SizedBox(
+              height: 10,
+            ),
+            SizedBox(
               height: kContainerHeightSize * 0.7,
               child: ReservationSettingView(),
             ),

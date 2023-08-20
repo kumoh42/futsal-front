@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_front/common/utils/validation_util.dart';
 import 'package:flutter_front/common/styles/styles.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -182,9 +184,31 @@ class _MessageTextFormField extends StatelessWidget {
               ),
               color: controller.isOpened ? backgroundColor : null,
             ),
-            child: Column(
-              children: [
-                if (controller.isVerticalExpanding)
+            child: Form(
+              key: controller.sendKey,
+              child: Column(
+                children: [
+                  if (controller.isVerticalExpanding)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: kPaddingMiddleSize,
+                      ),
+                      child: Column(
+                        children: [
+                          Divider(color: textFieldColor),
+                          _CustomTextField(
+                            controller: controller,
+                            bodyTextStyle: bodyTextStyle,
+                            textFieldColor: textFieldColor,
+                            textFiledTextStyle: textFiledTextStyle,
+                            labelText: 'email',
+                            prefixIcon: Icons.email,
+                            textController: controller.emailController,
+                            validator: validateEmail,
+                          ),
+                        ],
+                      ),
+                    ),
                   Padding(
                     padding: const EdgeInsets.symmetric(
                       horizontal: kPaddingMiddleSize,
@@ -192,36 +216,23 @@ class _MessageTextFormField extends StatelessWidget {
                     child: _CustomTextField(
                       controller: controller,
                       bodyTextStyle: bodyTextStyle,
-                      textFieldColor: textFieldColor,
-                      textFiledTextStyle: textFiledTextStyle,
-                      labelText: 'email',
-                      prefixIcon: Icons.email,
-                      textController: controller.emailController,
+                      textFieldColor: controller.isVerticalExpanding
+                          ? textFieldColor
+                          : backgroundColor,
+                      textFiledTextStyle: controller.isVerticalExpanding
+                          ? textFiledTextStyle
+                          : bodyTextStyle,
+                      labelText: 'message',
+                      prefixIcon: Icons.message,
+                      minLine: controller.isVerticalExpanding ? 10 : 1,
+                      maxLine: 11,
+                      textController: controller.messageController,
                     ),
                   ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: kPaddingMiddleSize,
-                  ),
-                  child: _CustomTextField(
-                    controller: controller,
-                    bodyTextStyle: bodyTextStyle,
-                    textFieldColor: controller.isVerticalExpanding
-                        ? textFieldColor
-                        : backgroundColor,
-                    textFiledTextStyle: controller.isVerticalExpanding
-                        ? textFiledTextStyle
-                        : bodyTextStyle,
-                    labelText: 'message',
-                    prefixIcon: Icons.message,
-                    minLine: controller.isVerticalExpanding ? 11 : 1,
-                    maxLine: 11,
-                    textController: controller.messageController,
-                  ),
-                ),
-                if (controller.isVerticalExpanding)
-                  const SizedBox(height: kPaddingMiddleSize),
-              ],
+                  if (controller.isVerticalExpanding)
+                    const SizedBox(height: kPaddingMiddleSize),
+                ],
+              ),
             ),
           ),
         ),
@@ -234,7 +245,9 @@ class _MessageTextFormField extends StatelessWidget {
               : IconButton(
                   icon: Icon(
                     Icons.send,
-                    color: controller.isVerticalExpanding ? backgroundColor : bodyTextStyle?.color,
+                    color: controller.isVerticalExpanding
+                        ? backgroundColor
+                        : bodyTextStyle?.color,
                   ),
                   onPressed: controller.send,
                 ),
@@ -256,6 +269,8 @@ class _CustomTextField extends StatelessWidget {
   final int minLine;
   final int maxLine;
 
+  final String? Function(String?)? validator;
+
   const _CustomTextField({
     Key? key,
     required this.controller,
@@ -266,6 +281,7 @@ class _CustomTextField extends StatelessWidget {
     required this.prefixIcon,
     this.minLine = 1,
     this.maxLine = 1,
+    this.validator,
     required this.textController,
   }) : super(key: key);
 
@@ -301,6 +317,7 @@ class _CustomTextField extends StatelessWidget {
           controller: textController,
           minLines: minLine,
           maxLines: maxLine,
+          validator: validator,
           decoration: InputDecoration(
             filled: true,
             fillColor: textFieldColor,
@@ -373,6 +390,8 @@ class MessagingBoxController extends ChangeNotifier {
   final TextEditingController messageController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
 
+  final sendKey = GlobalKey<FormState>();
+
   MessagingBoxController({required this.onSendClicked});
 
   void show(String title) async {
@@ -389,6 +408,7 @@ class MessagingBoxController extends ChangeNotifier {
   }
 
   void send() async {
+    if (!(sendKey.currentState?.validate() ?? false)) return;
     await _changState(MessagingBoxState.send, const Duration(seconds: 1));
     await onSendClicked(emailController.text, messageController.text);
     emailController.clear();

@@ -1,12 +1,12 @@
 name: flutter_front
 description: A new Flutter project.
 
-publish_to: 'none'
+publish_to: "none"
 
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.0.6 <4.0.0'
+  sdk: ">=3.0.6 <4.0.0"
 
 dependencies:
   flutter:
@@ -46,6 +46,12 @@ dependencies:
   # Time Builder
   timer_builder: ^2.0.0
 
+  # URL launcher
+  url_launcher: ^6.1.12
+
+  # validators
+  validators:
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -58,7 +64,6 @@ dev_dependencies:
   json_serializable: ^6.6.1
 
 flutter:
-
   uses-material-design: true
 
   assets:

@@ -5,7 +5,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final localStorageProvider = Provider((ref) => LocalStorage());
 
+//Flutter 애플리케이션에서 로컬 스토리지 관련 작업
 class LocalStorage {
+  // 웹 브라우저 환경인 경우 window.localStorage를 사용하고, 그렇지 않은 경우 (Flutter 앱인 경우) FlutterSecureStorage를 사용
   final _storage = kIsWeb ? window.localStorage : const FlutterSecureStorage();
 
   Future<String?> read({required String key}) async {

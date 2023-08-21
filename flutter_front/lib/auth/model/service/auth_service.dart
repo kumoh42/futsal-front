@@ -22,6 +22,7 @@ class AuthService extends StateNotifier<AuthState> {
   }
 
   Future login({required String id, required String password}) async {
+    //statenotifier의 state를 AuthStateLoading 상태로 변경
     state = AuthStateLoading();
     try {
       await authRepository.login(LoginRequestDto(id: id, password: password));

@@ -14,17 +14,18 @@ final reservationStatusViewModelProvider =
 
 class ReservationStatusViewModel extends ChangeNotifier {
   final Ref ref;
+  // statusState = reservationStatusServiceProvider
   late ReservationStatusListState statusState;
   late final CustomTimeTableController customTimeTableController;
 
-  get reservationStatusList => statusState
-  is ReservationStatusListStateSuccess ? (statusState
-          as ReservationStatusListStateSuccess)
-      .data
-      .where((element) =>
-          defaultDateFormat.format(element.date) ==
-          defaultDateFormat.format(customTimeTableController.selectedDay))
-      .toList() : null;
+  get reservationStatusList => statusState is ReservationStatusListStateSuccess
+      ? (statusState as ReservationStatusListStateSuccess)
+          .data
+          .where((element) =>
+              defaultDateFormat.format(element.date) ==
+              defaultDateFormat.format(customTimeTableController.selectedDay))
+          .toList()
+      : null;
 
   ReservationStatusViewModel(this.ref) {
     customTimeTableController = CustomTimeTableController(
@@ -32,6 +33,10 @@ class ReservationStatusViewModel extends ChangeNotifier {
     );
 
     statusState = ref.read(reservationStatusServiceProvider);
+    /* 
+    프로바이더의 상태 변경을 감지하고, 변경 사항이 있을 때마다 특정 동작을 수행하는 부분
+    두 번째 매개변수로는 변경 이전의 상태(previous)와 변경 후의 상태(next)를 받음
+    */
     ref.listen(reservationStatusServiceProvider, (previous, next) {
       if (previous != next) {
         statusState = next;

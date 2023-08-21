@@ -108,17 +108,27 @@ class _RootTabState extends ConsumerState<RootTab>
         ))
             .toList(),
       ),*/
+
+      /* LayoutBuilder->부모 위젯의 크기와 제약 조건에 따라 자식 위젯의 레이아웃을 동적으로 조정
+       constraints 변수를 통해 부모 위젯의 제약 조건에 접근 */
       child: LayoutBuilder(
         builder: (context, constraints) => Row(
           children: [
             /*if(MediaQuery.of(context).size.width > 700)*/
+            // SingleChildScrollView 이 부분이 tab 부분
             SingleChildScrollView(
               child: Container(
                 constraints: BoxConstraints(
+                  // root tab의 세로 높이.
                   minHeight: constraints.maxHeight,
                 ),
+                // root tab의 가로 너비
                 width: kNavigationRailSize,
+
+                /* IntrinsicHeight->자식 위젯들의 최소한의 크기를 감지하여 
+                부모 위젯의 높이를 자식 위젯들 중 가장 큰 크기로 조정하는 데 사용 */
                 child: IntrinsicHeight(
+                  // NavigationRail->수직 또는 수평 방향의 네비게이션 메뉴를 생성하는 데 사용되는 위젯
                   child: NavigationRail(
                     backgroundColor: CustomColor.subColor,
                     useIndicator: true,
@@ -131,10 +141,14 @@ class _RootTabState extends ConsumerState<RootTab>
                         const IconThemeData(color: CustomColor.subColor),
                     unselectedIconTheme: IconThemeData(
                         color: CustomColor.disabledColor.withOpacity(0.5)),
+                    // destinations 실제 메뉴에 나타날 위젯들
                     destinations: TABS.map((e) => _destination(e)).toList(),
                     selectedIndex: index,
+                    // tab controller로 화면 전환
                     onDestinationSelected: controller.animateTo,
+                    // 레일의 너비를 확장하거나 축소하는 것을 제어할 수 있음
                     extended: true,
+                    // trailing ->보통 오른쪽 또는 아래쪽에 위치한 것, 해당 요소의 뒷쪽이나 끝에 위치하는 내용을 의미
                     trailing: Expanded(
                       child: Padding(
                         padding: const EdgeInsets.all(kPaddingSmallSize),
@@ -161,6 +175,7 @@ class _RootTabState extends ConsumerState<RootTab>
                 ),
               ),
             ),
+            // 이 부분이 실제 tab 화면 부분
             Expanded(
               child: TabBarView(
                 controller: controller,

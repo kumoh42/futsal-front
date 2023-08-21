@@ -39,6 +39,7 @@ class DefaultLayout extends StatelessWidget {
               actions: actions,
             ),
       backgroundColor: backgroundColor,
+      //사용자가 왼쪽에서 오른쪽으로 스와이프하거나 버튼을 탭하여 화면에서 숨겨진 메뉴 또는 내비게이션을 표시할 수 있도록 해주는 기능
       drawer: drawer,
       body: SafeArea(child: child),
       bottomNavigationBar: bottomNavigationBar,

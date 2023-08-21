@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_front/common/styles/sizes.dart';
 import 'package:flutter_front/common/view/default_tab_bar_view.dart';
-import 'package:flutter_front/reservation_status/view/reservation_setting_view.dart';
+import 'package:flutter_front/reservation_status/view/pre_reservation_view/pre_reservation_setting_view.dart';
 import 'package:flutter_front/reservation_status/view/reservation_status_view.dart';
 
 class ReservationStatusScreen extends StatelessWidget {
@@ -12,18 +12,22 @@ class ReservationStatusScreen extends StatelessWidget {
     return const DefaultTabBarView(
       child: Padding(
         padding: EdgeInsets.all(kPaddingMiddleSize),
-        child: Column(
+        child: Row(
           children: [
-            SizedBox(
-              height: kContainerHeightSize,
-              child: ReservationStatusView(),
+            Expanded(
+              child: SizedBox(
+                height: 800,
+                child: ReservationStatusView(),
+              ),
             ),
             SizedBox(
-              height: 10,
+              width: 10,
             ),
-            SizedBox(
-              height: kContainerHeightSize * 0.7,
-              child: ReservationSettingView(),
+            Expanded(
+              child: SizedBox(
+                height: 800,
+                child: PreReservationSettingView(),
+              ),
             ),
           ],
         ),

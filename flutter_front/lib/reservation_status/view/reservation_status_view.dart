@@ -24,17 +24,18 @@ class ReservationStatusView extends ConsumerWidget {
           width: width,
           height: height,
           title: "예약 확인",
-          child: LayoutBuilder(builder: (context, constraints) {
-            final width = constraints.maxWidth;
-            final height = constraints.maxHeight;
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              final width = constraints.maxWidth;
+              final height = constraints.maxHeight;
 
-            return Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Center(
-                child: Row(
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
                   children: [
                     Expanded(
                       child: CustomContainer(
+                        width: width,
                         height: height,
                         isBackground: true,
                         boarderRadius: 0,
@@ -54,6 +55,7 @@ class ReservationStatusView extends ConsumerWidget {
                     Expanded(
                       child: CustomContainer(
                         height: height,
+                        width: width,
                         color: CustomColor.backgroundMainColor,
                         isBackground: true,
                         boarderRadius: 0,
@@ -65,15 +67,15 @@ class ReservationStatusView extends ConsumerWidget {
                               viewmodel.reservationStatusList,
                           onCancelClicked: (entity) => viewmodel
                               .cancelReservationStatus(context, entity),
-                          height: height,
+                          height: height / 2,
                         ),
                       ),
                     ),
                   ],
                 ),
-              ),
-            );
-          }),
+              );
+            },
+          ),
         );
       },
     );

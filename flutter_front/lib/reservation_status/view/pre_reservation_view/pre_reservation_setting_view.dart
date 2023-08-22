@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_front/common/component/custom_elevated_button.dart';
+import 'package:flutter_front/common/component/number_container.dart';
 import 'package:flutter_front/common/styles/styles.dart';
 import 'package:flutter_front/reservation_status/component/custom_table_calendar.dart';
 import 'package:flutter_front/reservation_status/component/custom_container.dart';
 import 'package:flutter_front/reservation_status/view/pre_reservation_view/pre_reservation_setting_status_view.dart';
 import 'package:flutter_front/reservation_status/view/pre_reservation_view/progress_reservation_view.dart';
-import 'package:flutter_front/reservation_status/viewmodel/reservation_status_viewmodel.dart';
+import 'package:flutter_front/reservation_status/viewmodel/pre_reservation_viewmodel/pre_reservation_setting_viewmodel.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class PreReservationSettingView extends ConsumerWidget {
@@ -12,14 +14,14 @@ class PreReservationSettingView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final viewmodel = ref.watch(reservationStatusViewModelProvider);
+    final viewmodel = ref.watch(preReservationSettingViewModelProvider);
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Expanded(
           child: CustomContainer(
-            title: "사전 예약 설정",
+            title: "우선예약 설정",
             child: LayoutBuilder(
               builder: (context, constraints) {
                 final width = constraints.maxWidth;
@@ -57,8 +59,16 @@ class PreReservationSettingView extends ConsumerWidget {
                           const SizedBox(
                             width: 10,
                           ),
-                          const NumberContainer(
-                            content: "20",
+                          GestureDetector(
+                            onTap: () {
+                              viewmodel.setTimePicker(context);
+                            },
+                            child: NumberContainer(
+                              content:
+                                  viewmodel.hour.toString().padLeft(2, "0"),
+                              width: 60,
+                              height: 40,
+                            ),
                           ),
                           const SizedBox(
                             width: 10,
@@ -70,36 +80,28 @@ class PreReservationSettingView extends ConsumerWidget {
                           const SizedBox(
                             width: 10,
                           ),
-                          const NumberContainer(
-                            content: "20",
+                          GestureDetector(
+                            onTap: () {
+                              viewmodel.setTimePicker(context);
+                            },
+                            child: NumberContainer(
+                              content:
+                                  viewmodel.minute.toString().padLeft(2, "0"),
+                              width: 60,
+                              height: 40,
+                            ),
                           ),
                           const SizedBox(
                             width: 10,
                           ),
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.black, // 배경색을 검정색으로 설정
-                              shape: RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.circular(20.0), // 둥근 모서리 설정
+                          CustomElevatedButton(
+                            content: Text(
+                              "APPLY",
+                              style: kTextReverseStyleMiddle.copyWith(
+                                fontWeight: FontWeight.normal,
                               ),
                             ),
-                            onPressed: () {
-                              // 버튼이 클릭되었을 때 실행될 코드
-                            },
-                            child: const Padding(
-                              padding: EdgeInsets.symmetric(
-                                vertical: 5,
-                                horizontal: 1,
-                              ),
-                              child: Text(
-                                'APPLY',
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ),
+                            onPressed: () {},
                           ),
                         ],
                       ),
@@ -110,48 +112,39 @@ class PreReservationSettingView extends ConsumerWidget {
             ),
           ),
         ),
+        const Padding(
+          padding: EdgeInsets.symmetric(vertical: kPaddingSmallSize),
+          child: Row(
+            children: [
+              Expanded(
+                flex: 4,
+                child: PreReservationSettingStatusView(),
+              ),
+              Expanded(
+                flex: 3,
+                child: ProgressReservationView(),
+              ),
+            ],
+          ),
+        ),
         const Row(
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Expanded(
-              flex: 3,
-              child: PreReservationSettingStatusView(),
-            ),
-            Expanded(
-              flex: 2,
-              child: ProgressReservation(),
+            Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: kPaddingMiniSize,
+                vertical: kPaddingSmallSize,
+              ),
+              child: Text(
+                "정규예약은 매월 1일 0시에 사전예약 종료 후 자동으로 시작됩니다.",
+                style: kTextMainStyleSmall,
+              ),
             ),
           ],
         ),
-        const Text("정규예약은 매월 1일 0시에 사전예약 종료 후 자동으로 시작됩니다."),
       ],
     );
   }
-}
 
-class NumberContainer extends StatelessWidget {
-  final String content;
-  const NumberContainer({
-    super.key,
-    required this.content,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 60,
-      height: 35,
-      decoration: BoxDecoration(
-        border: Border.all(
-          color: Colors.black,
-          width: 1,
-        ),
-      ),
-      child: Center(
-        child: Text(
-          content,
-          style: kTextMainStyleMiddle,
-        ),
-      ),
-    );
-  }
+  void showTimePicker() {}
 }

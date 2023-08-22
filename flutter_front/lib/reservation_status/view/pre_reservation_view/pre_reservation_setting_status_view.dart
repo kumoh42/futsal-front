@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_front/common/styles/text_styles.dart';
 import 'package:flutter_front/reservation_status/component/custom_container.dart';
 
 class PreReservationSettingStatusView extends StatelessWidget {
@@ -7,16 +8,17 @@ class PreReservationSettingStatusView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomContainer(
-      title: "사전 예약 설정 현황",
+      title: "우선예약 설정 현황",
       height: 250,
       child: ListView.separated(
           itemBuilder: (context, index) => const Row(
                 children: [
                   Text(
                     "2023년 6월 28일 20:00:00",
+                    style: kTextNormalStyleLarge,
                   ),
                   SizedBox(
-                    width: 10,
+                    width: 20,
                   ),
                   Icon(
                     Icons.close,

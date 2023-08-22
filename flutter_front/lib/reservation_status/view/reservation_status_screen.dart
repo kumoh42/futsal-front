@@ -13,6 +13,7 @@ class ReservationStatusScreen extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.all(kPaddingMiddleSize),
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // 예약 확인 부분
             Expanded(

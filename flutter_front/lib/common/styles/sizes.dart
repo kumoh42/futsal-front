@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 const double kLayoutWidthSize = 1440;
-const double kNavigationRailSize = 257;
+const double kNavigationRailSize = 100;
 const double kAppbarHeight = 75;
 
 const double kContainerHeightSize = 461;

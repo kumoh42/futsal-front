@@ -14,6 +14,7 @@ class ReservationStatusScreen extends StatelessWidget {
         padding: EdgeInsets.all(kPaddingMiddleSize),
         child: Row(
           children: [
+            // 예약 확인 부분
             Expanded(
               child: SizedBox(
                 height: 800,
@@ -23,6 +24,7 @@ class ReservationStatusScreen extends StatelessWidget {
             SizedBox(
               width: 10,
             ),
+            // 우선예약 부분
             Expanded(
               child: SizedBox(
                 height: 800,

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_front/common/styles/sizes.dart';
 import 'package:flutter_front/common/styles/styles.dart';
-import 'package:flutter_front/common/styles/text_styles.dart';
 import 'package:flutter_front/common/utils/data_utils.dart';
 import 'package:flutter_front/reservation_status/model/entity/reservation_entity.dart';
 
@@ -49,7 +47,10 @@ class ReservationStateItem extends StatelessWidget {
                   horizontal: kPaddingMiddleSize,
                 ),
                 child: entity.major == null
-                    ? entity.date.copyWith(hour:entity.time).compareTo(DateTime.now()) == -1
+                    ? entity.date
+                                .copyWith(hour: entity.time)
+                                .compareTo(DateTime.now()) ==
+                            -1
                         ? Row(
                             children: [
                               Image.asset(
@@ -78,9 +79,26 @@ class ReservationStateItem extends StatelessWidget {
                               ),
                             ],
                           )
-                    : Text(
-                        "${entity.circle ?? "개인"} (${entity.major})",
-                        style: kTextNormalStyleMiddle,
+                    : Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "${entity.circle ?? "개인"} (${entity.major})",
+                            style: kTextNormalStyleMiddle,
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              if (onCancelClicked == null) return;
+                              onCancelClicked!(entity);
+                            },
+                            child: const Icon(
+                              Icons.close,
+                              color: Colors.red,
+                              size: kIconMainSize,
+                              weight: 1,
+                            ),
+                          ),
+                        ],
                       ),
               ),
             ),

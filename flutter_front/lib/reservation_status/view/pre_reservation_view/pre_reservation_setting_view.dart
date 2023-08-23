@@ -136,7 +136,7 @@ class PreReservationSettingView extends ConsumerWidget {
                 vertical: kPaddingSmallSize,
               ),
               child: Text(
-                "정규예약은 매월 1일 0시에 사전예약 종료 후 자동으로 시작됩니다.",
+                "우선예약은 매월 1일 0시에 사전예약 종료 후 자동으로 시작됩니다.",
                 style: kTextMainStyleSmall,
               ),
             ),

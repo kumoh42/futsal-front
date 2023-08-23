@@ -52,7 +52,36 @@ class ReservationStatusService
   Future cancelReservation({required ReservationStatusEntity entity}) async {
     try {
       state = ReservationStatusListStateLoading();
-//      await repository.cancelReservation(entity.reservationId);
+      if (entity.time % 2 != 0) {
+        throw Exception("취소하려고하는 예약의 시간이 잘못되었습니다.");
+      }
+      // TODO 해야할 일
+      print(regDateFormat.format(entity.date));
+      print(entity.time);
+//       await repository.cancelReservation({
+//     "date": cancelDate,
+//     "time": entity.time,
+//   "isPre": true
+// });
+      final data = await repository.getReservationStatusList(
+        defaultDateFormat.format(entity.date),
+      );
+      state = ReservationStatusListStateSuccess(data);
+    } catch (e) {
+      state = ReservationStatusListStateError(e.toString());
+    }
+  }
+
+  Future cancelMonthReservation(
+      {required ReservationStatusEntity entity}) async {
+    try {
+      state = ReservationStatusListStateLoading();
+
+      print(regDateFormat.format(entity.date));
+//       await repository.cancelReservation({
+//     "date": cancelDate,
+//   "isPre": true
+// });
       final data = await repository.getReservationStatusList(
         defaultDateFormat.format(entity.date),
       );

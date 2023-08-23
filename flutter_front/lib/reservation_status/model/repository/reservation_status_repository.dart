@@ -14,13 +14,20 @@ final reservationStatusRepositoryProvider = Provider((ref) {
 @RestApi()
 abstract class ReservationStatusRepository {
   factory ReservationStatusRepository(Dio dio, {String baseUrl}) =
-  _ReservationStatusRepository;
+      _ReservationStatusRepository;
 
   @GET('/reservation/{date}')
-  @Headers({'accessToken' : 'true'})
-  Future<List<ReservationStatusEntity>> getReservationStatusList(@Path() String date);
+  @Headers({'accessToken': 'true'})
+  Future<List<ReservationStatusEntity>> getReservationStatusList(
+      @Path() String date);
 
-// Future cancelReservation(String reservationId);
+  @PATCH('/reservation/delete-one')
+  @Headers({'accessToken': 'true'})
+  Future cancelReservation(@Body() Map<String, dynamic> map);
+
+  @PATCH('/reservation/delete-month')
+  @Headers({'accessToken': 'true'})
+  Future cancelMonthReservation(@Body() Map<String, dynamic> map);
 
 // Future cancelAllReservation();
 }

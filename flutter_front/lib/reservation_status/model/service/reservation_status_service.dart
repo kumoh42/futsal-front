@@ -37,6 +37,7 @@ class ReservationStatusService
           date ?? (temp as ReservationStatusListStateSuccess).data.first.date,
         ),
       );
+      //TODO 데이터가 비어도 날짜가 지났으면 다른 방식으로 띄워야 할듯
       if (data.isEmpty) {
         state = ReservationStatusListStateNone();
       } else {
@@ -49,6 +50,7 @@ class ReservationStatusService
     }
   }
 
+  // 예약 1개 삭제
   Future cancelReservation({required ReservationStatusEntity entity}) async {
     try {
       state = ReservationStatusListStateLoading();
@@ -56,14 +58,10 @@ class ReservationStatusService
       if (entity.time % 2 != 0) {
         throw Exception("취소하려고하는 예약의 시간이 잘못되었습니다.");
       }
-      // TODO 해야할 일
-      print(regDateFormat.format(entity.date));
-      print(entity.time);
-//       await repository.cancelReservation({
-//     "date": cancelDate,
-//     "time": entity.time,
-//   "isPre": true
-// });
+      final cancelDate = regDateFormat.format(entity.date);
+
+      // await repository.cancelReservation(
+      //     {"date": cancelDate, "time": entity.time, "isPre": true});
       final data = await repository.getReservationStatusList(
         defaultDateFormat.format(entity.date),
       );
@@ -73,16 +71,16 @@ class ReservationStatusService
     }
   }
 
+  // 예약 1달 삭제
   Future cancelMonthReservation(
       {required ReservationStatusEntity entity}) async {
     try {
       state = ReservationStatusListStateLoading();
+      final cancelDate = regDateMonthFormat.format(entity.date);
+      print(cancelDate);
 
-      print(regDateFormat.format(entity.date));
-//       await repository.cancelReservation({
-//     "date": cancelDate,
-//   "isPre": true
-// });
+      // await repository
+      //     .cancelMonthReservation({"date": cancelDate, "isPre": true});
       final data = await repository.getReservationStatusList(
         defaultDateFormat.format(entity.date),
       );

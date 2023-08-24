@@ -14,6 +14,10 @@ class ReservationStatusView extends ConsumerWidget {
     final viewmodel = ref.watch(reservationStatusViewModelProvider);
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
+        /* constraints -> 부모 위젯의 크기에 따라 자식 위젯의 크기가 결정 됨
+          즉, ReservationStatusView를 사용하는 부모 위젯인 DefaultTabBarView의 크기에 따라
+          width, height가 결정됨
+        */
         final width = constraints.maxWidth;
         final height = constraints.maxHeight;
         return CustomContainer(
@@ -23,6 +27,7 @@ class ReservationStatusView extends ConsumerWidget {
           child: LayoutBuilder(builder: (context, constraints) {
             final width = constraints.maxWidth;
             final height = constraints.maxHeight;
+
             return Padding(
               padding: const EdgeInsets.all(8.0),
               child: Center(
@@ -36,6 +41,7 @@ class ReservationStatusView extends ConsumerWidget {
                         boarderColor: CustomColor.disabledColor,
                         boarderWidth: kBorderSideWidth * 10,
                         color: CustomColor.backgroundMainColor,
+                        // container에서 실제로 보이는 부분
                         child: CustomTimeTable(
                           controller: viewmodel.customTimeTableController,
                           rowHeight: 41,

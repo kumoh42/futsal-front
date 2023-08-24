@@ -9,11 +9,29 @@ import 'package:flutter_front/reservation_status/view/pre_reservation_view/progr
 import 'package:flutter_front/reservation_status/viewmodel/pre_reservation_viewmodel/pre_reservation_setting_viewmodel.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class PreReservationSettingView extends ConsumerWidget {
+class PreReservationSettingView extends ConsumerStatefulWidget {
   const PreReservationSettingView({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<PreReservationSettingView> createState() =>
+      _PreReservationSettingViewState();
+}
+
+class _PreReservationSettingViewState
+    extends ConsumerState<PreReservationSettingView> {
+  @override
+  void initState() {
+    super.initState();
+    // UI가 빌드된 후 실행
+    Future(() {
+      ref
+          .read(preReservationSettingViewModelProvider)
+          .getPreReservationStatusList();
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final viewmodel = ref.watch(preReservationSettingViewModelProvider);
 
     return Column(
@@ -101,7 +119,10 @@ class PreReservationSettingView extends ConsumerWidget {
                                 fontWeight: FontWeight.normal,
                               ),
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              viewmodel.setPreReservation();
+                              // viewmodel.getPreReservationStatusList();
+                            },
                           ),
                         ],
                       ),
@@ -112,15 +133,25 @@ class PreReservationSettingView extends ConsumerWidget {
             ),
           ),
         ),
-        const Padding(
-          padding: EdgeInsets.symmetric(vertical: kPaddingSmallSize),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: kPaddingSmallSize),
           child: Row(
             children: [
               Expanded(
                 flex: 4,
-                child: PreReservationSettingStatusView(),
+                child: CustomContainer(
+                  title: "우선예약 설정 현황",
+                  height: 250,
+                  child: PreReservationStatusList(
+                    state: viewmodel.statusState,
+                    list: viewmodel.preReservationStatusList,
+                    onCancelClicked: (p) {
+                      viewmodel.canclePreReservation(context, p);
+                    },
+                  ),
+                ),
               ),
-              Expanded(
+              const Expanded(
                 flex: 3,
                 child: ProgressReservationView(),
               ),

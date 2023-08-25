@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_front/common/styles/styles.dart';
-import 'package:flutter_front/reservation_status/model/entity/pre_reservation_status_entity.dart';
-import 'package:flutter_front/reservation_status/model/state/pre_reservation_setting_state.dart';
+import 'package:flutter_front/reservation_status/model/entity/pre_reservation/pre_reservation_status_entity.dart';
+import 'package:flutter_front/reservation_status/model/state/pre_reservation/pre_reservation_setting_state.dart';
 
 class PreReservationStatusList extends StatelessWidget {
   final List<PreReservationStatusEntity>? list;

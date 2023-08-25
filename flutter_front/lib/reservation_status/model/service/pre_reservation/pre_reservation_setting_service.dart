@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_front/reservation_status/model/entity/pre_reservation_status_entity.dart';
-import 'package:flutter_front/reservation_status/model/repository/pre_reservation_setting_repository.dart';
-import 'package:flutter_front/reservation_status/model/state/pre_reservation_setting_state.dart';
+import 'package:flutter_front/reservation_status/model/entity/pre_reservation/pre_reservation_status_entity.dart';
+import 'package:flutter_front/reservation_status/model/repository/pre_resevation/pre_reservation_setting_repository.dart';
+import 'package:flutter_front/reservation_status/model/state/pre_reservation/pre_reservation_setting_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final preReservationSettingServiceProvider = StateNotifierProvider<
@@ -25,6 +25,7 @@ class PreReservationSettingService
       // await repository.setPreReservation(preReservationStatusEntity);
       // final data = await repository.getPreReservationList();
       // state = PreReservationSettingListStateSuccess(data);
+      getPreReservationList();
     } on DioException {
       state = PreReservationSettingStateError("서버와의 통신이 끊겼습니다.");
     } catch (e) {

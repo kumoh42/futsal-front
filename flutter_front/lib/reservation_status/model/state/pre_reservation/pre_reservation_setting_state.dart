@@ -1,5 +1,5 @@
 import 'package:flutter_front/common/state/state.dart';
-import 'package:flutter_front/reservation_status/model/entity/pre_reservation_status_entity.dart';
+import 'package:flutter_front/reservation_status/model/entity/pre_reservation/pre_reservation_status_entity.dart';
 
 abstract class PreReservationSettingState {}
 

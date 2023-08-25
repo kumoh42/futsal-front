@@ -25,6 +25,8 @@ jobs:
           echo "REFRESH_TOKEN_KEY=${{ secrets.REFRESH_TOKEN_KEY }}" >> .env
           cat .env
         working-directory: ./flutter_front
+      - run: pwd
+      - run: ls
       - run: flutter pub get
       - run: flutter build web --release
       - name: if fail

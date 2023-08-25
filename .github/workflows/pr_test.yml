@@ -9,9 +9,11 @@ jobs:
     env:
       my_secret: ${{secrets.commit_secret}}
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./flutter_front
     steps:
       - uses: actions/checkout@v3
-      - run: cd ./flutter_front
       - run: pwd
       - run: ls
       - uses: subosito/flutter-action@v2

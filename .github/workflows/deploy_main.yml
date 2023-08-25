@@ -26,11 +26,13 @@ jobs:
           cat .env
       - run: flutter pub get
       - run: flutter build web --release
+      - run: ls
       - name: Upload build file
         uses: actions/upload-artifact@v3
         with:
           name: web-artifact
           path: build/web
+          if-no-files-found: error
   deploy:
     name: Deploy Web to Aws S3
     runs-on: ubuntu-latest

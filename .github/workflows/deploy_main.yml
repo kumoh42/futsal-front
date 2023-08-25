@@ -9,11 +9,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - run: cd ./flutter_front
       - uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
       - run: flutter config --enable-web
-      - run: pwd
       - name: Setting .env
         run: |
           echo "ACCESS_TOKEN_KEY=${{ secrets.ACCESS_TOKEN_KEY }}" >> .env
@@ -22,9 +22,6 @@ jobs:
           echo "KUMOH42_REGISTER=${{ secrets.KUMOH42_REGISTER }}" >> .env
           echo "REFRESH_TOKEN_KEY=${{ secrets.REFRESH_TOKEN_KEY }}" >> .env
           cat .env
-        working-directory: ./flutter_front
-      - run: pwd
-      - run: ls
       - run: flutter pub get
       - run: flutter build web --release
       - name: Upload build file

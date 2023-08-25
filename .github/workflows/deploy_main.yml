@@ -13,6 +13,7 @@ jobs:
         with:
           channel: 'stable'
       - run: flutter config --enable-web
+      - run: pwd
       - name: Setting .env
         run: |
           echo "ACCESS_TOKEN_KEY=${{ secrets.ACCESS_TOKEN_KEY }}" >> .env

@@ -30,7 +30,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: web-artifact
-          path: flutter_front/build/web
+          path: ./build/web
           if-no-files-found: error
   deploy:
     name: Deploy Web to Aws S3
@@ -48,9 +48,9 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: web-artifact
-          path: build/web
+          path: ./build/web
       - name: Sync Bucket
-        run: aws s3 sync build/web --region ap-northeast-2 ${{secrets.AWS_BUCKET_NAME}} --delete
+        run: aws s3 sync ./build/web --region ap-northeast-2 ${{secrets.AWS_BUCKET_NAME}} --delete
       - name: Invalidate cache CloudFront
         run: aws cloudfront create-invalidation --distribution-id ${{secrets.AWS_DISTRIBUTION_ID}} --paths "/*"
         continue-on-error: true

@@ -24,4 +24,9 @@ abstract class PreReservationSettingRepository {
   @PUT('/')
   @Headers({'accessToken': 'true'})
   Future<List<PreReservationStatusEntity>> getPreReservationList();
+
+  @PATCH('/')
+  @Headers({'accessToken': 'true'})
+  Future cancelPreReservation(
+      @Body() PreReservationStatusEntity preReservationStatusEntity);
 }

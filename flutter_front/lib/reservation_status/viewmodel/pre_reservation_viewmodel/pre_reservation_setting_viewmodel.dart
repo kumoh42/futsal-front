@@ -77,7 +77,9 @@ class PreReservationSettingViewModel extends ChangeNotifier {
   }
 
   void canclePreReservation(
-      BuildContext context, PreReservationStatusEntity entity) {
-    print(entity.title);
+      BuildContext context, PreReservationStatusEntity entity) async {
+    await ref
+        .read(preReservationSettingServiceProvider.notifier)
+        .cancelPreReservation(preReservationStatusEntity: entity);
   }
 }

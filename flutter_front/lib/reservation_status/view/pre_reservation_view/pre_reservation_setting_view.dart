@@ -121,7 +121,6 @@ class _PreReservationSettingViewState
                             ),
                             onPressed: () {
                               viewmodel.setPreReservation();
-                              // viewmodel.getPreReservationStatusList();
                             },
                           ),
                         ],

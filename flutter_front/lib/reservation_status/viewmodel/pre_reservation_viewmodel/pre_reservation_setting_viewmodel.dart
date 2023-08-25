@@ -3,9 +3,9 @@ import 'package:flutter_front/common/state/state.dart';
 import 'package:flutter_front/common/utils/date_utils.dart';
 import 'package:flutter_front/common/utils/snack_bar_util.dart';
 import 'package:flutter_front/reservation_status/component/custom_table_calendar.dart';
-import 'package:flutter_front/reservation_status/model/entity/pre_reservation_status_entity.dart';
-import 'package:flutter_front/reservation_status/model/service/pre_reservation_setting_service.dart';
-import 'package:flutter_front/reservation_status/model/state/pre_reservation_setting_state.dart';
+import 'package:flutter_front/reservation_status/model/entity/pre_reservation/pre_reservation_status_entity.dart';
+import 'package:flutter_front/reservation_status/model/service/pre_reservation/pre_reservation_setting_service.dart';
+import 'package:flutter_front/reservation_status/model/state/pre_reservation/pre_reservation_setting_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final preReservationSettingViewModelProvider =
@@ -70,10 +70,10 @@ class PreReservationSettingViewModel extends ChangeNotifier {
     final time =
         "${regDateFormat.format(customTimeTableController.focusedDay)} ${hour.toString().padLeft(2, "0")} : ${minute.toString().padLeft(2, "0")}";
     print(time);
-    // final entity = PreReservationStatusEntity(title: time);
-    // await ref
-    //     .read(preReservationSettingServiceProvider.notifier)
-    //     .setPreReservation(preReservationStatusEntity: entity);
+    final entity = PreReservationStatusEntity(title: time);
+    await ref
+        .read(preReservationSettingServiceProvider.notifier)
+        .setPreReservation(preReservationStatusEntity: entity);
   }
 
   void canclePreReservation(

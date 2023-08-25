@@ -18,7 +18,7 @@ class ReservationStatusScreen extends StatelessWidget {
             // 예약 확인 부분
             Expanded(
               child: SizedBox(
-                height: 800,
+                height: kMainPageContainerHeightSize,
                 child: ReservationStatusView(),
               ),
             ),
@@ -28,7 +28,7 @@ class ReservationStatusScreen extends StatelessWidget {
             // 우선예약 부분
             Expanded(
               child: SizedBox(
-                height: 800,
+                height: kMainPageContainerHeightSize,
                 child: PreReservationSettingView(),
               ),
             ),

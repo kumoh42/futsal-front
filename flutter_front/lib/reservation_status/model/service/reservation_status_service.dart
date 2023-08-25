@@ -49,10 +49,37 @@ class ReservationStatusService
     }
   }
 
+  // 예약 1개 삭제
   Future cancelReservation({required ReservationStatusEntity entity}) async {
     try {
       state = ReservationStatusListStateLoading();
-//      await repository.cancelReservation(entity.reservationId);
+      // 요청 시간이 2의 배수이고  8이상 20이하가 들어가야 함
+      if (!(entity.time % 2 == 0 && (8 <= entity.time && entity.time <= 20))) {
+        throw Exception("취소하려고하는 예약의 시간이 잘못되었습니다.");
+      }
+      // await repository.cancelReservation({
+      //   "date": regDateFormat.format(entity.date),
+      //   "time": entity.time,
+      //   "isPre": entity.isPre,
+      // });
+      final data = await repository.getReservationStatusList(
+        defaultDateFormat.format(entity.date),
+      );
+      state = ReservationStatusListStateSuccess(data);
+    } catch (e) {
+      state = ReservationStatusListStateError(e.toString());
+    }
+  }
+
+  // 예약 1달 삭제
+  Future cancelMonthReservation(
+      {required ReservationStatusEntity entity}) async {
+    try {
+      state = ReservationStatusListStateLoading();
+      // await repository.cancelMonthReservation({
+      //   "date": regDateMonthFormat.format(entity.date),
+      //   "isPre": entity.isPre,
+      // });
       final data = await repository.getReservationStatusList(
         defaultDateFormat.format(entity.date),
       );

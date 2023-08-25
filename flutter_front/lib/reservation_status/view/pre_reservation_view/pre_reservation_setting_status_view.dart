@@ -1,35 +1,38 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_front/common/styles/text_styles.dart';
-import 'package:flutter_front/reservation_status/component/custom_container.dart';
+import 'package:flutter_front/reservation_status/component/pre_reservation_status_row.dart';
+import 'package:flutter_front/reservation_status/model/entity/pre_reservation/pre_reservation_status_entity.dart';
+import 'package:flutter_front/reservation_status/model/state/pre_reservation/pre_reservation_setting_state.dart';
 
-class PreReservationSettingStatusView extends StatelessWidget {
-  const PreReservationSettingStatusView({super.key});
+class PreReservationStatusList extends StatelessWidget {
+  final List<PreReservationStatusEntity>? list;
+  final PreReservationSettingState state;
+  final void Function(PreReservationStatusEntity)? onCancelClicked;
+
+  const PreReservationStatusList({
+    super.key,
+    required this.list,
+    required this.state,
+    required this.onCancelClicked,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return CustomContainer(
-      title: "우선예약 설정 현황",
-      height: 250,
-      child: ListView.separated(
-          itemBuilder: (context, index) => const Row(
-                children: [
-                  Text(
-                    "2023년 6월 28일 20:00:00",
-                    style: kTextNormalStyleLarge,
-                  ),
-                  SizedBox(
-                    width: 20,
-                  ),
-                  Icon(
-                    Icons.close,
-                    color: Colors.red,
-                  )
-                ],
-              ),
+    switch (state.runtimeType) {
+      case PreReservationSettingListStateLoading:
+        return const Center(child: CircularProgressIndicator());
+
+      case PreReservationSettingListStateSuccess:
+        return ListView.separated(
+          itemBuilder: (context, index) => PreReservationStatusRow(
+            entity: list![index],
+            onCancelClicked: onCancelClicked,
+          ),
           separatorBuilder: (context, index) => const SizedBox(
-                height: 10,
-              ),
-          itemCount: 31),
-    );
+            height: 10,
+          ),
+          itemCount: list!.length,
+        );
+    }
+    return Container();
   }
 }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_front/auth/model/service/auth_service.dart';
-import 'package:flutter_front/auth/model/state/auth_state.dart';
 import 'package:flutter_front/common/const/tabs.dart';
 import 'package:flutter_front/common/layout/default_layout.dart';
 import 'package:flutter_front/common/styles/styles.dart';
@@ -51,20 +50,23 @@ class _RootTabState extends ConsumerState<RootTab>
         fit: BoxFit.fitWidth,
       ),
       appbarHeight: kAppbarHeight,
-      leadingWidth: kNavigationRailSize,
+      leadingWidth: kNavigationRailSize * 2,
       backgroundColor: CustomColor.backgroundMainColor,
       actions: [
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              "${(ref.read(authServiceProvider) as AuthStateSuccess).data.userName}님 안녕하세요!",
-              style: kTextReverseStyleMiddle,
+        Padding(
+          padding: const EdgeInsets.only(
+            right: 15,
+            top: 2,
+          ),
+          child: IconButton(
+            icon: const Icon(
+              Icons.person,
             ),
-          ],
-        ),
-        const SizedBox(
-          width: 5,
+            iconSize: kIconMainSize,
+            splashRadius: kIconMainSize,
+            color: CustomColor.textReverseColor,
+            onPressed: () {},
+          ),
         ),
         Padding(
           padding: const EdgeInsets.only(
@@ -75,8 +77,8 @@ class _RootTabState extends ConsumerState<RootTab>
             icon: const Icon(
               Icons.logout,
             ),
-            iconSize: 20,
-            splashRadius: 25,
+            iconSize: kIconMainSize,
+            splashRadius: kIconMainSize,
             color: CustomColor.textReverseColor,
             onPressed: () {
               CustomDialogUtil.showCustomDialog(

@@ -12,8 +12,6 @@ jobs:
         working-directory: ./flutter_front
     steps:
       - uses: actions/checkout@v3
-      - run: pwd
-      - run: ls
       - uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
@@ -26,8 +24,6 @@ jobs:
           echo "KUMOH42_REGISTER=${{ secrets.KUMOH42_REGISTER }}" >> .env
           echo "REFRESH_TOKEN_KEY=${{ secrets.REFRESH_TOKEN_KEY }}" >> .env
           cat .env
-      - run: pwd
-      - run: ls
       - run: flutter pub get
       - run: flutter build web --release
       - name: Upload build file
@@ -38,6 +34,9 @@ jobs:
   deploy:
     name: Deploy Web to Aws S3
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./flutter_front
     needs: build
     env:
       AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID}}

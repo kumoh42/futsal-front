@@ -53,8 +53,8 @@ class ReservationStatusService
   Future cancelReservation({required ReservationStatusEntity entity}) async {
     try {
       state = ReservationStatusListStateLoading();
-      // 요청에 8이상 20이하의 2의 배수만 들어가야 함
-      if (entity.time % 2 != 0 && 8 <= entity.time && entity.time <= 20) {
+      // 요청 시간이 2의 배수이고  8이상 20이하가 들어가야 함
+      if (!(entity.time % 2 == 0 && (8 <= entity.time && entity.time <= 20))) {
         throw Exception("취소하려고하는 예약의 시간이 잘못되었습니다.");
       }
       print("regdate : ${entity.regDate}");

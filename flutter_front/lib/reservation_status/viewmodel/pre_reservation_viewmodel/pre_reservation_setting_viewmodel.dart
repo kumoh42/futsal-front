@@ -67,9 +67,7 @@ class PreReservationSettingViewModel extends ChangeNotifier {
   }
 
   void setPreReservation() async {
-    final time =
-        "${regDateFormat.format(customTimeTableController.focusedDay)} ${hour.toString().padLeft(2, "0")} : ${minute.toString().padLeft(2, "0")}";
-    print(time);
+    final time = regDateTimeFormat.format(customTimeTableController.focusedDay);
     final entity = PreReservationStatusEntity(title: time);
     await ref
         .read(preReservationSettingServiceProvider.notifier)

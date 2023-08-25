@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_front/common/styles/styles.dart';
+import 'package:flutter_front/reservation_status/component/pre_reservation_status_row.dart';
 import 'package:flutter_front/reservation_status/model/entity/pre_reservation/pre_reservation_status_entity.dart';
 import 'package:flutter_front/reservation_status/model/state/pre_reservation/pre_reservation_setting_state.dart';
 
@@ -23,24 +23,9 @@ class PreReservationStatusList extends StatelessWidget {
 
       case PreReservationSettingListStateSuccess:
         return ListView.separated(
-          itemBuilder: (context, index) => Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                list![index].title,
-                style: kTextNormalStyleLarge,
-              ),
-              const SizedBox(
-                width: 20,
-              ),
-              IconButton(
-                  onPressed: () => onCancelClicked!(list![index]),
-                  splashRadius: kIconMiddleSize,
-                  icon: const Icon(
-                    Icons.close,
-                    color: Colors.red,
-                  )),
-            ],
+          itemBuilder: (context, index) => PreReservationStatusRow(
+            entity: list![index],
+            onCancelClicked: onCancelClicked,
           ),
           separatorBuilder: (context, index) => const SizedBox(
             height: 10,

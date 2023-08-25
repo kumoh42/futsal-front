@@ -42,18 +42,8 @@ class PreReservationSettingService
       //   state = PreReservationSettingStateSuccess(resp);
       // }
 
-      // FOR TEST
-      await Future.delayed(
-        const Duration(seconds: 3),
-      );
-
-      List<PreReservationStatusEntity> list = [
-        PreReservationStatusEntity(title: "2023년 6월 28일 20:00:00"),
-        PreReservationStatusEntity(title: "2023년 7월 28일 20:00:00"),
-        PreReservationStatusEntity(title: "2023년 8월 28일 20:00:00"),
-        PreReservationStatusEntity(title: "2023년 9월 28일 20:00:00"),
-      ];
-      state = PreReservationSettingListStateSuccess(list);
+      //TODO : getPreReservationList repository 연결
+      //  state = PreReservationSettingListStateSuccess(list);
     } on DioException {
       state = PreReservationSettingStateError("서버에서 예약 정보를 가져올 수 없습니다. ");
     } catch (e) {
@@ -66,7 +56,7 @@ class PreReservationSettingService
     try {
       state = PreReservaitonSettingStateLoading();
 
-      //  await repository.cancelPreReservation(preReservationStatusEntity);
+      // TODO PreReservationSettingRepository와 연결
 
       final data = await getPreReservationList();
     } on DioException {

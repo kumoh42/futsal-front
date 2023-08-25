@@ -23,7 +23,6 @@ class ReservationStatusEntity {
   final String? circle;
   @JsonKey(name: "major")
   final String? major;
-  late bool isPre;
 
   static DateTime _dateFromJson(String date) => defaultDateFormat.parse(date);
   static String _dateToJson(DateTime date) => defaultDateFormat.format(date);
@@ -41,9 +40,8 @@ class ReservationStatusEntity {
     required this.regDate,
     required this.circle,
     required this.major,
-  }) {
-    isPre = isPreReservation(date);
-  }
+  });
+  bool get isPre => isPreReservation(date);
 
   Map<String, dynamic> toJson() => _$ReservationStatusEntityToJson(this);
 

@@ -10,7 +10,7 @@ class ProgressReservationStateLoading extends LoadingState
 
 class ProgressReservationStateSuccess extends SuccessState
     implements ProgressReservationState {
-  ProgressReservationStateSuccess(super.data);
+  ProgressReservationStateSuccess(super.data, {super.message});
 }
 
 class ProgressReservationStateError extends ErrorState

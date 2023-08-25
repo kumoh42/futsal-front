@@ -119,9 +119,7 @@ class _PreReservationSettingViewState
                                 fontWeight: FontWeight.normal,
                               ),
                             ),
-                            onPressed: () {
-                              viewmodel.setPreReservation();
-                            },
+                            onPressed: viewmodel.setPreReservation,
                           ),
                         ],
                       ),

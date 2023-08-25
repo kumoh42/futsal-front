@@ -37,7 +37,6 @@ class ReservationStatusService
           date ?? (temp as ReservationStatusListStateSuccess).data.first.date,
         ),
       );
-      //TODO 데이터가 비어도 날짜가 지났으면 다른 방식으로 띄워야 할듯
       if (data.isEmpty) {
         state = ReservationStatusListStateNone();
       } else {
@@ -54,10 +53,13 @@ class ReservationStatusService
   Future cancelReservation({required ReservationStatusEntity entity}) async {
     try {
       state = ReservationStatusListStateLoading();
-      // 요청에 2의 배수만 들어가야 함
-      if (entity.time % 2 != 0) {
+      // 요청에 8이상 20이하의 2의 배수만 들어가야 함
+      if (entity.time % 2 != 0 && 8 <= entity.time && entity.time <= 20) {
         throw Exception("취소하려고하는 예약의 시간이 잘못되었습니다.");
       }
+      print("regdate : ${entity.regDate}");
+      print("date: ${entity.date}");
+
       final cancelDate = regDateFormat.format(entity.date);
 
       // await repository.cancelReservation(

@@ -23,6 +23,7 @@ class ReservationStatusEntity {
   final String? circle;
   @JsonKey(name: "major")
   final String? major;
+  late bool isPre;
 
   static DateTime _dateFromJson(String date) => defaultDateFormat.parse(date);
   static String _dateToJson(DateTime date) => defaultDateFormat.format(date);
@@ -40,10 +41,22 @@ class ReservationStatusEntity {
     required this.regDate,
     required this.circle,
     required this.major,
-  });
+  }) {
+    isPre = isPreReservation(date);
+  }
 
   Map<String, dynamic> toJson() => _$ReservationStatusEntityToJson(this);
 
   factory ReservationStatusEntity.fromJson(Map<String, dynamic> json) =>
       _$ReservationStatusEntityFromJson(json);
+  // 만약 현재가 12월달이고, 취소하려는 날짜가 1월이면 사전예약을 true
+
+  bool isPreReservation(DateTime time) {
+    final today = DateTime.now();
+
+    if ((time.year >= today.year) && (time.month > (today.month) % 12)) {
+      return true;
+    }
+    return false;
+  }
 }

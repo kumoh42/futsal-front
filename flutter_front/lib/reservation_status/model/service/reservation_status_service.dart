@@ -57,13 +57,11 @@ class ReservationStatusService
       if (!(entity.time % 2 == 0 && (8 <= entity.time && entity.time <= 20))) {
         throw Exception("취소하려고하는 예약의 시간이 잘못되었습니다.");
       }
-      print("regdate : ${entity.regDate}");
-      print("date: ${entity.date}");
-
-      final cancelDate = regDateFormat.format(entity.date);
-
-      // await repository.cancelReservation(
-      //     {"date": cancelDate, "time": entity.time, "isPre": true});
+      // await repository.cancelReservation({
+      //   "date": regDateFormat.format(entity.date),
+      //   "time": entity.time,
+      //   "isPre": entity.isPre,
+      // });
       final data = await repository.getReservationStatusList(
         defaultDateFormat.format(entity.date),
       );
@@ -78,11 +76,10 @@ class ReservationStatusService
       {required ReservationStatusEntity entity}) async {
     try {
       state = ReservationStatusListStateLoading();
-      final cancelDate = regDateMonthFormat.format(entity.date);
-      print(cancelDate);
-
-      // await repository
-      //     .cancelMonthReservation({"date": cancelDate, "isPre": true});
+      // await repository.cancelMonthReservation({
+      //   "date": regDateMonthFormat.format(entity.date),
+      //   "isPre": entity.isPre,
+      // });
       final data = await repository.getReservationStatusList(
         defaultDateFormat.format(entity.date),
       );

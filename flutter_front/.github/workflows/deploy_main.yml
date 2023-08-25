@@ -2,7 +2,7 @@ name: Deploy Main
 on:
   push:
     branches:
-      - KUM-60-프론트-main-branch를-aws에-배포한다
+      - KUM-60*
 jobs:
   build:
     name: Build Web

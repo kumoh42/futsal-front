@@ -137,6 +137,7 @@ class ReservationStatusView extends ConsumerWidget {
                                 reservationStatusList:
                                     viewmodel.reservationStatusList,
                                 height: height / 2,
+                                viewmodel: viewmodel,
                               ),
                             ],
                           ),

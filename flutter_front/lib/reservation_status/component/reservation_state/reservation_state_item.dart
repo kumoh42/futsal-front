@@ -2,28 +2,28 @@ import 'package:flutter/material.dart';
 import 'package:flutter_front/common/styles/styles.dart';
 import 'package:flutter_front/common/utils/data_utils.dart';
 import 'package:flutter_front/reservation_status/model/entity/reservation_entity.dart';
+import 'package:flutter_front/reservation_status/viewmodel/reservation_status_viewmodel.dart';
 
-class ReservationStateItem extends StatefulWidget {
+class ReservationStateItem extends StatelessWidget {
   final ReservationStatusEntity entity;
   final double? height;
+  final ReservationStatusViewModel viewmodel;
+  final int index;
 
   const ReservationStateItem({
     Key? key,
     this.height,
     required this.entity,
+    required this.viewmodel,
+    required this.index,
   }) : super(key: key);
 
-  @override
-  State<ReservationStateItem> createState() => _ReservationStateItemState();
-}
-
-class _ReservationStateItemState extends State<ReservationStateItem> {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraints) {
       return Container(
         width: constraints.maxWidth,
-        height: widget.height,
+        height: height,
         decoration: const BoxDecoration(
           border: Border(bottom: BorderSide(width: kBorderSideWidth)),
         ),
@@ -40,7 +40,7 @@ class _ReservationStateItemState extends State<ReservationStateItem> {
                   horizontal: kPaddingMiddleSize,
                 ),
                 child: Text(
-                  DataUtils.intToTimeRange(widget.entity.time, 2),
+                  DataUtils.intToTimeRange(entity.time, 2),
                   textAlign: TextAlign.center,
                   style: kTextNormalStyleMiddle,
                 ),
@@ -52,9 +52,9 @@ class _ReservationStateItemState extends State<ReservationStateItem> {
                   vertical: kPaddingSmallSize + 2,
                   horizontal: kPaddingMiddleSize,
                 ),
-                child: widget.entity.major == null
-                    ? widget.entity.date
-                                .copyWith(hour: widget.entity.time)
+                child: entity.major == null
+                    ? entity.date
+                                .copyWith(hour: entity.time)
                                 .compareTo(DateTime.now()) ==
                             -1
                         ? Row(
@@ -89,7 +89,7 @@ class _ReservationStateItemState extends State<ReservationStateItem> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            "${widget.entity.circle ?? "개인"} (${widget.entity.major})",
+                            "${entity.circle ?? "개인"} (${entity.major})",
                             style: kTextNormalStyleMiddle,
                           ),
                           Transform.scale(
@@ -98,12 +98,9 @@ class _ReservationStateItemState extends State<ReservationStateItem> {
                               padding: const EdgeInsets.only(
                                   right: kPaddingMiddleSize),
                               child: Checkbox(
-                                value: widget.entity.isChecked,
+                                value: viewmodel.checkedList[index],
                                 onChanged: (value) {
-                                  setState(() {
-                                    widget.entity
-                                        .setIsChecked(!widget.entity.isChecked);
-                                  });
+                                  viewmodel.clickedCheckBox(index);
                                 },
                               ),
                             ),

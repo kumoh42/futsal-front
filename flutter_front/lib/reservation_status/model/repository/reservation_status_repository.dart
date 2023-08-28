@@ -23,7 +23,7 @@ abstract class ReservationStatusRepository {
 
   @PATCH('/reservation/delete-one')
   @Headers({'accessToken': 'true'})
-  Future cancelReservation(@Body() String json);
+  Future cancelReservation(@Body() List<ReservationStatusEntity> entities);
 
   @PATCH('/reservation/delete-month')
   @Headers({'accessToken': 'true'})

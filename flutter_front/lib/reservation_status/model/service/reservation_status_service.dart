@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:flutter_front/common/state/state.dart';
 import 'package:flutter_front/common/utils/date_utils.dart';
@@ -51,38 +49,15 @@ class ReservationStatusService
     }
   }
 
-  // 예약 1개 삭제
+  // 예약삭제
   Future cancelReservation(
       {required List<ReservationStatusEntity> entities}) async {
     try {
       state = ReservationStatusListStateLoading();
 
-      List<Map<String, dynamic>> jsonList =
-          entities.map((entity) => entity.toJson()).toList();
-      String jsonString = json.encode(jsonList);
-
-      print(jsonString);
-      //   await repository.cancelReservation(jsonString);
+      //   await repository.cancelReservation(entities);
       final data = await repository.getReservationStatusList(
         defaultDateFormat.format(entities[0].date),
-      );
-      state = ReservationStatusListStateSuccess(data);
-    } catch (e) {
-      state = ReservationStatusListStateError(e.toString());
-    }
-  }
-
-  // 예약 1달 삭제
-  Future cancelMonthReservation(
-      {required ReservationStatusEntity entity}) async {
-    try {
-      state = ReservationStatusListStateLoading();
-      // await repository.cancelMonthReservation({
-      //   "date": regDateMonthFormat.format(entity.date),
-      //   "isPre": entity.isPre,
-      // });
-      final data = await repository.getReservationStatusList(
-        defaultDateFormat.format(entity.date),
       );
       state = ReservationStatusListStateSuccess(data);
     } catch (e) {

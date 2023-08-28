@@ -3,17 +3,20 @@ import 'package:flutter_front/common/styles/styles.dart';
 import 'package:flutter_front/reservation_status/component/reservation_state/reservation_state_item.dart';
 import 'package:flutter_front/reservation_status/model/entity/reservation_entity.dart';
 import 'package:flutter_front/reservation_status/model/state/reservation_list_state.dart';
+import 'package:flutter_front/reservation_status/viewmodel/reservation_status_viewmodel.dart';
 
 class ReservationStateList extends StatelessWidget {
   final ReservationStatusListState state;
   final List<ReservationStatusEntity>? reservationStatusList;
   final double height;
+  final ReservationStatusViewModel viewmodel;
 
   const ReservationStateList({
     Key? key,
     required this.state,
     required this.reservationStatusList,
     required this.height,
+    required this.viewmodel,
   }) : super(key: key);
 
   @override
@@ -47,6 +50,8 @@ class ReservationStateList extends StatelessWidget {
             height: (height / reservationStatusList!.length - kBorderSideWidth)
                 .floorToDouble(),
             entity: reservationStatusList![i],
+            viewmodel: viewmodel,
+            index: i,
           ),
         );
       case ReservationStatusListStateError:

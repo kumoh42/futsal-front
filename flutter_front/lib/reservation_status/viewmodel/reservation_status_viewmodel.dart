@@ -17,6 +17,7 @@ class ReservationStatusViewModel extends ChangeNotifier {
   // statusState = reservationStatusServiceProvider
   late ReservationStatusListState statusState;
   late final CustomTimeTableController customTimeTableController;
+  List<bool> checkedList = [];
 
   get reservationStatusList => statusState is ReservationStatusListStateSuccess
       ? (statusState as ReservationStatusListStateSuccess)
@@ -46,12 +47,30 @@ class ReservationStatusViewModel extends ChangeNotifier {
         notifyListeners();
       }
     });
+
+    // 8시~20시 2시간 간격으로 총 7 타임이 나옴
+    // 숫자 넣기 싫은데 다른 방법이 잘 안 돼요ㅠㅠ
+    for (int i = 0; i < 7; i++) {
+      checkedList.add(false);
+    }
   }
 
   void getReservationStatusList() async {
     await ref
         .read(reservationStatusServiceProvider.notifier)
         .getReservationStatusList(date: customTimeTableController.selectedDay);
+    checkedList = [];
+    if (reservationStatusList != null) {
+      for (int i = 0; i < reservationStatusList.length; i++) {
+        checkedList.add(false);
+      }
+    }
+
+    notifyListeners();
+  }
+
+  void clickedCheckBox(int index) {
+    checkedList[index] = !checkedList[index];
     notifyListeners();
   }
 
@@ -61,7 +80,7 @@ class ReservationStatusViewModel extends ChangeNotifier {
   ) async {
     List<ReservationStatusEntity> cancelList = [];
     for (int i = 0; i < reservationStatusList.length; i++) {
-      if (reservationStatusList[i].isChecked) {
+      if (checkedList[i]) {
         cancelList.add(reservationStatusList[i]);
       }
     }
@@ -69,7 +88,7 @@ class ReservationStatusViewModel extends ChangeNotifier {
     showDialog(
       context: context,
       builder: (context) => ReservationCancelDialog(
-        entity: entities[0],
+        entities: cancelList,
         onPressed: (e) => ref
             .read(reservationStatusServiceProvider.notifier)
             .cancelReservation(entities: cancelList),

@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart' hide Headers;
+import 'package:flutter_front/reservation_status/model/entity/reservation_cancle_entity.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:flutter_front/common/dio/dio.dart';
 import 'package:flutter_front/reservation_status/model/entity/reservation_entity.dart';
@@ -23,11 +24,7 @@ abstract class ReservationStatusRepository {
 
   @PATCH('/reservation/delete-one')
   @Headers({'accessToken': 'true'})
-  Future cancelReservation(@Body() List<ReservationStatusEntity> entities);
-
-  @PATCH('/reservation/delete-month')
-  @Headers({'accessToken': 'true'})
-  Future cancelMonthReservation(@Body() Map<String, dynamic> map);
+  Future cancelReservation(@Body() ReservationCancelEntity entity);
 
 // Future cancelAllReservation();
 }

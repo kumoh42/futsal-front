@@ -25,7 +25,7 @@ class _ReservationStatusRepository implements ReservationStatusRepository {
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'accessToken': 'true'};
     _headers.removeWhere((k, v) => v == null);
-    final Map<String, dynamic>? _data = null;
+    const Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<List<dynamic>>(
         _setStreamType<List<ReservationStatusEntity>>(Options(
       method: 'GET',
@@ -47,13 +47,13 @@ class _ReservationStatusRepository implements ReservationStatusRepository {
   }
 
   @override
-  Future<dynamic> cancelReservation(
-      List<ReservationStatusEntity> entities) async {
+  Future<dynamic> cancelReservation(ReservationCancelEntity entity) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'accessToken': 'true'};
     _headers.removeWhere((k, v) => v == null);
-    final _data = entities.map((e) => e.toJson()).toList();
+    final _data = <String, dynamic>{};
+    _data.addAll(entity.toJson());
     final _result = await _dio.fetch(_setStreamType<dynamic>(Options(
       method: 'PATCH',
       headers: _headers,

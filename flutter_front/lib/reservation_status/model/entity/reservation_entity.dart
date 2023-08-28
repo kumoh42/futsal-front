@@ -23,6 +23,7 @@ class ReservationStatusEntity {
   final String? circle;
   @JsonKey(name: "major")
   final String? major;
+  bool isChecked;
 
   static DateTime _dateFromJson(String date) => defaultDateFormat.parse(date);
   static String _dateToJson(DateTime date) => defaultDateFormat.format(date);
@@ -40,6 +41,7 @@ class ReservationStatusEntity {
     required this.regDate,
     required this.circle,
     required this.major,
+    this.isChecked = false,
   });
   bool get isPre => isPreReservation(date);
 
@@ -56,5 +58,9 @@ class ReservationStatusEntity {
       return true;
     }
     return false;
+  }
+
+  void setIsChecked(bool check) {
+    isChecked = check;
   }
 }

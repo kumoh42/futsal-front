@@ -8,13 +8,11 @@ class ReservationStateList extends StatelessWidget {
   final ReservationStatusListState state;
   final List<ReservationStatusEntity>? reservationStatusList;
   final double height;
-  final void Function(ReservationStatusEntity)? onCancelClicked;
 
   const ReservationStateList({
     Key? key,
     required this.state,
     required this.reservationStatusList,
-    required this.onCancelClicked,
     required this.height,
   }) : super(key: key);
 
@@ -46,9 +44,9 @@ class ReservationStateList extends StatelessWidget {
           shrinkWrap: true,
           itemCount: reservationStatusList!.length,
           itemBuilder: (context, i) => ReservationStateItem(
-            height: (height / reservationStatusList!.length - kBorderSideWidth).floorToDouble(),
+            height: (height / reservationStatusList!.length - kBorderSideWidth)
+                .floorToDouble(),
             entity: reservationStatusList![i],
-            onCancelClicked: onCancelClicked,
           ),
         );
       case ReservationStatusListStateError:

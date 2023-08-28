@@ -47,13 +47,12 @@ class _ReservationStatusRepository implements ReservationStatusRepository {
   }
 
   @override
-  Future<dynamic> cancelReservation(Map<String, dynamic> map) async {
+  Future<dynamic> cancelReservation(String json) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'accessToken': 'true'};
     _headers.removeWhere((k, v) => v == null);
-    final _data = <String, dynamic>{};
-    _data.addAll(map);
+    final _data = json;
     final _result = await _dio.fetch(_setStreamType<dynamic>(Options(
       method: 'PATCH',
       headers: _headers,

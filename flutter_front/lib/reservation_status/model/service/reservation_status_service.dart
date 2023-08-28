@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:flutter_front/common/state/state.dart';
 import 'package:flutter_front/common/utils/date_utils.dart';
@@ -50,20 +52,19 @@ class ReservationStatusService
   }
 
   // 예약 1개 삭제
-  Future cancelReservation({required ReservationStatusEntity entity}) async {
+  Future cancelReservation(
+      {required List<ReservationStatusEntity> entities}) async {
     try {
       state = ReservationStatusListStateLoading();
-      // 요청 시간이 2의 배수이고  8이상 20이하가 들어가야 함
-      if (!(entity.time % 2 == 0 && (8 <= entity.time && entity.time <= 20))) {
-        throw Exception("취소하려고하는 예약의 시간이 잘못되었습니다.");
-      }
-      // await repository.cancelReservation({
-      //   "date": regDateFormat.format(entity.date),
-      //   "time": entity.time,
-      //   "isPre": entity.isPre,
-      // });
+
+      List<Map<String, dynamic>> jsonList =
+          entities.map((entity) => entity.toJson()).toList();
+      String jsonString = json.encode(jsonList);
+
+      print(jsonString);
+      //   await repository.cancelReservation(jsonString);
       final data = await repository.getReservationStatusList(
-        defaultDateFormat.format(entity.date),
+        defaultDateFormat.format(entities[0].date),
       );
       state = ReservationStatusListStateSuccess(data);
     } catch (e) {

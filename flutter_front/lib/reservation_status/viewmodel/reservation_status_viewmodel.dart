@@ -57,15 +57,22 @@ class ReservationStatusViewModel extends ChangeNotifier {
 
   void cancelReservationStatus(
     BuildContext context,
-    ReservationStatusEntity entity,
+    List<ReservationStatusEntity> entities,
   ) async {
+    List<ReservationStatusEntity> cancelList = [];
+    for (int i = 0; i < reservationStatusList.length; i++) {
+      if (reservationStatusList[i].isChecked) {
+        cancelList.add(reservationStatusList[i]);
+      }
+    }
+    if (cancelList.isEmpty) return;
     showDialog(
       context: context,
       builder: (context) => ReservationCancelDialog(
-        entity: entity,
+        entity: entities[0],
         onPressed: (e) => ref
             .read(reservationStatusServiceProvider.notifier)
-            .cancelReservation(entity: e),
+            .cancelReservation(entities: cancelList),
       ),
     );
   }

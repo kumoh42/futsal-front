@@ -3,21 +3,27 @@ import 'package:flutter_front/common/styles/styles.dart';
 import 'package:flutter_front/common/utils/data_utils.dart';
 import 'package:flutter_front/reservation_status/model/entity/reservation_entity.dart';
 
-class ReservationStateItem extends StatelessWidget {
+class ReservationStateItem extends StatefulWidget {
   final ReservationStatusEntity entity;
   final double? height;
-  final void Function(ReservationStatusEntity)? onCancelClicked;
 
-  const ReservationStateItem(
-      {Key? key, this.height, required this.entity, this.onCancelClicked})
-      : super(key: key);
+  const ReservationStateItem({
+    Key? key,
+    this.height,
+    required this.entity,
+  }) : super(key: key);
 
+  @override
+  State<ReservationStateItem> createState() => _ReservationStateItemState();
+}
+
+class _ReservationStateItemState extends State<ReservationStateItem> {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraints) {
       return Container(
         width: constraints.maxWidth,
-        height: height,
+        height: widget.height,
         decoration: const BoxDecoration(
           border: Border(bottom: BorderSide(width: kBorderSideWidth)),
         ),
@@ -34,7 +40,7 @@ class ReservationStateItem extends StatelessWidget {
                   horizontal: kPaddingMiddleSize,
                 ),
                 child: Text(
-                  DataUtils.intToTimeRange(entity.time, 2),
+                  DataUtils.intToTimeRange(widget.entity.time, 2),
                   textAlign: TextAlign.center,
                   style: kTextNormalStyleMiddle,
                 ),
@@ -46,9 +52,9 @@ class ReservationStateItem extends StatelessWidget {
                   vertical: kPaddingSmallSize + 2,
                   horizontal: kPaddingMiddleSize,
                 ),
-                child: entity.major == null
-                    ? entity.date
-                                .copyWith(hour: entity.time)
+                child: widget.entity.major == null
+                    ? widget.entity.date
+                                .copyWith(hour: widget.entity.time)
                                 .compareTo(DateTime.now()) ==
                             -1
                         ? Row(
@@ -83,19 +89,23 @@ class ReservationStateItem extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            "${entity.circle ?? "개인"} (${entity.major})",
+                            "${widget.entity.circle ?? "개인"} (${widget.entity.major})",
                             style: kTextNormalStyleMiddle,
                           ),
-                          GestureDetector(
-                            onTap: () {
-                              if (onCancelClicked == null) return;
-                              onCancelClicked!(entity);
-                            },
-                            child: const Icon(
-                              Icons.close,
-                              color: Colors.red,
-                              size: kIconMainSize,
-                              weight: 1,
+                          Transform.scale(
+                            scale: 1.3,
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                  right: kPaddingMiddleSize),
+                              child: Checkbox(
+                                value: widget.entity.isChecked,
+                                onChanged: (value) {
+                                  setState(() {
+                                    widget.entity
+                                        .setIsChecked(!widget.entity.isChecked);
+                                  });
+                                },
+                              ),
                             ),
                           ),
                         ],

@@ -118,7 +118,12 @@ class ReservationStatusView extends ConsumerWidget {
                                               content: const Text("예약 삭제"),
                                               color: Colors.red,
                                               verticalPadding: kPaddingMiniSize,
-                                              onPressed: () {},
+                                              onPressed: () {
+                                                viewmodel.cancelReservationStatus(
+                                                    context,
+                                                    viewmodel
+                                                        .reservationStatusList);
+                                              },
                                             ),
                                           ],
                                         ),
@@ -131,7 +136,6 @@ class ReservationStatusView extends ConsumerWidget {
                                 state: viewmodel.statusState,
                                 reservationStatusList:
                                     viewmodel.reservationStatusList,
-                                onCancelClicked: (entity) {},
                                 height: height / 2,
                               ),
                             ],

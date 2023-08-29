@@ -40,7 +40,9 @@ class ReservationStateList extends StatelessWidget {
           ),
         );
       case ReservationStatusListStateLoading:
-        return const Center(child: CircularProgressIndicator());
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
       case ReservationStatusListStateSuccess:
         return ListView.builder(
           shrinkWrap: true,

@@ -136,6 +136,11 @@ class ReservationStatusView extends ConsumerWidget {
                                     ),
                                   ),
                                 ),
+                              if (viewmodel.statusState
+                                  is! ReservationStatusListStateSuccess)
+                                const SizedBox(
+                                  height: kPaddingXLargeSize,
+                                ),
                               ReservationStateList(
                                 state: viewmodel.statusState,
                                 reservationStatusList:

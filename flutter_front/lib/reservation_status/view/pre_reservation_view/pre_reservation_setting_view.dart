@@ -138,7 +138,7 @@ class _PreReservationSettingViewState
                 flex: 4,
                 child: CustomContainer(
                   title: "우선예약 설정 현황",
-                  height: 250,
+                  height: kSubPageContainerHeightSize,
                   child: PreReservationStatusList(
                     state: viewmodel.statusState,
                     list: viewmodel.preReservationStatusList,

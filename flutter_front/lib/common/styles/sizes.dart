@@ -35,3 +35,5 @@ const double kLineSmallSize = 2.0;
 const double kTextHeight = 1.4;
 
 const double kMainPageContainerHeightSize = 850;
+
+const double kSubPageContainerHeightSize = 250;

@@ -16,4 +16,14 @@ class ProgressReservationService
 
   ProgressReservationService(this.repository)
       : super(ProgressReservationStateNone());
+
+  Future stopPreReservation() async {
+    repository.setPrgressReservation("close");
+  }
+
+  Future restartPreReservation() async {
+    repository.setPrgressReservation("open");
+  }
+
+  Future resetPreReservation() async {}
 }

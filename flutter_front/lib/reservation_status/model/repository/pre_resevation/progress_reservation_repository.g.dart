@@ -18,6 +18,26 @@ class _ProgressReservationRepository implements ProgressReservationRepository {
 
   String? baseUrl;
 
+  @override
+  Future<void> setPrgressReservation(String state) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'state': state};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    await _dio.fetch<void>(_setStreamType<void>(Options(
+      method: 'PUT',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          '/reservation/pre',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+  }
+
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
     if (T != dynamic &&
         !(requestOptions.responseType == ResponseType.bytes ||

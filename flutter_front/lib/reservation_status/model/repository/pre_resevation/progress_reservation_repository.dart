@@ -14,4 +14,7 @@ final progressReservationRepositoryProvider = Provider((ref) {
 abstract class ProgressReservationRepository {
   factory ProgressReservationRepository(Dio dio, {String baseUrl}) =
       _ProgressReservationRepository;
+
+  @PUT("/reservation/pre")
+  Future<void> setPrgressReservation(@Query("state") String state);
 }

@@ -1,21 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_front/common/component/custom_elevated_button.dart';
 import 'package:flutter_front/common/styles/styles.dart';
+import 'package:flutter_front/common/utils/date_utils.dart';
 import 'package:flutter_front/reservation_status/component/custom_container.dart';
+import 'package:flutter_front/reservation_status/viewmodel/pre_reservation_viewmodel/progress_reservation_viewmodel.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ProgressReservationView extends StatelessWidget {
+class ProgressReservationView extends ConsumerWidget {
   const ProgressReservationView({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final viewmodel = ref.watch(progressReservationViewModelProvider);
     return CustomContainer(
       title: "진행 중인 예약",
-      height: 250,
+      height: kSubPageContainerHeightSize,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const Text(
-            "2023년 5월 28일\n20:00:00",
+          Text(
+            regDateTimeFormatK
+                .format(viewmodel.progressReservation)
+                .replaceFirst("일 ", "일\n"),
             style: kTextNormalStyleLarge,
             textAlign: TextAlign.center,
           ),
@@ -39,7 +45,7 @@ class ProgressReservationView extends StatelessWidget {
                         ),
                       ],
                     ),
-                    onPressed: () {},
+                    onPressed: viewmodel.stopPreReservation,
                   ),
                   const SizedBox(
                     height: kPaddingMiddleSize,
@@ -57,7 +63,7 @@ class ProgressReservationView extends StatelessWidget {
                         ),
                       ],
                     ),
-                    onPressed: () {},
+                    onPressed: viewmodel.restartPreReservation,
                   ),
                 ],
               ),
@@ -79,7 +85,7 @@ class ProgressReservationView extends StatelessWidget {
                     ),
                   ],
                 ),
-                onPressed: () {},
+                onPressed: viewmodel.resetPreReservation,
               ),
             ],
           ),

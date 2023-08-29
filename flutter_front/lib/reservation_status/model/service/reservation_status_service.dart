@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_front/common/state/state.dart';
 import 'package:flutter_front/common/utils/date_utils.dart';
-import 'package:flutter_front/reservation_status/model/entity/reservation_cancle_entity.dart';
+import 'package:flutter_front/reservation_status/model/entity/reservation_cancel_entity.dart';
 import 'package:flutter_front/reservation_status/model/entity/reservation_entity.dart';
 import 'package:flutter_front/reservation_status/model/repository/reservation_status_repository.dart';
 import 'package:flutter_front/reservation_status/model/state/reservation_list_state.dart';
@@ -60,7 +60,7 @@ class ReservationStatusService
       final entity = ReservationCancelEntity(
         date: regDateFormat.format(entities.first.date),
         isPre: entities.first.isPre,
-        time: timeList,
+        times: timeList,
       );
 
       await repository.cancelReservation(entity);

@@ -4,6 +4,7 @@ import 'package:flutter_front/common/utils/date_utils.dart';
 import 'package:flutter_front/common/utils/snack_bar_util.dart';
 import 'package:flutter_front/reservation_status/component/custom_table_calendar.dart';
 import 'package:flutter_front/reservation_status/component/reservation_cancel_dialog.dart';
+import 'package:flutter_front/reservation_status/component/reservation_state/reservation_state_list.dart';
 import 'package:flutter_front/reservation_status/model/entity/reservation_entity.dart';
 import 'package:flutter_front/reservation_status/model/service/reservation_status_service.dart';
 import 'package:flutter_front/reservation_status/model/state/reservation_list_state.dart';
@@ -17,7 +18,7 @@ class ReservationStatusViewModel extends ChangeNotifier {
   // statusState = reservationStatusServiceProvider
   late ReservationStatusListState statusState;
   late final CustomTimeTableController customTimeTableController;
-  List<bool> checkedList = [];
+  late final CustomCancelListController cancelListcontroller;
 
   get reservationStatusList => statusState is ReservationStatusListStateSuccess
       ? (statusState as ReservationStatusListStateSuccess)
@@ -32,6 +33,7 @@ class ReservationStatusViewModel extends ChangeNotifier {
     customTimeTableController = CustomTimeTableController(
       onDayChange: getReservationStatusList,
     );
+    cancelListcontroller = CustomCancelListController();
 
     statusState = ref.read(reservationStatusServiceProvider);
     /* 
@@ -47,44 +49,30 @@ class ReservationStatusViewModel extends ChangeNotifier {
         notifyListeners();
       }
     });
-
-    // 8시~20시 2시간 간격으로 총 7 타임이 나옴
-    // 숫자 넣기 싫은데 다른 방법이 잘 안 돼요ㅠㅠ
-    for (int i = 0; i < 7; i++) {
-      checkedList.add(false);
-    }
   }
 
   void getReservationStatusList() async {
     await ref
         .read(reservationStatusServiceProvider.notifier)
         .getReservationStatusList(date: customTimeTableController.selectedDay);
-    checkedList = [];
-    if (reservationStatusList != null) {
-      for (int i = 0; i < reservationStatusList.length; i++) {
-        checkedList.add(false);
-      }
-    }
-
-    notifyListeners();
-  }
-
-  void clickedCheckBox(int index) {
-    checkedList[index] = !checkedList[index];
+    cancelListcontroller.reset();
     notifyListeners();
   }
 
   void cancelReservationStatus(
     BuildContext context,
-    List<ReservationStatusEntity> entities,
   ) async {
-    List<ReservationStatusEntity> cancelList = [];
-    for (int i = 0; i < reservationStatusList.length; i++) {
-      if (checkedList[i]) {
-        cancelList.add(reservationStatusList[i]);
+    final List<ReservationStatusEntity> cancelList = [];
+
+    for (int entityId in cancelListcontroller.cancelIdList) {
+      for (ReservationStatusEntity entity in reservationStatusList) {
+        if (entity.reservationId == entityId) {
+          cancelList.add(entity);
+        }
       }
     }
     if (cancelList.isEmpty) return;
+
     showDialog(
       context: context,
       builder: (context) => ReservationCancelDialog(

@@ -123,10 +123,10 @@ class ReservationStatusView extends ConsumerWidget {
                                                 verticalPadding:
                                                     kPaddingMiniSize,
                                                 onPressed: () {
-                                                  viewmodel.cancelReservationStatus(
-                                                      context,
-                                                      viewmodel
-                                                          .reservationStatusList);
+                                                  viewmodel
+                                                      .cancelReservationStatus(
+                                                    context,
+                                                  );
                                                 },
                                               ),
                                             ],
@@ -141,7 +141,8 @@ class ReservationStatusView extends ConsumerWidget {
                                 reservationStatusList:
                                     viewmodel.reservationStatusList,
                                 height: height / 2,
-                                viewmodel: viewmodel,
+                                customCancelListController:
+                                    viewmodel.cancelListcontroller,
                               ),
                             ],
                           ),

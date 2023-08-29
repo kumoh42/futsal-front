@@ -1,29 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_front/common/styles/styles.dart';
 import 'package:flutter_front/common/utils/data_utils.dart';
+import 'package:flutter_front/reservation_status/component/reservation_state/reservation_state_list.dart';
 import 'package:flutter_front/reservation_status/model/entity/reservation_entity.dart';
-import 'package:flutter_front/reservation_status/viewmodel/reservation_status_viewmodel.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ReservationStateItem extends StatelessWidget {
+class ReservationStateItem extends ConsumerStatefulWidget {
   final ReservationStatusEntity entity;
   final double? height;
-  final ReservationStatusViewModel viewmodel;
-  final int index;
+  late final ChangeNotifierProvider<CustomCancelListController> provider;
 
-  const ReservationStateItem({
+  ReservationStateItem({
     Key? key,
     this.height,
     required this.entity,
-    required this.viewmodel,
-    required this.index,
-  }) : super(key: key);
+    required CustomCancelListController controller,
+  }) : super(key: key) {
+    provider = ChangeNotifierProvider((ref) => controller);
+  }
 
   @override
+  ConsumerState<ReservationStateItem> createState() =>
+      _ReservationStateItemState();
+}
+
+class _ReservationStateItemState extends ConsumerState<ReservationStateItem> {
+  late CustomCancelListController controller;
+  @override
   Widget build(BuildContext context) {
+    controller = ref.watch(widget.provider);
     return LayoutBuilder(builder: (context, constraints) {
       return Container(
         width: constraints.maxWidth,
-        height: height,
+        height: widget.height,
         decoration: const BoxDecoration(
           border: Border(bottom: BorderSide(width: kBorderSideWidth)),
         ),
@@ -40,7 +49,7 @@ class ReservationStateItem extends StatelessWidget {
                   horizontal: kPaddingMiddleSize,
                 ),
                 child: Text(
-                  DataUtils.intToTimeRange(entity.time, 2),
+                  DataUtils.intToTimeRange(widget.entity.time, 2),
                   textAlign: TextAlign.center,
                   style: kTextNormalStyleMiddle,
                 ),
@@ -52,9 +61,9 @@ class ReservationStateItem extends StatelessWidget {
                   vertical: kPaddingSmallSize + 2,
                   horizontal: kPaddingMiddleSize,
                 ),
-                child: entity.major == null
-                    ? entity.date
-                                .copyWith(hour: entity.time)
+                child: widget.entity.major == null
+                    ? widget.entity.date
+                                .copyWith(hour: widget.entity.time)
                                 .compareTo(DateTime.now()) ==
                             -1
                         ? Row(
@@ -89,7 +98,7 @@ class ReservationStateItem extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            "${entity.circle ?? "개인"} (${entity.major})",
+                            "${widget.entity.circle ?? "개인"} (${widget.entity.major})",
                             style: kTextNormalStyleMiddle,
                           ),
                           Transform.scale(
@@ -98,9 +107,11 @@ class ReservationStateItem extends StatelessWidget {
                               padding: const EdgeInsets.only(
                                   right: kPaddingMiddleSize),
                               child: Checkbox(
-                                value: viewmodel.checkedList[index],
+                                value: controller
+                                    .isChecked(widget.entity.reservationId),
                                 onChanged: (value) {
-                                  viewmodel.clickedCheckBox(index);
+                                  controller.clickedCheckBox(
+                                      widget.entity.reservationId);
                                 },
                               ),
                             ),

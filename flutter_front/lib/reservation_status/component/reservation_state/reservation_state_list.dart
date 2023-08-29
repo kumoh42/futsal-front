@@ -3,20 +3,19 @@ import 'package:flutter_front/common/styles/styles.dart';
 import 'package:flutter_front/reservation_status/component/reservation_state/reservation_state_item.dart';
 import 'package:flutter_front/reservation_status/model/entity/reservation_entity.dart';
 import 'package:flutter_front/reservation_status/model/state/reservation_list_state.dart';
-import 'package:flutter_front/reservation_status/viewmodel/reservation_status_viewmodel.dart';
 
 class ReservationStateList extends StatelessWidget {
   final ReservationStatusListState state;
   final List<ReservationStatusEntity>? reservationStatusList;
   final double height;
-  final ReservationStatusViewModel viewmodel;
+  final CustomCancelListController customCancelListController;
 
   const ReservationStateList({
     Key? key,
     required this.state,
     required this.reservationStatusList,
     required this.height,
-    required this.viewmodel,
+    required this.customCancelListController,
   }) : super(key: key);
 
   @override
@@ -50,13 +49,40 @@ class ReservationStateList extends StatelessWidget {
             height: (height / reservationStatusList!.length - kBorderSideWidth)
                 .floorToDouble(),
             entity: reservationStatusList![i],
-            viewmodel: viewmodel,
-            index: i,
+            controller: customCancelListController,
           ),
         );
       case ReservationStatusListStateError:
         return Container();
     }
     return Container();
+  }
+}
+
+class CustomCancelListController extends ChangeNotifier {
+  late final List<int> _cancelIdList;
+  CustomCancelListController() {
+    _cancelIdList = [];
+  }
+
+  List<int> get cancelIdList => _cancelIdList;
+
+  void clickedCheckBox(int id) {
+    if (isChecked(id)) {
+      _cancelIdList.remove(id);
+    } else {
+      _cancelIdList.add(id);
+      _cancelIdList.sort();
+    }
+    notifyListeners();
+  }
+
+  void reset() {
+    _cancelIdList.clear();
+    notifyListeners();
+  }
+
+  bool isChecked(int id) {
+    return _cancelIdList.contains(id);
   }
 }

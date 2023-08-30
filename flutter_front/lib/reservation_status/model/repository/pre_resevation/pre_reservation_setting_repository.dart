@@ -16,7 +16,7 @@ abstract class PreReservationSettingRepository {
   factory PreReservationSettingRepository(Dio dio, {String baseUrl}) =
       _PreReservationSettingRepository;
 
-  @PUT('/')
+  @POST('/pre/time-apply')
   @Headers({'accessToken': 'true'})
   Future setPreReservation(
       @Body() PreReservationStatusEntity preReservationStatusEntity);

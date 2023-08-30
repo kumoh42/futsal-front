@@ -19,7 +19,7 @@ class PreReservationStatusRow extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
-          entity.title,
+          "$entity.dates $entity.times",
           style: kTextNormalStyleLarge,
         ),
         const SizedBox(

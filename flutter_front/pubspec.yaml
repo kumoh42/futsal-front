@@ -49,6 +49,9 @@ dependencies:
   # URL launcher
   url_launcher: ^6.1.12
 
+  # validators
+  validators:
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

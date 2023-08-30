@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_front/auth/component/custom_container.dart';
-import 'package:flutter_front/auth/util/validation_util.dart';
+import 'package:flutter_front/common/utils/validation_util.dart';
 import 'package:flutter_front/common/component/custom_text_button.dart';
 import 'package:flutter_front/common/component/custom_text_form_field.dart';
 import 'package:flutter_front/common/state/state.dart';

@@ -6,6 +6,7 @@ import 'package:flutter_front/common/styles/styles.dart';
 import 'package:flutter_front/common/utils/custom_dialog_utils.dart';
 import 'package:flutter_front/common/view/construction_screen.dart';
 import 'package:flutter_front/reservation_status/view/reservation_status_screen.dart';
+import 'package:flutter_front/slack_message/view/message_view.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class RootTab extends ConsumerStatefulWidget {
@@ -52,6 +53,8 @@ class _RootTabState extends ConsumerState<RootTab>
       appbarHeight: kAppbarHeight,
       leadingWidth: kNavigationRailSize * 2,
       backgroundColor: CustomColor.backgroundMainColor,
+      floatingActionButton: const MessageView(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       actions: [
         Padding(
           padding: const EdgeInsets.only(

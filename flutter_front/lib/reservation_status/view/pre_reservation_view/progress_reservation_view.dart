@@ -18,12 +18,24 @@ class ProgressReservationView extends ConsumerWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text(
-            regDateTimeFormatK
-                .format(viewmodel.progressReservation)
-                .replaceFirst("일 ", "일\n"),
-            style: kTextNormalStyleLarge,
-            textAlign: TextAlign.center,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Expanded(
+                child: Text(
+                  regDateTimeFormatK
+                      .format(viewmodel.progressReservation)
+                      .replaceFirst("일 ", "일\n"),
+                  style: kTextNormalStyleLarge,
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              IconButton(
+                onPressed: viewmodel.getProgressReservation,
+                icon: const Icon(Icons.refresh_outlined),
+                splashRadius: 15,
+              ),
+            ],
           ),
           const SizedBox(
             height: kPaddingSmallSize,

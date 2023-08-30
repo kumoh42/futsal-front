@@ -61,7 +61,6 @@ class AuthService extends StateNotifier<AuthState> {
       final data = await authRepository.getUserInfo();
       state = AuthStateSuccess(data);
     } on DioException catch (e) {
-      print(e);
       if (e.response != null && e.response!.statusCode == 400) {
         state = AuthStateError(
             e.response!.data["message"][0] ?? "알 수 없는 에러가 발생했습니다.");

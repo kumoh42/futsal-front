@@ -3,7 +3,6 @@ import 'package:flutter_front/common/styles/styles.dart';
 
 class CustomContainer extends StatelessWidget {
   final String? title;
-  final Widget? leading;
   final double? width;
   final double? height;
   final double? minWidth;
@@ -17,7 +16,6 @@ class CustomContainer extends StatelessWidget {
   const CustomContainer({
     Key? key,
     this.title,
-    this.leading,
     this.width,
     this.height,
     this.minWidth,
@@ -55,18 +53,8 @@ class CustomContainer extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              title != null || leading != null
-                  ? Row(
-                      children: [
-                        leading != null
-                            ? Row(children: [
-                                leading!,
-                                const SizedBox(width: kPaddingMiddleSize),
-                              ])
-                            : Container(),
-                        Text(title!, style: kTextMainStyleLarge),
-                      ],
-                    )
+              title != null
+                  ? Text(title!, style: kTextMainStyleLarge)
                   : Container(),
               child,
             ],

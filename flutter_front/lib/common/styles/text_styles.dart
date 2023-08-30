@@ -48,12 +48,6 @@ const TextStyle kTextNormalStyleMiddle = TextStyle(
   overflow: TextOverflow.ellipsis,
   height: kTextHeight,
 );
-const TextStyle kTextNormalStyleLarge = TextStyle(
-  color: CustomColor.textMainColor,
-  fontSize: kTextMiddleSize,
-  overflow: TextOverflow.ellipsis,
-  height: kTextHeight,
-);
 
 const TextStyle kTextPointStyleMiddle = TextStyle(
   color: CustomColor.pointColor,

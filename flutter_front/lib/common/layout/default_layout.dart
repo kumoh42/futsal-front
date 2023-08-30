@@ -11,8 +11,6 @@ class DefaultLayout extends StatelessWidget {
   final Color backgroundColor;
   final Widget? bottomNavigationBar;
   final Widget child;
-  final Widget? floatingActionButton;
-  final FloatingActionButtonLocation? floatingActionButtonLocation;
   final List<Widget>? actions;
 
   const DefaultLayout({
@@ -24,8 +22,6 @@ class DefaultLayout extends StatelessWidget {
     this.drawer,
     this.backgroundColor = Colors.white,
     this.bottomNavigationBar,
-    this.floatingActionButton,
-    this.floatingActionButtonLocation,
     this.actions,
     required this.child,
   }) : super(key: key);
@@ -47,8 +43,6 @@ class DefaultLayout extends StatelessWidget {
       drawer: drawer,
       body: SafeArea(child: child),
       bottomNavigationBar: bottomNavigationBar,
-      floatingActionButtonLocation: floatingActionButtonLocation,
-      floatingActionButton: floatingActionButton,
     );
   }
 }

@@ -60,15 +60,13 @@ class _CustomTimeTableState extends ConsumerState<CustomTimeTable> {
         selectedBuilder: (context, dateTime, _) => _cellBuilder(
           color: CustomColor.mainColor,
           date: dateTime.day.toString(),
-          textColor: Colors.white,
         ),
       ),
       onPageChanged: controller.onPageChanged,
     );
   }
 
-  Widget _cellBuilder({Color? color, required String date, Color? textColor}) =>
-      Container(
+  Widget _cellBuilder({Color? color, required String date}) => Container(
         color: color,
         width: widget.rowHeight - 2,
         height: widget.rowHeight - 2,
@@ -77,7 +75,6 @@ class _CustomTimeTableState extends ConsumerState<CustomTimeTable> {
             date,
             style: kTextMainStyleSmall.copyWith(
               fontWeight: FontWeight.normal,
-              color: textColor,
             ),
             // 텍스트 위젯 내에서 텍스트가 너무 길어서 화면의 가로 공간을 초과할 때 줄 바꿈을 어떻게 처리할지를 지정하는 속성
             softWrap: false,

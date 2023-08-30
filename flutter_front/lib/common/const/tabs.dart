@@ -9,6 +9,7 @@ class TabInfo {
 
 // ignore: constant_identifier_names
 const TABS = [
-  TabInfo(icon: Icons.search, label: '예약조회 및 설정'),
-  TabInfo(icon: Icons.person_search, label: "사용자 조회"),
+  TabInfo(icon: Icons.search, label: '예약 현황 조회'),
+  TabInfo(icon: Icons.settings, label: '예약 설정'),
+  // TabInfo(icon: Icons.person, label: "사용자 설정"),
 ];

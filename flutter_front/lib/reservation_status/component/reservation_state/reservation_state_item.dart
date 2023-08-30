@@ -1,21 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_front/common/styles/sizes.dart';
 import 'package:flutter_front/common/styles/styles.dart';
+import 'package:flutter_front/common/styles/text_styles.dart';
 import 'package:flutter_front/common/utils/data_utils.dart';
 import 'package:flutter_front/reservation_status/model/entity/reservation_entity.dart';
 
 class ReservationStateItem extends StatelessWidget {
   final ReservationStatusEntity entity;
   final double? height;
-  final void Function(bool?) onPressed;
-  final bool isChecked;
+  final void Function(ReservationStatusEntity)? onCancelClicked;
 
-  const ReservationStateItem({
-    Key? key,
-    this.height,
-    required this.entity,
-    required this.isChecked,
-    required this.onPressed,
-  }) : super(key: key);
+  const ReservationStateItem(
+      {Key? key, this.height, required this.entity, this.onCancelClicked})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -52,10 +49,7 @@ class ReservationStateItem extends StatelessWidget {
                   horizontal: kPaddingMiddleSize,
                 ),
                 child: entity.major == null
-                    ? entity.date
-                                .copyWith(hour: entity.time)
-                                .compareTo(DateTime.now()) ==
-                            -1
+                    ? entity.date.copyWith(hour:entity.time).compareTo(DateTime.now()) == -1
                         ? Row(
                             children: [
                               Image.asset(
@@ -84,25 +78,9 @@ class ReservationStateItem extends StatelessWidget {
                               ),
                             ],
                           )
-                    : Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "${entity.circle ?? "개인"} (${entity.major})",
-                            style: kTextNormalStyleMiddle,
-                          ),
-                          Transform.scale(
-                            scale: 1.3,
-                            child: Padding(
-                              padding: const EdgeInsets.only(
-                                  right: kPaddingMiddleSize),
-                              child: Checkbox(
-                                value: isChecked,
-                                onChanged: onPressed,
-                              ),
-                            ),
-                          ),
-                        ],
+                    : Text(
+                        "${entity.circle ?? "개인"} (${entity.major})",
+                        style: kTextNormalStyleMiddle,
                       ),
               ),
             ),

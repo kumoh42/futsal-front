@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_front/common/component/titled_text.dart';
 import 'package:flutter_front/common/styles/styles.dart';
-import 'package:flutter_front/common/utils/date_utils.dart';
 import 'package:flutter_front/reservation_status/model/entity/reservation_entity.dart';
 
 class ReservationCancelDialog extends StatelessWidget {
-  final List<ReservationStatusEntity> entities;
+  final ReservationStatusEntity entity;
   final Future Function(ReservationStatusEntity) onPressed;
 
   const ReservationCancelDialog({
     Key? key,
-    required this.entities,
+    required this.entity,
     required this.onPressed,
   }) : super(key: key);
 
@@ -34,46 +33,30 @@ class ReservationCancelDialog extends StatelessWidget {
           Radius.circular(kBorderRadiusSize),
         ),
       ),
-      content: SingleChildScrollView(
+      /*content: SingleChildScrollView(
         child: Container(
           width: width * 0.3,
           constraints: const BoxConstraints(minWidth: 500, maxWidth: 700),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              // TitledText(title: '아이디', text: entity.member.id),
-              // const SizedBox(height: kPaddingMiddleSize),
-              // TitledText(title: '이름', text: entity.member.name),
-              // const SizedBox(height: kPaddingMiddleSize),
-              // Row(
-              //   children: [
-              //     Expanded(
-              //         child:
-              //             TitledText(title: '연락처', text: entity.member.phone)),
-              //     const SizedBox(width: kPaddingMiddleSize),
-              //     Expanded(
-              //         child:
-              //             TitledText(title: '이메일', text: entity.member.email)),
-              //   ],
-              // ),
+              TitledText(title: '아이디', text: entity.member.id),
               const SizedBox(height: kPaddingMiddleSize),
-              for (var e in entities)
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    TitledText(
-                      title: '예약 날짜',
-                      text: defaultDateFormat.format(e.date),
-                    ),
-                    const SizedBox(
-                      width: kPaddingLargeSize,
-                    ),
-                    TitledText(
-                      title: '예약 시간',
-                      text: '${e.time}시~${e.time + 2}시',
-                    ),
-                  ],
-                ),
+              TitledText(title: '이름', text: entity.member.name),
+              const SizedBox(height: kPaddingMiddleSize),
+              Row(
+                children: [
+                  Expanded(
+                      child:
+                          TitledText(title: '연락처', text: entity.member.phone)),
+                  const SizedBox(width: kPaddingMiddleSize),
+                  Expanded(
+                      child:
+                          TitledText(title: '이메일', text: entity.member.email)),
+                ],
+              ),
+              const SizedBox(height: kPaddingMiddleSize),
+              TitledText(title: '예약 시간', text: entity.time),
               const SizedBox(height: kPaddingMiddleSize),
               const Text('예약을 취소하시겠습니까?', style: kTextMainStyleSmall),
               const SizedBox(height: kPaddingMiddleSize),
@@ -84,11 +67,11 @@ class ReservationCancelDialog extends StatelessWidget {
             ],
           ),
         ),
-      ),
+      ),*/
       actions: [
         ElevatedButton(
           onPressed: () async {
-            await onPressed(entities[0]);
+            await onPressed(entity);
             if (context.mounted) Navigator.of(context).pop();
           },
           style: ElevatedButton.styleFrom(

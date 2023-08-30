@@ -4,7 +4,6 @@ import 'package:flutter_front/common/utils/date_utils.dart';
 import 'package:flutter_front/common/utils/snack_bar_util.dart';
 import 'package:flutter_front/reservation_status/component/custom_table_calendar.dart';
 import 'package:flutter_front/reservation_status/component/reservation_cancel_dialog.dart';
-import 'package:flutter_front/reservation_status/component/reservation_state/reservation_state_list.dart';
 import 'package:flutter_front/reservation_status/model/entity/reservation_entity.dart';
 import 'package:flutter_front/reservation_status/model/service/reservation_status_service.dart';
 import 'package:flutter_front/reservation_status/model/state/reservation_list_state.dart';
@@ -18,7 +17,6 @@ class ReservationStatusViewModel extends ChangeNotifier {
   // statusState = reservationStatusServiceProvider
   late ReservationStatusListState statusState;
   late final CustomTimeTableController customTimeTableController;
-  late final CustomCancelListController cancelListcontroller;
 
   get reservationStatusList => statusState is ReservationStatusListStateSuccess
       ? (statusState as ReservationStatusListStateSuccess)
@@ -33,7 +31,6 @@ class ReservationStatusViewModel extends ChangeNotifier {
     customTimeTableController = CustomTimeTableController(
       onDayChange: getReservationStatusList,
     );
-    cancelListcontroller = CustomCancelListController();
 
     statusState = ref.read(reservationStatusServiceProvider);
     /* 
@@ -55,34 +52,21 @@ class ReservationStatusViewModel extends ChangeNotifier {
     await ref
         .read(reservationStatusServiceProvider.notifier)
         .getReservationStatusList(date: customTimeTableController.selectedDay);
-    cancelListcontroller.reset();
     notifyListeners();
   }
 
   void cancelReservationStatus(
     BuildContext context,
+    ReservationStatusEntity entity,
   ) async {
-    final List<ReservationStatusEntity> cancelList = [];
-
-    for (int entityId in cancelListcontroller.cancelIdList) {
-      for (ReservationStatusEntity entity in reservationStatusList) {
-        if (entity.reservationId == entityId) {
-          cancelList.add(entity);
-        }
-      }
-    }
-    if (cancelList.isEmpty) return;
-
-    await showDialog(
+    showDialog(
       context: context,
       builder: (context) => ReservationCancelDialog(
-        entities: cancelList,
+        entity: entity,
         onPressed: (e) => ref
             .read(reservationStatusServiceProvider.notifier)
-            .cancelReservation(entities: cancelList),
+            .cancelReservation(entity: e),
       ),
     );
-
-    cancelListcontroller.reset();
   }
 }

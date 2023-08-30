@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_front/auth/model/service/auth_service.dart';
-import 'package:flutter_front/auth/model/state/auth_state.dart';
 import 'package:flutter_front/common/const/tabs.dart';
 import 'package:flutter_front/common/layout/default_layout.dart';
 import 'package:flutter_front/common/styles/styles.dart';
@@ -51,20 +50,23 @@ class _RootTabState extends ConsumerState<RootTab>
         fit: BoxFit.fitWidth,
       ),
       appbarHeight: kAppbarHeight,
-      leadingWidth: kNavigationRailSize,
+      leadingWidth: kNavigationRailSize * 2,
       backgroundColor: CustomColor.backgroundMainColor,
       actions: [
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              "${(ref.read(authServiceProvider) as AuthStateSuccess).data.userName}님 안녕하세요!",
-              style: kTextReverseStyleMiddle,
+        Padding(
+          padding: const EdgeInsets.only(
+            right: 15,
+            top: 2,
+          ),
+          child: IconButton(
+            icon: const Icon(
+              Icons.person,
             ),
-          ],
-        ),
-        const SizedBox(
-          width: 5,
+            iconSize: kIconMainSize,
+            splashRadius: kIconMainSize,
+            color: CustomColor.textReverseColor,
+            onPressed: () {},
+          ),
         ),
         Padding(
           padding: const EdgeInsets.only(
@@ -75,8 +77,8 @@ class _RootTabState extends ConsumerState<RootTab>
             icon: const Icon(
               Icons.logout,
             ),
-            iconSize: 20,
-            splashRadius: 25,
+            iconSize: kIconMainSize,
+            splashRadius: kIconMainSize,
             color: CustomColor.textReverseColor,
             onPressed: () {
               CustomDialogUtil.showCustomDialog(
@@ -130,15 +132,20 @@ class _RootTabState extends ConsumerState<RootTab>
                 child: IntrinsicHeight(
                   // NavigationRail->수직 또는 수평 방향의 네비게이션 메뉴를 생성하는 데 사용되는 위젯
                   child: NavigationRail(
+                    labelType: NavigationRailLabelType.all,
                     backgroundColor: CustomColor.subColor,
                     useIndicator: true,
+
                     indicatorColor: CustomColor.backgroundMainColor,
+
                     selectedLabelTextStyle:
                         const TextStyle(color: CustomColor.backgroundMainColor),
                     unselectedLabelTextStyle: TextStyle(
                         color: CustomColor.disabledColor.withOpacity(0.5)),
-                    selectedIconTheme:
-                        const IconThemeData(color: CustomColor.subColor),
+                    selectedIconTheme: const IconThemeData(
+                      color: CustomColor.subColor,
+                      size: 30,
+                    ),
                     unselectedIconTheme: IconThemeData(
                         color: CustomColor.disabledColor.withOpacity(0.5)),
                     // destinations 실제 메뉴에 나타날 위젯들
@@ -147,30 +154,7 @@ class _RootTabState extends ConsumerState<RootTab>
                     // tab controller로 화면 전환
                     onDestinationSelected: controller.animateTo,
                     // 레일의 너비를 확장하거나 축소하는 것을 제어할 수 있음
-                    extended: true,
-                    // trailing ->보통 오른쪽 또는 아래쪽에 위치한 것, 해당 요소의 뒷쪽이나 끝에 위치하는 내용을 의미
-                    trailing: Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.all(kPaddingSmallSize),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: kPaddingSmallSize,
-                                vertical: kPaddingXLargeSize,
-                              ),
-                              child: Text(
-                                "기술 문의\n\nTeam Kumoh-42",
-                                style: kTextReverseStyleMiddle.copyWith(
-                                  fontSize: 16,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+                    //  extended: true,
                   ),
                 ),
               ),
@@ -194,11 +178,13 @@ class _RootTabState extends ConsumerState<RootTab>
 
   NavigationRailDestination _destination(TabInfo info) {
     return NavigationRailDestination(
-      indicatorShape: const RoundedRectangleBorder(),
-      icon: Icon(info.icon),
+      icon: Icon(
+        info.icon,
+        size: 32,
+      ),
       label: Text(
         info.label,
-        style: kTextReverseStyleMiddle.copyWith(fontSize: 18),
+        style: kTextReverseStyleMini,
       ),
     );
   }

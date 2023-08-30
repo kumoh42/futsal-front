@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_front/common/component/custom_elevated_button.dart';
 import 'package:flutter_front/common/styles/styles.dart';
 import 'package:flutter_front/reservation_status/component/custom_table_calendar.dart';
 import 'package:flutter_front/reservation_status/component/custom_container.dart';
 import 'package:flutter_front/reservation_status/component/reservation_state/reservation_state_list.dart';
+import 'package:flutter_front/reservation_status/model/state/reservation_list_state.dart';
 import 'package:flutter_front/reservation_status/viewmodel/reservation_status_viewmodel.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -23,18 +25,19 @@ class ReservationStatusView extends ConsumerWidget {
         return CustomContainer(
           width: width,
           height: height,
-          title: "예약 확인",
-          child: LayoutBuilder(builder: (context, constraints) {
-            final width = constraints.maxWidth;
-            final height = constraints.maxHeight;
+          title: "예약 현황 조회",
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              final width = constraints.maxWidth;
+              final height = constraints.maxHeight;
 
-            return Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Center(
-                child: Row(
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
                   children: [
                     Expanded(
                       child: CustomContainer(
+                        width: width,
                         height: height,
                         isBackground: true,
                         boarderRadius: 0,
@@ -54,26 +57,107 @@ class ReservationStatusView extends ConsumerWidget {
                     Expanded(
                       child: CustomContainer(
                         height: height,
+                        width: width,
                         color: CustomColor.backgroundMainColor,
                         isBackground: true,
                         boarderRadius: 0,
                         boarderColor: CustomColor.disabledColor,
                         boarderWidth: kBorderSideWidth * 10,
-                        child: ReservationStateList(
-                          state: viewmodel.statusState,
-                          reservationStatusList:
-                              viewmodel.reservationStatusList,
-                          onCancelClicked: (entity) => viewmodel
-                              .cancelReservationStatus(context, entity),
-                          height: height,
+                        child: SingleChildScrollView(
+                          child: Column(
+                            children: [
+                              if (viewmodel.statusState
+                                  is ReservationStatusListStateSuccess)
+                                Container(
+                                  height: (height / 15).floorToDouble(),
+                                  decoration: const BoxDecoration(
+                                    border: Border(
+                                        bottom: BorderSide(
+                                            width: kBorderSideWidth)),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: kPaddingMiddleSize),
+                                    child: Row(
+                                      children: [
+                                        Container(
+                                          decoration: const BoxDecoration(
+                                            border: Border(
+                                                right: BorderSide(
+                                                    width: kBorderSideWidth)),
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                              horizontal: kPaddingLargeSize + 9,
+                                            ),
+                                            child: Text(
+                                              "Time",
+                                              style: kTextNormalStyleMiddle
+                                                  .copyWith(
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal:
+                                                            kPaddingMiddleSize),
+                                                child: Text(
+                                                  "List",
+                                                  style: kTextNormalStyleMiddle
+                                                      .copyWith(
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                              ),
+                                              CustomElevatedButton(
+                                                content: const Text("예약 삭제"),
+                                                color: Colors.red,
+                                                verticalPadding:
+                                                    kPaddingMiniSize,
+                                                onPressed: () {
+                                                  viewmodel
+                                                      .cancelReservationStatus(
+                                                    context,
+                                                  );
+                                                },
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              if (viewmodel.statusState
+                                  is! ReservationStatusListStateSuccess)
+                                const SizedBox(
+                                  height: kPaddingXLargeSize,
+                                ),
+                              ReservationStateList(
+                                state: viewmodel.statusState,
+                                reservationStatusList:
+                                    viewmodel.reservationStatusList,
+                                height: height / 2,
+                                controller: viewmodel.cancelListcontroller,
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
                   ],
                 ),
-              ),
-            );
-          }),
+              );
+            },
+          ),
         );
       },
     );

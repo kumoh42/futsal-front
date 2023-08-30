@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 class CustomColor {
-  static const Color mainColor = Color(0xFF00BFFF);
+  static const Color mainColor = Color(0xFF344F65);
   static const Color subColor = Color(0xFF4C4C4C);
   static const Color disabledColor = Color(0xfdD9d9d9);
   static const Color pointColor = Color(0xffec255a);

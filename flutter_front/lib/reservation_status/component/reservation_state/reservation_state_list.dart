@@ -3,24 +3,36 @@ import 'package:flutter_front/common/styles/styles.dart';
 import 'package:flutter_front/reservation_status/component/reservation_state/reservation_state_item.dart';
 import 'package:flutter_front/reservation_status/model/entity/reservation_entity.dart';
 import 'package:flutter_front/reservation_status/model/state/reservation_list_state.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ReservationStateList extends StatelessWidget {
+class ReservationStateList extends ConsumerStatefulWidget {
   final ReservationStatusListState state;
   final List<ReservationStatusEntity>? reservationStatusList;
   final double height;
-  final CustomCancelListController customCancelListController;
-
-  const ReservationStateList({
+  late final ChangeNotifierProvider<CustomCancelListController> provider;
+  ReservationStateList({
     Key? key,
     required this.state,
     required this.reservationStatusList,
     required this.height,
-    required this.customCancelListController,
-  }) : super(key: key);
+    required CustomCancelListController controller,
+  }) : super(key: key) {
+    provider = ChangeNotifierProvider((ref) => controller);
+  }
+
+  @override
+  ConsumerState<ReservationStateList> createState() =>
+      _ReservationStateListState();
+}
+
+class _ReservationStateListState extends ConsumerState<ReservationStateList> {
+  late CustomCancelListController controller;
 
   @override
   Widget build(BuildContext context) {
-    switch (state.runtimeType) {
+    controller = ref.watch(widget.provider);
+
+    switch (widget.state.runtimeType) {
       case ReservationStatusListStateNone:
         return Center(
           child: Column(
@@ -28,8 +40,8 @@ class ReservationStateList extends StatelessWidget {
             children: [
               Image(
                 image: const AssetImage("assets/image/black_logo.png"),
-                width: height * 3 / 7,
-                height: height * 3 / 7,
+                width: widget.height * 3 / 7,
+                height: widget.height * 3 / 7,
               ),
               const Text(
                 "아직 예약이 오픈되지 않았습니다.",
@@ -46,12 +58,18 @@ class ReservationStateList extends StatelessWidget {
       case ReservationStatusListStateSuccess:
         return ListView.builder(
           shrinkWrap: true,
-          itemCount: reservationStatusList!.length,
+          itemCount: widget.reservationStatusList!.length,
           itemBuilder: (context, i) => ReservationStateItem(
-            height: (height / reservationStatusList!.length - kBorderSideWidth)
+            height: (widget.height / widget.reservationStatusList!.length -
+                    kBorderSideWidth)
                 .floorToDouble(),
-            entity: reservationStatusList![i],
-            controller: customCancelListController,
+            entity: widget.reservationStatusList![i],
+            isChecked: controller
+                .isChecked(widget.reservationStatusList![i].reservationId),
+            onPressed: (value) {
+              controller.clickedCheckBox(
+                  widget.reservationStatusList![i].reservationId);
+            },
           ),
         );
       case ReservationStatusListStateError:

@@ -1,38 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_front/common/styles/styles.dart';
 import 'package:flutter_front/common/utils/data_utils.dart';
-import 'package:flutter_front/reservation_status/component/reservation_state/reservation_state_list.dart';
 import 'package:flutter_front/reservation_status/model/entity/reservation_entity.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ReservationStateItem extends ConsumerStatefulWidget {
+class ReservationStateItem extends StatelessWidget {
   final ReservationStatusEntity entity;
   final double? height;
-  late final ChangeNotifierProvider<CustomCancelListController> provider;
+  final void Function(bool?) onPressed;
+  final bool isChecked;
 
-  ReservationStateItem({
+  const ReservationStateItem({
     Key? key,
     this.height,
     required this.entity,
-    required CustomCancelListController controller,
-  }) : super(key: key) {
-    provider = ChangeNotifierProvider((ref) => controller);
-  }
+    required this.isChecked,
+    required this.onPressed,
+  }) : super(key: key);
 
-  @override
-  ConsumerState<ReservationStateItem> createState() =>
-      _ReservationStateItemState();
-}
-
-class _ReservationStateItemState extends ConsumerState<ReservationStateItem> {
-  late CustomCancelListController controller;
   @override
   Widget build(BuildContext context) {
-    controller = ref.watch(widget.provider);
     return LayoutBuilder(builder: (context, constraints) {
       return Container(
         width: constraints.maxWidth,
-        height: widget.height,
+        height: height,
         decoration: const BoxDecoration(
           border: Border(bottom: BorderSide(width: kBorderSideWidth)),
         ),
@@ -49,7 +39,7 @@ class _ReservationStateItemState extends ConsumerState<ReservationStateItem> {
                   horizontal: kPaddingMiddleSize,
                 ),
                 child: Text(
-                  DataUtils.intToTimeRange(widget.entity.time, 2),
+                  DataUtils.intToTimeRange(entity.time, 2),
                   textAlign: TextAlign.center,
                   style: kTextNormalStyleMiddle,
                 ),
@@ -61,9 +51,9 @@ class _ReservationStateItemState extends ConsumerState<ReservationStateItem> {
                   vertical: kPaddingSmallSize + 2,
                   horizontal: kPaddingMiddleSize,
                 ),
-                child: widget.entity.major == null
-                    ? widget.entity.date
-                                .copyWith(hour: widget.entity.time)
+                child: entity.major == null
+                    ? entity.date
+                                .copyWith(hour: entity.time)
                                 .compareTo(DateTime.now()) ==
                             -1
                         ? Row(
@@ -98,7 +88,7 @@ class _ReservationStateItemState extends ConsumerState<ReservationStateItem> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            "${widget.entity.circle ?? "개인"} (${widget.entity.major})",
+                            "${entity.circle ?? "개인"} (${entity.major})",
                             style: kTextNormalStyleMiddle,
                           ),
                           Transform.scale(
@@ -107,12 +97,8 @@ class _ReservationStateItemState extends ConsumerState<ReservationStateItem> {
                               padding: const EdgeInsets.only(
                                   right: kPaddingMiddleSize),
                               child: Checkbox(
-                                value: controller
-                                    .isChecked(widget.entity.reservationId),
-                                onChanged: (value) {
-                                  controller.clickedCheckBox(
-                                      widget.entity.reservationId);
-                                },
+                                value: isChecked,
+                                onChanged: onPressed,
                               ),
                             ),
                           ),

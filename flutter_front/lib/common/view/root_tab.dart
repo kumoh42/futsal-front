@@ -137,17 +137,25 @@ class _RootTabState extends ConsumerState<RootTab>
                     useIndicator: true,
 
                     indicatorColor: CustomColor.backgroundMainColor,
+                    indicatorShape: const RoundedRectangleBorder(
+                      side: BorderSide(
+                        color: CustomColor.backgroundMainColor,
+                        strokeAlign: 1,
+                        width: 19,
+                      ),
+                    ),
 
                     selectedLabelTextStyle:
-                        const TextStyle(color: CustomColor.backgroundMainColor),
+                        const TextStyle(color: CustomColor.subColor),
                     unselectedLabelTextStyle: TextStyle(
-                        color: CustomColor.disabledColor.withOpacity(0.5)),
+                      color: CustomColor.backgroundMainColor.withOpacity(0.8),
+                    ),
                     selectedIconTheme: const IconThemeData(
                       color: CustomColor.subColor,
                       size: 30,
                     ),
-                    unselectedIconTheme: IconThemeData(
-                        color: CustomColor.disabledColor.withOpacity(0.5)),
+                    unselectedIconTheme: const IconThemeData(
+                        color: CustomColor.backgroundMainColor),
                     // destinations 실제 메뉴에 나타날 위젯들
                     destinations: TABS.map((e) => _destination(e)).toList(),
                     selectedIndex: index,
@@ -184,7 +192,10 @@ class _RootTabState extends ConsumerState<RootTab>
       ),
       label: Text(
         info.label,
-        style: kTextReverseStyleMini,
+        style: const TextStyle(
+          fontSize: 11,
+          fontWeight: FontWeight.w900,
+        ),
       ),
     );
   }

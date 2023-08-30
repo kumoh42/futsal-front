@@ -73,7 +73,7 @@ class ReservationStatusViewModel extends ChangeNotifier {
     }
     if (cancelList.isEmpty) return;
 
-    showDialog(
+    await showDialog(
       context: context,
       builder: (context) => ReservationCancelDialog(
         entities: cancelList,
@@ -82,5 +82,7 @@ class ReservationStatusViewModel extends ChangeNotifier {
             .cancelReservation(entities: cancelList),
       ),
     );
+
+    cancelListcontroller.reset();
   }
 }

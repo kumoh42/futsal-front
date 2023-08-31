@@ -12,7 +12,6 @@ void main() async {
 }
 
 class MyApp extends ConsumerWidget {
-  //FOR COMMIT TEST
   const MyApp({super.key});
 
   @override

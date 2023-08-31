@@ -18,11 +18,15 @@ class ProgressReservationService
       : super(ProgressReservationStateNone());
 
   Future stopPreReservation() async {
-    repository.setPrgressReservation("close");
+    repository.setProgressReservation("close");
   }
 
   Future restartPreReservation() async {
-    repository.setPrgressReservation("open");
+    repository.setProgressReservation("open");
+  }
+
+  Future<String> getProgressReservation() async {
+    return "";
   }
 
   Future resetPreReservation() async {}

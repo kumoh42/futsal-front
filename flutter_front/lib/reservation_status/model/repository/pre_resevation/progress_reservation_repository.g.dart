@@ -19,7 +19,7 @@ class _ProgressReservationRepository implements ProgressReservationRepository {
   String? baseUrl;
 
   @override
-  Future<void> setPrgressReservation(String state) async {
+  Future<void> setProgressReservation(String state) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'state': state};
     final _headers = <String, dynamic>{};

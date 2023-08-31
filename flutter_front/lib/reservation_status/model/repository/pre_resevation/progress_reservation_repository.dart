@@ -16,5 +16,5 @@ abstract class ProgressReservationRepository {
       _ProgressReservationRepository;
 
   @PUT("/reservation/pre")
-  Future<void> setPrgressReservation(@Query("state") String state);
+  Future<void> setProgressReservation(@Query("state") String state);
 }

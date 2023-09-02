@@ -9,13 +9,13 @@ part of 'pre_reservation_status_entity.dart';
 PreReservationStatusEntity _$PreReservationStatusEntityFromJson(
         Map<String, dynamic> json) =>
     PreReservationStatusEntity(
-      dates: json['dates'] as String,
-      times: json['times'] as String,
+      date: json['date'] as String,
+      time: json['time'] as String,
     );
 
 Map<String, dynamic> _$PreReservationStatusEntityToJson(
         PreReservationStatusEntity instance) =>
     <String, dynamic>{
-      'dates': instance.dates,
-      'times': instance.times,
+      'date': instance.date,
+      'time': instance.time,
     };

@@ -4,11 +4,11 @@ part 'pre_reservation_status_entity.g.dart';
 
 @JsonSerializable()
 class PreReservationStatusEntity {
-  String dates;
-  String times;
+  String date;
+  String time;
   PreReservationStatusEntity({
-    required this.dates,
-    required this.times,
+    required this.date,
+    required this.time,
   });
   Map<String, dynamic> toJson() => _$PreReservationStatusEntityToJson(this);
 

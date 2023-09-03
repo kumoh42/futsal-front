@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_front/common/dio/dio.dart';
+import 'package:flutter_front/reservation_status/model/entity/pre_reservation/progress_reservation_entity.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:retrofit/retrofit.dart';
 
@@ -17,4 +18,10 @@ abstract class ProgressReservationRepository {
 
   @PUT("/reservation/pre")
   Future<void> setProgressReservation(@Query("state") String state);
+
+  @GET("/")
+  Future<ProgressReservationEntity> getProgressReservation();
+
+  @PUT("/")
+  Future<void> reset();
 }

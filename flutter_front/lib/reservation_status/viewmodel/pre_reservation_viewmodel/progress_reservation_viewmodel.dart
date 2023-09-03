@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_front/reservation_status/model/entity/pre_reservation/pre_reservation_status_entity.dart';
+import 'package:flutter_front/common/styles/text_styles.dart';
+import 'package:flutter_front/common/utils/custom_dialog_utils.dart';
+import 'package:flutter_front/common/utils/snack_bar_util.dart';
 import 'package:flutter_front/reservation_status/model/service/pre_reservation/progress_reservation_service.dart';
+import 'package:flutter_front/reservation_status/model/state/pre_reservation/progress_reservation_state.dart';
 import 'package:flutter_front/reservation_status/viewmodel/pre_reservation_viewmodel/pre_reservation_setting_viewmodel.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -9,34 +12,94 @@ final progressReservationViewModelProvider =
 
 class ProgressReservationViewModel extends ChangeNotifier {
   final Ref ref;
-  late bool isPreReservation;
-  late DateTime progressReservation;
+  late ProgressReservationState state;
   ProgressReservationViewModel(this.ref) {
-    isPreReservation = false;
-    progressReservation = DateTime.now();
+    state = ref.watch(progressResrvationServiceProvider);
   }
 
-  void getProgressReservation() {
-    final viewmodel = ref.watch(preReservationSettingViewModelProvider);
-    final List<PreReservationStatusEntity> list =
-        viewmodel.preReservationStatusList ?? [];
-  }
-
-  void stopPreReservation() async {
+  void getProgressReservation() async {
     await ref
         .read(progressResrvationServiceProvider.notifier)
-        .stopPreReservation();
+        .getProgressReservation();
+
+    // progressReservation = date;
+    notifyListeners();
   }
 
-  void restartPreReservation() async {
-    await ref
-        .read(progressResrvationServiceProvider.notifier)
-        .restartPreReservation();
+  void refreshProgressReservation() async {
+    SnackBarUtil.showSuccess("새로고침");
+    ref
+        .read(preReservationSettingViewModelProvider.notifier)
+        .getPreReservationStatusList();
+
+    getProgressReservation();
+    notifyListeners();
   }
 
-  void resetPreReservation() async {
-    await ref
-        .read(progressResrvationServiceProvider.notifier)
-        .resetPreReservation();
+  void stopPreReservation(BuildContext context) async {
+    if (state is! ProgressReservationStateSuccess) return;
+    if (!(state as ProgressReservationStateSuccess).data.isPre) {
+      SnackBarUtil.showError("정규예약은 중단할 수 없습니다!");
+      return;
+    }
+    CustomDialogUtil.showCustomDialog(
+        dialog: CustomDialog(
+          title: const Text(
+            "우선예약 중단 확인",
+            style: kTextMainStyleMiddle,
+          ),
+          content: Text(
+            '${(state as ProgressReservationStateSuccess).data.date.date} ${(state as ProgressReservationStateSuccess).data.date.time}\n예약을 중지하시겠습니까?',
+            style: kTextNormalStyleLarge,
+          ),
+          onPressed: () async {
+            await ref
+                .read(progressResrvationServiceProvider.notifier)
+                .stopPreReservation();
+          },
+        ),
+        context: context);
+  }
+
+  void restartPreReservation(BuildContext context) async {
+    if (state is! ProgressReservationStateSuccess) return;
+    if (!(state as ProgressReservationStateSuccess).data.isPre) {
+      SnackBarUtil.showError("정규예약은 재개 할 수 없습니다!");
+      return;
+    }
+    CustomDialogUtil.showCustomDialog(
+        dialog: CustomDialog(
+          title: const Text(
+            "우선예약 재개 확인",
+            style: kTextMainStyleMiddle,
+          ),
+          content: Text(
+            '${(state as ProgressReservationStateSuccess).data.date.date} ${(state as ProgressReservationStateSuccess).data.date.time}\n예약을 재개하시겠습니까?',
+            style: kTextNormalStyleLarge,
+          ),
+          onPressed: () async {
+            await ref
+                .read(progressResrvationServiceProvider.notifier)
+                .restartPreReservation();
+          },
+        ),
+        context: context);
+  }
+
+  void resetPreReservation(BuildContext context) async {
+    if (state is! ProgressReservationStateSuccess) return;
+    if (!(state as ProgressReservationStateSuccess).data.isPre) {
+      SnackBarUtil.showError("정규예약은 초기화 할 수 없습니다!");
+      return;
+    }
+    CustomDialogUtil.showCustomDialog(
+        dialog: CustomDialog(
+          onPressed: () async {
+            await ref
+                .read(progressResrvationServiceProvider.notifier)
+                .resetPreReservation();
+          },
+        ),
+        context: context);
   }
 }

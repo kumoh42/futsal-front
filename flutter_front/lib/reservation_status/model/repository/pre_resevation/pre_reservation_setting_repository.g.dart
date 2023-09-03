@@ -29,13 +29,13 @@ class _PreReservationSettingRepository
     final _data = <String, dynamic>{};
     _data.addAll(preReservationStatusEntity.toJson());
     final _result = await _dio.fetch(_setStreamType<dynamic>(Options(
-      method: 'PUT',
+      method: 'POST',
       headers: _headers,
       extra: _extra,
     )
         .compose(
           _dio.options,
-          '/',
+          '/reservation/pre/time-setting',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -53,13 +53,13 @@ class _PreReservationSettingRepository
     final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<List<dynamic>>(
         _setStreamType<List<PreReservationStatusEntity>>(Options(
-      method: 'PUT',
+      method: 'GET',
       headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              '/',
+              '/reservation/pre/time-list',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -87,7 +87,7 @@ class _PreReservationSettingRepository
     )
         .compose(
           _dio.options,
-          '/',
+          '/reservation/pre/time-delete',
           queryParameters: queryParameters,
           data: _data,
         )

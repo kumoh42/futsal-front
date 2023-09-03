@@ -72,9 +72,9 @@ class PreReservationSettingViewModel extends ChangeNotifier {
     final dates =
         defaultDateFormat.format(customTimeTableController.focusedDay);
     final times =
-        '${hour.toString().padLeft(2, "0")}-${minute.toString().padLeft(2, "0")}';
+        '${hour.toString().padLeft(2, "0")}:${minute.toString().padLeft(2, "0")}';
 
-    final entity = PreReservationStatusEntity(dates: dates, times: times);
+    final entity = PreReservationStatusEntity(date: dates, time: times);
 
     CustomDialogUtil.showCustomDialog(
       dialog: CustomDialog(
@@ -101,8 +101,26 @@ class PreReservationSettingViewModel extends ChangeNotifier {
 
   void canclePreReservation(
       BuildContext context, PreReservationStatusEntity entity) async {
-    await ref
-        .read(preReservationSettingServiceProvider.notifier)
-        .cancelPreReservation(preReservationStatusEntity: entity);
+    CustomDialogUtil.showCustomDialog(
+      dialog: CustomDialog(
+        title: const Text(
+          '우선예약 설정 취소',
+          style: kTextMainStyleMiddle,
+        ),
+        content: Text(
+          ' ${entity.date} ${entity.time}',
+          style: kTextNormalStyleLarge,
+        ),
+        accept: "확인",
+        cancel: "취소",
+        onPressed: () async {
+          await ref
+              .read(preReservationSettingServiceProvider.notifier)
+              .cancelPreReservation(preReservationStatusEntity: entity);
+          Navigator.of(context).pop();
+        },
+      ),
+      context: context,
+    );
   }
 }

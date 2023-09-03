@@ -22,9 +22,8 @@ class PreReservationSettingService
       {required PreReservationStatusEntity preReservationStatusEntity}) async {
     state = PreReservaitonSettingStateLoading();
     try {
-      // await repository.setPreReservation(preReservationStatusEntity);
-      final data = await getPreReservationList();
-      state = PreReservationSettingListStateSuccess(data);
+      await repository.setPreReservation(preReservationStatusEntity);
+      await getPreReservationList();
     } on DioException {
       state = PreReservationSettingStateError("서버와의 통신이 끊겼습니다.");
     } catch (e) {
@@ -35,17 +34,16 @@ class PreReservationSettingService
   Future getPreReservationList() async {
     try {
       state = PreReservationSettingListStateLoading();
-      // final resp = await repository.getPreReservationList();
-      // if (resp.isEmpty) {
-      //   state = PreReservaitonSettingStateNone();
-      // } else {
-      //   state = PreReservationSettingStateSuccess(resp);
-      // }
+      final resp = await repository.getPreReservationList();
+      if (resp.isEmpty) {
+        state = PreReservaitonSettingStateNone();
+      } else {
+        state = PreReservationSettingStateSuccess(resp);
+      }
 
-      //TODO : getPreReservationList repository 연결
-      //  state = PreReservationSettingListStateSuccess(list);
+      state = PreReservationSettingListStateSuccess(resp);
     } on DioException {
-      state = PreReservationSettingStateError("서버에서 예약 정보를 가져올 수 없습니다. ");
+      state = PreReservationSettingStateError("서버에서 우선예약 정보를 가져올 수 없습니다. ");
     } catch (e) {
       state = PreReservationSettingStateError("알 수 없는 에러가 발생했습니다.");
     }
@@ -55,10 +53,8 @@ class PreReservationSettingService
       {required PreReservationStatusEntity preReservationStatusEntity}) async {
     try {
       state = PreReservaitonSettingStateLoading();
-
-      // TODO PreReservationSettingRepository와 연결
-
-      final data = await getPreReservationList();
+      await repository.cancelPreReservation(preReservationStatusEntity);
+      await getPreReservationList();
     } on DioException {
       state = PreReservationSettingStateError("서버에서 예약 정보를 가져올 수 없습니다. ");
     } catch (e) {

@@ -16,16 +16,16 @@ abstract class PreReservationSettingRepository {
   factory PreReservationSettingRepository(Dio dio, {String baseUrl}) =
       _PreReservationSettingRepository;
 
-  @POST('/pre/time-apply')
+  @POST('/reservation/pre/time-setting')
   @Headers({'accessToken': 'true'})
   Future setPreReservation(
       @Body() PreReservationStatusEntity preReservationStatusEntity);
 
-  @PUT('/')
+  @GET('/reservation/pre/time-list')
   @Headers({'accessToken': 'true'})
   Future<List<PreReservationStatusEntity>> getPreReservationList();
 
-  @PATCH('/')
+  @PATCH('/reservation/pre/time-delete')
   @Headers({'accessToken': 'true'})
   Future cancelPreReservation(
       @Body() PreReservationStatusEntity preReservationStatusEntity);

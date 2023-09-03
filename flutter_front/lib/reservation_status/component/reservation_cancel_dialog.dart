@@ -78,7 +78,7 @@ class ReservationCancelDialog extends StatelessWidget {
               const Text('예약을 취소하시겠습니까?', style: kTextMainStyleSmall),
               const SizedBox(height: kPaddingMiddleSize),
               const Text(
-                '사전 안내 없이 임의로 취소하여 문제가 발생할 경우\n\'금오사이\'에서는 챔임지지 않습니다.',
+                '우선 안내 없이 임의로 취소하여 문제가 발생할 경우\n\'금오사이\'에서는 챔임지지 않습니다.',
                 style: kTextMainStyleSmall,
               ),
             ],

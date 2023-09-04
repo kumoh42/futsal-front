@@ -1,4 +1,4 @@
-import 'package:dio/dio.dart';
+import 'package:dio/dio.dart' hide Headers;
 import 'package:flutter_front/common/dio/dio.dart';
 import 'package:flutter_front/reservation_status/model/entity/pre_reservation/progress_reservation_entity.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -16,12 +16,19 @@ abstract class ProgressReservationRepository {
   factory ProgressReservationRepository(Dio dio, {String baseUrl}) =
       _ProgressReservationRepository;
 
-  @PUT("/reservation/pre")
-  Future<void> setProgressReservation(@Query("state") String state);
+  @PUT("/reservation/pre/reopen")
+  @Headers({'accessToken': 'true'})
+  Future<void> setProgressReservationOpen();
 
-  @GET("/")
+  @PUT("/reservation/pre/stop")
+  @Headers({'accessToken': 'true'})
+  Future<void> setProgressReservationStop();
+
+  @GET("/reservation/now")
+  @Headers({'accessToken': 'true'})
   Future<ProgressReservationEntity> getProgressReservation();
 
-  @PUT("/")
+  @DELETE("/reservation/pre/reset")
+  @Headers({'accessToken': 'true'})
   Future<void> reset();
 }

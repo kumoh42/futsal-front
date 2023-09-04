@@ -19,10 +19,11 @@ class _ProgressReservationRepository implements ProgressReservationRepository {
   String? baseUrl;
 
   @override
-  Future<void> setProgressReservation(String state) async {
+  Future<void> setProgressReservationOpen() async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{r'state': state};
-    final _headers = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'accessToken': 'true'};
+    _headers.removeWhere((k, v) => v == null);
     final Map<String, dynamic>? _data = null;
     await _dio.fetch<void>(_setStreamType<void>(Options(
       method: 'PUT',
@@ -31,7 +32,28 @@ class _ProgressReservationRepository implements ProgressReservationRepository {
     )
         .compose(
           _dio.options,
-          '/reservation/pre',
+          '/reservation/pre/reopen',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+  }
+
+  @override
+  Future<void> setProgressReservationStop() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'accessToken': 'true'};
+    _headers.removeWhere((k, v) => v == null);
+    final Map<String, dynamic>? _data = null;
+    await _dio.fetch<void>(_setStreamType<void>(Options(
+      method: 'PUT',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          '/reservation/pre/stop',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -42,7 +64,8 @@ class _ProgressReservationRepository implements ProgressReservationRepository {
   Future<ProgressReservationEntity> getProgressReservation() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'accessToken': 'true'};
+    _headers.removeWhere((k, v) => v == null);
     final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ProgressReservationEntity>(Options(
@@ -52,7 +75,7 @@ class _ProgressReservationRepository implements ProgressReservationRepository {
     )
             .compose(
               _dio.options,
-              '/',
+              '/reservation/now',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -65,16 +88,17 @@ class _ProgressReservationRepository implements ProgressReservationRepository {
   Future<void> reset() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'accessToken': 'true'};
+    _headers.removeWhere((k, v) => v == null);
     final Map<String, dynamic>? _data = null;
     await _dio.fetch<void>(_setStreamType<void>(Options(
-      method: 'PUT',
+      method: 'DELETE',
       headers: _headers,
       extra: _extra,
     )
         .compose(
           _dio.options,
-          '/',
+          '/reservation/pre/reset',
           queryParameters: queryParameters,
           data: _data,
         )

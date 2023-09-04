@@ -46,7 +46,7 @@ class _MessagingBoxState extends ConsumerState<MessagingBox> {
       child: AnimatedContainer(
         width: controller.isHorizontalExpanded
             ? 400
-            : kNavigationRailSize - 2 * kPaddingSmallSize,
+            : kNavigationRailSize * 2.5 - 2 * kPaddingSmallSize,
         height: controller.isVerticalExpanded ? kContainerHeightSize : 70,
         duration: controller.duration,
         curve: Curves.fastEaseInToSlowEaseOut,

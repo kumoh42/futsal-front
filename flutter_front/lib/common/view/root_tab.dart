@@ -44,6 +44,7 @@ class _RootTabState extends ConsumerState<RootTab>
 
   @override
   Widget build(BuildContext context) {
+    displayWidth = MediaQuery.of(context).size.width;
     return DefaultLayout(
       title: '풋살장 예약 시스템 관리자 페이지',
       leading: Image.asset(
@@ -99,9 +100,9 @@ class _RootTabState extends ConsumerState<RootTab>
           ),
         ),
       ],
-      /*bottomNavigationBar: MediaQuery.of(context).size.width > 700 ? null : BottomNavigationBar(
+      bottomNavigationBar: !kIsMobile ? null : BottomNavigationBar(
         backgroundColor: CustomColor.mainColor,
-        selectedItemColor: CustomColor.backGroundSubColor,
+        selectedItemColor: CustomColor.backgroundMainColor,
         unselectedItemColor: CustomColor.disabledColor.withOpacity(0.5),
         type: BottomNavigationBarType.fixed,
         onTap: (int index) => setState(() => controller.animateTo(index)),
@@ -112,7 +113,7 @@ class _RootTabState extends ConsumerState<RootTab>
           label: e.label,
         ))
             .toList(),
-      ),*/
+      ),
 
       /* LayoutBuilder->부모 위젯의 크기와 제약 조건에 따라 자식 위젯의 레이아웃을 동적으로 조정
        constraints 변수를 통해 부모 위젯의 제약 조건에 접근 */
@@ -121,7 +122,7 @@ class _RootTabState extends ConsumerState<RootTab>
           children: [
             /*if(MediaQuery.of(context).size.width > 700)*/
             // SingleChildScrollView 이 부분이 tab 부분
-            SingleChildScrollView(
+            if(!kIsMobile) SingleChildScrollView(
               child: Container(
                 constraints: BoxConstraints(
                   // root tab의 세로 높이.
@@ -167,7 +168,7 @@ class _RootTabState extends ConsumerState<RootTab>
               child: TabBarView(
                 controller: controller,
                 physics: const NeverScrollableScrollPhysics(),
-                children: const [
+                children: [
                   ReservationStatusScreen(),
                   ConstructionScreen(),
                 ],

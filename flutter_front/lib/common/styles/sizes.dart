@@ -1,6 +1,29 @@
 import 'package:flutter/material.dart';
 
-const double kLayoutWidthSize = 1440;
+const double _kResponsiveTrigger1920 = 1920;
+const double _kResponsiveTrigger1300 = 1300;
+const double _kResponsiveTrigger768 = 768;
+const double _kResponsiveTrigger480 = 480;
+
+double displayWidth = 1920;
+
+bool get kIsWeb => displayWidth > _kResponsiveTrigger1300;
+bool get kIsTab => !kIsWeb && displayWidth > _kResponsiveTrigger480;
+bool get kIsMobile => displayWidth <= _kResponsiveTrigger480;
+
+double get kLayoutWidthSize => displayWidth > _kResponsiveTrigger1920
+    ? _kResponsiveTrigger1920
+    : displayWidth > _kResponsiveTrigger768
+        ? displayWidth
+        : displayWidth > _kResponsiveTrigger480
+            ? _kResponsiveTrigger768
+            : displayWidth;
+
+double get kMainPageContainerHeightSize =>
+    850 / _kResponsiveTrigger1920 * displayWidth > 850
+        ? 850 / _kResponsiveTrigger1920 * displayWidth
+        : 850;
+
 const double kNavigationRailSize = 100;
 const double kAppbarHeight = 75;
 
@@ -35,5 +58,3 @@ const double kLineLargeSize = 5.0;
 const double kLineSmallSize = 2.0;
 
 const double kTextHeight = 1.4;
-
-const double kMainPageContainerHeightSize = 850;

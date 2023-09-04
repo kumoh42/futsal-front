@@ -4,7 +4,7 @@ import 'package:flutter_front/common/styles/text_styles.dart';
 import 'package:flutter_front/common/view/default_tab_bar_view.dart';
 
 class ConstructionScreen extends StatelessWidget {
-  const ConstructionScreen({Key? key}) : super(key: key);
+  ConstructionScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

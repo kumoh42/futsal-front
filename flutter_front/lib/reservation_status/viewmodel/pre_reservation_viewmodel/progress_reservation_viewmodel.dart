@@ -21,9 +21,6 @@ class ProgressReservationViewModel extends ChangeNotifier {
     await ref
         .read(progressResrvationServiceProvider.notifier)
         .getProgressReservation();
-
-    // progressReservation = date;
-    notifyListeners();
   }
 
   void refreshProgressReservation() async {
@@ -33,7 +30,6 @@ class ProgressReservationViewModel extends ChangeNotifier {
         .getPreReservationStatusList();
 
     getProgressReservation();
-    notifyListeners();
   }
 
   void stopPreReservation(BuildContext context) async {
@@ -42,6 +38,7 @@ class ProgressReservationViewModel extends ChangeNotifier {
       SnackBarUtil.showError("정규예약은 중단할 수 없습니다!");
       return;
     }
+
     CustomDialogUtil.showCustomDialog(
         dialog: CustomDialog(
           title: const Text(
@@ -56,6 +53,7 @@ class ProgressReservationViewModel extends ChangeNotifier {
             await ref
                 .read(progressResrvationServiceProvider.notifier)
                 .stopPreReservation();
+            Navigator.of(context).pop();
           },
         ),
         context: context);
@@ -67,6 +65,7 @@ class ProgressReservationViewModel extends ChangeNotifier {
       SnackBarUtil.showError("정규예약은 재개 할 수 없습니다!");
       return;
     }
+
     CustomDialogUtil.showCustomDialog(
         dialog: CustomDialog(
           title: const Text(
@@ -81,6 +80,7 @@ class ProgressReservationViewModel extends ChangeNotifier {
             await ref
                 .read(progressResrvationServiceProvider.notifier)
                 .restartPreReservation();
+            Navigator.of(context).pop();
           },
         ),
         context: context);
@@ -92,12 +92,18 @@ class ProgressReservationViewModel extends ChangeNotifier {
       SnackBarUtil.showError("정규예약은 초기화 할 수 없습니다!");
       return;
     }
+
     CustomDialogUtil.showCustomDialog(
         dialog: CustomDialog(
+          content: Text(
+            '${(state as ProgressReservationStateSuccess).data.date.date} ${(state as ProgressReservationStateSuccess).data.date.time} 에 시작된\n우선예약 중 예약된 내역을 \n모두 삭제하시겠습니까?',
+            style: kTextNormalStyleLarge,
+          ),
           onPressed: () async {
             await ref
                 .read(progressResrvationServiceProvider.notifier)
                 .resetPreReservation();
+            Navigator.of(context).pop();
           },
         ),
         context: context);

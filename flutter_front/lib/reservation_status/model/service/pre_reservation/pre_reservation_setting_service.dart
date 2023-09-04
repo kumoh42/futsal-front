@@ -38,10 +38,8 @@ class PreReservationSettingService
       if (resp.isEmpty) {
         state = PreReservaitonSettingStateNone();
       } else {
-        state = PreReservationSettingStateSuccess(resp);
+        state = PreReservationSettingListStateSuccess(resp);
       }
-
-      state = PreReservationSettingListStateSuccess(resp);
     } on DioException {
       state = PreReservationSettingStateError("서버에서 우선예약 정보를 가져올 수 없습니다. ");
     } catch (e) {

@@ -34,21 +34,17 @@ class PreReservationStatusList extends StatelessWidget {
           itemCount: list!.length,
         );
       case PreReservaitonSettingStateNone:
-        return Container(
-          child: const Center(
-            child: Text(
-              "설정된 우선예약이 없습니다",
-              style: kTextMainStyleMiddle,
-            ),
+        return const Center(
+          child: Text(
+            "설정된 우선예약이 없습니다",
+            style: kTextMainStyleMiddle,
           ),
         );
       case PreReservationSettingStateError:
-        return Container(
-          child: const Center(
-            child: Text(
-              "오류가 발생했습니다",
-              style: kTextMainStyleMiddle,
-            ),
+        return const Center(
+          child: Text(
+            "정보를 가져올 수 없습니다",
+            style: kTextMainStyleMiddle,
           ),
         );
     }

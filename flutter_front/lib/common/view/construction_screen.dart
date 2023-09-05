@@ -19,11 +19,11 @@ class ConstructionScreen extends StatelessWidget {
               width: 300,
               height: 300,
             ),
-            const Text(
+            Text(
               "해당 기능은 공사중 입니다. 빠른시일 내에 오픈하겠습니다.",
               style: kTextMainStyleLarge,
             ),
-            const SizedBox(height: kPaddingXLargeSize),
+            SizedBox(height: kPaddingXLargeSize),
           ],
         ),
       ),

@@ -7,7 +7,7 @@ class CustomTextButton extends StatelessWidget {
   final String text;
   final TextAlign textAlign;
 
-  const CustomTextButton(
+  CustomTextButton(
       {Key? key,
       required this.onPressed,
       required this.text,

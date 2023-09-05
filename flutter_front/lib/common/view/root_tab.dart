@@ -12,7 +12,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class RootTab extends ConsumerStatefulWidget {
   static String get routeName => 'home';
 
-  const RootTab({Key? key}) : super(key: key);
+  RootTab({Key? key}) : super(key: key);
 
   @override
   ConsumerState<RootTab> createState() => _RootTabState();
@@ -44,7 +44,6 @@ class _RootTabState extends ConsumerState<RootTab>
 
   @override
   Widget build(BuildContext context) {
-    displayWidth = MediaQuery.of(context).size.width;
     return DefaultLayout(
       title: '풋살장 예약 시스템 관리자 페이지',
       leading: Image.asset(
@@ -54,7 +53,7 @@ class _RootTabState extends ConsumerState<RootTab>
       appbarHeight: kAppbarHeight,
       leadingWidth: kNavigationRailSize * 2,
       backgroundColor: CustomColor.backgroundMainColor,
-      floatingActionButton: const MessageView(),
+      floatingActionButton: MessageView(),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       actions: [
         Padding(
@@ -90,7 +89,7 @@ class _RootTabState extends ConsumerState<RootTab>
                 dialog: CustomDialog(
                   onPressed: ref.read(authServiceProvider.notifier).logout,
                   accept: "logout",
-                  content: const Text(
+                  content: Text(
                     "정말 로그아웃 하시겠습니까?",
                     style: kTextNormalStyleMiddle,
                   ),

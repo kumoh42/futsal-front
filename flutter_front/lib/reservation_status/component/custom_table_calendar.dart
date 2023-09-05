@@ -28,14 +28,12 @@ class _CustomTimeTableState extends ConsumerState<CustomTimeTable> {
     controller = ref.watch(widget.provider);
     return TableCalendar(
       locale: 'ko_KR',
-      headerStyle: const HeaderStyle(
+      headerStyle: HeaderStyle(
         titleCentered: true,
         formatButtonVisible: false,
         // TODO : TimeTable Header 디자인 변경
         titleTextStyle: kTextMainStyleMiddle,
-        decoration: BoxDecoration(
-          color: CustomColor.disabledColor,
-        ),
+        decoration: const BoxDecoration(color: CustomColor.disabledColor),
       ),
       rowHeight: widget.rowHeight,
       daysOfWeekHeight: widget.rowHeight,

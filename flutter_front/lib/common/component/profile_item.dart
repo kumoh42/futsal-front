@@ -7,7 +7,7 @@ class ProfileItem extends StatelessWidget {
   final UserEntity entity;
   final Function() logout;
 
-  const ProfileItem({
+  ProfileItem({
     Key? key,
     required this.entity,
     required this.logout,
@@ -21,7 +21,7 @@ class ProfileItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
         children: [
-          const SizedBox(width: kPaddingSmallSize),
+          SizedBox(width: kPaddingSmallSize),
           Container(
             width: 60,
             height: 60,
@@ -32,19 +32,19 @@ class ProfileItem extends StatelessWidget {
           ),
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.all(kPaddingSmallSize),
+              padding: EdgeInsets.all(kPaddingSmallSize),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(entity.userName, style: kTextMainStyleMiddle),
-                  const SizedBox(height: kPaddingSmallSize),
+                  SizedBox(height: kPaddingSmallSize),
                   Row(
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Expanded(child: Text('관리자', style: kTextMainStyleSmall)),
-                      const SizedBox(width: kPaddingSmallSize),
+                      Expanded(child: Text('관리자', style: kTextMainStyleSmall)),
+                      SizedBox(width: kPaddingSmallSize),
                       ElevatedButton(
                         onPressed: logout,
                         style: ElevatedButton.styleFrom(

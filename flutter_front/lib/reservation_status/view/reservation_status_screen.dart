@@ -11,7 +11,7 @@ class ReservationStatusScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return DefaultTabBarView(
       child: Padding(
-        padding: const EdgeInsets.all(kPaddingMiddleSize),
+        padding: EdgeInsets.all(kPaddingMiddleSize),
         child: kIsWeb
             ? Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -20,15 +20,15 @@ class ReservationStatusScreen extends StatelessWidget {
                   Expanded(
                     child: SizedBox(
                       height: kMainPageContainerHeightSize,
-                      child: const ReservationStatusView(),
+                      child: ReservationStatusView(),
                     ),
                   ),
-                  const SizedBox(width: kPaddingMiddleSize),
+                  SizedBox(width: kPaddingMiddleSize),
                   // 우선예약 부분
                   Expanded(
                     child: SizedBox(
                       height: kMainPageContainerHeightSize,
-                      child: const PreReservationSettingView(),
+                      child: PreReservationSettingView(),
                     ),
                   ),
                 ],
@@ -39,13 +39,13 @@ class ReservationStatusScreen extends StatelessWidget {
                   // 예약 확인 부분
                   SizedBox(
                     height: kMainPageContainerHeightSize,
-                    child: const ReservationStatusView(),
+                    child: ReservationStatusView(),
                   ),
-                  const SizedBox(width: kPaddingMiddleSize),
+                  SizedBox(width: kPaddingMiddleSize),
                   // 우선예약 부분
                   SizedBox(
                     height: kMainPageContainerHeightSize,
-                    child: const PreReservationSettingView(),
+                    child: PreReservationSettingView(),
                   ),
                 ],
               ),

@@ -4,7 +4,7 @@ import 'package:flutter_front/reservation_status/component/custom_container.dart
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ReservationMemberView extends ConsumerWidget {
-  const ReservationMemberView({Key? key}) : super(key: key);
+  ReservationMemberView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

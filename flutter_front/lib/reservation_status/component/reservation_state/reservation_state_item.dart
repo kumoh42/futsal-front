@@ -9,7 +9,7 @@ class ReservationStateItem extends StatelessWidget {
   final void Function(bool?) onPressed;
   final bool isChecked;
 
-  const ReservationStateItem({
+  ReservationStateItem({
     Key? key,
     this.height,
     required this.entity,
@@ -34,7 +34,7 @@ class ReservationStateItem extends StatelessWidget {
                 border: Border(right: BorderSide(width: kBorderSideWidth)),
               ),
               child: Padding(
-                padding: const EdgeInsets.symmetric(
+                padding: EdgeInsets.symmetric(
                   vertical: kPaddingSmallSize + 2,
                   horizontal: kPaddingMiddleSize,
                 ),
@@ -47,7 +47,7 @@ class ReservationStateItem extends StatelessWidget {
             ),
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.symmetric(
+                padding: EdgeInsets.symmetric(
                   vertical: kPaddingSmallSize + 2,
                   horizontal: kPaddingMiddleSize,
                 ),
@@ -63,8 +63,8 @@ class ReservationStateItem extends StatelessWidget {
                                 width: kTextMiddleSize,
                                 height: kTextMiddleSize,
                               ),
-                              const SizedBox(width: kPaddingSmallSize),
-                              const Text(
+                              SizedBox(width: kPaddingSmallSize),
+                              Text(
                                 "예약 불가능",
                                 style: kTextNormalStyleMiddle,
                               ),
@@ -77,8 +77,8 @@ class ReservationStateItem extends StatelessWidget {
                                 width: kTextMiddleSize,
                                 height: kTextMiddleSize,
                               ),
-                              const SizedBox(width: kPaddingSmallSize),
-                              const Text(
+                              SizedBox(width: kPaddingSmallSize),
+                              Text(
                                 "예약 가능",
                                 style: kTextNormalStyleMiddle,
                               ),
@@ -94,7 +94,7 @@ class ReservationStateItem extends StatelessWidget {
                           Transform.scale(
                             scale: 1.3,
                             child: Padding(
-                              padding: const EdgeInsets.only(
+                              padding: EdgeInsets.only(
                                   right: kPaddingMiddleSize),
                               child: Checkbox(
                                 value: isChecked,

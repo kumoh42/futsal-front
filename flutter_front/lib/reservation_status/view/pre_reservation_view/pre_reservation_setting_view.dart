@@ -10,7 +10,7 @@ import 'package:flutter_front/reservation_status/viewmodel/pre_reservation_viewm
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class PreReservationSettingView extends ConsumerStatefulWidget {
-  const PreReservationSettingView({super.key});
+  PreReservationSettingView({super.key});
 
   @override
   ConsumerState<PreReservationSettingView> createState() =>
@@ -74,9 +74,7 @@ class _PreReservationSettingViewState
                             Icons.watch_later_outlined,
                             size: kIconMainSize,
                           ),
-                          const SizedBox(
-                            width: 10,
-                          ),
+                          SizedBox(width: kPaddingSmallSize),
                           GestureDetector(
                             onTap: () {
                               viewmodel.setTimePicker(context);
@@ -88,10 +86,8 @@ class _PreReservationSettingViewState
                               height: 40,
                             ),
                           ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          const Text(
+                          SizedBox(width: kPaddingSmallSize),
+                          Text(
                             ":",
                             style: kTextMainStyleMiddle,
                           ),
@@ -131,7 +127,7 @@ class _PreReservationSettingViewState
           ),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: kPaddingSmallSize),
+          padding: EdgeInsets.symmetric(vertical: kPaddingSmallSize),
           child: Row(
             children: [
               Expanded(
@@ -148,14 +144,14 @@ class _PreReservationSettingViewState
                   ),
                 ),
               ),
-              const Expanded(
+              Expanded(
                 flex: 3,
                 child: ProgressReservationView(),
               ),
             ],
           ),
         ),
-        const Row(
+        Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Padding(

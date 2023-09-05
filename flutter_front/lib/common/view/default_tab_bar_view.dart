@@ -5,7 +5,7 @@ class DefaultTabBarView extends StatelessWidget {
   final Widget child;
   final bool isExpanded;
 
-  const DefaultTabBarView({
+  DefaultTabBarView({
     Key? key,
     this.isExpanded = false,
     required this.child,

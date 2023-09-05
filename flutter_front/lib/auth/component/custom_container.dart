@@ -14,7 +14,7 @@ class CustomContainer extends StatelessWidget {
   final bool isBackground;
   final Widget child;
 
-  const CustomContainer({
+  CustomContainer({
     Key? key,
     this.title,
     this.leading,
@@ -61,7 +61,7 @@ class CustomContainer extends StatelessWidget {
                         leading != null
                             ? Row(children: [
                                 leading!,
-                                const SizedBox(width: kPaddingMiddleSize),
+                                SizedBox(width: kPaddingMiddleSize),
                               ])
                             : Container(),
                         Text(title!, style: kTextMainStyleLarge),

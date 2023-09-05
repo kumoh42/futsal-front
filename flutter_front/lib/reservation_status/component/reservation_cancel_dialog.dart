@@ -8,7 +8,7 @@ class ReservationCancelDialog extends StatelessWidget {
   final List<ReservationStatusEntity> entities;
   final Future Function(ReservationStatusEntity) onPressed;
 
-  const ReservationCancelDialog({
+  ReservationCancelDialog({
     Key? key,
     required this.entities,
     required this.onPressed,
@@ -56,7 +56,7 @@ class ReservationCancelDialog extends StatelessWidget {
               //             TitledText(title: '이메일', text: entity.member.email)),
               //   ],
               // ),
-              const SizedBox(height: kPaddingMiddleSize),
+              SizedBox(height: kPaddingMiddleSize),
               for (var e in entities)
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -65,8 +65,8 @@ class ReservationCancelDialog extends StatelessWidget {
                       title: '예약 날짜',
                       text: defaultDateFormat.format(e.date),
                     ),
-                    const SizedBox(
-                      width: kPaddingLargeSize,
+                    SizedBox(
+                      width: kPaddingLargeSize
                     ),
                     TitledText(
                       title: '예약 시간',
@@ -74,10 +74,10 @@ class ReservationCancelDialog extends StatelessWidget {
                     ),
                   ],
                 ),
-              const SizedBox(height: kPaddingMiddleSize),
-              const Text('예약을 취소하시겠습니까?', style: kTextMainStyleSmall),
-              const SizedBox(height: kPaddingMiddleSize),
-              const Text(
+              SizedBox(height: kPaddingMiddleSize),
+              Text('예약을 취소하시겠습니까?', style: kTextMainStyleSmall),
+              SizedBox(height: kPaddingMiddleSize),
+              Text(
                 '사전 안내 없이 임의로 취소하여 문제가 발생할 경우\n\'금오사이\'에서는 챔임지지 않습니다.',
                 style: kTextMainStyleSmall,
               ),
@@ -98,7 +98,7 @@ class ReservationCancelDialog extends StatelessWidget {
                 Radius.circular(50),
               ),
             ),
-            padding: const EdgeInsets.symmetric(
+            padding: EdgeInsets.symmetric(
               horizontal: kPaddingLargeSize,
               vertical: kPaddingMiddleSize,
             ),

@@ -4,7 +4,7 @@ import 'package:flutter_front/common/styles/styles.dart';
 import 'package:flutter_front/reservation_status/component/custom_container.dart';
 
 class ProgressReservationView extends StatelessWidget {
-  const ProgressReservationView({super.key});
+  ProgressReservationView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -14,12 +14,12 @@ class ProgressReservationView extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const Text(
+          Text(
             "2023년 5월 28일\n20:00:00",
             style: kTextNormalStyleLarge,
             textAlign: TextAlign.center,
           ),
-          const SizedBox(
+          SizedBox(
             height: kPaddingSmallSize,
           ),
           Row(
@@ -30,9 +30,9 @@ class ProgressReservationView extends StatelessWidget {
                     color: CustomColor.mainColor,
                     verticalPadding: 5,
                     horizontalPadding: 0,
-                    content: const Row(
+                    content: Row(
                       children: [
-                        Icon(Icons.pause),
+                        const Icon(Icons.pause),
                         Text(
                           "예약중단",
                           style: kTextReverseStyleSmall,
@@ -41,16 +41,14 @@ class ProgressReservationView extends StatelessWidget {
                     ),
                     onPressed: () {},
                   ),
-                  const SizedBox(
-                    height: kPaddingMiddleSize,
-                  ),
+                  SizedBox(height: kPaddingMiddleSize),
                   CustomElevatedButton(
                     color: CustomColor.mainColor,
                     verticalPadding: 5,
                     horizontalPadding: 0,
-                    content: const Row(
+                    content: Row(
                       children: [
-                        Icon(Icons.play_arrow),
+                        const Icon(Icons.play_arrow),
                         Text(
                           "예약재개",
                           style: kTextReverseStyleSmall,
@@ -61,9 +59,7 @@ class ProgressReservationView extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(
-                width: kPaddingMiddleSize,
-              ),
+              SizedBox(width: kPaddingMiddleSize),
               CustomElevatedButton(
                 color: CustomColor.pointColor,
                 verticalPadding: 16,

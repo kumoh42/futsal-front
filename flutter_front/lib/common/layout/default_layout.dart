@@ -15,7 +15,7 @@ class DefaultLayout extends StatelessWidget {
   final FloatingActionButtonLocation? floatingActionButtonLocation;
   final List<Widget>? actions;
 
-  const DefaultLayout({
+  DefaultLayout({
     Key? key,
     this.title,
     this.leading,
@@ -59,7 +59,7 @@ class _CustomAppBar extends ConsumerWidget implements PreferredSizeWidget {
   final double leadingWidth;
   final double appbarHeight;
   final List<Widget>? actions;
-  const _CustomAppBar({
+  _CustomAppBar({
     this.actions,
     required this.appbarHeight,
     required this.leading,

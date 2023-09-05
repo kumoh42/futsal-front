@@ -9,7 +9,7 @@ import 'package:flutter_front/reservation_status/viewmodel/reservation_status_vi
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ReservationStatusView extends ConsumerWidget {
-  const ReservationStatusView({Key? key}) : super(key: key);
+  ReservationStatusView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -32,7 +32,7 @@ class ReservationStatusView extends ConsumerWidget {
               final height = constraints.maxHeight;
 
               return Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: EdgeInsets.all(kPaddingSmallSize),
                 child: Column(
                   children: [
                     Expanded(
@@ -76,7 +76,7 @@ class ReservationStatusView extends ConsumerWidget {
                                             width: kBorderSideWidth)),
                                   ),
                                   child: Padding(
-                                    padding: const EdgeInsets.symmetric(
+                                    padding: EdgeInsets.symmetric(
                                         horizontal: kPaddingMiddleSize),
                                     child: Row(
                                       children: [
@@ -87,7 +87,7 @@ class ReservationStatusView extends ConsumerWidget {
                                                     width: kBorderSideWidth)),
                                           ),
                                           child: Padding(
-                                            padding: const EdgeInsets.symmetric(
+                                            padding: EdgeInsets.symmetric(
                                               horizontal: kPaddingLargeSize + 9,
                                             ),
                                             child: Text(
@@ -105,10 +105,9 @@ class ReservationStatusView extends ConsumerWidget {
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
                                               Padding(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal:
-                                                            kPaddingMiddleSize),
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal:
+                                                        kPaddingMiddleSize),
                                                 child: Text(
                                                   "List",
                                                   style: kTextNormalStyleMiddle
@@ -138,9 +137,7 @@ class ReservationStatusView extends ConsumerWidget {
                                 ),
                               if (viewmodel.statusState
                                   is! ReservationStatusListStateSuccess)
-                                const SizedBox(
-                                  height: kPaddingXLargeSize,
-                                ),
+                                SizedBox(height: kPaddingXLargeSize),
                               ReservationStateList(
                                 state: viewmodel.statusState,
                                 reservationStatusList:

@@ -17,7 +17,7 @@ class CustomContainer extends StatelessWidget {
   final bool isBackground;
   final Widget child;
 
-  const CustomContainer({
+  CustomContainer({
     Key? key,
     this.title,
     this.width,
@@ -67,7 +67,7 @@ class CustomContainer extends StatelessWidget {
             children: [
               // 컨테이너의 제목, title
               if (title != null) Text(title!, style: kTextMainStyleLarge),
-              if (title != null) const SizedBox(height: kPaddingMiddleSize),
+              if (title != null) SizedBox(height: kPaddingMiddleSize),
               Expanded(child: child),
             ],
           ),

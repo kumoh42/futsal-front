@@ -20,7 +20,7 @@ class ConstructionScreen extends StatelessWidget {
               height: 300,
             ),
             Text(
-              "해당 기능은 공사중 입니다. 빠른시일 내에 오픈하겠습니다.",
+              "해당 기능은 공사중 입니다.\n빠른시일 내에 오픈하겠습니다.",
               style: kTextMainStyleLarge,
             ),
             SizedBox(height: kPaddingXLargeSize),

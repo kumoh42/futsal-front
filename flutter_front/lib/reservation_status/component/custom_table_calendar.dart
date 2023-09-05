@@ -49,6 +49,10 @@ class _CustomTimeTableState extends ConsumerState<CustomTimeTable> {
         defaultBuilder: (context, dateTime, _) => _cellBuilder(
           date: dateTime.day.toString(),
         ),
+        outsideBuilder: (context, dateTime, _) => _cellBuilder(
+          textColor: Colors.black.withOpacity(0.5),
+          date: dateTime.day.toString(),
+        ),
         // 오늘 날짜 셀의 빌더 함수
         todayBuilder: (context, dateTime, _) => _cellBuilder(
           color: CustomColor.mainColor.withOpacity(0.3),

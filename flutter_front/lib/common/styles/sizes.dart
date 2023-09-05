@@ -3,26 +3,26 @@ import 'package:flutter/material.dart';
 const double _kResponsiveTrigger1920 = 1920;
 const double _kResponsiveTrigger1300 = 1300;
 const double _kResponsiveTrigger768 = 768;
-const double _kResponsiveTrigger480 = 480;
-const double _kResponsiveTrigger280 = 280;
+const double _kResponsiveTrigger586 = 586;
+const double _kResponsiveTrigger360 = 360;
 
 double displayWidth = 1920;
 
 bool get kIsWeb => displayWidth > _kResponsiveTrigger1300;
 
-bool get kIsTab => !kIsWeb && displayWidth > _kResponsiveTrigger480;
+bool get kIsTab => !kIsWeb && displayWidth > _kResponsiveTrigger586;
 
-bool get kIsMobile => displayWidth <= _kResponsiveTrigger480;
+bool get kIsMobile => displayWidth <= _kResponsiveTrigger586;
 
 double get kLayoutWidthSize => displayWidth > _kResponsiveTrigger1920
     ? _kResponsiveTrigger1920
     : displayWidth > _kResponsiveTrigger768
         ? displayWidth
-        : displayWidth > _kResponsiveTrigger480
+        : displayWidth > _kResponsiveTrigger586
             ? _kResponsiveTrigger768
-            : displayWidth > _kResponsiveTrigger280
+            : displayWidth > _kResponsiveTrigger360
                 ? displayWidth
-                : _kResponsiveTrigger280;
+                : _kResponsiveTrigger360;
 
 double get kMainPageContainerHeightSize =>
     850 / _kResponsiveTrigger1920 * displayWidth > 850

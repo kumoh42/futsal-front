@@ -24,6 +24,7 @@ class ProgressReservationView extends StatelessWidget {
                   height: kPaddingSmallSize,
                 ),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Column(
                       children: [
@@ -141,7 +142,7 @@ class ProgressReservationView extends StatelessWidget {
                         children: [
                           const Icon(Icons.refresh_outlined),
                           Text(
-                            "예약내역\n  초기화",
+                            "예약내역\n초기화",
                             style: kTextReverseStyleSmall.copyWith(
                               fontSize: 11,
                             ),

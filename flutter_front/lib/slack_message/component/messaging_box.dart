@@ -45,7 +45,7 @@ class _MessagingBoxState extends ConsumerState<MessagingBox> {
       borderRadius: const BorderRadius.all(Radius.circular(kBorderRadiusSize)),
       child: AnimatedContainer(
         width:
-            controller.isHorizontalExpanded ? 400 : 70,
+            controller.isHorizontalExpanded ? kContainerWidthSize : 70,
         height: controller.isVerticalExpanded ? kContainerHeightSize : 70,
         duration: controller.duration,
         curve: Curves.fastEaseInToSlowEaseOut,
@@ -105,7 +105,7 @@ class _DefaultWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => controller.show(title),
+      onTap: () => controller.open(title),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -339,8 +339,9 @@ class _CustomTextField extends StatelessWidget {
 
 enum MessagingBoxState {
   close,
-  horizontalExpend,
-  verticalExpend,
+  horizontalExpand,
+  horizontalExpanding,
+  verticalExpand,
   verticalExpanding,
   open,
   send;
@@ -374,9 +375,11 @@ class MessagingBoxController extends ChangeNotifier {
 
   bool get isClosed => state >= MessagingBoxState.close;
 
-  bool get isHorizontalExpanded => state >= MessagingBoxState.horizontalExpend;
+  bool get isHorizontalExpanded => state >= MessagingBoxState.horizontalExpand;
 
-  bool get isVerticalExpanded => state >= MessagingBoxState.verticalExpend;
+  bool get isHorizontalExpanding => state >= MessagingBoxState.horizontalExpanding;
+
+  bool get isVerticalExpanded => state >= MessagingBoxState.verticalExpand;
 
   bool get isVerticalExpanding => state >= MessagingBoxState.verticalExpanding;
 
@@ -391,11 +394,12 @@ class MessagingBoxController extends ChangeNotifier {
 
   MessagingBoxController({required this.onSendClicked});
 
-  void show(String title) async {
+  void open(String title) async {
+    await _changState(MessagingBoxState.horizontalExpand, _duration250);
     messageController.text = title;
-    await _changState(MessagingBoxState.horizontalExpend, duration);
+    await _changState(MessagingBoxState.horizontalExpanding, _duration250);
     messageController.clear();
-    await _changState(MessagingBoxState.verticalExpend, _duration250);
+    await _changState(MessagingBoxState.verticalExpand, _duration250);
     await _changState(MessagingBoxState.verticalExpanding, _duration250);
     await _changState(MessagingBoxState.open, const Duration());
   }

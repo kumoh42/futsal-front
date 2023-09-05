@@ -4,7 +4,7 @@ const double _kResponsiveTrigger1920 = 1920;
 const double _kResponsiveTrigger1300 = 1300;
 const double _kResponsiveTrigger768 = 768;
 const double _kResponsiveTrigger480 = 480;
-const double _kResponsiveTrigger280 = 360;
+const double _kResponsiveTrigger280 = 280;
 
 double displayWidth = 1920;
 
@@ -33,7 +33,8 @@ double get kNavigationRailSize => !kIsMobile ? 100 : 0;
 
 double get kAppbarHeight => !kIsMobile ? 75 : 50;
 
-const double kContainerHeightSize = 461;
+double get kContainerWidthSize => !kIsMobile ? 400 : 280;
+double get kContainerHeightSize => !kIsMobile ? 461 : 350;
 
 const double kBorderRadiusSize = 12.0;
 const double kBorderRadiusMiniSize = 5.0;
@@ -48,15 +49,15 @@ const double kIconMiddleSize = 24.0;
 const double kIconSmallSize = 20.0;
 const double kIconMiniSize = 16.0;
 
-double get kPaddingXLargeSize => !kIsMobile ? 64.0 : 48.0;
+double get kPaddingXLargeSize => !kIsMobile ? 64.0 : 32.0;
 
-double get kPaddingLargeSize => !kIsMobile ? 32.0 : 24.0;
+double get kPaddingLargeSize => !kIsMobile ? 32.0 : 16.0;
 
-double get kPaddingMiddleSize => !kIsMobile ? 16.0 : 12.0;
+double get kPaddingMiddleSize => !kIsMobile ? 16.0 : 8.0;
 
-double get kPaddingSmallSize => !kIsMobile ? 8.0 : 6.0;
+double get kPaddingSmallSize => !kIsMobile ? 8.0 : 4.0;
 
-double get kPaddingMiniSize => !kIsMobile ? 4.0 : 3.0;
+double get kPaddingMiniSize => !kIsMobile ? 4.0 : 2.0;
 
 double get kTextXLargeSize => !kIsMobile ? 44.0 : 28.0;
 

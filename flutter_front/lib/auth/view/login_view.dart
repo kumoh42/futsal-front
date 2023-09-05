@@ -25,18 +25,8 @@ class _LoginViewState extends ConsumerState<LoginView> {
   Widget build(BuildContext context) {
     final viewModel = ref.watch(loginViewModelProvider);
     return CustomContainer(
-      minWidth: MediaQuery.of(context).size.width * 0.25 >= 500
-          ? 500
-          : MediaQuery.of(context).size.width * 0.25,
-      maxWidth: MediaQuery.of(context).size.width * 0.25 >= 550
-          ? MediaQuery.of(context).size.width * 0.25
-          : 550,
-      minHeight: MediaQuery.of(context).size.height * 0.6 >= 550
-          ? 550
-          : MediaQuery.of(context).size.height * 0.6,
-      maxHeight: MediaQuery.of(context).size.height * 0.6 >= 600
-          ? MediaQuery.of(context).size.height * 0.6
-          : 600,
+      maxWidth: !kIsMobile ? 500 : 450,
+      maxHeight: !kIsMobile ? 600 : 400,
       child: Padding(
         padding: EdgeInsets.all(kPaddingLargeSize).copyWith(top: 0),
         child: Form(
@@ -62,10 +52,10 @@ class _LoginViewState extends ConsumerState<LoginView> {
               ),
               SizedBox(height: kPaddingXLargeSize),
               if (viewModel.state is LoadingState)
-                const SizedBox(
-                  width: 76,
-                  height: 76,
-                  child: CircularProgressIndicator(
+                SizedBox(
+                  width: !kIsMobile ? 76 : null,
+                  height: !kIsMobile ? 76 : null,
+                  child: const CircularProgressIndicator(
                     color: CustomColor.subColor,
                   ),
                 )

@@ -35,7 +35,7 @@ class CustomContainer extends StatelessWidget {
       width: width,
       height: height,
       constraints: BoxConstraints(
-        minWidth: minWidth ?? 500,
+        minWidth: minWidth ?? 400,
         minHeight: minHeight ?? 0,
         maxWidth: maxWidth ?? double.infinity,
         maxHeight: maxHeight ?? double.infinity,

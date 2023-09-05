@@ -15,7 +15,6 @@ class LoginScreen extends StatelessWidget {
       child: SingleChildScrollView(
         keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
         child: Container(
-          width: width,
           constraints: BoxConstraints(minHeight: height),
           decoration: const BoxDecoration(
             image: DecorationImage(

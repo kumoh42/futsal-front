@@ -42,12 +42,19 @@ class _ProgressReservationViewState
               children: [
                 if (viewmodel.state is ProgressReservationStateSuccess)
                   Expanded(
-                    // TODO 정규예약시 따로 표시 해주기
-                    child: Text(
-                      '${(viewmodel.state as ProgressReservationStateSuccess).data.date} ${(viewmodel.state as ProgressReservationStateSuccess).data.time}',
-                      style: kTextNormalStyleLarge,
-                      textAlign: TextAlign.center,
-                    ),
+                    child: (viewmodel.state as ProgressReservationStateSuccess)
+                            .data
+                            .isPre
+                        ? Text(
+                            '${(viewmodel.state as ProgressReservationStateSuccess).data.date} ${(viewmodel.state as ProgressReservationStateSuccess).data.time}',
+                            style: kTextNormalStyleLarge,
+                            textAlign: TextAlign.center,
+                          )
+                        : Text(
+                            '${(viewmodel.state as ProgressReservationStateSuccess).data.date.substring(0, 6)}월 정규예약',
+                            style: kTextNormalStyleLarge,
+                            textAlign: TextAlign.center,
+                          ),
                   ),
                 if (viewmodel.state is ProgressReservationStateError)
                   Expanded(

@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart' hide Headers;
 import 'package:flutter_front/common/dio/dio.dart';
 import 'package:flutter_front/reservation_status/model/entity/pre_reservation/pre_reservation_status_entity.dart';
+import 'package:flutter_front/reservation_status/model/entity/pre_reservation/progress_reservation_entity.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:retrofit/retrofit.dart';
 
@@ -19,7 +20,7 @@ abstract class PreReservationSettingRepository {
   @POST('/reservation/pre/time-setting')
   @Headers({'accessToken': 'true'})
   Future setPreReservation(
-      @Body() PreReservationStatusEntity preReservationStatusEntity);
+      @Body() ProgressReservationEntity progressReservationEntity);
 
   @GET('/reservation/pre/time-list')
   @Headers({'accessToken': 'true'})

@@ -21,13 +21,13 @@ class _PreReservationSettingRepository
 
   @override
   Future<dynamic> setPreReservation(
-      PreReservationStatusEntity preReservationStatusEntity) async {
+      ProgressReservationEntity progressReservationEntity) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'accessToken': 'true'};
     _headers.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    _data.addAll(preReservationStatusEntity.toJson());
+    _data.addAll(progressReservationEntity.toJson());
     final _result = await _dio.fetch(_setStreamType<dynamic>(Options(
       method: 'POST',
       headers: _headers,

@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_front/reservation_status/model/entity/pre_reservation/pre_reservation_status_entity.dart';
+import 'package:flutter_front/reservation_status/model/entity/pre_reservation/progress_reservation_entity.dart';
 import 'package:flutter_front/reservation_status/model/repository/pre_resevation/pre_reservation_setting_repository.dart';
 import 'package:flutter_front/reservation_status/model/state/pre_reservation/pre_reservation_setting_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -19,10 +20,10 @@ class PreReservationSettingService
       : super(PreReservaitonSettingStateNone());
 
   Future setPreReservation(
-      {required PreReservationStatusEntity preReservationStatusEntity}) async {
+      {required ProgressReservationEntity progressReservationEntity}) async {
     state = PreReservaitonSettingStateLoading();
     try {
-      await repository.setPreReservation(preReservationStatusEntity);
+      await repository.setPreReservation(progressReservationEntity);
       await getPreReservationList();
     } on DioException {
       state = PreReservationSettingStateError("서버와의 통신이 끊겼습니다.");

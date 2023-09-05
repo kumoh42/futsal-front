@@ -24,9 +24,9 @@ abstract class ProgressReservationRepository {
   @Headers({'accessToken': 'true'})
   Future<void> setProgressReservationStop();
 
-  @GET("/reservation/now")
+  @GET("/reservation/now/setting")
   @Headers({'accessToken': 'true'})
-  Future<ProgressReservationEntity> getProgressReservation();
+  Future<List<ProgressReservationEntity>> getProgressReservation();
 
   @DELETE("/reservation/pre/reset")
   @Headers({'accessToken': 'true'})

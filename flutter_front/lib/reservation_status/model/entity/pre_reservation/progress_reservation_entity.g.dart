@@ -10,13 +10,14 @@ ProgressReservationEntity _$ProgressReservationEntityFromJson(
         Map<String, dynamic> json) =>
     ProgressReservationEntity(
       isPre: json['isPre'] as bool,
-      date: PreReservationStatusEntity.fromJson(
-          json['date'] as Map<String, dynamic>),
+      date: json['date'] as String,
+      time: json['time'] as String,
     );
 
 Map<String, dynamic> _$ProgressReservationEntityToJson(
         ProgressReservationEntity instance) =>
     <String, dynamic>{
       'date': instance.date,
+      'time': instance.time,
       'isPre': instance.isPre,
     };

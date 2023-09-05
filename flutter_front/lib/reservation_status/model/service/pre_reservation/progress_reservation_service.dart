@@ -1,7 +1,7 @@
-import 'package:dio/dio.dart';
 import 'package:flutter_front/reservation_status/model/repository/pre_resevation/progress_reservation_repository.dart';
 import 'package:flutter_front/reservation_status/model/state/pre_reservation/progress_reservation_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:dio/dio.dart';
 
 final progressResrvationServiceProvider =
     StateNotifierProvider<ProgressReservationService, ProgressReservationState>(
@@ -37,8 +37,13 @@ class ProgressReservationService
   Future getProgressReservation() async {
     try {
       state = ProgressReservationStateLoading();
+
       final data = await repository.getProgressReservation();
-      state = ProgressReservationStateSuccess(data);
+      if (data.isEmpty) {
+        state = ProgressReservationStateError("서버로부터 진행중인 예약을 가져오지 못했습니다.");
+      }
+
+      state = ProgressReservationStateSuccess(data[0]);
     } on DioException {
       state = ProgressReservationStateError("서버로부터 진행중인 예약을 가져오지 못했습니다.");
     } catch (e) {

@@ -24,11 +24,9 @@ class ProgressReservationViewModel extends ChangeNotifier {
   }
 
   void refreshProgressReservation() async {
-    SnackBarUtil.showSuccess("새로고침");
     ref
         .read(preReservationSettingViewModelProvider.notifier)
         .getPreReservationStatusList();
-
     getProgressReservation();
   }
 
@@ -46,7 +44,7 @@ class ProgressReservationViewModel extends ChangeNotifier {
             style: kTextMainStyleMiddle,
           ),
           content: Text(
-            '${(state as ProgressReservationStateSuccess).data.date.date} ${(state as ProgressReservationStateSuccess).data.date.time}\n예약을 중지하시겠습니까?',
+            '${(state as ProgressReservationStateSuccess).data.date} ${(state as ProgressReservationStateSuccess).data.time}\n예약을 중지하시겠습니까?',
             style: kTextNormalStyleLarge,
           ),
           onPressed: () async {
@@ -57,6 +55,7 @@ class ProgressReservationViewModel extends ChangeNotifier {
           },
         ),
         context: context);
+    SnackBarUtil.showSuccess("예약을 중단하였습니다!");
   }
 
   void restartPreReservation(BuildContext context) async {
@@ -73,7 +72,7 @@ class ProgressReservationViewModel extends ChangeNotifier {
             style: kTextMainStyleMiddle,
           ),
           content: Text(
-            '${(state as ProgressReservationStateSuccess).data.date.date} ${(state as ProgressReservationStateSuccess).data.date.time}\n예약을 재개하시겠습니까?',
+            '${(state as ProgressReservationStateSuccess).data.date} ${(state as ProgressReservationStateSuccess).data.time}\n예약을 재개하시겠습니까?',
             style: kTextNormalStyleLarge,
           ),
           onPressed: () async {
@@ -84,6 +83,8 @@ class ProgressReservationViewModel extends ChangeNotifier {
           },
         ),
         context: context);
+
+    SnackBarUtil.showSuccess("예약을 재개하였습니다!");
   }
 
   void resetPreReservation(BuildContext context) async {
@@ -96,7 +97,7 @@ class ProgressReservationViewModel extends ChangeNotifier {
     CustomDialogUtil.showCustomDialog(
         dialog: CustomDialog(
           content: Text(
-            '${(state as ProgressReservationStateSuccess).data.date.date} ${(state as ProgressReservationStateSuccess).data.date.time} 에 시작된\n우선예약 중 예약된 내역을 \n모두 삭제하시겠습니까?',
+            '${(state as ProgressReservationStateSuccess).data.date} ${(state as ProgressReservationStateSuccess).data.time} 에 시작된\n우선예약 중 예약된 내역을 \n모두 삭제하시겠습니까?',
             style: kTextNormalStyleLarge,
           ),
           onPressed: () async {
@@ -107,5 +108,6 @@ class ProgressReservationViewModel extends ChangeNotifier {
           },
         ),
         context: context);
+    SnackBarUtil.showSuccess("예약을 초기화하였습니다!");
   }
 }

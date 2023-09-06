@@ -49,21 +49,21 @@ const double kIconMiddleSize = 24.0;
 const double kIconSmallSize = 20.0;
 const double kIconMiniSize = 16.0;
 
-double get kPaddingXLargeSize => !kIsMobile ? 64.0 : 32.0;
+double get kPaddingXLargeSize => !kIsMobile ? 64.0 : 28.0;
 
-double get kPaddingLargeSize => !kIsMobile ? 32.0 : 16.0;
+double get kPaddingLargeSize => !kIsMobile ? 32.0 : 14.0;
 
-double get kPaddingMiddleSize => !kIsMobile ? 16.0 : 8.0;
+double get kPaddingMiddleSize => !kIsMobile ? 16.0 : 7.0;
 
-double get kPaddingSmallSize => !kIsMobile ? 8.0 : 4.0;
+double get kPaddingSmallSize => !kIsMobile ? 8.0 : 3.5;
 
-double get kPaddingMiniSize => !kIsMobile ? 4.0 : 2.0;
+double get kPaddingMiniSize => !kIsMobile ? 4.0 : 1.75;
 
 double get kTextXLargeSize => !kIsMobile ? 44.0 : 28.0;
 
 double get kTextLargeSize => !kIsMobile ? 28.0 : 21.0;
 
-double get kTextMiddleSize => !kIsMobile ? 21.0 : 14.0;
+double get kTextMiddleSize => !kIsMobile ? 21.0 : 16.0;
 
 double get kTextSmallSize => !kIsMobile ? 14.0 : 10.5;
 

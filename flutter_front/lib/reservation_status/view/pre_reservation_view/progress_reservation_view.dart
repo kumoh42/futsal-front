@@ -10,7 +10,7 @@ class ProgressReservationView extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomContainer(
       title: "진행 중인 예약",
-      height: !kIsMobile ? 250 : 150,
+      height: !kIsMobile ? 250 : 170,
       child: !kIsMobile
           ? Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -102,7 +102,7 @@ class ProgressReservationView extends StatelessWidget {
                       children: [
                         CustomElevatedButton(
                           color: CustomColor.mainColor,
-                          verticalPadding: 5,
+                          verticalPadding: 0,
                           horizontalPadding: 0,
                           content: Row(
                             children: [
@@ -115,10 +115,10 @@ class ProgressReservationView extends StatelessWidget {
                           ),
                           onPressed: () {},
                         ),
-                        SizedBox(height: kPaddingMiddleSize),
+                        SizedBox(height: kPaddingSmallSize),
                         CustomElevatedButton(
                           color: CustomColor.mainColor,
-                          verticalPadding: 5,
+                          verticalPadding: 0,
                           horizontalPadding: 0,
                           content: Row(
                             children: [

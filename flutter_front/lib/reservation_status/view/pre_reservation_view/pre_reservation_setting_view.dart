@@ -8,8 +8,8 @@ import 'package:flutter_front/reservation_status/viewmodel/reservation_setting_v
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:timer_builder/timer_builder.dart';
 
-class ReservationSettingView extends ConsumerWidget {
-  ReservationSettingView({Key? key}) : super(key: key);
+class PreReservationSettingView extends ConsumerWidget {
+  PreReservationSettingView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

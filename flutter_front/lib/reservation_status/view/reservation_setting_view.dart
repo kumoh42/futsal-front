@@ -22,7 +22,7 @@ class ReservationSettingView extends ConsumerWidget {
         builder: (context) => CustomContainer(
           width: width,
           height: height,
-          title: "${DateTime.now().month % 12 + 1}월 사전예약 오픈 설정",
+          title: "${DateTime.now().month % 12 + 1}월 우선예약 오픈 설정",
           child: LayoutBuilder(
             builder: (context, constraints) => Row(
               children: [

@@ -119,7 +119,9 @@ class _PreReservationSettingViewState
                                 fontWeight: FontWeight.normal,
                               ),
                             ),
-                            onPressed: viewmodel.setPreReservation,
+                            onPressed: () {
+                              viewmodel.setPreReservation(context);
+                            },
                           ),
                         ],
                       ),
@@ -138,7 +140,7 @@ class _PreReservationSettingViewState
                 flex: 4,
                 child: CustomContainer(
                   title: "우선예약 설정 현황",
-                  height: 250,
+                  height: kSubPageContainerHeightSize,
                   child: PreReservationStatusList(
                     state: viewmodel.statusState,
                     list: viewmodel.preReservationStatusList,

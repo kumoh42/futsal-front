@@ -1,21 +1,23 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'pre_reservation_status_entity.dart';
+part of 'progress_reservation_entity.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-PreReservationStatusEntity _$PreReservationStatusEntityFromJson(
+ProgressReservationEntity _$ProgressReservationEntityFromJson(
         Map<String, dynamic> json) =>
-    PreReservationStatusEntity(
+    ProgressReservationEntity(
+      isPre: json['isPre'] as bool,
       date: json['date'] as String,
       time: json['time'] as String,
     );
 
-Map<String, dynamic> _$PreReservationStatusEntityToJson(
-        PreReservationStatusEntity instance) =>
+Map<String, dynamic> _$ProgressReservationEntityToJson(
+        ProgressReservationEntity instance) =>
     <String, dynamic>{
       'date': instance.date,
       'time': instance.time,
+      'isPre': instance.isPre,
     };

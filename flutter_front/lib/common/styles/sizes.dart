@@ -17,17 +17,17 @@ bool get kIsMobile => displayWidth <= _kResponsiveTrigger586;
 double get kLayoutWidthSize => displayWidth > _kResponsiveTrigger1920
     ? _kResponsiveTrigger1920
     : displayWidth > _kResponsiveTrigger768
-        ? displayWidth
-        : displayWidth > _kResponsiveTrigger586
-            ? _kResponsiveTrigger768
-            : displayWidth > _kResponsiveTrigger360
-                ? displayWidth
-                : _kResponsiveTrigger360;
+    ? displayWidth
+    : displayWidth > _kResponsiveTrigger586
+    ? _kResponsiveTrigger768
+    : displayWidth > _kResponsiveTrigger360
+    ? displayWidth
+    : _kResponsiveTrigger360;
 
 double get kMainPageContainerHeightSize =>
     850 / _kResponsiveTrigger1920 * displayWidth > 850
         ? 850 / _kResponsiveTrigger1920 * displayWidth
-        : 850;
+        : !kIsMobile ? 850 : 900;
 
 double get kNavigationRailSize => !kIsMobile ? 100 : 0;
 
@@ -73,3 +73,5 @@ const double kLineLargeSize = 5.0;
 const double kLineSmallSize = 2.0;
 
 const double kTextHeight = 1.4;
+
+double get kSubPageContainerHeightSize => !kIsMobile ? 250 : 200;

@@ -2,159 +2,152 @@ import 'package:flutter/material.dart';
 import 'package:flutter_front/common/component/custom_elevated_button.dart';
 import 'package:flutter_front/common/styles/styles.dart';
 import 'package:flutter_front/reservation_status/component/custom_container.dart';
+import 'package:flutter_front/reservation_status/model/state/pre_reservation/progress_reservation_state.dart';
+import 'package:flutter_front/reservation_status/viewmodel/pre_reservation_viewmodel/progress_reservation_viewmodel.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ProgressReservationView extends StatelessWidget {
+class ProgressReservationView extends ConsumerStatefulWidget {
   ProgressReservationView({super.key});
 
   @override
+  ConsumerState<ProgressReservationView> createState() =>
+      _ProgressReservationViewState();
+}
+
+class _ProgressReservationViewState
+    extends ConsumerState<ProgressReservationView> {
+  @override
+  void initState() {
+    super.initState();
+    // UI가 빌드된 후 실행
+    Future(() {
+      ref.read(progressReservationViewModelProvider).getProgressReservation();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final viewmodel = ref.watch(progressReservationViewModelProvider);
     return CustomContainer(
       title: "진행 중인 예약",
-      height: !kIsMobile ? 250 : 170,
-      child: !kIsMobile
-          ? Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
+      height: kSubPageContainerHeightSize,
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            if (viewmodel.state is ProgressReservationStateLoading)
+              const Center(child: CircularProgressIndicator()),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Text(
-                  "2023년 5월 28일\n20:00:00",
-                  style: kTextNormalStyleLarge,
-                  textAlign: TextAlign.center,
-                ),
-                SizedBox(
-                  height: kPaddingSmallSize,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Column(
-                      children: [
-                        CustomElevatedButton(
-                          color: CustomColor.mainColor,
-                          verticalPadding: 5,
-                          horizontalPadding: 0,
-                          content: Row(
-                            children: [
-                              const Icon(Icons.pause),
-                              Text(
-                                "예약중단",
-                                style: kTextReverseStyleSmall,
-                              ),
-                            ],
-                          ),
-                          onPressed: () {},
-                        ),
-                        SizedBox(height: kPaddingMiddleSize),
-                        CustomElevatedButton(
-                          color: CustomColor.mainColor,
-                          verticalPadding: 5,
-                          horizontalPadding: 0,
-                          content: Row(
-                            children: [
-                              const Icon(Icons.play_arrow),
-                              Text(
-                                "예약재개",
-                                style: kTextReverseStyleSmall,
-                              ),
-                            ],
-                          ),
-                          onPressed: () {},
-                        ),
-                      ],
+                if (viewmodel.state is ProgressReservationStateSuccess)
+                  Expanded(
+                    child: (viewmodel.state as ProgressReservationStateSuccess)
+                        .data
+                        .isPre
+                        ? Text(
+                      '${(viewmodel.state as ProgressReservationStateSuccess).data.date} ${(viewmodel.state as ProgressReservationStateSuccess).data.time}',
+                      style: kTextNormalStyleLarge,
+                      textAlign: TextAlign.center,
+                    )
+                        : Text(
+                      '${(viewmodel.state as ProgressReservationStateSuccess).data.date.substring(0, 6)}월 정규예약',
+                      style: kTextNormalStyleLarge,
+                      textAlign: TextAlign.center,
                     ),
-                    SizedBox(width: kPaddingMiddleSize),
-                    CustomElevatedButton(
-                      color: CustomColor.pointColor,
-                      verticalPadding: 16,
-                      horizontalPadding: 0,
-                      content: Column(
-                        children: [
-                          const Icon(Icons.refresh_outlined),
-                          Text(
-                            "예약내역\n  초기화",
-                            style: kTextReverseStyleSmall.copyWith(
-                              fontSize: 11,
-                            ),
-                          ),
-                        ],
+                  ),
+                if (viewmodel.state is ProgressReservationStateError)
+                  Expanded(
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Text(
+                        '서버에서 정보를 불러오지 못했습니다.',
+                        style: kTextNormalStyleMiddle.copyWith(
+                          fontSize: 14,
+                        ),
+                        textAlign: TextAlign.start,
                       ),
-                      onPressed: () {},
                     ),
-                  ],
-                ),
+                  ),
+                if (viewmodel.state is! ProgressReservationStateLoading)
+                  IconButton(
+                    onPressed: viewmodel.refreshProgressReservation,
+                    icon: const Icon(Icons.refresh_outlined),
+                    splashRadius: 15,
+                  ),
               ],
-            )
-          : Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
+            ),
+            SizedBox(
+              height: kPaddingSmallSize,
+            ),
+            Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Expanded(
-                  child: Text(
-                    "2023년 5월 28일\n20:00:00",
-                    style: kTextNormalStyleLarge,
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-                SizedBox(width: kPaddingSmallSize),
-                Row(
+                Column(
                   children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        CustomElevatedButton(
-                          color: CustomColor.mainColor,
-                          verticalPadding: 0,
-                          horizontalPadding: 0,
-                          content: Row(
-                            children: [
-                              const Icon(Icons.pause),
-                              Text(
-                                "예약중단",
-                                style: kTextReverseStyleSmall,
-                              ),
-                            ],
-                          ),
-                          onPressed: () {},
-                        ),
-                        SizedBox(height: kPaddingSmallSize),
-                        CustomElevatedButton(
-                          color: CustomColor.mainColor,
-                          verticalPadding: 0,
-                          horizontalPadding: 0,
-                          content: Row(
-                            children: [
-                              const Icon(Icons.play_arrow),
-                              Text(
-                                "예약재개",
-                                style: kTextReverseStyleSmall,
-                              ),
-                            ],
-                          ),
-                          onPressed: () {},
-                        ),
-                      ],
-                    ),
-                    SizedBox(width: kPaddingMiddleSize),
                     CustomElevatedButton(
-                      color: CustomColor.pointColor,
-                      verticalPadding: 16,
+                      color: CustomColor.mainColor,
+                      verticalPadding: 5,
                       horizontalPadding: 0,
-                      content: Column(
+                      content: Row(
                         children: [
-                          const Icon(Icons.refresh_outlined),
+                          const Icon(Icons.pause),
                           Text(
-                            "예약내역\n초기화",
-                            style: kTextReverseStyleSmall.copyWith(
-                              fontSize: 11,
-                            ),
+                            "예약중단",
+                            style: kTextReverseStyleSmall,
                           ),
                         ],
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        viewmodel.stopPreReservation(context);
+                      },
                     ),
+                    SizedBox(height: kPaddingMiddleSize),
+                    CustomElevatedButton(
+                        color: CustomColor.mainColor,
+                        verticalPadding: 5,
+                        horizontalPadding: 0,
+                        content: Row(
+                          children: [
+                            const Icon(Icons.play_arrow),
+                            Text(
+                              "예약재개",
+                              style: kTextReverseStyleSmall,
+                            ),
+                          ],
+                        ),
+                        onPressed: () {
+                          viewmodel.restartPreReservation(context);
+                        }),
                   ],
+                ),
+                SizedBox(
+                  width: kPaddingMiddleSize,
+                ),
+                CustomElevatedButton(
+                  color: CustomColor.pointColor,
+                  verticalPadding: 16,
+                  horizontalPadding: 0,
+                  content: Column(
+                    children: [
+                      const Icon(Icons.refresh_outlined),
+                      Text(
+                        "예약내역\n  초기화",
+                        style: kTextReverseStyleSmall.copyWith(
+                          fontSize: 11,
+                        ),
+                      ),
+                    ],
+                  ),
+                  onPressed: () {
+                    viewmodel.resetPreReservation(context);
+                  },
                 ),
               ],
             ),
+          ],
+        ),
+      ),
     );
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter_front/reservation_status/model/repository/pre_resevation/progress_reservation_repository.dart';
 import 'package:flutter_front/reservation_status/model/state/pre_reservation/progress_reservation_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:dio/dio.dart';
 
 final progressResrvationServiceProvider =
     StateNotifierProvider<ProgressReservationService, ProgressReservationState>(
@@ -16,4 +17,45 @@ class ProgressReservationService
 
   ProgressReservationService(this.repository)
       : super(ProgressReservationStateNone());
+
+  Future stopPreReservation() async {
+    try {
+      await repository.setProgressReservationStop();
+    } catch (e) {
+      state = ProgressReservationStateError("알 수 없는 에러가 발생했습니다");
+    }
+  }
+
+  Future restartPreReservation() async {
+    try {
+      await repository.setProgressReservationOpen();
+    } catch (e) {
+      state = ProgressReservationStateError("알 수 없는 에러가 발생했습니다");
+    }
+  }
+
+  Future getProgressReservation() async {
+    try {
+      state = ProgressReservationStateLoading();
+
+      final data = await repository.getProgressReservation();
+      if (data.isEmpty) {
+        state = ProgressReservationStateError("서버로부터 진행중인 예약을 가져오지 못했습니다.");
+      }
+
+      state = ProgressReservationStateSuccess(data[0]);
+    } on DioException {
+      state = ProgressReservationStateError("서버로부터 진행중인 예약을 가져오지 못했습니다.");
+    } catch (e) {
+      state = ProgressReservationStateError("알 수 없는 에러가 발생했습니다");
+    }
+  }
+
+  Future resetPreReservation() async {
+    try {
+      await repository.reset();
+    } catch (e) {
+      state = ProgressReservationStateError("예약 삭제를 실패했습니다.");
+    }
+  }
 }

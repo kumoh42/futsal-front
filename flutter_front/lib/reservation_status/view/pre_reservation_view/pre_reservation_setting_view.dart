@@ -1,97 +1,169 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_front/common/state/state.dart';
+import 'package:flutter_front/common/component/custom_elevated_button.dart';
+import 'package:flutter_front/common/component/number_container.dart';
 import 'package:flutter_front/common/styles/styles.dart';
-import 'package:flutter_front/common/utils/date_utils.dart';
+import 'package:flutter_front/reservation_status/component/custom_table_calendar.dart';
 import 'package:flutter_front/reservation_status/component/custom_container.dart';
-import 'package:flutter_front/reservation_status/component/custom_outlined_button.dart';
-import 'package:flutter_front/reservation_status/viewmodel/reservation_setting_viewmodel.dart';
+import 'package:flutter_front/reservation_status/view/pre_reservation_view/pre_reservation_setting_status_view.dart';
+import 'package:flutter_front/reservation_status/view/pre_reservation_view/progress_reservation_view.dart';
+import 'package:flutter_front/reservation_status/viewmodel/pre_reservation_viewmodel/pre_reservation_setting_viewmodel.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:timer_builder/timer_builder.dart';
 
-class PreReservationSettingView extends ConsumerWidget {
-  PreReservationSettingView({Key? key}) : super(key: key);
+class PreReservationSettingView extends ConsumerStatefulWidget {
+  PreReservationSettingView({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final viewmodel = ref.watch(reservationSettingViewModelProvider);
-    return LayoutBuilder(builder: (context, constraints) {
-      final width = constraints.maxWidth;
-      final height = constraints.maxHeight;
-      return TimerBuilder.periodic(
-        const Duration(seconds: 1),
-        builder: (context) => CustomContainer(
-          width: width,
-          height: height,
-          title: "${DateTime.now().month % 12 + 1}월 우선예약 오픈 설정",
-          child: LayoutBuilder(
-            builder: (context, constraints) => Row(
-              children: [
-                Expanded(
-                  child: Card(
-                    elevation: 0,
-                    shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(
-                            Radius.circular(kBorderRadiusSize * 3)),
-                        side: BorderSide(width: 3, color: Colors.black)),
-                    child: Padding(
-                      padding: EdgeInsets.all(kPaddingLargeSize),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text("현재 시각", style: kTextMainStyleLarge),
-                          Text(
-                            settingDateFormat.format(DateTime.now()),
-                            textAlign: TextAlign.center,
-                            style: kTextMainStyleLarge,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(width: kPaddingMiddleSize),
-                Expanded(
-                  flex: 2,
+  ConsumerState<PreReservationSettingView> createState() =>
+      _PreReservationSettingViewState();
+}
+
+class _PreReservationSettingViewState
+    extends ConsumerState<PreReservationSettingView> {
+  @override
+  void initState() {
+    super.initState();
+    // UI가 빌드된 후 실행
+    Future(() {
+      ref
+          .read(preReservationSettingViewModelProvider)
+          .getPreReservationStatusList();
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final viewmodel = ref.watch(preReservationSettingViewModelProvider);
+
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Expanded(
+          child: CustomContainer(
+            title: "우선예약 설정",
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                final width = constraints.maxWidth;
+                final height = constraints.maxHeight;
+
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      SizedBox(height: kPaddingMiddleSize * 2),
-                      viewmodel.settingState is LoadingState
-                          ? const Center(child: CircularProgressIndicator())
-                          : Row(
+                      Expanded(
+                        child: CustomContainer(
+                          width: width,
+                          height: height,
+                          isBackground: true,
+                          boarderRadius: 0,
+                          boarderColor: CustomColor.disabledColor,
+                          boarderWidth: kBorderSideWidth * 10,
+                          color: CustomColor.backgroundMainColor,
+                          child: CustomTimeTable(
+                            controller: viewmodel.customTimeTableController,
+                            rowHeight: 41,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Expanded(
-                            child: CustomOutlinedButton(
-                              height: 75,
-                              borderRadius: 0,
-                              elevation: 5,
-                              onPressed: viewmodel.startReservation,
-                              text: "예약 시작",
+                          const Icon(
+                            Icons.watch_later_outlined,
+                            size: kIconMainSize,
+                          ),
+                          const SizedBox(width: 10),
+                          GestureDetector(
+                            onTap: () {
+                              viewmodel.setTimePicker(context);
+                            },
+                            child: NumberContainer(
+                              content:
+                                  viewmodel.hour.toString().padLeft(2, "0"),
+                              width: 60,
+                              height: 40,
                             ),
                           ),
-                          SizedBox(width: kPaddingMiddleSize),
-                          Expanded(
-                            child: CustomOutlinedButton(
-                              height: 75,
-                              borderRadius: 0,
-                              elevation: 5,
-                              color: CustomColor.pointColor,
-                              onPressed: viewmodel.closeReservation,
-                              text: "예약 중단 및 기존 예약 내역 삭제",
+                          const SizedBox(width: 10),
+                          Text(
+                            ":",
+                            style: kTextMainStyleMiddle,
+                          ),
+                          const SizedBox(width: 10),
+                          GestureDetector(
+                            onTap: () {
+                              viewmodel.setTimePicker(context);
+                            },
+                            child: NumberContainer(
+                              content:
+                                  viewmodel.minute.toString().padLeft(2, "0"),
+                              width: 60,
+                              height: 40,
                             ),
+                          ),
+                          const SizedBox(width: 10),
+                          CustomElevatedButton(
+                            content: Text(
+                              "APPLY",
+                              style: kTextReverseStyleMiddle.copyWith(
+                                fontWeight: FontWeight.normal,
+                              ),
+                            ),
+                            onPressed: () =>
+                                viewmodel.setPreReservation(context),
                           ),
                         ],
                       ),
-                      SizedBox(height: kPaddingMiddleSize),
-                      const Text("정식 예약은 매월 1일 0시에 시작됩니다."),
                     ],
                   ),
-                ),
-              ],
+                );
+              },
             ),
           ),
         ),
-      );
-    });
+        Padding(
+          padding: EdgeInsets.symmetric(vertical: kPaddingSmallSize),
+          child: Row(
+            children: [
+              Expanded(
+                flex: 4,
+                child: CustomContainer(
+                  title: "우선예약 설정 현황",
+                  height: 250,
+                  child: PreReservationStatusList(
+                    state: viewmodel.statusState,
+                    list: viewmodel.preReservationStatusList,
+                    onCancelClicked: (p) {
+                      viewmodel.canclePreReservation(context, p);
+                    },
+                  ),
+                ),
+              ),
+              Expanded(
+                flex: 3,
+                child: ProgressReservationView(),
+              ),
+            ],
+          ),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: kPaddingMiniSize,
+                vertical: kPaddingSmallSize,
+              ),
+              child: Text(
+                "정규예약은 매월 1일 0시에 우선예약 종료 후 자동으로 시작됩니다.",
+                style: kTextMainStyleSmall,
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
   }
 }

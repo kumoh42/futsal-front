@@ -5,18 +5,22 @@ class CustomElevatedButton extends StatelessWidget {
   final Widget content;
   final Color color;
   final double borderRadiusCircular;
-  final double verticalPadding;
-  final double horizontalPadding;
+  late final double verticalPadding;
+  late final double horizontalPadding;
   final void Function()? onPressed;
-  const CustomElevatedButton({
+
+  CustomElevatedButton({
     super.key,
     required this.content,
     required this.onPressed,
     this.color = Colors.black,
     this.borderRadiusCircular = 20.0,
-    this.horizontalPadding = kPaddingMiniSize,
-    this.verticalPadding = kPaddingSmallSize,
-  });
+    double? horizontalPadding,
+    double? verticalPadding,
+  }) {
+    this.horizontalPadding = horizontalPadding ?? kPaddingMiniSize;
+    this.verticalPadding = verticalPadding ?? kPaddingSmallSize;
+  }
 
   @override
   Widget build(BuildContext context) {

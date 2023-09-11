@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class TimeContainer extends StatelessWidget {
   final String content;
-  const TimeContainer({
+  TimeContainer({
     required this.content,
     super.key,
   });

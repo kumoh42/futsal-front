@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_front/common/styles/sizes.dart';
 import 'colors.dart';
 
-const TextStyle kTextMainStyleXLarge = TextStyle(
+TextStyle get kTextMainStyleXLarge => TextStyle(
   color: CustomColor.textMainColor,
   fontSize: kTextXLargeSize,
   fontWeight: FontWeight.bold,
@@ -10,7 +10,7 @@ const TextStyle kTextMainStyleXLarge = TextStyle(
   height: kTextHeight,
 );
 
-const TextStyle kTextMainStyleLarge = TextStyle(
+TextStyle get kTextMainStyleLarge => TextStyle(
   color: CustomColor.textMainColor,
   fontSize: kTextLargeSize,
   fontWeight: FontWeight.bold,
@@ -18,7 +18,7 @@ const TextStyle kTextMainStyleLarge = TextStyle(
   height: kTextHeight,
 );
 
-const TextStyle kTextReverseStyleLarge = TextStyle(
+TextStyle get kTextReverseStyleLarge => TextStyle(
   color: CustomColor.textReverseColor,
   fontSize: kTextLargeSize,
   fontWeight: FontWeight.bold,
@@ -26,7 +26,7 @@ const TextStyle kTextReverseStyleLarge = TextStyle(
   height: kTextHeight,
 );
 
-const TextStyle kTextPointStyleLarge = TextStyle(
+TextStyle get kTextPointStyleLarge => TextStyle(
   color: CustomColor.pointColor,
   fontSize: kTextLargeSize,
   fontWeight: FontWeight.bold,
@@ -34,7 +34,7 @@ const TextStyle kTextPointStyleLarge = TextStyle(
   height: kTextHeight,
 );
 
-const TextStyle kTextMainStyleMiddle = TextStyle(
+TextStyle get kTextMainStyleMiddle => TextStyle(
   color: CustomColor.textMainColor,
   fontSize: kTextMiddleSize,
   fontWeight: FontWeight.bold,
@@ -42,20 +42,21 @@ const TextStyle kTextMainStyleMiddle = TextStyle(
   height: kTextHeight,
 );
 
-const TextStyle kTextNormalStyleMiddle = TextStyle(
+TextStyle get kTextNormalStyleMiddle => TextStyle(
   color: CustomColor.textMainColor,
   fontSize: kTextMiddleSize - 3,
   overflow: TextOverflow.ellipsis,
   height: kTextHeight,
 );
-const TextStyle kTextNormalStyleLarge = TextStyle(
+
+TextStyle get kTextNormalStyleLarge => TextStyle(
   color: CustomColor.textMainColor,
   fontSize: kTextMiddleSize,
   overflow: TextOverflow.ellipsis,
   height: kTextHeight,
 );
 
-const TextStyle kTextPointStyleMiddle = TextStyle(
+TextStyle get kTextPointStyleMiddle => TextStyle(
   color: CustomColor.pointColor,
   fontSize: kTextMiddleSize,
   fontWeight: FontWeight.bold,
@@ -63,7 +64,7 @@ const TextStyle kTextPointStyleMiddle = TextStyle(
   height: kTextHeight,
 );
 
-const TextStyle kTextPointStyleSmall = TextStyle(
+TextStyle get kTextPointStyleSmall => TextStyle(
   color: CustomColor.pointColor,
   fontSize: kTextSmallSize,
   fontWeight: FontWeight.bold,
@@ -71,7 +72,7 @@ const TextStyle kTextPointStyleSmall = TextStyle(
   height: kTextHeight,
 );
 
-const TextStyle kTextReverseStyleMiddle = TextStyle(
+TextStyle get kTextReverseStyleMiddle => TextStyle(
   color: CustomColor.textReverseColor,
   fontSize: kTextMiddleSize,
   fontWeight: FontWeight.bold,
@@ -79,7 +80,7 @@ const TextStyle kTextReverseStyleMiddle = TextStyle(
   height: kTextHeight,
 );
 
-const TextStyle kTextMainStyleSmall = TextStyle(
+TextStyle get kTextMainStyleSmall => TextStyle(
   color: CustomColor.textMainColor,
   fontSize: kTextSmallSize,
   fontWeight: FontWeight.bold,
@@ -87,7 +88,7 @@ const TextStyle kTextMainStyleSmall = TextStyle(
   height: kTextHeight,
 );
 
-const TextStyle kTextSubStyleSmall = TextStyle(
+TextStyle get kTextSubStyleSmall => TextStyle(
   color: CustomColor.textSubColor,
   fontSize: kTextSmallSize,
   fontWeight: FontWeight.bold,
@@ -95,7 +96,7 @@ const TextStyle kTextSubStyleSmall = TextStyle(
   height: kTextHeight,
 );
 
-const TextStyle kTextReverseStyleSmall = TextStyle(
+TextStyle get kTextReverseStyleSmall => TextStyle(
   color: CustomColor.textReverseColor,
   fontSize: kTextSmallSize,
   fontWeight: FontWeight.bold,
@@ -103,7 +104,7 @@ const TextStyle kTextReverseStyleSmall = TextStyle(
   height: kTextHeight,
 );
 
-const TextStyle kTextMainStyleMini = TextStyle(
+TextStyle get kTextMainStyleMini => TextStyle(
   color: CustomColor.textMainColor,
   fontSize: kTextMiniSize,
   fontWeight: FontWeight.bold,
@@ -111,7 +112,7 @@ const TextStyle kTextMainStyleMini = TextStyle(
   height: kTextHeight,
 );
 
-const TextStyle kTextReverseStyleMini = TextStyle(
+TextStyle get kTextReverseStyleMini => TextStyle(
   color: CustomColor.textReverseColor,
   fontSize: kTextMiniSize,
   fontWeight: FontWeight.bold,

@@ -15,7 +15,7 @@ class CustomOutlinedButton extends StatelessWidget {
 
   final bool withSide;
 
-  const CustomOutlinedButton({
+  CustomOutlinedButton({
     Key? key,
     required this.onPressed,
     required this.text,

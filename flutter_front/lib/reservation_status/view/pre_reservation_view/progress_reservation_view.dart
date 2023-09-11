@@ -7,7 +7,7 @@ import 'package:flutter_front/reservation_status/viewmodel/pre_reservation_viewm
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ProgressReservationView extends ConsumerStatefulWidget {
-  const ProgressReservationView({super.key});
+  ProgressReservationView({super.key});
 
   @override
   ConsumerState<ProgressReservationView> createState() =>
@@ -43,18 +43,18 @@ class _ProgressReservationViewState
                 if (viewmodel.state is ProgressReservationStateSuccess)
                   Expanded(
                     child: (viewmodel.state as ProgressReservationStateSuccess)
-                            .data
-                            .isPre
+                        .data
+                        .isPre
                         ? Text(
-                            '${(viewmodel.state as ProgressReservationStateSuccess).data.date} ${(viewmodel.state as ProgressReservationStateSuccess).data.time}',
-                            style: kTextNormalStyleLarge,
-                            textAlign: TextAlign.center,
-                          )
+                      '${(viewmodel.state as ProgressReservationStateSuccess).data.date} ${(viewmodel.state as ProgressReservationStateSuccess).data.time}',
+                      style: kTextNormalStyleLarge,
+                      textAlign: TextAlign.center,
+                    )
                         : Text(
-                            '${(viewmodel.state as ProgressReservationStateSuccess).data.date.substring(0, 6)}월 정규예약',
-                            style: kTextNormalStyleLarge,
-                            textAlign: TextAlign.center,
-                          ),
+                      '${(viewmodel.state as ProgressReservationStateSuccess).data.date.substring(0, 6)}월 정규예약',
+                      style: kTextNormalStyleLarge,
+                      textAlign: TextAlign.center,
+                    ),
                   ),
                 if (viewmodel.state is ProgressReservationStateError)
                   Expanded(
@@ -77,10 +77,11 @@ class _ProgressReservationViewState
                   ),
               ],
             ),
-            const SizedBox(
+            SizedBox(
               height: kPaddingSmallSize,
             ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Column(
                   children: [
@@ -88,9 +89,9 @@ class _ProgressReservationViewState
                       color: CustomColor.mainColor,
                       verticalPadding: 5,
                       horizontalPadding: 0,
-                      content: const Row(
+                      content: Row(
                         children: [
-                          Icon(Icons.pause),
+                          const Icon(Icons.pause),
                           Text(
                             "예약중단",
                             style: kTextReverseStyleSmall,
@@ -101,16 +102,14 @@ class _ProgressReservationViewState
                         viewmodel.stopPreReservation(context);
                       },
                     ),
-                    const SizedBox(
-                      height: kPaddingMiddleSize,
-                    ),
+                    SizedBox(height: kPaddingMiddleSize),
                     CustomElevatedButton(
                         color: CustomColor.mainColor,
                         verticalPadding: 5,
                         horizontalPadding: 0,
-                        content: const Row(
+                        content: Row(
                           children: [
-                            Icon(Icons.play_arrow),
+                            const Icon(Icons.play_arrow),
                             Text(
                               "예약재개",
                               style: kTextReverseStyleSmall,
@@ -122,27 +121,28 @@ class _ProgressReservationViewState
                         }),
                   ],
                 ),
-                const SizedBox(
+                SizedBox(
                   width: kPaddingMiddleSize,
                 ),
                 CustomElevatedButton(
-                    color: CustomColor.pointColor,
-                    verticalPadding: 16,
-                    horizontalPadding: 0,
-                    content: Column(
-                      children: [
-                        const Icon(Icons.refresh_outlined),
-                        Text(
-                          "예약내역\n  초기화",
-                          style: kTextReverseStyleSmall.copyWith(
-                            fontSize: 11,
-                          ),
+                  color: CustomColor.pointColor,
+                  verticalPadding: 16,
+                  horizontalPadding: 0,
+                  content: Column(
+                    children: [
+                      const Icon(Icons.refresh_outlined),
+                      Text(
+                        "예약내역\n  초기화",
+                        style: kTextReverseStyleSmall.copyWith(
+                          fontSize: 11,
                         ),
-                      ],
-                    ),
-                    onPressed: () {
-                      viewmodel.resetPreReservation(context);
-                    }),
+                      ),
+                    ],
+                  ),
+                  onPressed: () {
+                    viewmodel.resetPreReservation(context);
+                  },
+                ),
               ],
             ),
           ],

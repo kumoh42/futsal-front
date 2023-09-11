@@ -13,17 +13,17 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: '/',
         name: RootTab.routeName,
-        builder: (context, state) => const RootTab(),
+        builder: (context, state) => RootTab(),
       ),
       GoRoute(
         path: '/splash',
         name: SplashScreen.routeName,
-        builder: (context, state) => const SplashScreen(),
+        builder: (context, state) => SplashScreen(),
       ),
       GoRoute(
         path: '/login',
         name: LoginScreen.routeName,
-        builder: (context, state) => const LoginScreen(),
+        builder: (context, state) => LoginScreen(),
       ),
     ],
     refreshListenable: provider,

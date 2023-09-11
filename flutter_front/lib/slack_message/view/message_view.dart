@@ -5,7 +5,7 @@ import 'package:flutter_front/slack_message/viewmodel/message_viewmodel.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class MessageView extends ConsumerWidget {
-  const MessageView({Key? key}) : super(key: key);
+  MessageView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -24,7 +24,7 @@ class MessageView extends ConsumerWidget {
           color: CustomColor.mainColor,
           borderRadius: BorderRadius.circular(kBorderRadiusMiniSize),
         ),
-        child: const Column(
+        child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(

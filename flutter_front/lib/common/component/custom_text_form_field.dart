@@ -14,10 +14,10 @@ class CustomTextFormField extends StatelessWidget {
   final TextEditingController? controller;
 
   final TextStyle? textStyle;
-  final double contentPadding;
+  late final double contentPadding;
   final Color? backgroundColor;
 
-  const CustomTextFormField({
+  CustomTextFormField({
     Key? key,
     this.labelText,
     this.hintText,
@@ -26,9 +26,11 @@ class CustomTextFormField extends StatelessWidget {
     this.validator,
     this.controller,
     this.textStyle,
-    this.contentPadding = kPaddingMiddleSize,
+    double? contentPadding,
     this.backgroundColor,
-  }) : super(key: key);
+  }) : super(key: key) {
+    this.contentPadding = contentPadding ?? kPaddingMiddleSize;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,8 +49,7 @@ class CustomTextFormField extends StatelessWidget {
                   size: kIconSmallSize,
                   color: CustomColor.subColor,
                 ),
-              if (prefixIcon != null)
-                const SizedBox(width: kPaddingSmallSize),
+              if (prefixIcon != null) SizedBox(width: kPaddingSmallSize),
               if (labelText != null)
                 Text(
                   labelText!,

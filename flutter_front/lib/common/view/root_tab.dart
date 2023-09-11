@@ -12,7 +12,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class RootTab extends ConsumerStatefulWidget {
   static String get routeName => 'home';
 
-  const RootTab({Key? key}) : super(key: key);
+  RootTab({Key? key}) : super(key: key);
 
   @override
   ConsumerState<RootTab> createState() => _RootTabState();
@@ -53,7 +53,7 @@ class _RootTabState extends ConsumerState<RootTab>
       appbarHeight: kAppbarHeight,
       leadingWidth: kNavigationRailSize * 2,
       backgroundColor: CustomColor.backgroundMainColor,
-      floatingActionButton: const MessageView(),
+      floatingActionButton: MessageView(),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       actions: [
         Padding(
@@ -89,7 +89,7 @@ class _RootTabState extends ConsumerState<RootTab>
                 dialog: CustomDialog(
                   onPressed: ref.read(authServiceProvider.notifier).logout,
                   accept: "logout",
-                  content: const Text(
+                  content: Text(
                     "정말 로그아웃 하시겠습니까?",
                     style: kTextNormalStyleMiddle,
                   ),
@@ -99,9 +99,9 @@ class _RootTabState extends ConsumerState<RootTab>
           ),
         ),
       ],
-      /*bottomNavigationBar: MediaQuery.of(context).size.width > 700 ? null : BottomNavigationBar(
+      bottomNavigationBar: !kIsMobile ? null : BottomNavigationBar(
         backgroundColor: CustomColor.mainColor,
-        selectedItemColor: CustomColor.backGroundSubColor,
+        selectedItemColor: CustomColor.backgroundMainColor,
         unselectedItemColor: CustomColor.disabledColor.withOpacity(0.5),
         type: BottomNavigationBarType.fixed,
         onTap: (int index) => setState(() => controller.animateTo(index)),
@@ -112,7 +112,7 @@ class _RootTabState extends ConsumerState<RootTab>
           label: e.label,
         ))
             .toList(),
-      ),*/
+      ),
 
       /* LayoutBuilder->부모 위젯의 크기와 제약 조건에 따라 자식 위젯의 레이아웃을 동적으로 조정
        constraints 변수를 통해 부모 위젯의 제약 조건에 접근 */
@@ -121,7 +121,7 @@ class _RootTabState extends ConsumerState<RootTab>
           children: [
             /*if(MediaQuery.of(context).size.width > 700)*/
             // SingleChildScrollView 이 부분이 tab 부분
-            SingleChildScrollView(
+            if(!kIsMobile) SingleChildScrollView(
               child: Container(
                 constraints: BoxConstraints(
                   // root tab의 세로 높이.
@@ -175,7 +175,7 @@ class _RootTabState extends ConsumerState<RootTab>
               child: TabBarView(
                 controller: controller,
                 physics: const NeverScrollableScrollPhysics(),
-                children: const [
+                children: [
                   ReservationStatusScreen(),
                   ConstructionScreen(),
                 ],

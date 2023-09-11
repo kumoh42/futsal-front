@@ -6,7 +6,7 @@ import 'package:flutter_front/reservation_status/viewmodel/reservation_emergency
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ReservationEmergencyView extends ConsumerWidget {
-  const ReservationEmergencyView({Key? key}) : super(key: key);
+  ReservationEmergencyView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -29,12 +29,12 @@ class ReservationEmergencyView extends ConsumerWidget {
                   onPressed: () => viewmodel.stopAllReservationSetting(context),
                   text: "예약 긴급 중단",
                 ),
-                const SizedBox(height: kPaddingMiddleSize),
+                SizedBox(height: kPaddingMiddleSize),
                 CustomOutlinedButton(
                   onPressed: () => viewmodel.cancelAllReservation(context),
                   text: "전체 예약 취소",
                 ),
-                const SizedBox(height: kPaddingMiddleSize),
+                SizedBox(height: kPaddingMiddleSize),
                 CustomOutlinedButton(
                   onPressed: () => viewmodel.startAllReservationSetting(context),
                   text: "예약 제개",

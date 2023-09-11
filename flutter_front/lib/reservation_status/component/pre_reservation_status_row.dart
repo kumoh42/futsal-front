@@ -7,7 +7,7 @@ class PreReservationStatusRow extends StatelessWidget {
   final PreReservationStatusEntity entity;
   final void Function(PreReservationStatusEntity)? onCancelClicked;
 
-  const PreReservationStatusRow({
+  PreReservationStatusRow({
     super.key,
     required this.entity,
     required this.onCancelClicked,

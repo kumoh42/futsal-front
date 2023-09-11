@@ -7,7 +7,7 @@ import 'package:flutter_front/common/styles/colors.dart';
 class SplashScreen extends StatelessWidget {
   static String get routeName => 'splash';
 
-  const SplashScreen({Key? key}) : super(key: key);
+  SplashScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

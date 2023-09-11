@@ -6,7 +6,7 @@ class NumberContainer extends StatelessWidget {
   final double width;
   final double height;
 
-  const NumberContainer({
+  NumberContainer({
     super.key,
     required this.content,
     required this.height,

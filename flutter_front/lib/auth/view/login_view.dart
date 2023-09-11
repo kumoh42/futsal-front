@@ -14,7 +14,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 class LoginView extends ConsumerStatefulWidget {
   static String get routeName => 'login';
 
-  const LoginView({super.key});
+  LoginView({super.key});
 
   @override
   ConsumerState<LoginView> createState() => _LoginViewState();
@@ -25,34 +25,24 @@ class _LoginViewState extends ConsumerState<LoginView> {
   Widget build(BuildContext context) {
     final viewModel = ref.watch(loginViewModelProvider);
     return CustomContainer(
-      minWidth: MediaQuery.of(context).size.width * 0.25 >= 500
-          ? 500
-          : MediaQuery.of(context).size.width * 0.25,
-      maxWidth: MediaQuery.of(context).size.width * 0.25 >= 550
-          ? MediaQuery.of(context).size.width * 0.25
-          : 550,
-      minHeight: MediaQuery.of(context).size.height * 0.6 >= 550
-          ? 550
-          : MediaQuery.of(context).size.height * 0.6,
-      maxHeight: MediaQuery.of(context).size.height * 0.6 >= 600
-          ? MediaQuery.of(context).size.height * 0.6
-          : 600,
+      maxWidth: !kIsMobile ? 500 : 450,
+      maxHeight: !kIsMobile ? 600 : 400,
       child: Padding(
-        padding: const EdgeInsets.all(kPaddingLargeSize).copyWith(top: 0),
+        padding: EdgeInsets.all(kPaddingLargeSize).copyWith(top: 0),
         child: Form(
           key: viewModel.loginKey,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const _Title(),
-              const SizedBox(height: kPaddingLargeSize),
+              SizedBox(height: kPaddingLargeSize),
               CustomTextFormField(
                 labelText: "아이디",
                 hintText: '아이디를 입력해주세요',
                 controller: viewModel.idTextController,
                 validator: validateId,
               ),
-              const SizedBox(height: kPaddingLargeSize),
+              SizedBox(height: kPaddingLargeSize),
               CustomTextFormField(
                 labelText: "비밀번호",
                 hintText: '비밀번호를 입력해주세요',
@@ -60,12 +50,12 @@ class _LoginViewState extends ConsumerState<LoginView> {
                 controller: viewModel.passwordTextController,
                 validator: validatePassword,
               ),
-              const SizedBox(height: kPaddingXLargeSize),
+              SizedBox(height: kPaddingXLargeSize),
               if (viewModel.state is LoadingState)
-                const SizedBox(
-                  width: 76,
-                  height: 76,
-                  child: CircularProgressIndicator(
+                SizedBox(
+                  width: !kIsMobile ? 76 : null,
+                  height: !kIsMobile ? 76 : null,
+                  child: const CircularProgressIndicator(
                     color: CustomColor.subColor,
                   ),
                 )
@@ -84,7 +74,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
                             text: 'ID / PW 찾기',
                             textAlign: TextAlign.left,
                           ),
-                          const SizedBox(height: kPaddingSmallSize),
+                          SizedBox(height: kPaddingSmallSize),
                           CustomTextButton(
                             onPressed: () async {
                               viewModel.launch(dotenv.get('KUMOH42_REGISTER'));
@@ -92,7 +82,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
                             text: '금오사이 회원가입',
                             textAlign: TextAlign.left,
                           ),
-                          const SizedBox(height: kPaddingSmallSize),
+                          SizedBox(height: kPaddingSmallSize),
                           CustomTextButton(
                             onPressed: () {},
                             text: '관리자에게 문의하기',
@@ -112,7 +102,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
                           ),
                         ),
                       ),
-                      child: const Text(
+                      child: Text(
                         '로그인',
                         style: kTextReverseStyleMiddle,
                       ),

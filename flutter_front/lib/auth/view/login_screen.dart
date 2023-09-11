@@ -5,7 +5,7 @@ import 'package:flutter_front/common/layout/default_layout.dart';
 class LoginScreen extends StatelessWidget {
   static String get routeName => 'login';
 
-  const LoginScreen({super.key});
+  LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +15,6 @@ class LoginScreen extends StatelessWidget {
       child: SingleChildScrollView(
         keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
         child: Container(
-          width: width,
           constraints: BoxConstraints(minHeight: height),
           decoration: const BoxDecoration(
             image: DecorationImage(
@@ -23,7 +22,7 @@ class LoginScreen extends StatelessWidget {
               image: AssetImage('assets/image/login_background.png'),
             ),
           ),
-          child: const Center(child: LoginView()),
+          child: Center(child: LoginView()),
         ),
       ),
     );

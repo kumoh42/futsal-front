@@ -44,9 +44,8 @@ class _MessagingBoxState extends ConsumerState<MessagingBox> {
       elevation: 5,
       borderRadius: const BorderRadius.all(Radius.circular(kBorderRadiusSize)),
       child: AnimatedContainer(
-        width: controller.isHorizontalExpanded
-            ? 400
-            : kNavigationRailSize - 2 * kPaddingSmallSize,
+        width:
+            controller.isHorizontalExpanded ? kContainerWidthSize : 70,
         height: controller.isVerticalExpanded ? kContainerHeightSize : 70,
         duration: controller.duration,
         curve: Curves.fastEaseInToSlowEaseOut,
@@ -65,7 +64,7 @@ class _MessagingBoxState extends ConsumerState<MessagingBox> {
             if (controller.isVerticalExpanded && widget.child != null)
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(
+                  padding: EdgeInsets.symmetric(
                     horizontal: kPaddingMiddleSize,
                   ),
                   child: SingleChildScrollView(child: widget.child!),
@@ -96,7 +95,7 @@ class _DefaultWidget extends StatelessWidget {
   final String title;
   final TextStyle? textStyle;
 
-  const _DefaultWidget(
+  _DefaultWidget(
     this.controller,
     this.textStyle,
     this.title, {
@@ -106,19 +105,19 @@ class _DefaultWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => controller.show(title),
+      onTap: () => controller.open(title),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const SizedBox(width: kPaddingMiddleSize),
+/*          SizedBox(width: kPaddingMiddleSize),
           Expanded(
             child: Text(
               title,
               style: textStyle,
             ),
-          ),
+          ),*/
           Icon(Icons.message, color: textStyle?.color),
-          const SizedBox(width: kPaddingSmallSize + kPaddingMiniSize),
+//          SizedBox(width: kPaddingSmallSize + kPaddingMiniSize),
         ],
       ),
     );
@@ -130,18 +129,18 @@ class _TitleBar extends StatelessWidget {
   final TextStyle? textStyle;
   final String title;
 
-  const _TitleBar(this.title, this.textStyle, this.controller, {Key? key})
+  _TitleBar(this.title, this.textStyle, this.controller, {Key? key})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: kPaddingSmallSize),
+      padding: EdgeInsets.symmetric(vertical: kPaddingSmallSize),
       child: Row(
         children: [
-          const SizedBox(width: kPaddingMiddleSize),
+          SizedBox(width: kPaddingMiddleSize),
           Expanded(child: Text(title, style: textStyle)),
-          const SizedBox(width: kPaddingSmallSize),
+          SizedBox(width: kPaddingSmallSize),
           IconButton(
             onPressed: controller.close,
             icon: Icon(Icons.close, color: textStyle?.color),
@@ -159,7 +158,7 @@ class _MessageTextFormField extends StatelessWidget {
   final Color? textFieldColor;
   final TextStyle? textFiledTextStyle;
 
-  const _MessageTextFormField(
+  _MessageTextFormField(
     this.controller,
     this.backgroundColor,
     this.bodyTextStyle,
@@ -190,9 +189,8 @@ class _MessageTextFormField extends StatelessWidget {
                 children: [
                   if (controller.isVerticalExpanding)
                     Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: kPaddingMiddleSize,
-                      ),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: kPaddingMiddleSize),
                       child: Column(
                         children: [
                           Divider(color: textFieldColor),
@@ -210,9 +208,8 @@ class _MessageTextFormField extends StatelessWidget {
                       ),
                     ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: kPaddingMiddleSize,
-                    ),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: kPaddingMiddleSize),
                     child: _CustomTextField(
                       controller: controller,
                       bodyTextStyle: bodyTextStyle,
@@ -230,14 +227,14 @@ class _MessageTextFormField extends StatelessWidget {
                     ),
                   ),
                   if (controller.isVerticalExpanding)
-                    const SizedBox(height: kPaddingMiddleSize),
+                    SizedBox(height: kPaddingMiddleSize),
                 ],
               ),
             ),
           ),
         ),
         Padding(
-          padding: const EdgeInsets.all(kPaddingSmallSize).copyWith(
+          padding: EdgeInsets.all(kPaddingSmallSize).copyWith(
             bottom: kPaddingSmallSize,
           ),
           child: controller.isSending
@@ -271,7 +268,7 @@ class _CustomTextField extends StatelessWidget {
 
   final String? Function(String?)? validator;
 
-  const _CustomTextField({
+  _CustomTextField({
     Key? key,
     required this.controller,
     this.bodyTextStyle,
@@ -292,7 +289,7 @@ class _CustomTextField extends StatelessWidget {
         if (controller.isVerticalExpanding)
           Column(
             children: [
-              const SizedBox(height: kPaddingSmallSize),
+              SizedBox(height: kPaddingSmallSize),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
@@ -301,7 +298,7 @@ class _CustomTextField extends StatelessWidget {
                     size: kIconMiniSize,
                     color: bodyTextStyle?.color,
                   ),
-                  const SizedBox(width: kPaddingSmallSize),
+                  SizedBox(width: kPaddingSmallSize),
                   Text(
                     labelText,
                     style: textFiledTextStyle?.copyWith(
@@ -310,7 +307,7 @@ class _CustomTextField extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: kPaddingSmallSize),
+              SizedBox(height: kPaddingSmallSize),
             ],
           ),
         TextFormField(
@@ -325,7 +322,7 @@ class _CustomTextField extends StatelessWidget {
               borderSide: BorderSide.none,
             ),
             isDense: true,
-            contentPadding: const EdgeInsets.symmetric(
+            contentPadding: EdgeInsets.symmetric(
               vertical: kPaddingSmallSize,
               horizontal: kPaddingMiniSize,
             ),
@@ -342,8 +339,9 @@ class _CustomTextField extends StatelessWidget {
 
 enum MessagingBoxState {
   close,
-  horizontalExpend,
-  verticalExpend,
+  horizontalExpand,
+  horizontalExpanding,
+  verticalExpand,
   verticalExpanding,
   open,
   send;
@@ -377,9 +375,11 @@ class MessagingBoxController extends ChangeNotifier {
 
   bool get isClosed => state >= MessagingBoxState.close;
 
-  bool get isHorizontalExpanded => state >= MessagingBoxState.horizontalExpend;
+  bool get isHorizontalExpanded => state >= MessagingBoxState.horizontalExpand;
 
-  bool get isVerticalExpanded => state >= MessagingBoxState.verticalExpend;
+  bool get isHorizontalExpanding => state >= MessagingBoxState.horizontalExpanding;
+
+  bool get isVerticalExpanded => state >= MessagingBoxState.verticalExpand;
 
   bool get isVerticalExpanding => state >= MessagingBoxState.verticalExpanding;
 
@@ -394,11 +394,12 @@ class MessagingBoxController extends ChangeNotifier {
 
   MessagingBoxController({required this.onSendClicked});
 
-  void show(String title) async {
+  void open(String title) async {
+    await _changState(MessagingBoxState.horizontalExpand, _duration250);
     messageController.text = title;
-    await _changState(MessagingBoxState.horizontalExpend, duration);
+    await _changState(MessagingBoxState.horizontalExpanding, _duration250);
     messageController.clear();
-    await _changState(MessagingBoxState.verticalExpend, _duration250);
+    await _changState(MessagingBoxState.verticalExpand, _duration250);
     await _changState(MessagingBoxState.verticalExpanding, _duration250);
     await _changState(MessagingBoxState.open, const Duration());
   }

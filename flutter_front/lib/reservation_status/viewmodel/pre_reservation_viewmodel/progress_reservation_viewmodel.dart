@@ -39,7 +39,7 @@ class ProgressReservationViewModel extends ChangeNotifier {
 
     CustomDialogUtil.showCustomDialog(
         dialog: CustomDialog(
-          title: const Text(
+          title: Text(
             "우선예약 중단 확인",
             style: kTextMainStyleMiddle,
           ),
@@ -67,7 +67,7 @@ class ProgressReservationViewModel extends ChangeNotifier {
 
     CustomDialogUtil.showCustomDialog(
         dialog: CustomDialog(
-          title: const Text(
+          title: Text(
             "우선예약 재개 확인",
             style: kTextMainStyleMiddle,
           ),

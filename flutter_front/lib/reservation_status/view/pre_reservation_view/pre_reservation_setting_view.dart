@@ -10,7 +10,7 @@ import 'package:flutter_front/reservation_status/viewmodel/pre_reservation_viewm
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class PreReservationSettingView extends ConsumerStatefulWidget {
-  const PreReservationSettingView({super.key});
+  PreReservationSettingView({super.key});
 
   @override
   ConsumerState<PreReservationSettingView> createState() =>
@@ -74,9 +74,7 @@ class _PreReservationSettingViewState
                             Icons.watch_later_outlined,
                             size: kIconMainSize,
                           ),
-                          const SizedBox(
-                            width: 10,
-                          ),
+                          const SizedBox(width: 10),
                           GestureDetector(
                             onTap: () {
                               viewmodel.setTimePicker(context);
@@ -88,16 +86,12 @@ class _PreReservationSettingViewState
                               height: 40,
                             ),
                           ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          const Text(
+                          const SizedBox(width: 10),
+                          Text(
                             ":",
                             style: kTextMainStyleMiddle,
                           ),
-                          const SizedBox(
-                            width: 10,
-                          ),
+                          const SizedBox(width: 10),
                           GestureDetector(
                             onTap: () {
                               viewmodel.setTimePicker(context);
@@ -109,9 +103,7 @@ class _PreReservationSettingViewState
                               height: 40,
                             ),
                           ),
-                          const SizedBox(
-                            width: 10,
-                          ),
+                          const SizedBox(width: 10),
                           CustomElevatedButton(
                             content: Text(
                               "APPLY",
@@ -119,9 +111,8 @@ class _PreReservationSettingViewState
                                 fontWeight: FontWeight.normal,
                               ),
                             ),
-                            onPressed: () {
-                              viewmodel.setPreReservation(context);
-                            },
+                            onPressed: () =>
+                                viewmodel.setPreReservation(context),
                           ),
                         ],
                       ),
@@ -133,14 +124,14 @@ class _PreReservationSettingViewState
           ),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: kPaddingSmallSize),
+          padding: EdgeInsets.symmetric(vertical: kPaddingSmallSize),
           child: Row(
             children: [
               Expanded(
                 flex: 4,
                 child: CustomContainer(
                   title: "우선예약 설정 현황",
-                  height: kSubPageContainerHeightSize,
+                  height: 250,
                   child: PreReservationStatusList(
                     state: viewmodel.statusState,
                     list: viewmodel.preReservationStatusList,
@@ -150,14 +141,14 @@ class _PreReservationSettingViewState
                   ),
                 ),
               ),
-              const Expanded(
+              Expanded(
                 flex: 3,
                 child: ProgressReservationView(),
               ),
             ],
           ),
         ),
-        const Row(
+        Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Padding(

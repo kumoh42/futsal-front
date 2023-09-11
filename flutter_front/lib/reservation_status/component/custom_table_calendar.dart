@@ -28,14 +28,12 @@ class _CustomTimeTableState extends ConsumerState<CustomTimeTable> {
     controller = ref.watch(widget.provider);
     return TableCalendar(
       locale: 'ko_KR',
-      headerStyle: const HeaderStyle(
+      headerStyle: HeaderStyle(
         titleCentered: true,
         formatButtonVisible: false,
         // TODO : TimeTable Header 디자인 변경
         titleTextStyle: kTextMainStyleMiddle,
-        decoration: BoxDecoration(
-          color: CustomColor.disabledColor,
-        ),
+        decoration: const BoxDecoration(color: CustomColor.disabledColor),
       ),
       rowHeight: widget.rowHeight,
       daysOfWeekHeight: widget.rowHeight,
@@ -49,6 +47,10 @@ class _CustomTimeTableState extends ConsumerState<CustomTimeTable> {
       calendarBuilders: CalendarBuilders(
         // 기본 날짜 셀의 빌더 함수
         defaultBuilder: (context, dateTime, _) => _cellBuilder(
+          date: dateTime.day.toString(),
+        ),
+        outsideBuilder: (context, dateTime, _) => _cellBuilder(
+          textColor: Colors.black.withOpacity(0.5),
           date: dateTime.day.toString(),
         ),
         // 오늘 날짜 셀의 빌더 함수

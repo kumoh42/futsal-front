@@ -67,7 +67,7 @@ class PreReservationSettingViewModel extends ChangeNotifier {
 
     CustomDialogUtil.showCustomDialog(
       dialog: CustomDialog(
-        title: const Text(
+        title: Text(
           '우선예약 설정 확인',
           style: kTextMainStyleMiddle,
         ),
@@ -98,7 +98,7 @@ class PreReservationSettingViewModel extends ChangeNotifier {
       BuildContext context, PreReservationStatusEntity entity) async {
     CustomDialogUtil.showCustomDialog(
       dialog: CustomDialog(
-        title: const Text(
+        title: Text(
           '우선예약 설정 취소',
           style: kTextMainStyleMiddle,
         ),

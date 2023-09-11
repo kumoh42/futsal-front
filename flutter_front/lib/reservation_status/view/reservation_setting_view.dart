@@ -9,7 +9,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:timer_builder/timer_builder.dart';
 
 class ReservationSettingView extends ConsumerWidget {
-  const ReservationSettingView({Key? key}) : super(key: key);
+  ReservationSettingView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -34,11 +34,11 @@ class ReservationSettingView extends ConsumerWidget {
                             Radius.circular(kBorderRadiusSize * 3)),
                         side: BorderSide(width: 3, color: Colors.black)),
                     child: Padding(
-                      padding: const EdgeInsets.all(kPaddingLargeSize),
+                      padding: EdgeInsets.all(kPaddingLargeSize),
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          const Text("현재 시각", style: kTextMainStyleLarge),
+                          Text("현재 시각", style: kTextMainStyleLarge),
                           Text(
                             settingDateFormat.format(DateTime.now()),
                             textAlign: TextAlign.center,
@@ -49,13 +49,13 @@ class ReservationSettingView extends ConsumerWidget {
                     ),
                   ),
                 ),
-                const SizedBox(width: kPaddingMiddleSize),
+                SizedBox(width: kPaddingMiddleSize),
                 Expanded(
                   flex: 2,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const SizedBox(height: kPaddingMiddleSize * 2),
+                      SizedBox(height: kPaddingMiddleSize * 2),
                       viewmodel.settingState is LoadingState
                           ? const Center(child: CircularProgressIndicator())
                           : Row(
@@ -69,7 +69,7 @@ class ReservationSettingView extends ConsumerWidget {
                                     text: "예약 시작",
                                   ),
                                 ),
-                                const SizedBox(width: kPaddingMiddleSize),
+                                SizedBox(width: kPaddingMiddleSize),
                                 Expanded(
                                   child: CustomOutlinedButton(
                                     height: 75,
@@ -82,7 +82,7 @@ class ReservationSettingView extends ConsumerWidget {
                                 ),
                               ],
                             ),
-                      const SizedBox(height: kPaddingMiddleSize),
+                      SizedBox(height: kPaddingMiddleSize),
                       const Text("정식 예약은 매월 1일 0시에 시작됩니다."),
                     ],
                   ),

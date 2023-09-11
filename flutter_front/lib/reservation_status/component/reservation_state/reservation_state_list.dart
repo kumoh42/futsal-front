@@ -43,11 +43,11 @@ class _ReservationStateListState extends ConsumerState<ReservationStateList> {
                 width: widget.height * 3 / 7,
                 height: widget.height * 3 / 7,
               ),
-              const Text(
+              Text(
                 "아직 예약이 오픈되지 않았습니다.",
                 style: kTextMainStyleMiddle,
               ),
-              const SizedBox(height: kPaddingMiddleSize),
+              SizedBox(height: kPaddingMiddleSize),
             ],
           ),
         );

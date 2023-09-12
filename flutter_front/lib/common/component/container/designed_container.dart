@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_front/common/const_styles/colors.dart';
 import 'package:flutter_front/common/const_styles/sizes.dart';
-import 'package:flutter_front/reservation_status/component/container/designed_container_title_bar.dart';
+
+import 'designed_container_title_bar.dart';
 
 class DesignedContainer extends StatelessWidget {
   final String title;

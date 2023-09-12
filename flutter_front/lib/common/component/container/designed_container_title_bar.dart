@@ -22,7 +22,7 @@ class DesignedContainerTitleBar extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Expanded(child: Text(title, style: kTextMainStyleMiddle)),
+          Expanded(child: Text(title, style: kTextMainStyleLarge)),
           ...actions ?? [],
         ],
       ),

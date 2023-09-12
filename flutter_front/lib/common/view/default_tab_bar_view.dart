@@ -5,7 +5,7 @@ class DefaultTabBarView extends StatelessWidget {
   final Widget child;
   final bool isExpanded;
 
-  DefaultTabBarView({
+  const DefaultTabBarView({
     Key? key,
     this.isExpanded = false,
     required this.child,
@@ -18,8 +18,6 @@ class DefaultTabBarView extends StatelessWidget {
     return LayoutBuilder(
         // SingleChildScrollView-> 세로 스크롤을 위함
         builder: (context, constrains) {
-      double width = constrains.maxWidth;
-      double height = constrains.maxHeight;
       return SingleChildScrollView(
         // Scrollbar->사용자가 스크롤할 때 어디에 위치해 있는지를 시각적으로 보여주는 역할
         child: Scrollbar(
@@ -28,11 +26,10 @@ class DefaultTabBarView extends StatelessWidget {
           child: SingleChildScrollView(
             controller: horizontalScrollController,
             scrollDirection: Axis.horizontal,
-            child: Container(
+            child: SizedBox(
               width: isExpanded
                   ? constrains.maxWidth
-                  : kLayoutWidthSize - kNavigationRailSize,
-              constraints: BoxConstraints(minHeight: constrains.maxHeight),
+                  : kLayoutWidthSize,
               child: child,
             ),
           ),

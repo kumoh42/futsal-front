@@ -10,7 +10,7 @@ import 'package:flutter_front/reservation_status/viewmodel/pre_reservation_viewm
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class PreReservationSettingView extends ConsumerStatefulWidget {
-  PreReservationSettingView({super.key});
+  const PreReservationSettingView({super.key});
 
   @override
   ConsumerState<PreReservationSettingView> createState() =>
@@ -23,11 +23,9 @@ class _PreReservationSettingViewState
   void initState() {
     super.initState();
     // UI가 빌드된 후 실행
-    Future(() {
-      ref
-          .read(preReservationSettingViewModelProvider)
-          .getPreReservationStatusList();
-    });
+    Future(() => ref
+        .read(preReservationSettingViewModelProvider)
+        .getPreReservationStatusList());
   }
 
   @override
@@ -40,113 +38,95 @@ class _PreReservationSettingViewState
         Expanded(
           child: CustomContainer(
             title: "우선예약 설정",
-            child: LayoutBuilder(
-              builder: (context, constraints) {
-                final width = constraints.maxWidth;
-                final height = constraints.maxHeight;
-
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    children: [
-                      Expanded(
-                        child: CustomContainer(
-                          width: width,
-                          height: height,
-                          isBackground: true,
-                          boarderRadius: 0,
-                          boarderColor: CustomColor.disabledColor,
-                          boarderWidth: kBorderSideWidth * 10,
-                          color: CustomColor.backgroundMainColor,
-                          child: CustomTimeTable(
-                            controller: viewmodel.customTimeTableController,
-                            rowHeight: 41,
-                          ),
+            child: Column(
+              children: [
+                Expanded(
+                  child: CustomContainer(
+                    isBackground: true,
+                    boarderRadius: 0,
+                    boarderColor: CustomColor.disabledColor,
+                    boarderWidth: kBorderSideWidth * 10,
+                    color: CustomColor.backgroundMainColor,
+                    child: CustomTimeTable(
+                      controller: viewmodel.customTimeTableController,
+                      rowHeight: 41,
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(
+                      Icons.watch_later_outlined,
+                      size: kIconMainSize,
+                    ),
+                    const SizedBox(width: 10),
+                    GestureDetector(
+                      onTap: () {
+                        viewmodel.setTimePicker(context);
+                      },
+                      child: NumberContainer(
+                        content: viewmodel.hour.toString().padLeft(2, "0"),
+                        width: 60,
+                        height: 40,
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    Text(
+                      ":",
+                      style: kTextMainStyleMiddle,
+                    ),
+                    const SizedBox(width: 10),
+                    GestureDetector(
+                      onTap: () {
+                        viewmodel.setTimePicker(context);
+                      },
+                      child: NumberContainer(
+                        content: viewmodel.minute.toString().padLeft(2, "0"),
+                        width: 60,
+                        height: 40,
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    CustomElevatedButton(
+                      content: Text(
+                        "APPLY",
+                        style: kTextReverseStyleMiddle.copyWith(
+                          fontWeight: FontWeight.normal,
                         ),
                       ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Icon(
-                            Icons.watch_later_outlined,
-                            size: kIconMainSize,
-                          ),
-                          const SizedBox(width: 10),
-                          GestureDetector(
-                            onTap: () {
-                              viewmodel.setTimePicker(context);
-                            },
-                            child: NumberContainer(
-                              content:
-                                  viewmodel.hour.toString().padLeft(2, "0"),
-                              width: 60,
-                              height: 40,
-                            ),
-                          ),
-                          const SizedBox(width: 10),
-                          Text(
-                            ":",
-                            style: kTextMainStyleMiddle,
-                          ),
-                          const SizedBox(width: 10),
-                          GestureDetector(
-                            onTap: () {
-                              viewmodel.setTimePicker(context);
-                            },
-                            child: NumberContainer(
-                              content:
-                                  viewmodel.minute.toString().padLeft(2, "0"),
-                              width: 60,
-                              height: 40,
-                            ),
-                          ),
-                          const SizedBox(width: 10),
-                          CustomElevatedButton(
-                            content: Text(
-                              "APPLY",
-                              style: kTextReverseStyleMiddle.copyWith(
-                                fontWeight: FontWeight.normal,
-                              ),
-                            ),
-                            onPressed: () =>
-                                viewmodel.setPreReservation(context),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                );
-              },
+                      onPressed: () => viewmodel.setPreReservation(context),
+                    ),
+                  ],
+                ),
+              ],
             ),
           ),
         ),
-        Padding(
-          padding: EdgeInsets.symmetric(vertical: kPaddingSmallSize),
-          child: Row(
-            children: [
-              Expanded(
-                flex: 4,
-                child: CustomContainer(
-                  title: "우선예약 설정 현황",
-                  height: 250,
-                  child: PreReservationStatusList(
-                    state: viewmodel.statusState,
-                    list: viewmodel.preReservationStatusList,
-                    onCancelClicked: (p) {
-                      viewmodel.canclePreReservation(context, p);
-                    },
-                  ),
+        Row(
+          children: [
+            Expanded(
+              flex: 4,
+              child: CustomContainer(
+                title: "우선예약 설정 현황",
+                height: 250,
+                child: PreReservationStatusList(
+                  state: viewmodel.statusState,
+                  list: viewmodel.preReservationStatusList,
+                  onCancelClicked: (p) {
+                    viewmodel.canclePreReservation(context, p);
+                  },
                 ),
               ),
-              Expanded(
-                flex: 3,
-                child: ProgressReservationView(),
-              ),
-            ],
-          ),
+            ),
+            Expanded(
+              flex: 3,
+              child: ProgressReservationView(),
+            ),
+          ],
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.start,

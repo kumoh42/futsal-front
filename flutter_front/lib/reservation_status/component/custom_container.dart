@@ -17,7 +17,7 @@ class CustomContainer extends StatelessWidget {
   final bool isBackground;
   final Widget child;
 
-  CustomContainer({
+  const CustomContainer({
     Key? key,
     this.title,
     this.width,

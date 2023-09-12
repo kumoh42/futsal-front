@@ -23,3 +23,31 @@ const kTextMainStyleMiddle = TextStyle(
   fontWeight: FontWeight.bold,
   overflow: TextOverflow.ellipsis,
 );
+
+const kTextDisabledStyleLarge = TextStyle(
+  color: kDisabledColor,
+  fontSize: kTextLargeSize,
+  fontWeight: FontWeight.bold,
+  overflow: TextOverflow.ellipsis,
+);
+
+const kTextDisabledStyleMiddle = TextStyle(
+  color: kDisabledColor,
+  fontSize: kTextMiddleSize,
+  fontWeight: FontWeight.bold,
+  overflow: TextOverflow.ellipsis,
+);
+
+const kTextReverseStyleLarge = TextStyle(
+  color: kTextReverseColor,
+  fontSize: kTextLargeSize,
+  fontWeight: FontWeight.bold,
+  overflow: TextOverflow.ellipsis,
+);
+
+const kTextReverseStyleMiddle = TextStyle(
+  color: kTextReverseColor,
+  fontSize: kTextMiddleSize,
+  fontWeight: FontWeight.bold,
+  overflow: TextOverflow.ellipsis,
+);

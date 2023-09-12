@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_front/common/component/custom_elevated_button.dart';
-import 'package:flutter_front/common/component/number_container.dart';
-import 'package:flutter_front/common/styles/styles.dart';
-import 'package:flutter_front/reservation_status/component/custom_table_calendar.dart';
-import 'package:flutter_front/reservation_status/component/custom_container.dart';
-import 'package:flutter_front/reservation_status/view/pre_reservation_view/pre_reservation_setting_status_view.dart';
-import 'package:flutter_front/reservation_status/view/pre_reservation_view/progress_reservation_view.dart';
+import 'package:flutter_front/common/component/container/designed_container.dart';
+import 'package:flutter_front/common/const_styles/colors.dart';
+import 'package:flutter_front/common/const_styles/sizes.dart';
+import 'package:flutter_front/common/const_styles/text_styles.dart';
+import 'package:flutter_front/reservation_status/component/designed_button.dart';
+import 'package:flutter_front/reservation_status/component/titled_text.dart';
 import 'package:flutter_front/reservation_status/viewmodel/pre_reservation_viewmodel/pre_reservation_setting_viewmodel.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -32,116 +31,83 @@ class _PreReservationSettingViewState
   Widget build(BuildContext context) {
     final viewmodel = ref.watch(preReservationSettingViewModelProvider);
 
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Expanded(
-          child: CustomContainer(
-            title: "우선예약 설정",
+          flex: 7,
+          child: DesignedContainer(
+            title: "진행 중인 예약",
             child: Column(
               children: [
-                Expanded(
-                  child: CustomContainer(
-                    isBackground: true,
-                    boarderRadius: 0,
-                    boarderColor: CustomColor.disabledColor,
-                    boarderWidth: kBorderSideWidth * 10,
-                    color: CustomColor.backgroundMainColor,
-                    child: CustomTimeTable(
-                      controller: viewmodel.customTimeTableController,
-                      rowHeight: 41,
-                    ),
-                  ),
+                const TitledText(
+                  title: '정식 예약',
+                  text: '2023년 09월 01일 00:00 ~ 2023년 09월 30일 23:59',
                 ),
-                const SizedBox(
-                  height: 10,
+                const SizedBox(height: kPaddingMiddleSize),
+                const TitledText(
+                  title: '사전 예약',
+                  text: '2023년 09월 01일 00:00 ~ 2023년 09월 30일 23:59',
                 ),
+                const SizedBox(height: kPaddingMiddleSize),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Icon(
-                      Icons.watch_later_outlined,
-                      size: kIconMainSize,
+                    DesignedButton(
+                      icon: Icons.pause,
+                      text: "예약 중단",
+                      onPressed: () {},
                     ),
-                    const SizedBox(width: 10),
-                    GestureDetector(
-                      onTap: () {
-                        viewmodel.setTimePicker(context);
-                      },
-                      child: NumberContainer(
-                        content: viewmodel.hour.toString().padLeft(2, "0"),
-                        width: 60,
-                        height: 40,
-                      ),
+                    const SizedBox(width: kPaddingMiddleSize),
+                    DesignedButton(
+                      icon: Icons.play_arrow,
+                      text: "예약 재개",
+                      onPressed: () {},
                     ),
-                    const SizedBox(width: 10),
-                    Text(
-                      ":",
-                      style: kTextMainStyleMiddle,
-                    ),
-                    const SizedBox(width: 10),
-                    GestureDetector(
-                      onTap: () {
-                        viewmodel.setTimePicker(context);
-                      },
-                      child: NumberContainer(
-                        content: viewmodel.minute.toString().padLeft(2, "0"),
-                        width: 60,
-                        height: 40,
-                      ),
-                    ),
-                    const SizedBox(width: 10),
-                    CustomElevatedButton(
-                      content: Text(
-                        "APPLY",
-                        style: kTextReverseStyleMiddle.copyWith(
-                          fontWeight: FontWeight.normal,
-                        ),
-                      ),
-                      onPressed: () => viewmodel.setPreReservation(context),
+                    const SizedBox(width: kPaddingMiddleSize),
+                    DesignedButton(
+                      icon: Icons.refresh,
+                      text: "예약 내역 초기화",
+                      color: kPointColor,
+                      onPressed: () {},
                     ),
                   ],
-                ),
+                )
               ],
             ),
           ),
         ),
-        Row(
-          children: [
-            Expanded(
-              flex: 4,
-              child: CustomContainer(
-                title: "우선예약 설정 현황",
-                height: 250,
-                child: PreReservationStatusList(
-                  state: viewmodel.statusState,
-                  list: viewmodel.preReservationStatusList,
-                  onCancelClicked: (p) {
-                    viewmodel.canclePreReservation(context, p);
-                  },
+        const SizedBox(width: kLayoutGutterSize),
+        Expanded(
+          flex: 5,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              DesignedContainer(
+                title: "사전 예약 설정 현황",
+                actions: [
+                  IconButton(
+                    onPressed: () {},
+                    icon: const Icon(Icons.edit, size: kIconMiddleSize),
+                  ),
+                ],
+                child: const Column(
+                  children: [
+                    TitledText(
+                      title: '정식 예약',
+                      text: '2023년 09월 28일 20:00',
+                    ),
+                    SizedBox(height: kPaddingMiddleSize),
+                    TitledText(
+                      title: '사전 예약',
+                      text: '2023년 09월 30일 23:59',
+                    ),
+                  ],
                 ),
               ),
-            ),
-            Expanded(
-              flex: 3,
-              child: ProgressReservationView(),
-            ),
-          ],
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: kPaddingMiniSize,
-                vertical: kPaddingSmallSize,
-              ),
-              child: Text(
-                "정규예약은 매월 1일 0시에 우선예약 종료 후 자동으로 시작됩니다.",
-                style: kTextMainStyleSmall,
-              ),
-            ),
-          ],
+              const Text(" ·  사전 예약은 하나만 설정 가능 합니다.", style: kTextMainStyleMiddle,),
+              const Text(" ·  정식 예약은 매월 1월 00시에 자동으로 시작됩니다.", style: kTextMainStyleMiddle,),
+            ],
+          ),
         ),
       ],
     );

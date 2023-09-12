@@ -6,6 +6,7 @@ const double kTextTitleSize = 30.0;
 const double kTextLargeSize = 28.0;
 const double kTextMiddleSize = 21.0;
 
+const double kPaddingLargeSize = 16.0;
 const double kPaddingMiddleSize = 12.0;
 const double kPaddingSmallSize = 8.0;
 

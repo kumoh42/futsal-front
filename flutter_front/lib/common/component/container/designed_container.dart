@@ -25,15 +25,8 @@ class DesignedContainer extends StatelessWidget {
         borderRadius: const BorderRadius.all(
           Radius.circular(kBoarderRadiusSize),
         ),
-        boxShadow: const [
-          BoxShadow(
-            color: kDisabledColor,
-            blurRadius: 5.0,
-            offset: Offset(4, 4),
-          ),
-        ],
       ),
-      padding: const EdgeInsets.all(kPaddingMiddleSize),
+      padding: const EdgeInsets.all(kPaddingLargeSize),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [

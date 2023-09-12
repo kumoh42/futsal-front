@@ -3,10 +3,7 @@ import 'package:flutter_front/common/component/default_layout.dart';
 import 'package:flutter_front/common/component/tab_button.dart';
 import 'package:flutter_front/common/const/tabs.dart';
 import 'package:flutter_front/common/const_styles/sizes.dart';
-import 'package:flutter_front/reservation_status/view/reservation_status_screen.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import 'construction_screen.dart';
 
 final rootTabIndexProvider = StateProvider((ref) => 0);
 
@@ -54,10 +51,7 @@ class _RootTabState extends ConsumerState<RootTab>
       body: TabBarView(
         controller: controller,
         physics: const NeverScrollableScrollPhysics(),
-        children: [
-          const ReservationStatusScreen(),
-          Center(child: ConstructionScreen()),
-        ],
+        children: TABS.map((e) => e.tab).toList(),
       ),
     );
   }

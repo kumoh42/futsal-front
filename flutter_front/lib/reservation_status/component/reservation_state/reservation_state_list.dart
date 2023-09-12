@@ -60,6 +60,7 @@ class _ReservationStateListState extends ConsumerState<ReservationStateList> {
           shrinkWrap: true,
           itemCount: widget.reservationStatusList!.length,
           itemBuilder: (context, i) => ReservationStateItem(
+            index: i,
             height: (widget.height / widget.reservationStatusList!.length -
                     kBorderSideWidth)
                 .floorToDouble(),

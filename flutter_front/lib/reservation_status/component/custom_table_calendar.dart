@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_front/common/styles/styles.dart';
+import 'package:flutter_front/common/utils/date_utils.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -9,7 +10,6 @@ class CustomTimeTable extends ConsumerStatefulWidget {
 
   CustomTimeTable({
     Key? key,
-    // controller를 만들어서 그걸로 모든 기능을 조작함
     required CustomTimeTableController controller,
     required this.rowHeight,
   }) : super(key: key) {
@@ -27,13 +27,25 @@ class _CustomTimeTableState extends ConsumerState<CustomTimeTable> {
   Widget build(BuildContext context) {
     controller = ref.watch(widget.provider);
     return TableCalendar(
+      // TODO 토 일 색깔 바꾸기
       locale: 'ko_KR',
+      daysOfWeekStyle: DaysOfWeekStyle(
+        decoration: BoxDecoration(
+          border: Border(
+            bottom: BorderSide(
+              width: 1,
+              color: Colors.black.withOpacity(0.3),
+            ),
+          ),
+        ),
+        weekendStyle: kTextNormalStyleLarge,
+        weekdayStyle: kTextNormalStyleLarge,
+      ),
       headerStyle: HeaderStyle(
         titleCentered: true,
         formatButtonVisible: false,
         // TODO : TimeTable Header 디자인 변경
-        titleTextStyle: kTextMainStyleMiddle,
-        decoration: const BoxDecoration(color: CustomColor.disabledColor),
+        titleTextStyle: kTextMainStyleLarge,
       ),
       rowHeight: widget.rowHeight,
       daysOfWeekHeight: widget.rowHeight,
@@ -41,22 +53,35 @@ class _CustomTimeTableState extends ConsumerState<CustomTimeTable> {
       lastDay: controller.lastDay,
       focusedDay: controller.focusedDay,
       onDaySelected: controller.onDaySelected,
-      // 선택된 날짜와 현재 날짜가 동일한지 여부
       selectedDayPredicate: controller.selectedDayPredicate,
-      // 셀들을 빌드하고 스타일링하는 데 사용되는 콜백 함수의 모음
       calendarBuilders: CalendarBuilders(
-        // 기본 날짜 셀의 빌더 함수
-        defaultBuilder: (context, dateTime, _) => _cellBuilder(
-          date: dateTime.day.toString(),
-        ),
+        defaultBuilder: (context, dateTime, _) {
+          final date = getDayOfWeek(dateTime);
+          if (date == "토요일") {
+            return _cellBuilder(
+              date: dateTime.day.toString(),
+              textColor: Colors.blue,
+            );
+          }
+          if (date == "일요일") {
+            return _cellBuilder(
+                date: dateTime.day.toString(), textColor: Colors.red);
+          }
+          return _cellBuilder(date: dateTime.day.toString());
+        },
         outsideBuilder: (context, dateTime, _) => _cellBuilder(
           textColor: Colors.black.withOpacity(0.5),
           date: dateTime.day.toString(),
         ),
+
         // 오늘 날짜 셀의 빌더 함수
         todayBuilder: (context, dateTime, _) => _cellBuilder(
-          color: CustomColor.mainColor.withOpacity(0.3),
+          color: CustomColor.textReverseColor,
           date: dateTime.day.toString(),
+          border: Border.all(
+            color: Colors.black,
+            width: 2,
+          ),
         ),
         // 선택된 날짜 셀의 빌더 함수
         selectedBuilder: (context, dateTime, _) => _cellBuilder(
@@ -69,26 +94,33 @@ class _CustomTimeTableState extends ConsumerState<CustomTimeTable> {
     );
   }
 
-  Widget _cellBuilder({Color? color, required String date, Color? textColor}) =>
+  Widget _cellBuilder({
+    Color? color,
+    required String date,
+    Color? textColor,
+    BoxBorder? border,
+  }) =>
       Container(
-        color: color,
+        decoration: BoxDecoration(
+          color: color,
+          borderRadius: BorderRadius.circular(16),
+          border: border,
+        ),
         width: widget.rowHeight - 2,
         height: widget.rowHeight - 2,
         child: Center(
           child: Text(
             date,
-            style: kTextMainStyleSmall.copyWith(
+            style: kTextMainStyleMiddle.copyWith(
               fontWeight: FontWeight.normal,
               color: textColor,
             ),
-            // 텍스트 위젯 내에서 텍스트가 너무 길어서 화면의 가로 공간을 초과할 때 줄 바꿈을 어떻게 처리할지를 지정하는 속성
             softWrap: false,
           ),
         ),
       );
 }
 
-// viewmodel과 연결해서 사용
 class CustomTimeTableController extends ChangeNotifier {
   late DateTime _focusedDay;
   late DateTime _selectedDay;

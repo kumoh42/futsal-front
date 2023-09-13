@@ -70,7 +70,7 @@ class PreReservationSettingService
         BlockReservationEntity(endDate: end, startDate: start),
       );
     } on DioException {
-      state = PreReservationSettingStateError(" ");
+      state = PreReservationSettingStateError("서버와 통신이 끊겼습니다.");
     } catch (e) {
       state = PreReservationSettingStateError("알 수 없는 에러가 발생했습니다.");
     }

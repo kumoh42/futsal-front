@@ -24,25 +24,24 @@ class ReservationBlockDialog extends ConsumerStatefulWidget {
       _ReservationBlockDialogState();
 }
 
-// TODO  Date Range Picker로 바꿔보기
 class _ReservationBlockDialogState
     extends ConsumerState<ReservationBlockDialog> {
   late CustomTimeTableController controller;
   final _endTimes = [
-    "10",
-    "12",
-    "14",
-    "16",
-    "18",
-    "20",
+    "10시",
+    "12시",
+    "14시",
+    "16시",
+    "18시",
+    "20시",
   ];
   final _startTimes = [
-    "08",
-    "10",
-    "12",
-    "14",
-    "16",
-    "18",
+    "08시",
+    "10시",
+    "12시",
+    "14시",
+    "16시",
+    "18시",
   ];
 
   String _selectedStartTime = '';
@@ -97,7 +96,7 @@ class _ReservationBlockDialogState
         ),
       ),
       content: SizedBox(
-        height: height * 2 / 5,
+        height: height * 3 / 7,
         width: width / 2,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -132,97 +131,38 @@ class _ReservationBlockDialogState
                       SizedBox(
                         height: kPaddingLargeSize,
                       ),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "시작 일시",
-                              style: kTextSubStyleSmall.copyWith(
-                                color: const Color(
-                                  0XFF777777,
-                                ),
-                              ),
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                Text(
-                                  regDateTimeFormatK
-                                      .format(controller.selectedDay)
-                                      .toString()
-                                      .substring(0, 13),
-                                  style: kTextMainStyleMiddle,
-                                ),
-                                DropdownButton(
-                                  value: _selectedStartTime,
-                                  items: _startTimes
-                                      .map((e) => DropdownMenuItem(
-                                            value: e,
-                                            child: Text(
-                                              e,
-                                              style: kTextMainStyleMiddle,
-                                            ),
-                                          ))
-                                      .toList(),
-                                  onChanged: (value) {
-                                    setState(
-                                      () {
-                                        _selectedStartTime = value!;
-                                      },
-                                    );
-                                  },
-                                )
-                              ],
-                            ),
-                          ],
-                        ),
+                      buildDateTimeSelector(
+                        title: "시작 일시",
+                        content: regDateTimeFormatK
+                            .format(
+                                controller.startDay ?? controller.selectedDay)
+                            .toString()
+                            .substring(0, 13),
+                        selectedTime: _selectedStartTime,
+                        times: _startTimes,
+                        onChanged: (value) {
+                          setState(
+                            () {
+                              _selectedStartTime = value!;
+                            },
+                          );
+                        },
                       ),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "종료 일시",
-                              style: kTextSubStyleSmall.copyWith(
-                                color: const Color(
-                                  0XFF777777,
-                                ),
-                              ),
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                Text(
-                                  regDateTimeFormatK
-                                      .format(controller.selectedDay)
-                                      .toString()
-                                      .substring(0, 13),
-                                  style: kTextMainStyleMiddle,
-                                ),
-                                DropdownButton(
-                                  value: _selectedEndTime,
-                                  items: _endTimes
-                                      .map((e) => DropdownMenuItem(
-                                            value: e,
-                                            child: Text(
-                                              e,
-                                              style: kTextMainStyleMiddle,
-                                            ),
-                                          ))
-                                      .toList(),
-                                  onChanged: (value) {
-                                    setState(
-                                      () {
-                                        _selectedEndTime = value!;
-                                      },
-                                    );
-                                  },
-                                )
-                              ],
-                            ),
-                          ],
-                        ),
+                      buildDateTimeSelector(
+                        title: "종료 일시",
+                        content: regDateTimeFormatK
+                            .format(controller.endDay ?? controller.selectedDay)
+                            .toString()
+                            .substring(0, 13),
+                        selectedTime: _selectedEndTime,
+                        times: _endTimes,
+                        onChanged: (value) {
+                          setState(
+                            () {
+                              _selectedEndTime = value!;
+                            },
+                          );
+                        },
                       ),
                     ],
                   ),
@@ -235,7 +175,14 @@ class _ReservationBlockDialogState
       actions: [
         ElevatedButton(
           onPressed: () async {
-            // await onPressed(entity);
+            await widget.onPressed(
+              BlockReservationEntity(
+                startDate:
+                    '${controller.startDay.toString().split(" ")[0]}T${_selectedStartTime.substring(0, 2)}',
+                endDate:
+                    '${controller.endDay.toString().split(" ")[0]}T${_selectedEndTime.substring(0, 2)}',
+              ),
+            );
             if (context.mounted) Navigator.of(context).pop();
           },
           style: ElevatedButton.styleFrom(
@@ -271,4 +218,48 @@ class _ReservationBlockDialogState
       ],
     );
   }
+}
+
+Widget buildDateTimeSelector({
+  required String title,
+  required String content,
+  required String selectedTime,
+  required List<String> times,
+  required void Function(String?)? onChanged,
+}) {
+  return Expanded(
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          title,
+          style: kTextSubStyleSmall.copyWith(
+            color: const Color(0XFF777777),
+          ),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            Text(
+              content,
+              style: kTextMainStyleMiddle,
+            ),
+            DropdownButton(
+              value: selectedTime,
+              items: times
+                  .map((e) => DropdownMenuItem(
+                        value: e,
+                        child: Text(
+                          e,
+                          style: kTextMainStyleMiddle,
+                        ),
+                      ))
+                  .toList(),
+              onChanged: onChanged,
+            )
+          ],
+        ),
+      ],
+    ),
+  );
 }

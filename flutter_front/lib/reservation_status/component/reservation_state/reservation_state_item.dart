@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_front/common/styles/styles.dart';
+import 'package:flutter_front/common/const_styles/colors.dart';
+import 'package:flutter_front/common/const_styles/sizes.dart';
+import 'package:flutter_front/common/const_styles/text_styles.dart';
 import 'package:flutter_front/common/utils/data_utils.dart';
 import 'package:flutter_front/reservation_status/model/entity/reservation_entity.dart';
 
@@ -19,10 +21,8 @@ class ReservationStateItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textStyle = kTextMainStyleMiddle.copyWith(
-        color: index % 2 == 0
-            ? CustomColor.backgroundMainColor
-            : CustomColor.textMainColor);
+    final Color textColor =
+        index % 2 == 0 ? kBackgroundMainColor : kTextMainColor;
     return LayoutBuilder(builder: (context, constraints) {
       return SizedBox(
         width: constraints.maxWidth,
@@ -30,31 +30,29 @@ class ReservationStateItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Padding(
-              padding: EdgeInsets.only(
+              padding: const EdgeInsets.only(
                 left: kPaddingMiddleSize,
               ),
               child: Text(
                 DataUtils.intToTimeRange(entity.time, 2),
                 textAlign: TextAlign.center,
-                style: kTextMainStyleMiddle,
+                style: kTextMainStyleSmall,
               ),
             ),
             Expanded(
               child: CustomPaint(
                 painter: MyPainter(
-                    color: index % 2 == 0
-                        ? CustomColor.mainColor
-                        : CustomColor.backgroundMainColor),
+                    color: index % 2 == 0 ? kMainColor : kBackgroundMainColor),
                 child: Padding(
-                  padding: EdgeInsets.only(
+                  padding: const EdgeInsets.only(
                     right: kPaddingMiddleSize,
                   ),
                   child: Row(
                     children: [
-                      Expanded(
+                      const Expanded(
                         flex: 2,
                         child: SizedBox(
-                          width: kPaddingXLargeSize,
+                          width: kPaddingLargeSize,
                         ),
                       ),
                       Expanded(
@@ -62,8 +60,8 @@ class ReservationStateItem extends StatelessWidget {
                         child: SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
                           child: Padding(
-                            padding: EdgeInsets.symmetric(
-                              vertical: kPaddingLargeSize * 4 / 3,
+                            padding: const EdgeInsets.symmetric(
+                              vertical: kPaddingLargeSize * 5 / 2,
                             ),
                             child: entity.major == null
                                 ? entity.date
@@ -75,7 +73,10 @@ class ReservationStateItem extends StatelessWidget {
                                         children: [
                                           Text(
                                             "예약 불가능",
-                                            style: textStyle,
+                                            style:
+                                                kTextNormalStyleMiddle.copyWith(
+                                              color: textColor,
+                                            ),
                                           ),
                                         ],
                                       )
@@ -83,19 +84,41 @@ class ReservationStateItem extends StatelessWidget {
                                         children: [
                                           Text(
                                             "예약 가능",
-                                            style: textStyle,
+                                            style:
+                                                kTextNormalStyleMiddle.copyWith(
+                                              color: textColor,
+                                            ),
                                           ),
                                         ],
                                       )
-                                : Row(
-                                    // 누군가가 예약했을 때
+                                : IntrinsicHeight(
+                                    child: Row(
+                                      // 누군가가 예약했을 때
 
-                                    children: [
-                                      Text(
-                                        "${entity.circle ?? "개인"} (${entity.major})",
-                                        style: textStyle,
-                                      ),
-                                    ],
+                                      children: [
+                                        Text(
+                                          entity.circle ?? "개인",
+                                          style: kTextMainStyleLarge.copyWith(
+                                            color: textColor,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          width: kPaddingMiniSize,
+                                        ),
+                                        Align(
+                                          alignment: Alignment.bottomCenter,
+                                          child: Text(
+                                            entity.major ?? '',
+                                            style:
+                                                kTextReverseStyleMini.copyWith(
+                                              color: textColor,
+                                              fontWeight: FontWeight.normal,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                           ),
                         ),
@@ -109,7 +132,7 @@ class ReservationStateItem extends StatelessWidget {
                           ),
                         ),
                       if (entity.major == null)
-                        SizedBox(
+                        const SizedBox(
                           width: kPaddingMiddleSize,
                         ),
                     ],
@@ -127,7 +150,7 @@ class ReservationStateItem extends StatelessWidget {
 class MyPainter extends CustomPainter {
   final Color? color;
   MyPainter({
-    this.color = CustomColor.mainColor,
+    this.color = kMainColor,
   });
 
   @override

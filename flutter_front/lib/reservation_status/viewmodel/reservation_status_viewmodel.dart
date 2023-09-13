@@ -35,9 +35,10 @@ class ReservationStatusViewModel extends ChangeNotifier {
   ReservationStatusViewModel(this.ref) {
     customTimeTableController = CustomTimeTableController(
       onDayChange: getReservationStatusList,
+      useRange: false,
     );
     cancelListcontroller = CustomCancelListController();
-    blockReservationController = CustomTimeTableController();
+    blockReservationController = CustomTimeTableController(useRange: true);
 
     statusState = ref.read(reservationStatusServiceProvider);
     /* 
@@ -54,14 +55,9 @@ class ReservationStatusViewModel extends ChangeNotifier {
       }
     });
   }
-  // TODO 특정 기간 예약을 막는 기능
   void blockReservation(
     BuildContext context,
   ) async {
-    // 날짜는 yyyy-mm-ddTtime 형식 시간은 8~20시. 2시간 단위로 짝수만 가능.
-    String startDate = "2023-08-08T14";
-    String endDate = "2023-08-09T18";
-
     await showDialog(
       context: context,
       builder: (context) => ReservationBlockDialog(
@@ -69,8 +65,8 @@ class ReservationStatusViewModel extends ChangeNotifier {
         onPressed: (e) => ref
             .read(preReservationSettingServiceProvider.notifier)
             .blockReservation(
-              start: startDate,
-              end: endDate,
+              start: e.startDate,
+              end: e.endDate,
             ),
       ),
     );

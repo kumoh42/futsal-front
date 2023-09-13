@@ -20,7 +20,7 @@ class PreReservationSettingViewModel extends ChangeNotifier {
   late PreReservationSettingState statusState;
 
   PreReservationSettingViewModel(this.ref) {
-    customTimeTableController = CustomTimeTableController();
+    customTimeTableController = CustomTimeTableController(useRange: false);
     hour = DateTime.now().hour;
     minute = DateTime.now().minute;
     statusState = ref.watch(preReservationSettingServiceProvider);

@@ -61,9 +61,6 @@ class _ReservationStateListState extends ConsumerState<ReservationStateList> {
           itemCount: widget.reservationStatusList!.length,
           itemBuilder: (context, i) => ReservationStateItem(
             index: i,
-            height: (widget.height / widget.reservationStatusList!.length -
-                    kBorderSideWidth)
-                .floorToDouble(),
             entity: widget.reservationStatusList![i],
             isChecked: controller
                 .isChecked(widget.reservationStatusList![i].reservationId),

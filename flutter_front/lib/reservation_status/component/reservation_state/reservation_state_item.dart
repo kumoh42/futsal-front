@@ -5,14 +5,12 @@ import 'package:flutter_front/reservation_status/model/entity/reservation_entity
 
 class ReservationStateItem extends StatelessWidget {
   final ReservationStatusEntity entity;
-  final double? height;
   final void Function(bool?) onPressed;
   final bool isChecked;
   final int index;
 
   ReservationStateItem({
     Key? key,
-    this.height,
     required this.entity,
     required this.isChecked,
     required this.onPressed,
@@ -21,86 +19,101 @@ class ReservationStateItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textStyle = kTextNormalStyleMiddle.copyWith(
+    final textStyle = kTextMainStyleMiddle.copyWith(
         color: index % 2 == 0
             ? CustomColor.backgroundMainColor
-            : CustomColor.mainColor);
+            : CustomColor.textMainColor);
     return LayoutBuilder(builder: (context, constraints) {
       return SizedBox(
         width: constraints.maxWidth,
-        height: height,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(
-              DataUtils.intToTimeRange(entity.time, 2),
-              textAlign: TextAlign.center,
-              style: kTextMainStyleMiddle,
+            Padding(
+              padding: EdgeInsets.only(
+                left: kPaddingMiddleSize,
+              ),
+              child: Text(
+                DataUtils.intToTimeRange(entity.time, 2),
+                textAlign: TextAlign.center,
+                style: kTextMainStyleMiddle,
+              ),
             ),
             Expanded(
               child: CustomPaint(
-                painter: MyPainter(color: CustomColor.mainColor),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(
-                            vertical: kPaddingLargeSize,
-                            horizontal: kPaddingXLargeSize,
-                          ),
-                          child: entity.major == null
-                              ? entity.date
-                                          .copyWith(hour: entity.time)
-                                          .compareTo(DateTime.now()) ==
-                                      -1
-                                  ? Row(
-                                      // 예약 불가능일때
-                                      children: [
-                                        SizedBox(width: kPaddingSmallSize),
-                                        Text(
-                                          "예약 불가능",
-                                          style: textStyle,
-                                        ),
-                                      ],
-                                    )
-                                  : Row(
-                                      children: [
-                                        // 예약 가능일때
-
-                                        SizedBox(width: kPaddingSmallSize),
-                                        Text(
-                                          "예약 가능",
-                                          style: textStyle,
-                                        ),
-                                      ],
-                                    )
-                              : Row(
-                                  // 누군가가 예약했을 때
-
-                                  children: [
-                                    Text(
-                                      "${entity.circle ?? "개인"} (${entity.major})",
-                                      style: textStyle,
-                                    ),
-                                  ],
-                                ),
+                painter: MyPainter(
+                    color: index % 2 == 0
+                        ? CustomColor.mainColor
+                        : CustomColor.backgroundMainColor),
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    right: kPaddingMiddleSize,
+                  ),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        flex: 2,
+                        child: SizedBox(
+                          width: kPaddingXLargeSize,
                         ),
                       ),
-                    ),
-                    if (entity.major != null)
-                      Transform.scale(
-                        scale: 1.3,
-                        child: Padding(
-                          padding: EdgeInsets.only(right: kPaddingMiddleSize),
+                      Expanded(
+                        flex: 10,
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                              vertical: kPaddingLargeSize * 4 / 3,
+                            ),
+                            child: entity.major == null
+                                ? entity.date
+                                            .copyWith(hour: entity.time)
+                                            .compareTo(DateTime.now()) ==
+                                        -1
+                                    ? Row(
+                                        // 예약 불가능일때
+                                        children: [
+                                          Text(
+                                            "예약 불가능",
+                                            style: textStyle,
+                                          ),
+                                        ],
+                                      )
+                                    : Row(
+                                        children: [
+                                          Text(
+                                            "예약 가능",
+                                            style: textStyle,
+                                          ),
+                                        ],
+                                      )
+                                : Row(
+                                    // 누군가가 예약했을 때
+
+                                    children: [
+                                      Text(
+                                        "${entity.circle ?? "개인"} (${entity.major})",
+                                        style: textStyle,
+                                      ),
+                                    ],
+                                  ),
+                          ),
+                        ),
+                      ),
+                      if (entity.major != null)
+                        Transform.scale(
+                          scale: 1.3,
                           child: Checkbox(
                             value: isChecked,
                             onChanged: onPressed,
                           ),
                         ),
-                      ),
-                  ],
+                      if (entity.major == null)
+                        SizedBox(
+                          width: kPaddingMiddleSize,
+                        ),
+                    ],
+                  ),
                 ),
               ),
             ),

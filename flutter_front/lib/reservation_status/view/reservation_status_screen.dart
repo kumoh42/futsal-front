@@ -26,7 +26,7 @@ class ReservationStatusScreen extends ConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Flexible(
-                    flex: 3,
+                    flex: 7,
                     child: Padding(
                       padding: EdgeInsets.all(
                         kPaddingMiddleSize,
@@ -47,7 +47,7 @@ class ReservationStatusScreen extends ConsumerWidget {
                     width: 12,
                   ),
                   Flexible(
-                    flex: 2,
+                    flex: 5,
                     child: Padding(
                       padding: EdgeInsets.all(kPaddingMiddleSize),
                       child: NewReservationStatusView(

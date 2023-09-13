@@ -34,7 +34,9 @@ class NewReservationStatusView extends ConsumerWidget {
                 ),
                 iconSize: kIconMainSize,
                 splashRadius: 20,
-                onPressed: () {},
+                onPressed: () {
+                  viewmodel.blockReservation(context);
+                },
               ),
               IconButton(
                 icon: const Icon(
@@ -47,6 +49,9 @@ class NewReservationStatusView extends ConsumerWidget {
                 },
               ),
             ],
+          ),
+          SizedBox(
+            height: kPaddingMiddleSize,
           ),
           Expanded(
             child: ReservationStateList(

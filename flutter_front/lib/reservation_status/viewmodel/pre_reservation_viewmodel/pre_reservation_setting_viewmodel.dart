@@ -94,20 +94,6 @@ class PreReservationSettingViewModel extends ChangeNotifier {
     );
   }
 
-  // TODO 특정 기간 예약을 막는 기능
-  void blockReservation() async {
-    // 날짜는 yyyy-mm-ddTtime 형식 시간은 8~20시. 2시간 단위로 짝수만 가능.
-    String startDate = "2023-08-08T14";
-    String endDate = "2023-08-09T18";
-
-    await ref
-        .read(preReservationSettingServiceProvider.notifier)
-        .blockReservation(
-          start: startDate,
-          end: endDate,
-        );
-  }
-
   void canclePreReservation(
       BuildContext context, PreReservationStatusEntity entity) async {
     CustomDialogUtil.showCustomDialog(

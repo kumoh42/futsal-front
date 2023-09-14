@@ -18,50 +18,55 @@ class NewReservationStatusView extends ConsumerWidget {
     final viewmodel = ref.watch(reservationStatusViewModelProvider);
     return SizedBox(
       height: height,
-      child: Column(
-        children: [
-          Row(
-            children: [
-              Expanded(
-                child: Text(
-                  '${viewmodel.customTimeTableController.focusedDay.month}월 ${viewmodel.customTimeTableController.focusedDay.day}일 (${getDayOfWeek(viewmodel.customTimeTableController.focusedDay).substring(0, 1)})',
-                  style: kTextMainStyleLarge,
+      child: Padding(
+        padding: EdgeInsets.only(
+          top: kPaddingLargeSize,
+        ),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    '${viewmodel.customTimeTableController.focusedDay.month}월 ${viewmodel.customTimeTableController.focusedDay.day}일 (${getDayOfWeek(viewmodel.customTimeTableController.focusedDay).substring(0, 1)})',
+                    style: kTextMainStyleLarge,
+                  ),
                 ),
-              ),
-              IconButton(
-                icon: const Icon(
-                  Icons.settings,
+                IconButton(
+                  icon: const Icon(
+                    Icons.settings,
+                  ),
+                  iconSize: kIconMainSize,
+                  splashRadius: 20,
+                  onPressed: () {
+                    viewmodel.blockReservation(context);
+                  },
                 ),
-                iconSize: kIconMainSize,
-                splashRadius: 20,
-                onPressed: () {
-                  viewmodel.blockReservation(context);
-                },
-              ),
-              IconButton(
-                icon: const Icon(
-                  Icons.delete,
+                IconButton(
+                  icon: const Icon(
+                    Icons.delete,
+                  ),
+                  iconSize: kIconMainSize,
+                  splashRadius: 20,
+                  onPressed: () {
+                    viewmodel.cancelReservationStatus(context);
+                  },
                 ),
-                iconSize: kIconMainSize,
-                splashRadius: 20,
-                onPressed: () {
-                  viewmodel.cancelReservationStatus(context);
-                },
-              ),
-            ],
-          ),
-          SizedBox(
-            height: kPaddingMiddleSize,
-          ),
-          Expanded(
-            child: ReservationStateList(
-              state: viewmodel.statusState,
-              reservationStatusList: viewmodel.reservationStatusList,
-              height: height,
-              controller: viewmodel.cancelListcontroller,
+              ],
             ),
-          ),
-        ],
+            SizedBox(
+              height: kPaddingLargeSize,
+            ),
+            Expanded(
+              child: ReservationStateList(
+                state: viewmodel.statusState,
+                reservationStatusList: viewmodel.reservationStatusList,
+                height: height,
+                controller: viewmodel.cancelListcontroller,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

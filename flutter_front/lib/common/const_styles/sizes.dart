@@ -17,3 +17,7 @@ const double kIconLargeSize = 41.0;
 const double kIconMiddleSize = 28.0;
 
 const double kBoarderRadiusSize = 10.0;
+
+const double kListViewTileHeightSize = 100.0;
+
+const double kMainPageCalendarHeightSize = 833;

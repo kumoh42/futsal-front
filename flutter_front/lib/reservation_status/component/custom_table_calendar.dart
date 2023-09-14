@@ -31,7 +31,6 @@ class _CustomTimeTableState extends ConsumerState<CustomTimeTable> {
   Widget build(BuildContext context) {
     controller = ref.watch(widget.provider);
     return TableCalendar(
-      // TODO 토 일 색깔 바꾸기
       locale: 'ko_KR',
       daysOfWeekStyle: DaysOfWeekStyle(
         decoration: BoxDecoration(
@@ -59,7 +58,6 @@ class _CustomTimeTableState extends ConsumerState<CustomTimeTable> {
       focusedDay: controller.focusedDay,
       onDaySelected: controller.onDaySelected,
       selectedDayPredicate: controller.selectedDayPredicate,
-
       calendarBuilders: CalendarBuilders(
         defaultBuilder: (context, dateTime, _) {
           final date = getDayOfWeek(dateTime);
@@ -120,11 +118,11 @@ class _CustomTimeTableState extends ConsumerState<CustomTimeTable> {
       Container(
         decoration: BoxDecoration(
           color: color,
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(10),
           border: border,
         ),
-        width: widget.rowHeight - 2,
-        height: widget.rowHeight - 2,
+        width: 50,
+        height: 50,
         child: Center(
           child: Text(
             date,

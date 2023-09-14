@@ -68,6 +68,7 @@ class _ReservationStateListState extends ConsumerState<ReservationStateList> {
               controller.clickedCheckBox(
                   widget.reservationStatusList![i].reservationId);
             },
+            isLast: widget.reservationStatusList!.length - 1 == i,
           ),
         );
       case ReservationStatusListStateError:

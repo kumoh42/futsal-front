@@ -31,42 +31,43 @@ class ReservationStatusScreen extends ConsumerWidget {
                       padding: EdgeInsets.all(
                         kPaddingMiddleSize,
                       ),
-                      child: Container(
+                      child: SizedBox(
                         height: kMainPageContainerHeightSize,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          border: Border.all(
-                            color: kDisabledColor,
-                            width: 5,
-                          ),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.only(
-                            left: 16,
-                            bottom: 16,
-                            top: 16,
-                          ),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: kBackgroundMainColor,
-                              boxShadow: const [
-                                BoxShadow(
-                                  color: kDisabledColor,
-                                  offset: Offset(20, 0),
-                                ),
-                              ],
+                        child: Stack(
+                          children: [
+                            Container(
+                              margin: const EdgeInsets.only(
+                                top: 38,
+                                bottom: 38,
+                              ),
+                              decoration: BoxDecoration(
+                                color: const Color(0xFF999999),
+                                borderRadius: BorderRadius.circular(16),
+                              ),
                             ),
-                            child: Container(
-                              decoration: const BoxDecoration(
-                                color: kBackgroundMainColor,
+                            Container(
+                              margin: const EdgeInsets.only(
+                                  top: 18, bottom: 18, right: 14),
+                              decoration: BoxDecoration(
+                                  color: kDisabledColor,
+                                  borderRadius: BorderRadius.circular(16)),
+                            ),
+                            Container(
+                              margin: const EdgeInsets.only(right: 28),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(16),
+                                border: Border.all(
+                                  width: 5,
+                                  color: kDisabledColor,
+                                ),
                               ),
                               child: CustomTimeTable(
                                 controller: viewmodel.customTimeTableController,
                                 rowHeight: kMainPageContainerHeightSize / 9,
                               ),
                             ),
-                          ),
+                          ],
                         ),
                       ),
                     ),

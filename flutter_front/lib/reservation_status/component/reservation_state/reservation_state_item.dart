@@ -35,7 +35,7 @@ class ReservationStateItem extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(
+              const SizedBox(
                 width: kPaddingSmallSize,
               ),
               CustomPaint(

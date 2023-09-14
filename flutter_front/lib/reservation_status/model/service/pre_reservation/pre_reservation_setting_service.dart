@@ -63,8 +63,6 @@ class PreReservationSettingService
   }
 
   Future blockReservation({required String start, required String end}) async {
-    print(start);
-    print(end);
     try {
       await repository.blockReservation(
         BlockReservationEntity(endDate: end, startDate: start),

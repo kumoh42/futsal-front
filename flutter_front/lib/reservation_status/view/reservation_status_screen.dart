@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_front/common/const_styles/colors.dart';
 import 'package:flutter_front/common/styles/sizes.dart';
 import 'package:flutter_front/common/view/default_tab_bar_view.dart';
 import 'package:flutter_front/reservation_status/component/custom_table_calendar.dart';
@@ -33,11 +34,39 @@ class ReservationStatusScreen extends ConsumerWidget {
                       child: Container(
                         height: kMainPageContainerHeightSize,
                         decoration: BoxDecoration(
-                          border: Border.all(),
+                          borderRadius: BorderRadius.circular(20),
+                          border: Border.all(
+                            color: kDisabledColor,
+                            width: 5,
+                          ),
                         ),
-                        child: CustomTimeTable(
-                          controller: viewmodel.customTimeTableController,
-                          rowHeight: kMainPageContainerHeightSize / 9,
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                            left: 16,
+                            bottom: 16,
+                            top: 16,
+                          ),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: kBackgroundMainColor,
+                              boxShadow: const [
+                                BoxShadow(
+                                  color: kDisabledColor,
+                                  offset: Offset(20, 0),
+                                ),
+                              ],
+                            ),
+                            child: Container(
+                              decoration: const BoxDecoration(
+                                color: kBackgroundMainColor,
+                              ),
+                              child: CustomTimeTable(
+                                controller: viewmodel.customTimeTableController,
+                                rowHeight: kMainPageContainerHeightSize / 9,
+                              ),
+                            ),
+                          ),
                         ),
                       ),
                     ),

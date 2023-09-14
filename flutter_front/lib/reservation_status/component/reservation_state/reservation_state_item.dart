@@ -39,6 +39,9 @@ class ReservationStateItem extends StatelessWidget {
                 style: kTextMainStyleSmall,
               ),
             ),
+            const SizedBox(
+              width: kPaddingMiniSize,
+            ),
             Expanded(
               child: CustomPaint(
                 painter: MyPainter(
@@ -160,15 +163,14 @@ class MyPainter extends CustomPainter {
       ..style = PaintingStyle.fill;
 
     Path path = Path();
-    path.moveTo(0, size.height / 2); // 시작점 설정
+    path.moveTo(size.width / 30, size.height / 2); // 시작점 설정
     path.lineTo(size.width / 10 * 1, size.height / 10 * 6.5);
     path.lineTo(size.width / 10 * 1, size.height);
     path.lineTo(size.width, size.height);
     path.lineTo(size.width, 0);
     path.lineTo(size.width / 10 * 1, 0);
     path.lineTo(size.width / 10 * 1, size.height / 10 * 3.5);
-
-    path.lineTo(0, size.height / 2);
+    path.lineTo(size.width / 30, size.height / 2);
 
     path.close(); // 경로 닫기
     canvas.drawPath(path, paint);

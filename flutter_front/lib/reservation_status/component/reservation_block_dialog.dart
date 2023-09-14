@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_front/common/const_styles/colors.dart';
 import 'package:flutter_front/common/styles/colors.dart';
 import 'package:flutter_front/common/styles/sizes.dart';
 import 'package:flutter_front/common/styles/text_styles.dart';
@@ -106,6 +107,7 @@ class _ReservationBlockDialogState
               child: CustomTimeTable(
                 controller: controller,
                 rowHeight: height / 20,
+                textSize: kTextMiddleSize,
               ),
             ),
             SizedBox(
@@ -173,45 +175,52 @@ class _ReservationBlockDialogState
         ),
       ),
       actions: [
-        ElevatedButton(
-          onPressed: () async {
-            await widget.onPressed(
-              BlockReservationEntity(
-                startDate:
-                    '${controller.startDay.toString().split(" ")[0]}T${_selectedStartTime.substring(0, 2)}',
-                endDate:
-                    '${controller.endDay.toString().split(" ")[0]}T${_selectedEndTime.substring(0, 2)}',
-              ),
-            );
-            if (context.mounted) Navigator.of(context).pop();
-          },
-          style: ElevatedButton.styleFrom(
-            backgroundColor: CustomColor.mainColor,
-            shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(
-                Radius.circular(50),
-              ),
-            ),
-            padding: EdgeInsets.symmetric(
-              horizontal: kPaddingLargeSize,
-              vertical: kPaddingMiddleSize,
-            ),
-          ),
-          child: SizedBox(
-            width: width / 20,
-            child: Row(
-              children: [
-                const Icon(Icons.save),
-                SizedBox(
-                  width: kPaddingSmallSize,
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: ElevatedButton(
+            onPressed: () async {
+              await widget.onPressed(
+                BlockReservationEntity(
+                  startDate:
+                      '${controller.startDay.toString().split(" ")[0]}T${_selectedStartTime.substring(0, 2)}',
+                  endDate:
+                      '${controller.endDay.toString().split(" ")[0]}T${_selectedEndTime.substring(0, 2)}',
                 ),
-                Text(
-                  '저장',
-                  style: kTextMainStyleMiddle.copyWith(
-                    color: Colors.white,
+              );
+              if (context.mounted) Navigator.of(context).pop();
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: CustomColor.mainColor,
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(15),
+                ),
+              ),
+              padding: EdgeInsets.symmetric(
+                horizontal: kPaddingMiddleSize,
+                vertical: kPaddingMiddleSize,
+              ),
+            ),
+            child: SizedBox(
+              width: width / 20,
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.save,
+                    size: kTextLargeSize,
                   ),
-                ),
-              ],
+                  SizedBox(
+                    width: kPaddingSmallSize,
+                  ),
+                  Text(
+                    '저장',
+                    style: kTextMainStyleMiddle.copyWith(
+                      color: kBackgroundMainColor,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -247,13 +256,15 @@ Widget buildDateTimeSelector({
             DropdownButton(
               value: selectedTime,
               items: times
-                  .map((e) => DropdownMenuItem(
-                        value: e,
-                        child: Text(
-                          e,
-                          style: kTextMainStyleMiddle,
-                        ),
-                      ))
+                  .map(
+                    (e) => DropdownMenuItem(
+                      value: e,
+                      child: Text(
+                        e,
+                        style: kTextMainStyleMiddle,
+                      ),
+                    ),
+                  )
                   .toList(),
               onChanged: onChanged,
             )

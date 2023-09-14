@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_front/common/const_styles/colors.dart';
+import 'package:flutter_front/common/const_styles/sizes.dart';
 import 'package:flutter_front/common/const_styles/text_styles.dart';
 import 'package:flutter_front/common/utils/date_utils.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -8,11 +9,13 @@ import 'package:table_calendar/table_calendar.dart';
 class CustomTimeTable extends ConsumerStatefulWidget {
   late final ChangeNotifierProvider<CustomTimeTableController> provider;
   final double rowHeight;
+  final double? textSize;
 
   CustomTimeTable({
     Key? key,
     required CustomTimeTableController controller,
     required this.rowHeight,
+    this.textSize,
   }) : super(key: key) {
     provider = ChangeNotifierProvider((ref) => controller);
   }
@@ -64,33 +67,43 @@ class _CustomTimeTableState extends ConsumerState<CustomTimeTable> {
             return _cellBuilder(
               date: dateTime.day.toString(),
               textColor: Colors.blue,
+              textSize: widget.textSize,
             );
           }
           if (date == "일요일") {
             return _cellBuilder(
-                date: dateTime.day.toString(), textColor: Colors.red);
+              date: dateTime.day.toString(),
+              textColor: Colors.red,
+              textSize: widget.textSize,
+            );
           }
-          return _cellBuilder(date: dateTime.day.toString());
+          return _cellBuilder(
+            date: dateTime.day.toString(),
+            textSize: widget.textSize,
+          );
         },
         outsideBuilder: (context, dateTime, _) => _cellBuilder(
+          textSize: widget.textSize,
           textColor: Colors.black.withOpacity(0.5),
           date: dateTime.day.toString(),
         ),
 
         // 오늘 날짜 셀의 빌더 함수
         todayBuilder: (context, dateTime, _) => _cellBuilder(
-          color: kTextReverseColor,
+          textSize: widget.textSize,
+          color: kBackgroundMainColor,
           date: dateTime.day.toString(),
           border: Border.all(
-            color: Colors.black,
+            color: kTextMainColor,
             width: 2,
           ),
         ),
         // 선택된 날짜 셀의 빌더 함수
         selectedBuilder: (context, dateTime, _) => _cellBuilder(
-          color: kTextMainColor,
+          color: kMainColor,
           date: dateTime.day.toString(),
-          textColor: Colors.white,
+          textColor: kTextReverseColor,
+          textSize: widget.textSize,
         ),
       ),
       onPageChanged: controller.onPageChanged,
@@ -102,6 +115,7 @@ class _CustomTimeTableState extends ConsumerState<CustomTimeTable> {
     required String date,
     Color? textColor,
     BoxBorder? border,
+    double? textSize,
   }) =>
       Container(
         decoration: BoxDecoration(
@@ -116,6 +130,7 @@ class _CustomTimeTableState extends ConsumerState<CustomTimeTable> {
             date,
             style: kTextNormalStyleLarge.copyWith(
               color: textColor,
+              fontSize: textSize ?? kTextLargeSize,
             ),
             softWrap: false,
           ),

@@ -3,9 +3,11 @@ import 'package:flutter_front/common/state/state.dart';
 import 'package:flutter_front/common/utils/date_utils.dart';
 import 'package:flutter_front/common/utils/snack_bar_util.dart';
 import 'package:flutter_front/reservation_status/component/custom_table_calendar.dart';
+import 'package:flutter_front/reservation_status/component/reservation_block_dialog.dart';
 import 'package:flutter_front/reservation_status/component/reservation_cancel_dialog.dart';
 import 'package:flutter_front/reservation_status/component/reservation_state/reservation_state_list.dart';
 import 'package:flutter_front/reservation_status/model/entity/reservation_entity.dart';
+import 'package:flutter_front/reservation_status/model/service/pre_reservation/pre_reservation_setting_service.dart';
 import 'package:flutter_front/reservation_status/model/service/reservation_status_service.dart';
 import 'package:flutter_front/reservation_status/model/state/reservation_list_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -19,6 +21,7 @@ class ReservationStatusViewModel extends ChangeNotifier {
   late ReservationStatusListState statusState;
   late final CustomTimeTableController customTimeTableController;
   late final CustomCancelListController cancelListcontroller;
+  late final CustomTimeTableController blockReservationController;
 
   get reservationStatusList => statusState is ReservationStatusListStateSuccess
       ? (statusState as ReservationStatusListStateSuccess)
@@ -32,8 +35,10 @@ class ReservationStatusViewModel extends ChangeNotifier {
   ReservationStatusViewModel(this.ref) {
     customTimeTableController = CustomTimeTableController(
       onDayChange: getReservationStatusList,
+      useRange: false,
     );
     cancelListcontroller = CustomCancelListController();
+    blockReservationController = CustomTimeTableController(useRange: true);
 
     statusState = ref.read(reservationStatusServiceProvider);
     /* 
@@ -49,6 +54,22 @@ class ReservationStatusViewModel extends ChangeNotifier {
         notifyListeners();
       }
     });
+  }
+  void blockReservation(
+    BuildContext context,
+  ) async {
+    await showDialog(
+      context: context,
+      builder: (context) => ReservationBlockDialog(
+        controller: blockReservationController,
+        onPressed: (e) => ref
+            .read(preReservationSettingServiceProvider.notifier)
+            .blockReservation(
+              start: e.startDate,
+              end: e.endDate,
+            ),
+      ),
+    );
   }
 
   void getReservationStatusList() async {

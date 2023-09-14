@@ -1,114 +1,181 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_front/common/styles/styles.dart';
+import 'package:flutter_front/common/component/custom_donut_paint.dart';
+import 'package:flutter_front/common/component/custom_listview_background_paint.dart';
+import 'package:flutter_front/common/const_styles/colors.dart';
+import 'package:flutter_front/common/const_styles/sizes.dart';
+import 'package:flutter_front/common/const_styles/text_styles.dart';
 import 'package:flutter_front/common/utils/data_utils.dart';
 import 'package:flutter_front/reservation_status/model/entity/reservation_entity.dart';
 
 class ReservationStateItem extends StatelessWidget {
   final ReservationStatusEntity entity;
-  final double? height;
   final void Function(bool?) onPressed;
   final bool isChecked;
+  final int index;
+  final bool isLast;
 
   ReservationStateItem({
     Key? key,
-    this.height,
     required this.entity,
     required this.isChecked,
     required this.onPressed,
+    required this.index,
+    required this.isLast,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(builder: (context, constraints) {
-      return Container(
-        width: constraints.maxWidth,
-        height: height,
-        decoration: const BoxDecoration(
-          border: Border(bottom: BorderSide(width: kBorderSideWidth)),
-        ),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Container(
-              decoration: const BoxDecoration(
-                border: Border(right: BorderSide(width: kBorderSideWidth)),
+    final Color textColor =
+        index % 2 == 0 ? kBackgroundMainColor : kTextMainColor;
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return SizedBox(
+          width: constraints.maxWidth,
+          height: kListViewTileHeightSize,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const SizedBox(
+                width: kPaddingSmallSize,
               ),
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                  vertical: kPaddingSmallSize + 2,
-                  horizontal: kPaddingMiddleSize,
+              CustomPaint(
+                size: const Size(
+                    kIconMiddleSize, kIconMiddleSize), // 도넛 모양의 크기 설정
+                painter: DonutPainter(isLast: isLast),
+              ),
+              const SizedBox(
+                width: kPaddingMiniSize,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(
+                  left: kPaddingMiddleSize,
                 ),
                 child: Text(
                   DataUtils.intToTimeRange(entity.time, 2),
                   textAlign: TextAlign.center,
-                  style: kTextNormalStyleMiddle,
+                  style: kTextMainStyleSmall,
                 ),
               ),
-            ),
-            Expanded(
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                  vertical: kPaddingSmallSize + 2,
-                  horizontal: kPaddingMiddleSize,
-                ),
-                child: entity.major == null
-                    ? entity.date
-                                .copyWith(hour: entity.time)
-                                .compareTo(DateTime.now()) ==
-                            -1
-                        ? Row(
-                            children: [
-                              Image.asset(
-                                "assets/image/delete.png",
-                                width: kTextMiddleSize,
-                                height: kTextMiddleSize,
-                              ),
-                              SizedBox(width: kPaddingSmallSize),
-                              Text(
-                                "예약 불가능",
-                                style: kTextNormalStyleMiddle,
-                              ),
-                            ],
-                          )
-                        : Row(
-                            children: [
-                              Image.asset(
-                                "assets/image/check.png",
-                                width: kTextMiddleSize,
-                                height: kTextMiddleSize,
-                              ),
-                              SizedBox(width: kPaddingSmallSize),
-                              Text(
-                                "예약 가능",
-                                style: kTextNormalStyleMiddle,
-                              ),
-                            ],
-                          )
-                    : Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "${entity.circle ?? "개인"} (${entity.major})",
-                            style: kTextNormalStyleMiddle,
+              const SizedBox(
+                width: kPaddingMiniSize,
+              ),
+              Expanded(
+                child: CustomPaint(
+                  painter: MyPainter(
+                      color:
+                          index % 2 == 0 ? kMainColor : kBackgroundMainColor),
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                      right: kPaddingMiddleSize,
+                    ),
+                    child: Row(
+                      children: [
+                        const Expanded(
+                          flex: 2,
+                          child: SizedBox(
+                            width: kPaddingLargeSize,
                           ),
+                        ),
+                        Expanded(
+                          flex: 10,
+                          child: SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: entity.major == null
+                                ? entity.date
+                                            .copyWith(hour: entity.time)
+                                            .compareTo(DateTime.now()) ==
+                                        -1
+                                    ? Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.stretch,
+                                        // 예약 불가능일때
+                                        children: [
+                                          Align(
+                                            alignment: Alignment.center,
+                                            child: Text(
+                                              "예약 불가능",
+                                              style: kTextNormalStyleMiddle
+                                                  .copyWith(
+                                                color: textColor,
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      )
+                                    : Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.stretch,
+                                        children: [
+                                          Align(
+                                            alignment: Alignment.center,
+                                            child: Text(
+                                              "예약 가능",
+                                              style: kTextNormalStyleMiddle
+                                                  .copyWith(
+                                                color: textColor,
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      )
+                                : Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Row(
+                                        // 누군가가 예약했을 때
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.baseline,
+                                        textBaseline: TextBaseline.alphabetic,
+                                        children: [
+                                          Text(
+                                            entity.circle ?? "개인",
+                                            style: kTextMainStyleLarge.copyWith(
+                                              color: textColor,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            width: kPaddingMiniSize,
+                                          ),
+                                          Text(
+                                            entity.major ?? '',
+                                            style:
+                                                kTextReverseStyleMini.copyWith(
+                                              color: textColor,
+                                              fontWeight: FontWeight.normal,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                          ),
+                        ),
+                        if (entity.major != null)
                           Transform.scale(
                             scale: 1.3,
-                            child: Padding(
-                              padding: EdgeInsets.only(
-                                  right: kPaddingMiddleSize),
-                              child: Checkbox(
-                                value: isChecked,
-                                onChanged: onPressed,
-                              ),
+                            child: Checkbox(
+                              value: isChecked,
+                              onChanged: onPressed,
                             ),
                           ),
-                        ],
-                      ),
+                        if (entity.major == null)
+                          const SizedBox(
+                            width: kPaddingMiddleSize,
+                          ),
+                      ],
+                    ),
+                  ),
+                ),
               ),
-            ),
-          ],
-        ),
-      );
-    });
+            ],
+          ),
+        );
+      },
+    );
   }
 }

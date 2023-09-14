@@ -62,9 +62,15 @@ class ReservationStatusScreen extends ConsumerWidget {
                                   color: kDisabledColor,
                                 ),
                               ),
-                              child: CustomTimeTable(
-                                controller: viewmodel.customTimeTableController,
-                                rowHeight: kMainPageContainerHeightSize / 9,
+                              child: Padding(
+                                padding: EdgeInsets.only(
+                                  top: kPaddingMiddleSize,
+                                ),
+                                child: CustomTimeTable(
+                                  controller:
+                                      viewmodel.customTimeTableController,
+                                  rowHeight: kMainPageContainerHeightSize / 9,
+                                ),
                               ),
                             ),
                           ],

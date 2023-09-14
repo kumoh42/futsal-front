@@ -25,8 +25,7 @@ class ReservationStateItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Color textColor =
-        index % 2 == 0 ? kBackgroundMainColor : kTextMainColor;
+    final Color textColor = index % 2 == 0 ? kBackgroundMainColor : kMainColor;
     return LayoutBuilder(
       builder: (context, constraints) {
         return SizedBox(
@@ -161,6 +160,15 @@ class ReservationStateItem extends StatelessWidget {
                             child: Checkbox(
                               value: isChecked,
                               onChanged: onPressed,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(2.0),
+                              ),
+                              side: MaterialStateBorderSide.resolveWith(
+                                (states) => BorderSide(
+                                  width: 1.0,
+                                  color: textColor,
+                                ),
+                              ),
                             ),
                           ),
                         if (entity.major == null)

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_front/common/const_styles/colors.dart';
 
-class MyPainter extends CustomPainter {
+class CustomListViewBackgroundPaint extends CustomPainter {
   final Color? color;
-  MyPainter({
+  CustomListViewBackgroundPaint({
     this.color = kMainColor,
   });
 

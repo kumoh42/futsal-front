@@ -35,7 +35,6 @@ class ReservationStatusViewModel extends ChangeNotifier {
   ReservationStatusViewModel(this.ref) {
     customTimeTableController = CustomTimeTableController(
       onDayChange: getReservationStatusList,
-      useRange: false,
     );
     cancelListcontroller = CustomCancelListController();
     blockReservationController = CustomTimeTableController(useRange: true);

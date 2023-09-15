@@ -40,7 +40,7 @@ class ReservationStateItem extends StatelessWidget {
               CustomPaint(
                 size: const Size(
                     kIconMiddleSize, kIconMiddleSize), // 도넛 모양의 크기 설정
-                painter: DonutPainter(isLast: isLast),
+                painter: CustomDonutPainter(isLast: isLast),
               ),
               const SizedBox(
                 width: kPaddingMiniSize,
@@ -60,7 +60,7 @@ class ReservationStateItem extends StatelessWidget {
               ),
               Expanded(
                 child: CustomPaint(
-                  painter: MyPainter(
+                  painter: CustomListViewBackgroundPaint(
                       color:
                           index % 2 == 0 ? kMainColor : kBackgroundMainColor),
                   child: Padding(

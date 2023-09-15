@@ -161,7 +161,7 @@ class CustomTimeTableController extends ChangeNotifier {
   DateTime? get endDay => _endDay;
 
   CustomTimeTableController({
-    required this.useRange,
+    this.useRange = false,
     DateTime? initDay,
     DateTime? firstDay,
     DateTime? lastDay,

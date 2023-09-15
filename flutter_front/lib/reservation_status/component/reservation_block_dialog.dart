@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_front/common/component/custom_ok_button.dart';
 import 'package:flutter_front/common/const_styles/colors.dart';
 import 'package:flutter_front/common/styles/colors.dart';
 import 'package:flutter_front/common/styles/sizes.dart';
@@ -177,7 +178,19 @@ class _ReservationBlockDialogState
       actions: [
         Padding(
           padding: const EdgeInsets.all(8.0),
-          child: ElevatedButton(
+          child: CustomOkButton(
+            width: width / 20,
+            text: Text(
+              '저장',
+              style: kTextMainStyleMiddle.copyWith(
+                color: kBackgroundMainColor,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            icon: Icon(
+              Icons.save,
+              size: kTextLargeSize,
+            ),
             onPressed: () async {
               await widget.onPressed(
                 BlockReservationEntity(
@@ -189,39 +202,6 @@ class _ReservationBlockDialogState
               );
               if (context.mounted) Navigator.of(context).pop();
             },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: CustomColor.mainColor,
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(15),
-                ),
-              ),
-              padding: EdgeInsets.symmetric(
-                horizontal: kPaddingMiddleSize,
-                vertical: kPaddingMiddleSize,
-              ),
-            ),
-            child: SizedBox(
-              width: width / 20,
-              child: Row(
-                children: [
-                  Icon(
-                    Icons.save,
-                    size: kTextLargeSize,
-                  ),
-                  SizedBox(
-                    width: kPaddingSmallSize,
-                  ),
-                  Text(
-                    '저장',
-                    style: kTextMainStyleMiddle.copyWith(
-                      color: kBackgroundMainColor,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ],
-              ),
-            ),
           ),
         ),
       ],

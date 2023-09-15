@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_front/common/const_styles/colors.dart';
 import 'package:flutter_front/common/const_styles/sizes.dart';
 
-class DonutPainter extends CustomPainter {
+class CustomDonutPainter extends CustomPainter {
   final bool isLast;
-  DonutPainter({this.isLast = false});
+  CustomDonutPainter({this.isLast = false});
   @override
   void paint(Canvas canvas, Size size) {
     final Paint paint = Paint()

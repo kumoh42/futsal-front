@@ -21,3 +21,5 @@ const double kBoarderRadiusSize = 10.0;
 const double kListViewTileHeightSize = 100.0;
 
 const double kMainPageCalendarHeightSize = 833;
+
+const double kBorderSideWidth = 0.5;

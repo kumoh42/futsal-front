@@ -1,17 +1,23 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_front/common/const_styles/colors.dart';
-import 'package:flutter_front/common/const_styles/sizes.dart';
-import 'package:flutter_front/common/const_styles/text_styles.dart';
+import 'dart:math';
 
-class DefaultLayout extends StatelessWidget {
+import 'package:flutter/material.dart';
+import 'package:flutter_front/common/styles/colors.dart';
+import 'package:flutter_front/common/styles/sizes.dart';
+import 'package:flutter_front/common/styles/text_styles.dart';
+
+class DefaultContainer extends StatelessWidget {
+  final Color backgroundColor;
   final String? title;
   final List<Widget>? actions;
   final Widget body;
+  final bool isExpanded;
 
-  const DefaultLayout({
+  const DefaultContainer({
     Key? key,
+    this.backgroundColor = kBackgroundMainColor,
     this.title,
     this.actions,
+    this.isExpanded = false,
     required this.body,
   })  : assert(title != null || actions == null),
         super(key: key);
@@ -19,15 +25,25 @@ class DefaultLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: kBackgroundMainColor,
+      backgroundColor: backgroundColor,
       appBar: title == null
           ? null
           : _DefaultLayoutAppBar(title: title!, actions: actions),
       body: SafeArea(
-        child: Center(
-          child: _DefaultLayoutContainer(
-            margin: const EdgeInsets.only(top: kPaddingMiddleSize),
-            child: body,
+        child: LayoutBuilder(
+          builder: (context, constraints) => SingleChildScrollView(
+            child: Center(
+              child: _DefaultLayoutContainer(
+                margin: const EdgeInsets.symmetric(
+                  vertical: kPaddingMiddleSize,
+                ),
+                height: (isExpanded
+                        ? constraints.maxHeight
+                        : min(constraints.maxWidth * 8 / 15, 850)) -
+                    kPaddingMiddleSize * 2,
+                child: body,
+              ),
+            ),
           ),
         ),
       ),
@@ -36,9 +52,12 @@ class DefaultLayout extends StatelessWidget {
 }
 
 class _DefaultLayoutContainer extends Container {
-  _DefaultLayoutContainer({super.margin, super.child})
+  _DefaultLayoutContainer({super.margin, super.child, required double height})
       : super(
-          constraints: const BoxConstraints(maxWidth: kLayoutMaxSize),
+          constraints: BoxConstraints(
+            maxWidth: kLayoutMaxSize,
+            maxHeight: height,
+          ),
           padding: const EdgeInsets.symmetric(horizontal: kLayoutMarginSize),
         );
 }
@@ -66,6 +85,7 @@ class _DefaultLayoutAppBar extends StatelessWidget
       ),
       child: Center(
         child: _DefaultLayoutContainer(
+          height: kToolbarHeight,
           child: AppBar(
             automaticallyImplyLeading: false,
             centerTitle: false,

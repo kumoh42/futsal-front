@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_front/common/styles/styles.dart';
+import 'package:flutter_front/common/styles/colors.dart';
+import 'package:flutter_front/common/styles/sizes.dart';
+import 'package:flutter_front/common/styles/text_styles.dart';
 import 'package:flutter_front/slack_message/component/messaging_box.dart';
 import 'package:flutter_front/slack_message/viewmodel/message_viewmodel.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -13,18 +15,18 @@ class MessageView extends ConsumerWidget {
     return MessagingBox(
       controller: viewmodel.messageBoxController,
       title: "금오사이 문의하기",
-      backgroundColor: CustomColor.mainColor,
+      backgroundColor: kMainColor,
       bodyTextStyle: kTextReverseStyleMiddle,
-      textFieldColor: CustomColor.backgroundMainColor,
+      textFieldColor: kBackgroundMainColor,
       textFiledTextStyle: kTextMainStyleSmall.copyWith(
         fontWeight: FontWeight.normal,
       ),
       child: Container(
         decoration: BoxDecoration(
-          color: CustomColor.mainColor,
-          borderRadius: BorderRadius.circular(kBorderRadiusMiniSize),
+          color: kMainColor,
+          borderRadius: BorderRadius.circular(kBorderRadiusSize),
         ),
-        child: Column(
+        child: const Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(

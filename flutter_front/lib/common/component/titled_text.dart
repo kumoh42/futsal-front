@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_front/common/styles/styles.dart';
+import 'package:flutter_front/common/styles/colors.dart';
+import 'package:flutter_front/common/styles/sizes.dart';
+import 'package:flutter_front/common/styles/text_styles.dart';
 
 class TitledText extends StatelessWidget {
   final String? title;
@@ -7,7 +9,7 @@ class TitledText extends StatelessWidget {
 
   final IconData? prefixIcon;
 
-  TitledText({
+  const TitledText({
     Key? key,
     this.title,
     this.text,
@@ -20,7 +22,7 @@ class TitledText extends StatelessWidget {
       decoration: const BoxDecoration(
         border: Border(
           bottom: BorderSide(
-            color: CustomColor.mainColor,
+            color: kMainColor,
             width: 1.0,
           ),
         ),
@@ -33,11 +35,11 @@ class TitledText extends StatelessWidget {
             children: [
               if (prefixIcon != null)
                 Padding(
-                  padding: EdgeInsets.symmetric(vertical: kPaddingMiddleSize),
+                  padding: const EdgeInsets.symmetric(vertical: kPaddingMiddleSize,),
                   child: Icon(
                     prefixIcon,
                     size: kIconMiddleSize,
-                    color: CustomColor.mainColor,
+                    color: kMainColor,
                   ),
                 ),
               Text(title ?? "", style: kTextMainStyleSmall),

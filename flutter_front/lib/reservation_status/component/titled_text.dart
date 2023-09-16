@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_front/common/const_styles/text_styles.dart';
+import 'package:flutter_front/common/styles/text_styles.dart';
 
 class TitledText extends StatelessWidget {
   final String title;

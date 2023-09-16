@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_front/common/styles/styles.dart';
+import 'package:flutter_front/common/styles/sizes.dart';
 
 class CustomElevatedButton extends StatelessWidget {
   final Widget content;

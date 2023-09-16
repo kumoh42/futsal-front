@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_front/common/styles/styles.dart';
+import 'package:flutter_front/common/styles/text_styles.dart';
 import 'package:flutter_front/common/utils/custom_dialog_utils.dart';
-import 'package:flutter_front/common/utils/date_utils.dart';
 import 'package:flutter_front/reservation_status/component/custom_table_calendar.dart';
+import 'package:flutter_front/reservation_status/component/pre_reservation_setting_dialog.dart';
 import 'package:flutter_front/reservation_status/model/entity/pre_reservation/pre_reservation_status_entity.dart';
-import 'package:flutter_front/reservation_status/model/entity/pre_reservation/progress_reservation_entity.dart';
 import 'package:flutter_front/reservation_status/model/service/pre_reservation/pre_reservation_setting_service.dart';
 import 'package:flutter_front/reservation_status/model/state/pre_reservation/pre_reservation_setting_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -58,47 +57,56 @@ class PreReservationSettingViewModel extends ChangeNotifier {
   }
 
   void setPreReservation(BuildContext context) async {
-    final dates =
-        defaultDateFormat.format(customTimeTableController.focusedDay);
-    final times =
-        '${hour.toString().padLeft(2, "0")}:${minute.toString().padLeft(2, "0")}';
-
-    final entity = PreReservationStatusEntity(date: dates, time: times);
-
-    CustomDialogUtil.showCustomDialog(
-      dialog: CustomDialog(
-        title: Text(
-          '우선예약 설정 확인',
-          style: kTextMainStyleMiddle,
-        ),
-        content: Text(
-          ' $dates ${times.replaceFirst("-", "시 ")}분',
-          style: kTextNormalStyleLarge,
-        ),
-        accept: "확인",
-        cancel: "취소",
-        onPressed: () async {
-          await ref
-              .read(preReservationSettingServiceProvider.notifier)
-              .setPreReservation(
-                progressReservationEntity: ProgressReservationEntity(
-                  isPre: true,
-                  date: entity.date,
-                  time: entity.time,
-                ),
-              );
-          Navigator.of(context).pop();
-        },
-      ),
+    await showDialog(
       context: context,
+      builder: (context) => PreReservationSettingDialog(
+        controller: customTimeTableController,
+        onPressed: (e) => ref
+            .read(preReservationSettingServiceProvider.notifier)
+            .setPreReservation(progressReservationEntity: e),
+      ),
     );
+    // final dates =
+    //     defaultDateFormat.format(customTimeTableController.focusedDay);
+    // final times =
+    //     '${hour.toString().padLeft(2, "0")}:${minute.toString().padLeft(2, "0")}';
+    //
+    // final entity = PreReservationStatusEntity(date: dates, time: times);
+    //
+    // CustomDialogUtil.showCustomDialog(
+    //   dialog: CustomDialog(
+    //     title: const Text(
+    //       '우선예약 설정 확인',
+    //       style: kTextMainStyleMiddle,
+    //     ),
+    //     content: Text(
+    //       ' $dates ${times.replaceFirst("-", "시 ")}분',
+    //       style: kTextNormalStyleLarge,
+    //     ),
+    //     accept: "확인",
+    //     cancel: "취소",
+    //     onPressed: () async {
+    //       await ref
+    //           .read(preReservationSettingServiceProvider.notifier)
+    //           .setPreReservation(
+    //             progressReservationEntity: ProgressReservationEntity(
+    //               isPre: true,
+    //               date: entity.date,
+    //               time: entity.time,
+    //             ),
+    //           );
+    //       Navigator.of(context).pop();
+    //     },
+    //   ),
+    //   context: context,
+    // );
   }
 
   void canclePreReservation(
       BuildContext context, PreReservationStatusEntity entity) async {
     CustomDialogUtil.showCustomDialog(
       dialog: CustomDialog(
-        title: Text(
+        title: const Text(
           '우선예약 설정 취소',
           style: kTextMainStyleMiddle,
         ),

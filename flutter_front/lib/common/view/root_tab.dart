@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_front/common/component/default_layout.dart';
+import 'package:flutter_front/auth/provider/auth_provider.dart';
+import 'package:flutter_front/common/component/default_container.dart';
 import 'package:flutter_front/common/component/tab_button.dart';
 import 'package:flutter_front/common/const/tabs.dart';
-import 'package:flutter_front/common/const_styles/sizes.dart';
+import 'package:flutter_front/common/styles/sizes.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final rootTabIndexProvider = StateProvider((ref) => 0);
@@ -37,14 +38,14 @@ class _RootTabState extends ConsumerState<RootTab>
       rootTabIndexProvider,
       (previous, next) => controller.animateTo(next),
     );
-    return DefaultLayout(
+    return DefaultContainer(
       title: "풋살장 예약 시스템 관리자 페이지",
       actions: [
         ...TABS.map((e) => TabButton(tabInfo: e)),
         IconButton(
           padding: EdgeInsets.zero,
           splashRadius: kIconLargeSize / 2,
-          onPressed: () {},
+          onPressed: () => ref.read(authProvider.notifier).logout(),
           icon: const Icon(Icons.person, size: kIconLargeSize),
         )
       ],

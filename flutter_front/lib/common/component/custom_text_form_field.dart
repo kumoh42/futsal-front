@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_front/common/styles/styles.dart';
+import 'package:flutter_front/common/styles/colors.dart';
+import 'package:flutter_front/common/styles/sizes.dart';
+import 'package:flutter_front/common/styles/text_styles.dart';
 
 class CustomTextFormField extends StatelessWidget {
   final String? labelText;
@@ -36,7 +38,7 @@ class CustomTextFormField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: backgroundColor ?? CustomColor.backgroundMainColor,
+        color: backgroundColor ?? kBackgroundMainColor,
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -47,9 +49,9 @@ class CustomTextFormField extends StatelessWidget {
                 Icon(
                   prefixIcon,
                   size: kIconSmallSize,
-                  color: CustomColor.subColor,
+                  color: kSubColor,
                 ),
-              if (prefixIcon != null) SizedBox(width: kPaddingSmallSize),
+              if (prefixIcon != null) const SizedBox(width: kPaddingSmallSize),
               if (labelText != null)
                 Text(
                   labelText!,
@@ -61,7 +63,7 @@ class CustomTextFormField extends StatelessWidget {
           TextFormField(
             controller: controller,
             validator: validator,
-            cursorColor: CustomColor.textMainColor,
+            cursorColor: kTextMainColor,
             keyboardType: keyboardType,
             obscureText: keyboardType == TextInputType.visiblePassword,
             style: textStyle ?? kTextMainStyleMiddle,
@@ -73,12 +75,12 @@ class CustomTextFormField extends StatelessWidget {
               contentPadding: EdgeInsets.only(bottom: contentPadding),
               hintText: hintText,
               hintStyle: textStyle?.copyWith(
-                color: CustomColor.textMainColor.withOpacity(0.5),
+                color: kTextMainColor.withOpacity(0.5),
               ) ?? kTextMainStyleMiddle.copyWith(
-                color: CustomColor.textMainColor.withOpacity(0.5),
+                color: kTextMainColor.withOpacity(0.5),
               ),
               filled: true,
-              fillColor: backgroundColor ?? CustomColor.backgroundMainColor,
+              fillColor: backgroundColor ?? kBackgroundMainColor,
             ),
           ),
         ],

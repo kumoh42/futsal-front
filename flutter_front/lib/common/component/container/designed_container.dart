@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_front/common/const_styles/colors.dart';
-import 'package:flutter_front/common/const_styles/sizes.dart';
+import 'package:flutter_front/common/styles/colors.dart';
+import 'package:flutter_front/common/styles/sizes.dart';
 
 import 'designed_container_title_bar.dart';
 
@@ -23,7 +23,7 @@ class DesignedContainer extends StatelessWidget {
         color: kBackgroundMainColor,
         border: Border.all(color: kDisabledColor, width: 3),
         borderRadius: const BorderRadius.all(
-          Radius.circular(kBoarderRadiusSize),
+          Radius.circular(kBorderRadiusSize),
         ),
       ),
       padding: const EdgeInsets.all(kPaddingLargeSize),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_front/common/state/state.dart';
 import 'package:flutter_front/common/styles/text_styles.dart';
+import 'package:flutter_front/common/state/state.dart';
 import 'package:flutter_front/common/utils/custom_dialog_utils.dart';
 import 'package:flutter_front/common/utils/snack_bar_util.dart';
 import 'package:flutter_front/reservation_status/model/entity/pre_reservation/progress_reservation_entity.dart';
@@ -47,7 +47,7 @@ class ProgressReservationViewModel extends ChangeNotifier {
 
     CustomDialogUtil.showCustomDialog(
         dialog: CustomDialog(
-          title: Text(
+          title: const Text(
             "우선예약 중단 확인",
             style: kTextMainStyleMiddle,
           ),
@@ -75,7 +75,7 @@ class ProgressReservationViewModel extends ChangeNotifier {
 
     CustomDialogUtil.showCustomDialog(
         dialog: CustomDialog(
-          title: Text(
+          title: const Text(
             "우선예약 재개 확인",
             style: kTextMainStyleMiddle,
           ),

@@ -1,121 +1,101 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_front/common/styles/sizes.dart';
+
 import 'colors.dart';
+import 'sizes.dart';
 
-TextStyle get kTextMainStyleXLarge => TextStyle(
-  color: CustomColor.textMainColor,
-  fontSize: kTextXLargeSize,
+const kTextMainStyleTitle = TextStyle(
+  color: kTextMainColor,
+  fontSize: kTextTitleSize,
   fontWeight: FontWeight.bold,
   overflow: TextOverflow.ellipsis,
-  height: kTextHeight,
 );
 
-TextStyle get kTextMainStyleLarge => TextStyle(
-  color: CustomColor.textMainColor,
+const kTextMainStyleLarge = TextStyle(
+  color: kTextMainColor,
   fontSize: kTextLargeSize,
   fontWeight: FontWeight.bold,
   overflow: TextOverflow.ellipsis,
-  height: kTextHeight,
 );
 
-TextStyle get kTextReverseStyleLarge => TextStyle(
-  color: CustomColor.textReverseColor,
+const kTextMainStyleMiddle = TextStyle(
+  color: kTextMainColor,
+  fontSize: kTextMiddleSize,
+  fontWeight: FontWeight.bold,
+  overflow: TextOverflow.ellipsis,
+);
+
+const kTextMainStyleSmall = TextStyle(
+  color: kTextMainColor,
+  fontSize: kTextSmallSize,
+  fontWeight: FontWeight.bold,
+  overflow: TextOverflow.ellipsis,
+);
+
+const kTextDisabledStyleLarge = TextStyle(
+  color: kDisabledColor,
   fontSize: kTextLargeSize,
   fontWeight: FontWeight.bold,
   overflow: TextOverflow.ellipsis,
-  height: kTextHeight,
 );
 
-TextStyle get kTextPointStyleLarge => TextStyle(
-  color: CustomColor.pointColor,
+const kTextDisabledStyleMiddle = TextStyle(
+  color: kDisabledColor,
+  fontSize: kTextMiddleSize,
+  fontWeight: FontWeight.bold,
+  overflow: TextOverflow.ellipsis,
+);
+
+const kTextDisabledStyleSmall = TextStyle(
+  color: kDisabledColor,
+  fontSize: kTextSmallSize,
+  fontWeight: FontWeight.bold,
+  overflow: TextOverflow.ellipsis,
+);
+
+const kTextReverseStyleLarge = TextStyle(
+  color: kTextReverseColor,
   fontSize: kTextLargeSize,
   fontWeight: FontWeight.bold,
   overflow: TextOverflow.ellipsis,
-  height: kTextHeight,
 );
 
-TextStyle get kTextMainStyleMiddle => TextStyle(
-  color: CustomColor.textMainColor,
+const kTextReverseStyleMiddle = TextStyle(
+  color: kTextReverseColor,
   fontSize: kTextMiddleSize,
   fontWeight: FontWeight.bold,
   overflow: TextOverflow.ellipsis,
-  height: kTextHeight,
 );
 
-TextStyle get kTextNormalStyleMiddle => TextStyle(
-  color: CustomColor.textMainColor,
-  fontSize: kTextMiddleSize - 3,
-  overflow: TextOverflow.ellipsis,
-  height: kTextHeight,
-);
-
-TextStyle get kTextNormalStyleLarge => TextStyle(
-  color: CustomColor.textMainColor,
-  fontSize: kTextMiddleSize,
-  overflow: TextOverflow.ellipsis,
-  height: kTextHeight,
-);
-
-TextStyle get kTextPointStyleMiddle => TextStyle(
-  color: CustomColor.pointColor,
-  fontSize: kTextMiddleSize,
-  fontWeight: FontWeight.bold,
-  overflow: TextOverflow.ellipsis,
-  height: kTextHeight,
-);
-
-TextStyle get kTextPointStyleSmall => TextStyle(
-  color: CustomColor.pointColor,
+const kTextReverseStyleSmall = TextStyle(
+  color: kTextReverseColor,
   fontSize: kTextSmallSize,
   fontWeight: FontWeight.bold,
   overflow: TextOverflow.ellipsis,
-  height: kTextHeight,
 );
 
-TextStyle get kTextReverseStyleMiddle => TextStyle(
-  color: CustomColor.textReverseColor,
-  fontSize: kTextMiddleSize,
-  fontWeight: FontWeight.bold,
-  overflow: TextOverflow.ellipsis,
-  height: kTextHeight,
-);
-
-TextStyle get kTextMainStyleSmall => TextStyle(
-  color: CustomColor.textMainColor,
-  fontSize: kTextSmallSize,
-  fontWeight: FontWeight.bold,
-  overflow: TextOverflow.ellipsis,
-  height: kTextHeight,
-);
-
-TextStyle get kTextSubStyleSmall => TextStyle(
-  color: CustomColor.textSubColor,
-  fontSize: kTextSmallSize,
-  fontWeight: FontWeight.bold,
-  overflow: TextOverflow.ellipsis,
-  height: kTextHeight,
-);
-
-TextStyle get kTextReverseStyleSmall => TextStyle(
-  color: CustomColor.textReverseColor,
-  fontSize: kTextSmallSize,
-  fontWeight: FontWeight.bold,
-  overflow: TextOverflow.ellipsis,
-  height: kTextHeight,
-);
-
-TextStyle get kTextMainStyleMini => TextStyle(
-  color: CustomColor.textMainColor,
+const kTextReverseStyleMini = TextStyle(
+  color: kTextReverseColor,
   fontSize: kTextMiniSize,
   fontWeight: FontWeight.bold,
   overflow: TextOverflow.ellipsis,
-  height: kTextHeight,
 );
 
-TextStyle get kTextReverseStyleMini => TextStyle(
-  color: CustomColor.textReverseColor,
-  fontSize: kTextMiniSize,
-  fontWeight: FontWeight.bold,
+const kTextNormalStyleLarge = TextStyle(
+  color: kTextMainColor,
+  fontSize: kTextLargeSize,
+  fontWeight: FontWeight.normal,
   overflow: TextOverflow.ellipsis,
-  height: kTextHeight,
+);
+
+const kTextNormalStyleMiddle = TextStyle(
+  color: kTextMainColor,
+  fontSize: kTextMiddleSize,
+  fontWeight: FontWeight.normal,
+  overflow: TextOverflow.ellipsis,
+);
+const kTextNormalStyleSmall = TextStyle(
+  color: kTextMainColor,
+  fontSize: kTextSmallSize,
+  fontWeight: FontWeight.normal,
+  overflow: TextOverflow.ellipsis,
 );

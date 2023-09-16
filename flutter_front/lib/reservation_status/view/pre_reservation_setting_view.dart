@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_front/common/component/container/designed_container.dart';
-import 'package:flutter_front/common/const_styles/colors.dart';
-import 'package:flutter_front/common/const_styles/sizes.dart';
-import 'package:flutter_front/common/const_styles/text_styles.dart';
+import 'package:flutter_front/common/styles/colors.dart';
+import 'package:flutter_front/common/styles/sizes.dart';
+import 'package:flutter_front/common/styles/text_styles.dart';
 import 'package:flutter_front/common/utils/date_utils.dart';
 import 'package:flutter_front/reservation_status/component/designed_button.dart';
 import 'package:flutter_front/reservation_status/component/titled_text.dart';
@@ -41,12 +41,11 @@ class _PreReservationSettingViewState
           ? '-'
           : "${regDateFormatK.format(regDateFormat.parse(date))} $time:00";
 
-  String toLastDay(String? date) {
+  String toNextMonth(String? date) {
     if (date == null) return '-';
     DateTime dateTime = regDateMonthFormat.parse(date);
-    DateTime temp = DateTime(dateTime.year, dateTime.month + 1, 1);
-    DateTime result = temp.subtract(const Duration(days: 1));
-    return "${regDateFormatK.format(result)} 23:59";
+    DateTime result = DateTime(dateTime.year, dateTime.month + 1, 1);
+    return "${regDateFormatK.format(result)} 00:00";
   }
 
   @override
@@ -67,7 +66,7 @@ class _PreReservationSettingViewState
                   title: '정식 예약',
                   text: progressViewmodel.progressReservationStatus != null &&
                           !progressViewmodel.progressReservationStatus!.isPre
-                      ? '${toFirstDay(progressViewmodel.progressReservationStatus?.date)} ~ ${toLastDay(progressViewmodel.progressReservationStatus?.date)}'
+                      ? '${toFirstDay(progressViewmodel.progressReservationStatus?.date)} ~ ${toNextMonth(progressViewmodel.progressReservationStatus?.date)}'
                       : '-',
                 ),
                 const SizedBox(height: kPaddingMiddleSize),
@@ -75,7 +74,7 @@ class _PreReservationSettingViewState
                   title: '사전 예약',
                   text: progressViewmodel.progressReservationStatus != null &&
                           progressViewmodel.progressReservationStatus!.isPre
-                      ? '${toCurrentDay(progressViewmodel.progressReservationStatus?.date, progressViewmodel.progressReservationStatus?.time)} ~ ${toLastDay(progressViewmodel.progressReservationStatus?.date)}'
+                      ? '${toCurrentDay(progressViewmodel.progressReservationStatus?.date, progressViewmodel.progressReservationStatus?.time)} ~ ${toNextMonth(progressViewmodel.progressReservationStatus?.date)}'
                       : '-',
                 ),
                 const SizedBox(height: kPaddingMiddleSize),
@@ -84,20 +83,23 @@ class _PreReservationSettingViewState
                     DesignedButton(
                       icon: Icons.pause,
                       text: "예약 중단",
-                      onPressed: () => progressViewmodel.stopPreReservation(context),
+                      onPressed: () =>
+                          progressViewmodel.stopPreReservation(context),
                     ),
                     const SizedBox(width: kPaddingMiddleSize),
                     DesignedButton(
                       icon: Icons.play_arrow,
                       text: "예약 재개",
-                      onPressed: () => progressViewmodel.restartPreReservation(context),
+                      onPressed: () =>
+                          progressViewmodel.restartPreReservation(context),
                     ),
                     const SizedBox(width: kPaddingMiddleSize),
                     DesignedButton(
                       icon: Icons.refresh,
                       text: "예약 내역 초기화",
                       color: kPointColor,
-                      onPressed: () => progressViewmodel.resetPreReservation(context),
+                      onPressed: () =>
+                          progressViewmodel.resetPreReservation(context),
                     ),
                   ],
                 )
@@ -115,7 +117,7 @@ class _PreReservationSettingViewState
                 title: "사전 예약 설정 현황",
                 actions: [
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () => preViewmodel.setPreReservation(context),
                     icon: const Icon(Icons.edit, size: kIconMiddleSize),
                   ),
                 ],
@@ -130,7 +132,7 @@ class _PreReservationSettingViewState
                     const SizedBox(height: kPaddingMiddleSize),
                     TitledText(
                       title: '종료 일시',
-                      text: toLastDay(preViewmodel.preReservationStatus?.date),
+                      text: toNextMonth(preViewmodel.preReservationStatus?.date),
                     ),
                   ],
                 ),

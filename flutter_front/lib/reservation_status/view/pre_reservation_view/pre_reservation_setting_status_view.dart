@@ -9,7 +9,7 @@ class PreReservationStatusList extends StatelessWidget {
   final PreReservationSettingState state;
   final void Function(PreReservationStatusEntity)? onCancelClicked;
 
-  PreReservationStatusList({
+  const PreReservationStatusList({
     super.key,
     required this.list,
     required this.state,
@@ -22,7 +22,7 @@ class PreReservationStatusList extends StatelessWidget {
       case PreReservationSettingListStateLoading:
         return const Center(child: CircularProgressIndicator());
 
-      case PreReservationSettingListStateSuccess:
+      case PreReservationSettingStateSuccess:
         return ListView.separated(
           itemBuilder: (context, index) => PreReservationStatusRow(
             entity: list![index],
@@ -33,7 +33,7 @@ class PreReservationStatusList extends StatelessWidget {
           ),
           itemCount: list!.length,
         );
-      case PreReservaitonSettingStateNone:
+      case PreReservationSettingStateNone:
         return Center(
           child: Text(
             "설정된 우선예약이 없습니다",

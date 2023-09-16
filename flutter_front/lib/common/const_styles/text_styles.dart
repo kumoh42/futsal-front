@@ -24,6 +24,13 @@ const kTextMainStyleMiddle = TextStyle(
   overflow: TextOverflow.ellipsis,
 );
 
+const kTextMainStyleSmall = TextStyle(
+  color: kTextMainColor,
+  fontSize: kTextSmallSize,
+  fontWeight: FontWeight.bold,
+  overflow: TextOverflow.ellipsis,
+);
+
 const kTextDisabledStyleLarge = TextStyle(
   color: kDisabledColor,
   fontSize: kTextLargeSize,

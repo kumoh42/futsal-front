@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_front/common/state/state.dart';
 import 'package:flutter_front/common/styles/text_styles.dart';
 import 'package:flutter_front/common/utils/custom_dialog_utils.dart';
 import 'package:flutter_front/common/utils/snack_bar_util.dart';
+import 'package:flutter_front/reservation_status/model/entity/pre_reservation/progress_reservation_entity.dart';
 import 'package:flutter_front/reservation_status/model/service/pre_reservation/progress_reservation_service.dart';
 import 'package:flutter_front/reservation_status/model/state/pre_reservation/progress_reservation_state.dart';
 import 'package:flutter_front/reservation_status/viewmodel/pre_reservation_viewmodel/pre_reservation_setting_viewmodel.dart';
@@ -13,9 +15,15 @@ final progressReservationViewModelProvider =
 class ProgressReservationViewModel extends ChangeNotifier {
   final Ref ref;
   late ProgressReservationState state;
+
   ProgressReservationViewModel(this.ref) {
     state = ref.watch(progressResrvationServiceProvider);
   }
+
+  ProgressReservationEntity? get progressReservationStatus =>
+      state is SuccessState
+          ? (state as ProgressReservationStateSuccess).data
+          : null;
 
   void getProgressReservation() async {
     await ref

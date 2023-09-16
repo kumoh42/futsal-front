@@ -3,9 +3,11 @@ import 'package:flutter_front/common/component/container/designed_container.dart
 import 'package:flutter_front/common/const_styles/colors.dart';
 import 'package:flutter_front/common/const_styles/sizes.dart';
 import 'package:flutter_front/common/const_styles/text_styles.dart';
+import 'package:flutter_front/common/utils/date_utils.dart';
 import 'package:flutter_front/reservation_status/component/designed_button.dart';
 import 'package:flutter_front/reservation_status/component/titled_text.dart';
 import 'package:flutter_front/reservation_status/viewmodel/pre_reservation_viewmodel/pre_reservation_setting_viewmodel.dart';
+import 'package:flutter_front/reservation_status/viewmodel/pre_reservation_viewmodel/progress_reservation_viewmodel.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class PreReservationSettingView extends ConsumerStatefulWidget {
@@ -27,9 +29,30 @@ class _PreReservationSettingViewState
         .getPreReservationStatusList());
   }
 
+  String toFirstDay(String? date) {
+    if (date == null) return '-';
+    DateTime dateTime = regDateMonthFormat.parse(date);
+    DateTime result = DateTime(dateTime.year, dateTime.month, 1);
+    return "${regDateFormatK.format(result)} 00:00";
+  }
+
+  String toCurrentDay(String? date, String? time) =>
+      date == null || time == null
+          ? '-'
+          : "${regDateFormatK.format(regDateFormat.parse(date))} $time:00";
+
+  String toLastDay(String? date) {
+    if (date == null) return '-';
+    DateTime dateTime = regDateMonthFormat.parse(date);
+    DateTime temp = DateTime(dateTime.year, dateTime.month + 1, 1);
+    DateTime result = temp.subtract(const Duration(days: 1));
+    return "${regDateFormatK.format(result)} 23:59";
+  }
+
   @override
   Widget build(BuildContext context) {
-    final viewmodel = ref.watch(preReservationSettingViewModelProvider);
+    final preViewmodel = ref.watch(preReservationSettingViewModelProvider);
+    final progressViewmodel = ref.watch(progressReservationViewModelProvider);
 
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -40,14 +63,20 @@ class _PreReservationSettingViewState
             title: "진행 중인 예약",
             child: Column(
               children: [
-                const TitledText(
+                TitledText(
                   title: '정식 예약',
-                  text: '2023년 09월 01일 00:00 ~ 2023년 09월 30일 23:59',
+                  text: progressViewmodel.progressReservationStatus != null &&
+                          !progressViewmodel.progressReservationStatus!.isPre
+                      ? '${toFirstDay(progressViewmodel.progressReservationStatus?.date)} ~ ${toLastDay(progressViewmodel.progressReservationStatus?.date)}'
+                      : '-',
                 ),
                 const SizedBox(height: kPaddingMiddleSize),
-                const TitledText(
+                TitledText(
                   title: '사전 예약',
-                  text: '2023년 09월 01일 00:00 ~ 2023년 09월 30일 23:59',
+                  text: progressViewmodel.progressReservationStatus != null &&
+                          progressViewmodel.progressReservationStatus!.isPre
+                      ? '${toCurrentDay(progressViewmodel.progressReservationStatus?.date, progressViewmodel.progressReservationStatus?.time)} ~ ${toLastDay(progressViewmodel.progressReservationStatus?.date)}'
+                      : '-',
                 ),
                 const SizedBox(height: kPaddingMiddleSize),
                 Row(
@@ -55,20 +84,20 @@ class _PreReservationSettingViewState
                     DesignedButton(
                       icon: Icons.pause,
                       text: "예약 중단",
-                      onPressed: () {},
+                      onPressed: () => progressViewmodel.stopPreReservation(context),
                     ),
                     const SizedBox(width: kPaddingMiddleSize),
                     DesignedButton(
                       icon: Icons.play_arrow,
                       text: "예약 재개",
-                      onPressed: () {},
+                      onPressed: () => progressViewmodel.restartPreReservation(context),
                     ),
                     const SizedBox(width: kPaddingMiddleSize),
                     DesignedButton(
                       icon: Icons.refresh,
                       text: "예약 내역 초기화",
                       color: kPointColor,
-                      onPressed: () {},
+                      onPressed: () => progressViewmodel.resetPreReservation(context),
                     ),
                   ],
                 )
@@ -90,22 +119,31 @@ class _PreReservationSettingViewState
                     icon: const Icon(Icons.edit, size: kIconMiddleSize),
                   ),
                 ],
-                child: const Column(
+                child: Column(
                   children: [
                     TitledText(
-                      title: '정식 예약',
-                      text: '2023년 09월 28일 20:00',
+                      title: '시작 일시',
+                      text: toCurrentDay(
+                          preViewmodel.preReservationStatus?.date,
+                          preViewmodel.preReservationStatus?.time),
                     ),
-                    SizedBox(height: kPaddingMiddleSize),
+                    const SizedBox(height: kPaddingMiddleSize),
                     TitledText(
-                      title: '사전 예약',
-                      text: '2023년 09월 30일 23:59',
+                      title: '종료 일시',
+                      text: toLastDay(preViewmodel.preReservationStatus?.date),
                     ),
                   ],
                 ),
               ),
-              const Text(" ·  사전 예약은 하나만 설정 가능 합니다.", style: kTextMainStyleMiddle,),
-              const Text(" ·  정식 예약은 매월 1월 00시에 자동으로 시작됩니다.", style: kTextMainStyleMiddle,),
+              const SizedBox(height: kPaddingLargeSize),
+              const Text(
+                " ·  사전 예약은 하나만 설정 가능 합니다.",
+                style: kTextMainStyleSmall,
+              ),
+              const Text(
+                " ·  정식 예약은 매월 1월 00시에 자동으로 시작됩니다.",
+                style: kTextMainStyleSmall,
+              ),
             ],
           ),
         ),

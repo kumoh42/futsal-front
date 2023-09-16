@@ -1,14 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_front/common/const_styles/colors.dart';
 import 'package:flutter_front/common/styles/sizes.dart';
 import 'package:flutter_front/common/view/default_tab_bar_view.dart';
+import 'package:flutter_front/reservation_status/component/custom_table_calendar.dart';
+import 'package:flutter_front/reservation_status/view/new_reservation_status_view.dart';
 import 'package:flutter_front/reservation_status/view/pre_reservation_view/pre_reservation_setting_view.dart';
 import 'package:flutter_front/reservation_status/view/reservation_status_view.dart';
+import 'package:flutter_front/reservation_status/viewmodel/reservation_status_viewmodel.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ReservationStatusScreen extends StatelessWidget {
-  ReservationStatusScreen({Key? key}) : super(key: key);
+class ReservationStatusScreen extends ConsumerWidget {
+  ReservationStatusScreen({
+    Key? key,
+  }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final viewmodel = ref.watch(reservationStatusViewModelProvider);
+
     return DefaultTabBarView(
       child: Padding(
         padding: EdgeInsets.all(kPaddingMiddleSize),
@@ -16,19 +25,68 @@ class ReservationStatusScreen extends StatelessWidget {
             ? Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // 예약 확인 부분
-                  Expanded(
-                    child: SizedBox(
-                      height: kMainPageContainerHeightSize,
-                      child: ReservationStatusView(),
+                  Flexible(
+                    flex: 7,
+                    child: Padding(
+                      padding: EdgeInsets.all(
+                        kPaddingMiddleSize,
+                      ),
+                      child: SizedBox(
+                        height: kMainPageContainerHeightSize,
+                        child: Stack(
+                          children: [
+                            Container(
+                              margin: const EdgeInsets.only(
+                                top: 38,
+                                bottom: 38,
+                              ),
+                              decoration: BoxDecoration(
+                                color: const Color(0xFF999999),
+                                borderRadius: BorderRadius.circular(16),
+                              ),
+                            ),
+                            Container(
+                              margin: const EdgeInsets.only(
+                                  top: 18, bottom: 18, right: 14),
+                              decoration: BoxDecoration(
+                                  color: kDisabledColor,
+                                  borderRadius: BorderRadius.circular(16)),
+                            ),
+                            Container(
+                              margin: const EdgeInsets.only(right: 28),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(16),
+                                border: Border.all(
+                                  width: 5,
+                                  color: kDisabledColor,
+                                ),
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.only(
+                                  top: kPaddingMiddleSize,
+                                ),
+                                child: CustomTimeTable(
+                                  controller:
+                                      viewmodel.customTimeTableController,
+                                  rowHeight: kMainPageContainerHeightSize / 9,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                   ),
-                  SizedBox(width: kPaddingMiddleSize),
-                  // 우선예약 부분
-                  Expanded(
-                    child: SizedBox(
-                      height: kMainPageContainerHeightSize,
-                      child: PreReservationSettingView(),
+                  const SizedBox(
+                    width: 12,
+                  ),
+                  Flexible(
+                    flex: 5,
+                    child: Padding(
+                      padding: EdgeInsets.all(kPaddingMiddleSize),
+                      child: NewReservationStatusView(
+                          height: kMainPageContainerHeightSize),
                     ),
                   ),
                 ],
@@ -49,15 +107,6 @@ class ReservationStatusScreen extends StatelessWidget {
                   ),
                 ],
               ),
-        // child: Wrap(
-        //   direction: Axis.horizontal,
-        //   spacing: kPaddingMiddleSize,
-        //   runSpacing: kPaddingMiddleSize,
-        //   children: [
-        //     ReservationSettingView(),
-        //     ReservationStatusView(),
-        //   ],
-        // ),
       ),
     );
   }

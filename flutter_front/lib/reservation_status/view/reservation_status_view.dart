@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_front/common/component/custom_elevated_button.dart';
-import 'package:flutter_front/common/styles/styles.dart';
+import 'package:flutter_front/common/const_styles/colors.dart';
+import 'package:flutter_front/common/const_styles/sizes.dart';
+import 'package:flutter_front/common/const_styles/text_styles.dart';
 import 'package:flutter_front/reservation_status/component/custom_table_calendar.dart';
 import 'package:flutter_front/reservation_status/component/custom_container.dart';
 import 'package:flutter_front/reservation_status/component/reservation_state/reservation_state_list.dart';
@@ -16,10 +18,6 @@ class ReservationStatusView extends ConsumerWidget {
     final viewmodel = ref.watch(reservationStatusViewModelProvider);
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
-        /* constraints -> 부모 위젯의 크기에 따라 자식 위젯의 크기가 결정 됨
-          즉, ReservationStatusView를 사용하는 부모 위젯인 DefaultTabBarView의 크기에 따라
-          width, height가 결정됨
-        */
         final width = constraints.maxWidth;
         final height = constraints.maxHeight;
         return CustomContainer(
@@ -32,7 +30,7 @@ class ReservationStatusView extends ConsumerWidget {
               final height = constraints.maxHeight;
 
               return Padding(
-                padding: EdgeInsets.all(kPaddingSmallSize),
+                padding: const EdgeInsets.all(kPaddingSmallSize),
                 child: Column(
                   children: [
                     Expanded(
@@ -41,13 +39,13 @@ class ReservationStatusView extends ConsumerWidget {
                         height: height,
                         isBackground: true,
                         boarderRadius: 0,
-                        boarderColor: CustomColor.disabledColor,
+                        boarderColor: kDisabledColor,
                         boarderWidth: kBorderSideWidth * 10,
-                        color: CustomColor.backgroundMainColor,
+                        color: kBackgroundMainColor,
                         // container에서 실제로 보이는 부분
                         child: CustomTimeTable(
                           controller: viewmodel.customTimeTableController,
-                          rowHeight: 41,
+                          rowHeight: kMainPageCalendarHeightSize / 11,
                         ),
                       ),
                     ),
@@ -58,10 +56,10 @@ class ReservationStatusView extends ConsumerWidget {
                       child: CustomContainer(
                         height: height,
                         width: width,
-                        color: CustomColor.backgroundMainColor,
+                        color: kBackgroundMainColor,
                         isBackground: true,
                         boarderRadius: 0,
-                        boarderColor: CustomColor.disabledColor,
+                        boarderColor: kDisabledColor,
                         boarderWidth: kBorderSideWidth * 10,
                         child: SingleChildScrollView(
                           child: Column(
@@ -76,7 +74,7 @@ class ReservationStatusView extends ConsumerWidget {
                                             width: kBorderSideWidth)),
                                   ),
                                   child: Padding(
-                                    padding: EdgeInsets.symmetric(
+                                    padding: const EdgeInsets.symmetric(
                                         horizontal: kPaddingMiddleSize),
                                     child: Row(
                                       children: [
@@ -87,7 +85,7 @@ class ReservationStatusView extends ConsumerWidget {
                                                     width: kBorderSideWidth)),
                                           ),
                                           child: Padding(
-                                            padding: EdgeInsets.symmetric(
+                                            padding: const EdgeInsets.symmetric(
                                               horizontal: kPaddingLargeSize + 9,
                                             ),
                                             child: Text(
@@ -105,9 +103,10 @@ class ReservationStatusView extends ConsumerWidget {
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
                                               Padding(
-                                                padding: EdgeInsets.symmetric(
-                                                    horizontal:
-                                                        kPaddingMiddleSize),
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal:
+                                                            kPaddingMiddleSize),
                                                 child: Text(
                                                   "List",
                                                   style: kTextNormalStyleMiddle
@@ -137,14 +136,13 @@ class ReservationStatusView extends ConsumerWidget {
                                 ),
                               if (viewmodel.statusState
                                   is! ReservationStatusListStateSuccess)
-                                SizedBox(height: kPaddingXLargeSize),
-                              ReservationStateList(
-                                state: viewmodel.statusState,
-                                reservationStatusList:
-                                    viewmodel.reservationStatusList,
-                                height: height / 2,
-                                controller: viewmodel.cancelListcontroller,
-                              ),
+                                ReservationStateList(
+                                  state: viewmodel.statusState,
+                                  reservationStatusList:
+                                      viewmodel.reservationStatusList,
+                                  height: height / 2,
+                                  controller: viewmodel.cancelListcontroller,
+                                ),
                             ],
                           ),
                         ),

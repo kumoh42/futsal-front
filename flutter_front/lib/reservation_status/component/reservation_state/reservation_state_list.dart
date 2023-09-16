@@ -60,9 +60,7 @@ class _ReservationStateListState extends ConsumerState<ReservationStateList> {
           shrinkWrap: true,
           itemCount: widget.reservationStatusList!.length,
           itemBuilder: (context, i) => ReservationStateItem(
-            height: (widget.height / widget.reservationStatusList!.length -
-                    kBorderSideWidth)
-                .floorToDouble(),
+            index: i,
             entity: widget.reservationStatusList![i],
             isChecked: controller
                 .isChecked(widget.reservationStatusList![i].reservationId),
@@ -70,6 +68,7 @@ class _ReservationStateListState extends ConsumerState<ReservationStateList> {
               controller.clickedCheckBox(
                   widget.reservationStatusList![i].reservationId);
             },
+            isLast: widget.reservationStatusList!.length - 1 == i,
           ),
         );
       case ReservationStatusListStateError:

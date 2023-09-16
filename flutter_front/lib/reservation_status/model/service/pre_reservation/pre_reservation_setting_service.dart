@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_front/reservation_status/model/entity/block_reservation_entity.dart';
 import 'package:flutter_front/reservation_status/model/entity/pre_reservation/pre_reservation_status_entity.dart';
 import 'package:flutter_front/reservation_status/model/entity/pre_reservation/progress_reservation_entity.dart';
 import 'package:flutter_front/reservation_status/model/repository/pre_resevation/pre_reservation_setting_repository.dart';
@@ -56,6 +57,18 @@ class PreReservationSettingService
       await getPreReservationList();
     } on DioException {
       state = PreReservationSettingStateError("서버에서 예약 정보를 가져올 수 없습니다. ");
+    } catch (e) {
+      state = PreReservationSettingStateError("알 수 없는 에러가 발생했습니다.");
+    }
+  }
+
+  Future blockReservation({required String start, required String end}) async {
+    try {
+      await repository.blockReservation(
+        BlockReservationEntity(endDate: end, startDate: start),
+      );
+    } on DioException {
+      state = PreReservationSettingStateError("서버와 통신이 끊겼습니다.");
     } catch (e) {
       state = PreReservationSettingStateError("알 수 없는 에러가 발생했습니다.");
     }

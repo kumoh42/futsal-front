@@ -59,7 +59,7 @@ class ProgressReservationViewModel extends ChangeNotifier {
             await ref
                 .read(progressResrvationServiceProvider.notifier)
                 .stopPreReservation();
-            Navigator.of(context).pop();
+            if (context.mounted) Navigator.of(context).pop();
           },
         ),
         context: context);
@@ -87,7 +87,7 @@ class ProgressReservationViewModel extends ChangeNotifier {
             await ref
                 .read(progressResrvationServiceProvider.notifier)
                 .restartPreReservation();
-            Navigator.of(context).pop();
+            if (context.mounted) Navigator.of(context).pop();
           },
         ),
         context: context);
@@ -112,7 +112,7 @@ class ProgressReservationViewModel extends ChangeNotifier {
             await ref
                 .read(progressResrvationServiceProvider.notifier)
                 .resetPreReservation();
-            Navigator.of(context).pop();
+            if (context.mounted) Navigator.of(context).pop();
           },
         ),
         context: context);

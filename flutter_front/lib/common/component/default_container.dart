@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_front/common/styles/colors.dart';
 import 'package:flutter_front/common/styles/sizes.dart';
 import 'package:flutter_front/common/styles/text_styles.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class DefaultContainer extends StatelessWidget {
   final Color backgroundColor;
@@ -35,12 +36,12 @@ class DefaultContainer extends StatelessWidget {
             child: Center(
               child: _DefaultLayoutContainer(
                 margin: EdgeInsets.symmetric(
-                  vertical: kPaddingMiddleSize,
+                  vertical: kPaddingMiddleSize.w,
                 ),
                 height: (isExpanded
                         ? constraints.maxHeight
                         : min(constraints.maxWidth * 8 / 15, 850)) -
-                    kPaddingMiddleSize * 2,
+                    kPaddingMiddleSize.w * 2,
                 child: body,
               ),
             ),
@@ -76,7 +77,7 @@ class _DefaultLayoutAppBar extends StatelessWidget
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(bottom: kPaddingSmallSize),
+      padding: EdgeInsets.only(bottom: kPaddingSmallSize.w),
       decoration: BoxDecoration(
         border: const Border(
           bottom: BorderSide(color: kDisabledColor, width: 1.0),
@@ -99,7 +100,10 @@ class _DefaultLayoutAppBar extends StatelessWidget
               ),
             ),
             elevation: 0,
-            title: Text(title, style: kTextMainStyleTitle),
+            title: Text(
+              title,
+              style: kTextMainStyle.copyWith(fontSize: kTextTitleSize.sp),
+            ),
             actions: actions?.expand(_addPadding).toList(),
             foregroundColor: Colors.black,
           ),
@@ -109,7 +113,7 @@ class _DefaultLayoutAppBar extends StatelessWidget
   }
 
   Iterable<Widget> _addPadding(Widget element) =>
-      [SizedBox(width: kPaddingMiddleSize), element];
+      [SizedBox(width: kPaddingMiddleSize.w), element];
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);

@@ -7,6 +7,7 @@ import 'package:flutter_front/reservation_status/component/custom_table_calendar
 import 'package:flutter_front/reservation_status/component/reservation_state/reservation_state_list.dart';
 import 'package:flutter_front/reservation_status/viewmodel/reservation_status_viewmodel.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ReservationStatusView extends ConsumerWidget {
   const ReservationStatusView({
@@ -33,25 +34,25 @@ class ReservationStatusView extends ConsumerWidget {
             children: [
               Row(
                 children: [
-                  SizedBox(width: kPaddingMiddleSize * 3),
+                  SizedBox(width: kPaddingMiddleSize.w * 3),
                   Expanded(
                     child: Text(
                       '${viewmodel.customTimeTableController.focusedDay.month}월 ${viewmodel.customTimeTableController.focusedDay.day}일 (${getDayOfWeek(viewmodel.customTimeTableController.focusedDay).substring(0, 1)})',
-                      style: kTextMainStyleLarge,
+                      style: kTextMainStyle.copyWith(fontSize: kTextLargeSize.sp),
                     ),
                   ),
                   IconButton(
                     icon: const Icon(Icons.settings),
-                    iconSize: kIconMiddleSize,
-                    splashRadius: kIconMiddleSize,
+                    iconSize: kIconMiddleSize.w,
+                    splashRadius: kIconMiddleSize.w,
                     onPressed: () {
                       viewmodel.blockReservation(context);
                     },
                   ),
                   IconButton(
                     icon: const Icon(Icons.delete),
-                    iconSize: kIconMiddleSize,
-                    splashRadius: kIconMiddleSize,
+                    iconSize: kIconMiddleSize.w,
+                    splashRadius: kIconMiddleSize.w,
                     onPressed: () {
                       viewmodel.cancelReservationStatus(context);
                     },
@@ -59,7 +60,7 @@ class ReservationStatusView extends ConsumerWidget {
                   const SizedBox(width: 5.0),
                 ],
               ),
-              SizedBox(height: kPaddingLargeSize),
+              SizedBox(height: kPaddingLargeSize.w),
               Expanded(
                 child: ReservationStateList(
                   state: viewmodel.statusState,

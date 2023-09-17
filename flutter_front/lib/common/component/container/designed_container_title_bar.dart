@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_front/common/styles/colors.dart';
 import 'package:flutter_front/common/styles/sizes.dart';
 import 'package:flutter_front/common/styles/text_styles.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class DesignedContainerTitleBar extends StatelessWidget {
   final String title;
@@ -16,13 +17,18 @@ class DesignedContainerTitleBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(bottom: kPaddingSmallSize),
+      padding: EdgeInsets.only(bottom: kPaddingSmallSize.w),
       decoration: const BoxDecoration(
         border: Border(bottom: BorderSide(color: kDisabledColor, width: 1.0)),
       ),
       child: Row(
         children: [
-          Expanded(child: Text(title, style: kTextMainStyleLarge)),
+          Expanded(
+            child: Text(
+              title,
+              style: kTextMainStyle.copyWith(fontSize: kTextLargeSize.sp),
+            ),
+          ),
           ...actions ?? [],
         ],
       ),

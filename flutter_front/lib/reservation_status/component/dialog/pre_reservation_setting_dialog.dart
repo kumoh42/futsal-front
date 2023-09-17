@@ -9,6 +9,7 @@ import 'package:flutter_front/reservation_status/component/custom_table_calendar
 import 'package:flutter_front/reservation_status/component/designed_button.dart';
 import 'package:flutter_front/reservation_status/model/entity/pre_reservation/progress_reservation_entity.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class PreReservationSettingDialog extends ConsumerStatefulWidget {
   final Future Function(ProgressReservationEntity) onPressed;
@@ -76,7 +77,7 @@ class _ReservationBlockDialogState
             actions: [
               IconButton(
                 onPressed: () => Navigator.of(context).pop(),
-                icon: const Icon(Icons.close),
+                icon: Icon(Icons.close, size: kIconMiddleSize.w),
               )
             ],
           ),
@@ -93,10 +94,10 @@ class _ReservationBlockDialogState
                   flex: 5,
                   child: CustomTimeTable(
                     controller: controller,
-                    textSize: kTextMiddleSize,
+                    textSize: kTextMiddleSize.sp,
                   ),
                 ),
-                SizedBox(width: kPaddingMiddleSize),
+                SizedBox(width: kPaddingMiddleSize.w),
                 Container(
                   decoration: BoxDecoration(
                     border: Border(
@@ -107,11 +108,12 @@ class _ReservationBlockDialogState
                     ),
                   ),
                   child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: kPaddingLargeSize),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: kPaddingLargeSize.w),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        SizedBox(height: kPaddingLargeSize),
+                        SizedBox(height: kPaddingLargeSize.w),
                         buildDateTimeSelector(
                           title: "시작 일시",
                           content: regDateFormatK.format(
@@ -174,15 +176,15 @@ Widget buildDateTimeSelector({
     children: [
       Text(
         title,
-        style: kTextDisabledStyleSmall,
+        style: kTextDisabledStyle.copyWith(fontSize: kTextSmallSize.sp),
       ),
       Row(
         children: [
           Text(
             content,
-            style: kTextMainStyleMiddle,
+            style: kTextMainStyle.copyWith(fontSize: kTextMiddleSize.sp),
           ),
-          SizedBox(width: kPaddingMiddleSize),
+          SizedBox(width: kPaddingMiddleSize.w),
           DropdownButton(
             value: selectedTime,
             items: times
@@ -191,7 +193,9 @@ Widget buildDateTimeSelector({
                     value: e,
                     child: Text(
                       e,
-                      style: kTextMainStyleMiddle,
+                      style: kTextMainStyle.copyWith(
+                        fontSize: kTextMiddleSize.sp,
+                      ),
                     ),
                   ),
                 )

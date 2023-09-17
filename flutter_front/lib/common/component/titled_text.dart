@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_front/common/styles/colors.dart';
 import 'package:flutter_front/common/styles/sizes.dart';
 import 'package:flutter_front/common/styles/text_styles.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class TitledText extends StatelessWidget {
   final String? title;
@@ -35,17 +36,25 @@ class TitledText extends StatelessWidget {
             children: [
               if (prefixIcon != null)
                 Padding(
-                  padding: EdgeInsets.symmetric(vertical: kPaddingMiddleSize,),
+                  padding: EdgeInsets.symmetric(
+                    vertical: kPaddingMiddleSize.w,
+                  ),
                   child: Icon(
                     prefixIcon,
-                    size: kIconMiddleSize,
+                    size: kIconMiddleSize.w,
                     color: kMainColor,
                   ),
                 ),
-              Text(title ?? "", style: kTextMainStyleSmall),
+              Text(
+                title ?? "",
+                style: kTextMainStyle.copyWith(fontSize: kTextSmallSize.sp),
+              ),
             ],
           ),
-          Text(text ?? "", style: kTextMainStyleMiddle),
+          Text(
+            text ?? "",
+            style: kTextMainStyle.copyWith(fontSize: kTextSmallSize.sp),
+          ),
         ],
       ),
     );

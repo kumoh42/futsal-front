@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_front/common/styles/colors.dart';
 import 'package:flutter_front/common/styles/sizes.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class StackContainer extends StatelessWidget {
   final Widget child;
@@ -10,7 +11,7 @@ class StackContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        final padding = kPaddingMiddleSize;
+        final padding = kPaddingMiddleSize.w;
         final width = constraints.maxWidth;
         final height = constraints.maxHeight;
         return Stack(
@@ -52,7 +53,7 @@ class StackContainer extends StatelessWidget {
                     Radius.circular(kBorderRadiusSize),
                   ),
                 ),
-                padding: EdgeInsets.all(kPaddingLargeSize),
+                padding: EdgeInsets.all(kPaddingLargeSize.w),
                 child: child,
               ),
             ),

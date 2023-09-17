@@ -5,6 +5,7 @@ import 'package:flutter_front/common/styles/colors.dart';
 import 'package:flutter_front/common/styles/sizes.dart';
 import 'package:flutter_front/common/styles/text_styles.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class CustomTimeTable extends ConsumerStatefulWidget {
@@ -17,7 +18,7 @@ class CustomTimeTable extends ConsumerStatefulWidget {
     double? textSize,
   }) : super(key: key) {
     provider = ChangeNotifierProvider((ref) => controller);
-    this.textSize = textSize ??  kTextLargeSize;
+    this.textSize = textSize ?? kTextLargeSize.sp;
   }
 
   @override
@@ -41,19 +42,13 @@ class _CustomTimeTableState extends ConsumerState<CustomTimeTable> {
               bottom: BorderSide(color: kDisabledColor, width: 0.5),
             ),
           ),
-          weekendStyle: kTextNormalStyleLarge.copyWith(
-            fontSize: widget.textSize,
-          ),
-          weekdayStyle: kTextNormalStyleLarge.copyWith(
-            fontSize: widget.textSize,
-          ),
+          weekendStyle: kTextNormalStyle.copyWith(fontSize: widget.textSize),
+          weekdayStyle: kTextNormalStyle.copyWith(fontSize: widget.textSize),
         ),
         headerStyle: HeaderStyle(
           titleCentered: true,
           formatButtonVisible: false,
-          titleTextStyle: kTextMainStyleLarge.copyWith(
-            fontSize: widget.textSize,
-          ),
+          titleTextStyle: kTextMainStyle.copyWith(fontSize: widget.textSize),
           leftChevronPadding: EdgeInsets.zero,
           rightChevronPadding: EdgeInsets.zero,
           leftChevronMargin: EdgeInsets.zero,
@@ -129,7 +124,7 @@ class _CustomTimeTableState extends ConsumerState<CustomTimeTable> {
           child: Center(
             child: Text(
               date,
-              style: kTextNormalStyleLarge.copyWith(
+              style: kTextNormalStyle.copyWith(
                 color: textColor,
                 fontSize: textSize,
               ),

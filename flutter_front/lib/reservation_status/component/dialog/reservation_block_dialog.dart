@@ -74,7 +74,7 @@ class _ReservationBlockDialogState
             actions: [
               IconButton(
                 onPressed: () => Navigator.of(context).pop(),
-                icon: const Icon(Icons.close),
+                icon: Icon(Icons.close, size: kIconMiddleSize.w),
               )
             ],
           ),
@@ -82,8 +82,8 @@ class _ReservationBlockDialogState
             borderRadius: BorderRadius.all(Radius.circular(kBorderRadiusSize)),
           ),
           content: SizedBox(
-            height: max(width / 2, 850.w) * 8 / 15,
-            width: max(width / 2, 850.w),
+            height: max(width / 2, 850) * 8 / 15,
+            width: max(width / 2, 850),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -91,10 +91,10 @@ class _ReservationBlockDialogState
                   flex: 5,
                   child: CustomTimeTable(
                     controller: controller,
-                    textSize: kTextMiddleSize,
+                    textSize: kTextMiddleSize.sp,
                   ),
                 ),
-                SizedBox(width: kPaddingMiddleSize),
+                SizedBox(width: kPaddingMiddleSize.w),
                 Container(
                   decoration: BoxDecoration(
                     border: Border(
@@ -105,11 +105,11 @@ class _ReservationBlockDialogState
                     ),
                   ),
                   child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: kPaddingLargeSize),
+                    padding: EdgeInsets.symmetric(horizontal: kPaddingLargeSize.w,),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        SizedBox(height: kPaddingLargeSize),
+                        SizedBox(height: kPaddingLargeSize.w),
                         buildDateTimeSelector(
                           title: "시작 일시",
                           content: regDateFormatK.format(
@@ -177,7 +177,8 @@ Widget buildDateTimeSelector({
     children: [
       Text(
         title,
-        style: kTextDisabledStyleSmall.copyWith(
+        style: kTextDisabledStyle.copyWith(
+          fontSize: kTextSmallSize.sp,
           color: const Color(0XFF777777),
         ),
       ),
@@ -185,9 +186,9 @@ Widget buildDateTimeSelector({
         children: [
           Text(
             content,
-            style: kTextMainStyleMiddle,
+            style: kTextMainStyle.copyWith(fontSize: kTextMiddleSize.sp),
           ),
-          SizedBox(width: kPaddingMiddleSize),
+          SizedBox(width: kPaddingMiddleSize.w),
           DropdownButton(
             value: selectedTime,
             items: times
@@ -196,7 +197,7 @@ Widget buildDateTimeSelector({
                     value: e,
                     child: Text(
                       e,
-                      style: kTextMainStyleMiddle,
+                      style: kTextMainStyle.copyWith(fontSize: kTextMiddleSize.sp),
                     ),
                   ),
                 )

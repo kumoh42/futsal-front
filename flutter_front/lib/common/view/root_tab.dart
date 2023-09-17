@@ -5,6 +5,7 @@ import 'package:flutter_front/common/component/tab_button.dart';
 import 'package:flutter_front/common/const/tabs.dart';
 import 'package:flutter_front/common/styles/sizes.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 final rootTabIndexProvider = StateProvider((ref) => 0);
 
@@ -44,9 +45,9 @@ class _RootTabState extends ConsumerState<RootTab>
         ...TABS.map((e) => TabButton(tabInfo: e)),
         IconButton(
           padding: EdgeInsets.zero,
-          splashRadius: kIconLargeSize / 2,
+          splashRadius: kIconLargeSize.w / 2,
           onPressed: () => ref.read(authProvider.notifier).logout(),
-          icon: Icon(Icons.person, size: kIconLargeSize),
+          icon: Icon(Icons.person, size: kIconLargeSize.w),
         )
       ],
       body: TabBarView(

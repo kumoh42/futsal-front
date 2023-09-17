@@ -35,7 +35,7 @@ class TitledText extends StatelessWidget {
             children: [
               if (prefixIcon != null)
                 Padding(
-                  padding: const EdgeInsets.symmetric(vertical: kPaddingMiddleSize,),
+                  padding: EdgeInsets.symmetric(vertical: kPaddingMiddleSize,),
                   child: Icon(
                     prefixIcon,
                     size: kIconMiddleSize,

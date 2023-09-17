@@ -49,8 +49,11 @@ dependencies:
   # URL launcher
   url_launcher: ^6.1.12
 
-  # validators
+  # Validators
   validators:
+
+  # Responsive
+  flutter_screenutil: ^5.9.0
 
 dev_dependencies:
   flutter_test:

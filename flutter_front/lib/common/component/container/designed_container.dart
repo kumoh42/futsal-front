@@ -26,12 +26,12 @@ class DesignedContainer extends StatelessWidget {
           Radius.circular(kBorderRadiusSize),
         ),
       ),
-      padding: const EdgeInsets.all(kPaddingLargeSize),
+      padding: EdgeInsets.all(kPaddingLargeSize),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           DesignedContainerTitleBar(title: title, actions: actions),
-          const SizedBox(height: kPaddingMiddleSize),
+          SizedBox(height: kPaddingMiddleSize),
           child,
         ],
       ),

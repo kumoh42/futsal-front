@@ -46,7 +46,7 @@ class _RootTabState extends ConsumerState<RootTab>
           padding: EdgeInsets.zero,
           splashRadius: kIconLargeSize / 2,
           onPressed: () => ref.read(authProvider.notifier).logout(),
-          icon: const Icon(Icons.person, size: kIconLargeSize),
+          icon: Icon(Icons.person, size: kIconLargeSize),
         )
       ],
       body: TabBarView(

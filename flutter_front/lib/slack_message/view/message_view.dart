@@ -26,7 +26,7 @@ class MessageView extends ConsumerWidget {
           color: kMainColor,
           borderRadius: BorderRadius.circular(kBorderRadiusSize),
         ),
-        child: const Column(
+        child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(

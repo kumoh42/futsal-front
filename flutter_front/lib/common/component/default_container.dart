@@ -34,7 +34,7 @@ class DefaultContainer extends StatelessWidget {
           builder: (context, constraints) => SingleChildScrollView(
             child: Center(
               child: _DefaultLayoutContainer(
-                margin: const EdgeInsets.symmetric(
+                margin: EdgeInsets.symmetric(
                   vertical: kPaddingMiddleSize,
                 ),
                 height: (isExpanded
@@ -76,7 +76,7 @@ class _DefaultLayoutAppBar extends StatelessWidget
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.only(bottom: kPaddingSmallSize),
+      padding: EdgeInsets.only(bottom: kPaddingSmallSize),
       decoration: BoxDecoration(
         border: const Border(
           bottom: BorderSide(color: kDisabledColor, width: 1.0),
@@ -109,7 +109,7 @@ class _DefaultLayoutAppBar extends StatelessWidget
   }
 
   Iterable<Widget> _addPadding(Widget element) =>
-      [const SizedBox(width: kPaddingMiddleSize), element];
+      [SizedBox(width: kPaddingMiddleSize), element];
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);

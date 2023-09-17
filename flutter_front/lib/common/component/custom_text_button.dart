@@ -21,7 +21,7 @@ class CustomTextButton extends StatelessWidget {
       onPressed: onPressed,
       style: TextButton.styleFrom(
         alignment: Alignment.centerLeft,
-        minimumSize: const Size.fromHeight(kTextSmallSize),
+        minimumSize: Size.fromHeight(kTextSmallSize),
         padding: EdgeInsets.zero,
         tapTargetSize: MaterialTapTargetSize.shrinkWrap,
       ),

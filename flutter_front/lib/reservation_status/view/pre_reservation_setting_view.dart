@@ -69,7 +69,7 @@ class _PreReservationSettingViewState
                       ? '${toFirstDay(progressViewmodel.progressReservationStatus?.date)} ~ ${toNextMonth(progressViewmodel.progressReservationStatus?.date)}'
                       : '-',
                 ),
-                const SizedBox(height: kPaddingMiddleSize),
+                SizedBox(height: kPaddingMiddleSize),
                 TitledText(
                   title: '사전 예약',
                   text: progressViewmodel.progressReservationStatus != null &&
@@ -77,7 +77,7 @@ class _PreReservationSettingViewState
                       ? '${toCurrentDay(progressViewmodel.progressReservationStatus?.date, progressViewmodel.progressReservationStatus?.time)} ~ ${toNextMonth(progressViewmodel.progressReservationStatus?.date)}'
                       : '-',
                 ),
-                const SizedBox(height: kPaddingMiddleSize),
+                SizedBox(height: kPaddingMiddleSize),
                 Row(
                   children: [
                     DesignedButton(
@@ -86,14 +86,14 @@ class _PreReservationSettingViewState
                       onPressed: () =>
                           progressViewmodel.stopPreReservation(context),
                     ),
-                    const SizedBox(width: kPaddingMiddleSize),
+                    SizedBox(width: kPaddingMiddleSize),
                     DesignedButton(
                       icon: Icons.play_arrow,
                       text: "예약 재개",
                       onPressed: () =>
                           progressViewmodel.restartPreReservation(context),
                     ),
-                    const SizedBox(width: kPaddingMiddleSize),
+                    SizedBox(width: kPaddingMiddleSize),
                     DesignedButton(
                       icon: Icons.refresh,
                       text: "예약 내역 초기화",
@@ -118,7 +118,7 @@ class _PreReservationSettingViewState
                 actions: [
                   IconButton(
                     onPressed: () => preViewmodel.setPreReservation(context),
-                    icon: const Icon(Icons.edit, size: kIconMiddleSize),
+                    icon: Icon(Icons.edit, size: kIconMiddleSize),
                   ),
                 ],
                 child: Column(
@@ -129,7 +129,7 @@ class _PreReservationSettingViewState
                           preViewmodel.preReservationStatus?.date,
                           preViewmodel.preReservationStatus?.time),
                     ),
-                    const SizedBox(height: kPaddingMiddleSize),
+                    SizedBox(height: kPaddingMiddleSize),
                     TitledText(
                       title: '종료 일시',
                       text: toNextMonth(preViewmodel.preReservationStatus?.date),
@@ -137,12 +137,12 @@ class _PreReservationSettingViewState
                   ],
                 ),
               ),
-              const SizedBox(height: kPaddingLargeSize),
-              const Text(
+              SizedBox(height: kPaddingLargeSize),
+              Text(
                 " ·  사전 예약은 하나만 설정 가능 합니다.",
                 style: kTextMainStyleSmall,
               ),
-              const Text(
+              Text(
                 " ·  정식 예약은 매월 1월 00시에 자동으로 시작됩니다.",
                 style: kTextMainStyleSmall,
               ),

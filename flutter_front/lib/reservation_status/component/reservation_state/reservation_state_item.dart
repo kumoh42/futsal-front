@@ -30,32 +30,32 @@ class ReservationStateItem extends StatelessWidget {
       builder: (context, constraints) => Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          const SizedBox(width: kPaddingSmallSize),
+          SizedBox(width: kPaddingSmallSize),
           CustomPaint(
             // 도넛 모양의 크기 설정
             size: Size(kIconMiddleSize, constraints.maxHeight),
             painter: CustomDonutPainter(isLast: isLast),
           ),
-          const SizedBox(width: kPaddingMiniSize),
+          SizedBox(width: kPaddingMiniSize),
           Padding(
-            padding: const EdgeInsets.only(left: kPaddingMiddleSize),
+            padding: EdgeInsets.only(left: kPaddingMiddleSize),
             child: Text(
               DataUtils.intToTimeRange(entity.time, 2),
               textAlign: TextAlign.center,
               style: kTextMainStyleSmall,
             ),
           ),
-          const SizedBox(width: kPaddingMiniSize),
+          SizedBox(width: kPaddingMiniSize),
           Expanded(
             child: CustomPaint(
               painter: CustomListViewBackgroundPaint(
                 color: index % 2 == 0 ? kMainColor : kBackgroundMainColor,
               ),
               child: Padding(
-                padding: const EdgeInsets.only(right: kPaddingMiddleSize),
+                padding: EdgeInsets.only(right: kPaddingMiddleSize),
                 child: Row(
                   children: [
-                    const Expanded(
+                    Expanded(
                       flex: 2,
                       child: SizedBox(width: kPaddingLargeSize),
                     ),
@@ -77,7 +77,8 @@ class ReservationStateItem extends StatelessWidget {
                                         alignment: Alignment.center,
                                         child: Text(
                                           "예약 불가능",
-                                          style: kTextNormalStyleMiddle.copyWith(
+                                          style:
+                                              kTextNormalStyleMiddle.copyWith(
                                             color: textColor,
                                             fontWeight: FontWeight.w600,
                                           ),
@@ -93,7 +94,8 @@ class ReservationStateItem extends StatelessWidget {
                                         alignment: Alignment.center,
                                         child: Text(
                                           "예약 가능",
-                                          style: kTextNormalStyleMiddle.copyWith(
+                                          style:
+                                              kTextNormalStyleMiddle.copyWith(
                                             color: textColor,
                                             fontWeight: FontWeight.w600,
                                           ),
@@ -118,9 +120,7 @@ class ReservationStateItem extends StatelessWidget {
                                           fontWeight: FontWeight.w600,
                                         ),
                                       ),
-                                      const SizedBox(
-                                        width: kPaddingMiniSize,
-                                      ),
+                                      SizedBox(width: kPaddingMiniSize),
                                       Text(
                                         entity.major ?? '',
                                         style: kTextReverseStyleMini.copyWith(
@@ -152,7 +152,7 @@ class ReservationStateItem extends StatelessWidget {
                         ),
                       ),
                     if (entity.major == null)
-                      const SizedBox(width: kPaddingMiddleSize),
+                      SizedBox(width: kPaddingMiddleSize),
                   ],
                 ),
               ),

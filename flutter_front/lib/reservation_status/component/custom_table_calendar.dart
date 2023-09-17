@@ -9,14 +9,15 @@ import 'package:table_calendar/table_calendar.dart';
 
 class CustomTimeTable extends ConsumerStatefulWidget {
   late final ChangeNotifierProvider<CustomTimeTableController> provider;
-  final double textSize;
+  late final double textSize;
 
   CustomTimeTable({
     Key? key,
     required CustomTimeTableController controller,
-    this.textSize = kTextLargeSize,
+    double? textSize,
   }) : super(key: key) {
     provider = ChangeNotifierProvider((ref) => controller);
+    this.textSize = textSize ??  kTextLargeSize;
   }
 
   @override
@@ -114,7 +115,7 @@ class _CustomTimeTableState extends ConsumerState<CustomTimeTable> {
     required String date,
     Color? textColor,
     BoxBorder? border,
-    double textSize = kTextLargeSize,
+    required double textSize,
   }) =>
       Center(
         child: Container(

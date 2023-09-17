@@ -33,7 +33,7 @@ class ReservationStatusView extends ConsumerWidget {
             children: [
               Row(
                 children: [
-                  const SizedBox(width: kPaddingMiddleSize * 3),
+                  SizedBox(width: kPaddingMiddleSize * 3),
                   Expanded(
                     child: Text(
                       '${viewmodel.customTimeTableController.focusedDay.month}월 ${viewmodel.customTimeTableController.focusedDay.day}일 (${getDayOfWeek(viewmodel.customTimeTableController.focusedDay).substring(0, 1)})',
@@ -59,7 +59,7 @@ class ReservationStatusView extends ConsumerWidget {
                   const SizedBox(width: 5.0),
                 ],
               ),
-              const SizedBox(height: kPaddingLargeSize),
+              SizedBox(height: kPaddingLargeSize),
               Expanded(
                 child: ReservationStateList(
                   state: viewmodel.statusState,

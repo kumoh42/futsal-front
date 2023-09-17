@@ -34,11 +34,11 @@ class _ReservationStateListState extends ConsumerState<ReservationStateList> {
 
     switch (widget.state.runtimeType) {
       case ReservationStatusListStateNone:
-        return const Center(
+        return Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image(image: AssetImage("assets/image/black_logo.png")),
+              const Image(image: AssetImage("assets/image/black_logo.png")),
               Text(
                 "아직 예약이 오픈되지 않았습니다.",
                 style: kTextMainStyleMiddle,

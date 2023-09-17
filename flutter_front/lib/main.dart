@@ -3,12 +3,19 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_front/common/go_router/go_router.dart';
 import 'package:flutter_front/common/utils/snack_bar_util.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
 void main() async {
   await initializeDateFormatting();
   await dotenv.load(fileName: ".env");
-  runApp(const ProviderScope(child: MyApp()));
+  runApp(ProviderScope(
+    child: ScreenUtilInit(
+      designSize: const Size(1920, 1080),
+      rebuildFactor: RebuildFactors.always,
+      builder: (context, child) => const MyApp(),
+    ),
+  ));
 }
 
 class MyApp extends ConsumerWidget {

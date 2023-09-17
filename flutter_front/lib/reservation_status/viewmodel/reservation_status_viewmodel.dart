@@ -3,7 +3,7 @@ import 'package:flutter_front/common/state/state.dart';
 import 'package:flutter_front/common/utils/date_utils.dart';
 import 'package:flutter_front/common/utils/snack_bar_util.dart';
 import 'package:flutter_front/reservation_status/component/custom_table_calendar.dart';
-import 'package:flutter_front/reservation_status/component/reservation_block_dialog.dart';
+import 'package:flutter_front/reservation_status/component/dialog/reservation_block_dialog.dart';
 import 'package:flutter_front/reservation_status/component/reservation_cancel_dialog.dart';
 import 'package:flutter_front/reservation_status/component/reservation_state/reservation_state_list.dart';
 import 'package:flutter_front/reservation_status/model/entity/reservation_entity.dart';

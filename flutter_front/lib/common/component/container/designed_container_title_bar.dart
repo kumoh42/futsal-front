@@ -16,7 +16,7 @@ class DesignedContainerTitleBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.only(bottom: kPaddingSmallSize),
+      padding: EdgeInsets.only(bottom: kPaddingSmallSize),
       decoration: const BoxDecoration(
         border: Border(bottom: BorderSide(color: kDisabledColor, width: 1.0)),
       ),

@@ -27,7 +27,7 @@ class DesignedButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(kBorderRadiusSize * 2),
         ),
         elevation: 0.0,
-        padding: const EdgeInsets.symmetric(
+        padding: EdgeInsets.symmetric(
           horizontal: kPaddingMiddleSize,
           vertical: kPaddingLargeSize,
         ),

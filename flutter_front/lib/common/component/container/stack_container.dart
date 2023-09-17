@@ -10,7 +10,7 @@ class StackContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        const padding = kPaddingMiddleSize;
+        final padding = kPaddingMiddleSize;
         final width = constraints.maxWidth;
         final height = constraints.maxHeight;
         return Stack(
@@ -52,7 +52,7 @@ class StackContainer extends StatelessWidget {
                     Radius.circular(kBorderRadiusSize),
                   ),
                 ),
-                padding: const EdgeInsets.all(kPaddingLargeSize),
+                padding: EdgeInsets.all(kPaddingLargeSize),
                 child: child,
               ),
             ),

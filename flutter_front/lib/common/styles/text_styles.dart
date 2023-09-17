@@ -3,97 +3,98 @@ import 'package:flutter/material.dart';
 import 'colors.dart';
 import 'sizes.dart';
 
-const kTextMainStyleTitle = TextStyle(
+final kTextMainStyleTitle = TextStyle(
   color: kTextMainColor,
   fontSize: kTextTitleSize,
   fontWeight: FontWeight.bold,
   overflow: TextOverflow.ellipsis,
 );
 
-const kTextMainStyleLarge = TextStyle(
+final kTextMainStyleLarge = TextStyle(
   color: kTextMainColor,
   fontSize: kTextLargeSize,
   fontWeight: FontWeight.bold,
   overflow: TextOverflow.ellipsis,
 );
 
-const kTextMainStyleMiddle = TextStyle(
+final kTextMainStyleMiddle = TextStyle(
   color: kTextMainColor,
   fontSize: kTextMiddleSize,
   fontWeight: FontWeight.bold,
   overflow: TextOverflow.ellipsis,
 );
 
-const kTextMainStyleSmall = TextStyle(
+final kTextMainStyleSmall = TextStyle(
   color: kTextMainColor,
   fontSize: kTextSmallSize,
   fontWeight: FontWeight.bold,
   overflow: TextOverflow.ellipsis,
 );
 
-const kTextDisabledStyleLarge = TextStyle(
+final kTextDisabledStyleLarge = TextStyle(
   color: kDisabledColor,
   fontSize: kTextLargeSize,
   fontWeight: FontWeight.bold,
   overflow: TextOverflow.ellipsis,
 );
 
-const kTextDisabledStyleMiddle = TextStyle(
+final kTextDisabledStyleMiddle = TextStyle(
   color: kDisabledColor,
   fontSize: kTextMiddleSize,
   fontWeight: FontWeight.bold,
   overflow: TextOverflow.ellipsis,
 );
 
-const kTextDisabledStyleSmall = TextStyle(
+final kTextDisabledStyleSmall = TextStyle(
   color: kDisabledColor,
   fontSize: kTextSmallSize,
   fontWeight: FontWeight.bold,
   overflow: TextOverflow.ellipsis,
 );
 
-const kTextReverseStyleLarge = TextStyle(
+final kTextReverseStyleLarge = TextStyle(
   color: kTextReverseColor,
   fontSize: kTextLargeSize,
   fontWeight: FontWeight.bold,
   overflow: TextOverflow.ellipsis,
 );
 
-const kTextReverseStyleMiddle = TextStyle(
+final kTextReverseStyleMiddle = TextStyle(
   color: kTextReverseColor,
   fontSize: kTextMiddleSize,
   fontWeight: FontWeight.bold,
   overflow: TextOverflow.ellipsis,
 );
 
-const kTextReverseStyleSmall = TextStyle(
+final kTextReverseStyleSmall = TextStyle(
   color: kTextReverseColor,
   fontSize: kTextSmallSize,
   fontWeight: FontWeight.bold,
   overflow: TextOverflow.ellipsis,
 );
 
-const kTextReverseStyleMini = TextStyle(
+final kTextReverseStyleMini = TextStyle(
   color: kTextReverseColor,
   fontSize: kTextMiniSize,
   fontWeight: FontWeight.bold,
   overflow: TextOverflow.ellipsis,
 );
 
-const kTextNormalStyleLarge = TextStyle(
+final kTextNormalStyleLarge = TextStyle(
   color: kTextMainColor,
   fontSize: kTextLargeSize,
   fontWeight: FontWeight.normal,
   overflow: TextOverflow.ellipsis,
 );
 
-const kTextNormalStyleMiddle = TextStyle(
+final kTextNormalStyleMiddle = TextStyle(
   color: kTextMainColor,
   fontSize: kTextMiddleSize,
   fontWeight: FontWeight.normal,
   overflow: TextOverflow.ellipsis,
 );
-const kTextNormalStyleSmall = TextStyle(
+
+final kTextNormalStyleSmall = TextStyle(
   color: kTextMainColor,
   fontSize: kTextSmallSize,
   fontWeight: FontWeight.normal,

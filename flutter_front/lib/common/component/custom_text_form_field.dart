@@ -51,7 +51,7 @@ class CustomTextFormField extends StatelessWidget {
                   size: kIconSmallSize,
                   color: kSubColor,
                 ),
-              if (prefixIcon != null) const SizedBox(width: kPaddingSmallSize),
+              if (prefixIcon != null) SizedBox(width: kPaddingSmallSize),
               if (labelText != null)
                 Text(
                   labelText!,

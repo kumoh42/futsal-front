@@ -62,9 +62,7 @@ class _MessagingBoxState extends ConsumerState<MessagingBox> {
             if (controller.isVerticalExpanded && widget.child != null)
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: kPaddingMiddleSize,
-                  ),
+                  padding: EdgeInsets.symmetric(horizontal: kPaddingMiddleSize),
                   child: SingleChildScrollView(child: widget.child!),
                 ),
               ),
@@ -133,12 +131,12 @@ class _TitleBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: kPaddingSmallSize),
+      padding: EdgeInsets.symmetric(vertical: kPaddingSmallSize),
       child: Row(
         children: [
-          const SizedBox(width: kPaddingMiddleSize),
+          SizedBox(width: kPaddingMiddleSize),
           Expanded(child: Text(title, style: textStyle)),
-          const SizedBox(width: kPaddingSmallSize),
+          SizedBox(width: kPaddingSmallSize),
           IconButton(
             onPressed: controller.close,
             icon: Icon(Icons.close, color: textStyle?.color),
@@ -187,9 +185,8 @@ class _MessageTextFormField extends StatelessWidget {
                 children: [
                   if (controller.isVerticalExpanding)
                     Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: kPaddingMiddleSize,
-                      ),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: kPaddingMiddleSize),
                       child: Column(
                         children: [
                           Divider(color: textFieldColor),
@@ -207,9 +204,8 @@ class _MessageTextFormField extends StatelessWidget {
                       ),
                     ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: kPaddingMiddleSize,
-                    ),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: kPaddingMiddleSize),
                     child: _CustomTextField(
                       controller: controller,
                       bodyTextStyle: bodyTextStyle,
@@ -227,14 +223,14 @@ class _MessageTextFormField extends StatelessWidget {
                     ),
                   ),
                   if (controller.isVerticalExpanding)
-                    const SizedBox(height: kPaddingMiddleSize),
+                    SizedBox(height: kPaddingMiddleSize),
                 ],
               ),
             ),
           ),
         ),
         Padding(
-          padding: const EdgeInsets.all(kPaddingSmallSize).copyWith(
+          padding: EdgeInsets.all(kPaddingSmallSize).copyWith(
             bottom: kPaddingSmallSize,
           ),
           child: controller.isSending
@@ -289,7 +285,7 @@ class _CustomTextField extends StatelessWidget {
         if (controller.isVerticalExpanding)
           Column(
             children: [
-              const SizedBox(height: kPaddingSmallSize),
+              SizedBox(height: kPaddingSmallSize),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
@@ -298,7 +294,7 @@ class _CustomTextField extends StatelessWidget {
                     size: kIconMiniSize,
                     color: bodyTextStyle?.color,
                   ),
-                  const SizedBox(width: kPaddingSmallSize),
+                  SizedBox(width: kPaddingSmallSize),
                   Text(
                     labelText,
                     style: textFiledTextStyle?.copyWith(
@@ -307,7 +303,7 @@ class _CustomTextField extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: kPaddingSmallSize),
+              SizedBox(height: kPaddingSmallSize),
             ],
           ),
         TextFormField(
@@ -322,7 +318,7 @@ class _CustomTextField extends StatelessWidget {
               borderSide: BorderSide.none,
             ),
             isDense: true,
-            contentPadding: const EdgeInsets.symmetric(
+            contentPadding: EdgeInsets.symmetric(
               vertical: kPaddingSmallSize,
               horizontal: kPaddingMiniSize,
             ),

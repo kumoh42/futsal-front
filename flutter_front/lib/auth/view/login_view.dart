@@ -42,23 +42,21 @@ class _LoginViewState extends ConsumerState<LoginView> {
               maxHeight: 500,
             ),
             child: Padding(
-              padding: const EdgeInsets.all(
-                kPaddingXLargeSize,
-              ).copyWith(top: 0),
+              padding: EdgeInsets.all(kPaddingXLargeSize).copyWith(top: 0),
               child: Form(
                 key: viewModel.loginKey,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const _Title(),
-                    const SizedBox(height: kPaddingLargeSize),
+                    SizedBox(height: kPaddingLargeSize),
                     CustomTextFormField(
                       labelText: "아이디",
                       hintText: '아이디를 입력해주세요',
                       controller: viewModel.idTextController,
                       validator: validateId,
                     ),
-                    const SizedBox(height: kPaddingLargeSize),
+                    SizedBox(height: kPaddingLargeSize),
                     CustomTextFormField(
                       labelText: "비밀번호",
                       hintText: '비밀번호를 입력해주세요',
@@ -66,7 +64,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
                       controller: viewModel.passwordTextController,
                       validator: validatePassword,
                     ),
-                    const SizedBox(height: kPaddingXLargeSize),
+                    SizedBox(height: kPaddingXLargeSize),
                     if (viewModel.state is LoadingState)
                       const SizedBox(
                         width: 76,
@@ -88,7 +86,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
                                   text: 'ID / PW 찾기',
                                   textAlign: TextAlign.left,
                                 ),
-                                const SizedBox(height: kPaddingSmallSize),
+                                SizedBox(height: kPaddingSmallSize),
                                 CustomTextButton(
                                   onPressed: () async {
                                     viewModel
@@ -97,7 +95,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
                                   text: '금오사이 회원가입',
                                   textAlign: TextAlign.left,
                                 ),
-                                const SizedBox(height: kPaddingSmallSize),
+                                SizedBox(height: kPaddingSmallSize),
                               ],
                             ),
                           ),
@@ -112,8 +110,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
                                 ),
                               ),
                             ),
-                            child: const Text('로그인',
-                                style: kTextReverseStyleMiddle),
+                            child: Text('로그인', style: kTextReverseStyleMiddle),
                           ),
                         ],
                       ),
@@ -133,9 +130,9 @@ class _Title extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Row(
+    return Row(
       children: [
-        SizedBox(
+        const SizedBox(
             width: 100,
             height: 100,
             child: Image(
@@ -147,7 +144,7 @@ class _Title extends StatelessWidget {
             'Administrator Login\n- 체육시설 예약 시스템 -',
             textAlign: TextAlign.center,
             style: TextStyle(
-              fontSize: 20.0,
+              fontSize: kTextMiddleSize,
               fontWeight: FontWeight.bold,
               color: Colors.black,
             ),

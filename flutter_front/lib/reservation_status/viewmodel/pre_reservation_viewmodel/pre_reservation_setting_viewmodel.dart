@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_front/common/styles/text_styles.dart';
 import 'package:flutter_front/common/utils/custom_dialog_utils.dart';
 import 'package:flutter_front/reservation_status/component/custom_table_calendar.dart';
-import 'package:flutter_front/reservation_status/component/pre_reservation_setting_dialog.dart';
+import 'package:flutter_front/reservation_status/component/dialog/pre_reservation_setting_dialog.dart';
 import 'package:flutter_front/reservation_status/model/entity/pre_reservation/pre_reservation_status_entity.dart';
 import 'package:flutter_front/reservation_status/model/service/pre_reservation/pre_reservation_setting_service.dart';
 import 'package:flutter_front/reservation_status/model/state/pre_reservation/pre_reservation_setting_state.dart';
@@ -72,7 +72,7 @@ class PreReservationSettingViewModel extends ChangeNotifier {
       BuildContext context, PreReservationStatusEntity entity) async {
     CustomDialogUtil.showCustomDialog(
       dialog: CustomDialog(
-        title: const Text(
+        title: Text(
           '우선예약 설정 취소',
           style: kTextMainStyleMiddle,
         ),

@@ -5,7 +5,6 @@ import 'package:flutter_front/common/styles/sizes.dart';
 import 'package:flutter_front/common/styles/text_styles.dart';
 import 'package:flutter_front/common/view/root_tab.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class TabButton extends ConsumerWidget {
   final TabInfo tabInfo;
@@ -34,9 +33,9 @@ class TabButton extends ConsumerWidget {
       child: Text(
         tabInfo.label,
         style: TABS[currentIndex] == tabInfo
-            ? kTextMainStyle.copyWith(fontSize: kTextMiddleSize.sp)
+            ? kTextMainStyle.copyWith(fontSize: kTextMiddleSize)
             : kTextMainStyle.copyWith(
-                fontSize: kTextMiddleSize.sp,
+                fontSize: kTextMiddleSize,
                 color: kDisabledColor,
               ),
       ),

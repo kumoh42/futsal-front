@@ -9,7 +9,6 @@ import 'package:flutter_front/reservation_status/model/service/pre_reservation/p
 import 'package:flutter_front/reservation_status/model/state/pre_reservation/progress_reservation_state.dart';
 import 'package:flutter_front/reservation_status/viewmodel/pre_reservation_viewmodel/pre_reservation_setting_viewmodel.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 final progressReservationViewModelProvider =
     ChangeNotifierProvider((ref) => ProgressReservationViewModel(ref));
@@ -51,11 +50,11 @@ class ProgressReservationViewModel extends ChangeNotifier {
         dialog: CustomDialog(
           title: Text(
             "우선예약 중단 확인",
-            style: kTextMainStyle.copyWith(fontSize: kTextMiddleSize.sp),
+            style: kTextMainStyle.copyWith(fontSize: kTextMiddleSize),
           ),
           content: Text(
             '${(state as ProgressReservationStateSuccess).data.date} ${(state as ProgressReservationStateSuccess).data.time}\n예약을 중지하시겠습니까?',
-            style: kTextNormalStyle.copyWith(fontSize: kTextLargeSize.sp),
+            style: kTextNormalStyle.copyWith(fontSize: kTextLargeSize),
           ),
           onPressed: () async {
             await ref
@@ -79,11 +78,11 @@ class ProgressReservationViewModel extends ChangeNotifier {
         dialog: CustomDialog(
           title: Text(
             "우선예약 재개 확인",
-            style: kTextMainStyle.copyWith(fontSize: kTextMiddleSize.sp),
+            style: kTextMainStyle.copyWith(fontSize: kTextMiddleSize),
           ),
           content: Text(
             '${(state as ProgressReservationStateSuccess).data.date} ${(state as ProgressReservationStateSuccess).data.time}\n예약을 재개하시겠습니까?',
-            style: kTextNormalStyle.copyWith(fontSize: kTextLargeSize.sp),
+            style: kTextNormalStyle.copyWith(fontSize: kTextLargeSize),
           ),
           onPressed: () async {
             await ref
@@ -108,7 +107,7 @@ class ProgressReservationViewModel extends ChangeNotifier {
         dialog: CustomDialog(
           content: Text(
             '${(state as ProgressReservationStateSuccess).data.date} ${(state as ProgressReservationStateSuccess).data.time} 에 시작된\n우선예약 중 예약된 내역을 \n모두 삭제하시겠습니까?',
-            style: kTextNormalStyle.copyWith(fontSize: kTextLargeSize.sp),
+            style: kTextNormalStyle.copyWith(fontSize: kTextLargeSize),
           ),
           onPressed: () async {
             await ref

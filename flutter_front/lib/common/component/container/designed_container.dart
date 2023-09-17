@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_front/common/styles/colors.dart';
 import 'package:flutter_front/common/styles/sizes.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'designed_container_title_bar.dart';
 
@@ -23,16 +22,14 @@ class DesignedContainer extends StatelessWidget {
       decoration: BoxDecoration(
         color: kBackgroundMainColor,
         border: Border.all(color: kDisabledColor, width: 3),
-        borderRadius: const BorderRadius.all(
-          Radius.circular(kBorderRadiusSize),
-        ),
+        borderRadius: BorderRadius.all(Radius.circular(kBorderRadiusSize)),
       ),
-      padding: EdgeInsets.all(kPaddingLargeSize.w),
+      padding: EdgeInsets.all(kPaddingLargeSize),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           DesignedContainerTitleBar(title: title, actions: actions),
-          SizedBox(height: kPaddingMiddleSize.w),
+          SizedBox(height: kPaddingMiddleSize),
           child,
         ],
       ),

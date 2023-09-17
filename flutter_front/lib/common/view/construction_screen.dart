@@ -21,10 +21,10 @@ class ConstructionScreen extends StatelessWidget {
           ),
           Text(
             "해당 기능은 공사중 입니다.\n빠른시일 내에 오픈하겠습니다.",
-            style: kTextMainStyle.copyWith(fontSize: kTextLargeSize.sp),
+            style: kTextMainStyle.copyWith(fontSize: kTextLargeSize),
             textAlign: TextAlign.center,
           ),
-          SizedBox(height: kPaddingXLargeSize.w),
+          SizedBox(height: kPaddingXLargeSize),
         ],
       ),
     );

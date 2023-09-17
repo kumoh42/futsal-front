@@ -5,7 +5,6 @@ import 'package:flutter_front/reservation_status/component/reservation_state/res
 import 'package:flutter_front/reservation_status/model/entity/reservation_entity.dart';
 import 'package:flutter_front/reservation_status/model/state/reservation_list_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ReservationStateList extends ConsumerStatefulWidget {
   final ReservationStatusListState state;
@@ -42,7 +41,7 @@ class _ReservationStateListState extends ConsumerState<ReservationStateList> {
               const Image(image: AssetImage("assets/image/black_logo.png")),
               Text(
                 "아직 예약이 오픈되지 않았습니다.",
-                style: kTextMainStyle.copyWith(fontSize: kTextMiddleSize.sp),
+                style: kTextMainStyle.copyWith(fontSize: kTextMiddleSize),
               ),
               SizedBox(height: kPaddingMiddleSize),
             ],

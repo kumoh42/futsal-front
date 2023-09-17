@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_front/common/styles/sizes.dart';
 import 'package:flutter_front/common/utils/validation_util.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MessagingBox extends ConsumerStatefulWidget {
   final String title;
@@ -42,14 +41,14 @@ class _MessagingBoxState extends ConsumerState<MessagingBox> {
     controller = ref.watch(widget.provider);
     return Material(
       elevation: 5,
-      borderRadius: const BorderRadius.all(Radius.circular(kBorderRadiusSize)),
+      borderRadius: BorderRadius.all(Radius.circular(kBorderRadiusSize)),
       child: AnimatedContainer(
         width: controller.isHorizontalExpanded ? 400 : 70,
         height: controller.isVerticalExpanded ? 461 : 70,
         duration: controller.duration,
         curve: Curves.fastEaseInToSlowEaseOut,
         decoration: BoxDecoration(
-          borderRadius: const BorderRadius.all(
+          borderRadius: BorderRadius.all(
             Radius.circular(kBorderRadiusSize),
           ),
           color: widget.backgroundColor,
@@ -64,7 +63,7 @@ class _MessagingBoxState extends ConsumerState<MessagingBox> {
               Expanded(
                 child: Padding(
                   padding: EdgeInsets.symmetric(
-                    horizontal: kPaddingMiddleSize.w,
+                    horizontal: kPaddingMiddleSize,
                   ),
                   child: SingleChildScrollView(child: widget.child!),
                 ),
@@ -134,12 +133,12 @@ class _TitleBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: kPaddingSmallSize.w),
+      padding: EdgeInsets.symmetric(vertical: kPaddingSmallSize),
       child: Row(
         children: [
-          SizedBox(width: kPaddingMiddleSize.w),
+          SizedBox(width: kPaddingMiddleSize),
           Expanded(child: Text(title, style: textStyle)),
-          SizedBox(width: kPaddingSmallSize.w),
+          SizedBox(width: kPaddingSmallSize),
           IconButton(
             onPressed: controller.close,
             icon: Icon(Icons.close, color: textStyle?.color),
@@ -176,7 +175,7 @@ class _MessageTextFormField extends StatelessWidget {
         SingleChildScrollView(
           child: Container(
             decoration: BoxDecoration(
-              borderRadius: const BorderRadius.only(
+              borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(kBorderRadiusSize),
                 bottomRight: Radius.circular(kBorderRadiusSize),
               ),
@@ -189,7 +188,7 @@ class _MessageTextFormField extends StatelessWidget {
                   if (controller.isVerticalExpanding)
                     Padding(
                       padding:
-                          EdgeInsets.symmetric(horizontal: kPaddingMiddleSize.w),
+                          EdgeInsets.symmetric(horizontal: kPaddingMiddleSize),
                       child: Column(
                         children: [
                           Divider(color: textFieldColor),
@@ -208,7 +207,7 @@ class _MessageTextFormField extends StatelessWidget {
                     ),
                   Padding(
                     padding:
-                        EdgeInsets.symmetric(horizontal: kPaddingMiddleSize.w),
+                        EdgeInsets.symmetric(horizontal: kPaddingMiddleSize),
                     child: _CustomTextField(
                       controller: controller,
                       bodyTextStyle: bodyTextStyle,
@@ -226,15 +225,15 @@ class _MessageTextFormField extends StatelessWidget {
                     ),
                   ),
                   if (controller.isVerticalExpanding)
-                    SizedBox(height: kPaddingMiddleSize.w),
+                    SizedBox(height: kPaddingMiddleSize),
                 ],
               ),
             ),
           ),
         ),
         Padding(
-          padding: EdgeInsets.all(kPaddingSmallSize.w).copyWith(
-            bottom: kPaddingSmallSize.w,
+          padding: EdgeInsets.all(kPaddingSmallSize).copyWith(
+            bottom: kPaddingSmallSize,
           ),
           child: controller.isSending
               ? const CircularProgressIndicator()
@@ -288,16 +287,16 @@ class _CustomTextField extends StatelessWidget {
         if (controller.isVerticalExpanding)
           Column(
             children: [
-              SizedBox(height: kPaddingSmallSize.w),
+              SizedBox(height: kPaddingSmallSize),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Icon(
                     prefixIcon,
-                    size: kIconMiniSize.w,
+                    size: kIconMiniSize,
                     color: bodyTextStyle?.color,
                   ),
-                  SizedBox(width: kPaddingSmallSize.w),
+                  SizedBox(width: kPaddingSmallSize),
                   Text(
                     labelText,
                     style: textFiledTextStyle?.copyWith(
@@ -306,7 +305,7 @@ class _CustomTextField extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(height: kPaddingSmallSize.w),
+              SizedBox(height: kPaddingSmallSize),
             ],
           ),
         TextFormField(
@@ -322,8 +321,8 @@ class _CustomTextField extends StatelessWidget {
             ),
             isDense: true,
             contentPadding: EdgeInsets.symmetric(
-              vertical: kPaddingSmallSize.w,
-              horizontal: kPaddingMiniSize.w,
+              vertical: kPaddingSmallSize,
+              horizontal: kPaddingMiniSize,
             ),
             enabled: controller.isOpened,
           ),

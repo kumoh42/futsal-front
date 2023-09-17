@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_front/common/styles/colors.dart';
 import 'package:flutter_front/common/styles/sizes.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class StackContainer extends StatelessWidget {
   final Widget child;
@@ -11,7 +10,7 @@ class StackContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        final padding = kPaddingMiddleSize.w;
+        final padding = kPaddingMiddleSize;
         final width = constraints.maxWidth;
         final height = constraints.maxHeight;
         return Stack(
@@ -21,7 +20,7 @@ class StackContainer extends StatelessWidget {
               width: width,
               height: height - padding * 4,
               child: Container(
-                decoration: const BoxDecoration(
+                decoration: BoxDecoration(
                   color: kShadowColor,
                   borderRadius: BorderRadius.all(
                     Radius.circular(kBorderRadiusSize),
@@ -34,7 +33,7 @@ class StackContainer extends StatelessWidget {
               width: width - padding,
               height: height - padding * 2,
               child: Container(
-                decoration: const BoxDecoration(
+                decoration: BoxDecoration(
                   color: kDisabledColor,
                   borderRadius: BorderRadius.all(
                     Radius.circular(kBorderRadiusSize),
@@ -49,11 +48,11 @@ class StackContainer extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: kBackgroundMainColor,
                   border: Border.all(color: kDisabledColor, width: 3),
-                  borderRadius: const BorderRadius.all(
+                  borderRadius: BorderRadius.all(
                     Radius.circular(kBorderRadiusSize),
                   ),
                 ),
-                padding: EdgeInsets.all(kPaddingLargeSize.w),
+                padding: EdgeInsets.all(kPaddingLargeSize),
                 child: child,
               ),
             ),

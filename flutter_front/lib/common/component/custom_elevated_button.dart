@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_front/common/styles/sizes.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomElevatedButton extends StatelessWidget {
   final Widget content;
@@ -19,8 +18,8 @@ class CustomElevatedButton extends StatelessWidget {
     double? horizontalPadding,
     double? verticalPadding,
   }) {
-    this.horizontalPadding = horizontalPadding ?? kPaddingMiniSize.w;
-    this.verticalPadding = verticalPadding ?? kPaddingSmallSize.w;
+    this.horizontalPadding = horizontalPadding ?? kPaddingMiniSize;
+    this.verticalPadding = verticalPadding ?? kPaddingSmallSize;
   }
 
   @override

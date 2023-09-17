@@ -8,7 +8,6 @@ import 'package:flutter_front/reservation_status/model/entity/pre_reservation/pr
 import 'package:flutter_front/reservation_status/model/service/pre_reservation/pre_reservation_setting_service.dart';
 import 'package:flutter_front/reservation_status/model/state/pre_reservation/pre_reservation_setting_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 final preReservationSettingViewModelProvider =
     ChangeNotifierProvider((ref) => PreReservationSettingViewModel(ref));
@@ -76,11 +75,11 @@ class PreReservationSettingViewModel extends ChangeNotifier {
       dialog: CustomDialog(
         title: Text(
           '우선예약 설정 취소',
-          style: kTextMainStyle.copyWith(fontSize: kTextMiddleSize.sp),
+          style: kTextMainStyle.copyWith(fontSize: kTextMiddleSize),
         ),
         content: Text(
           ' ${entity.date} ${entity.time}',
-          style: kTextNormalStyle.copyWith(fontSize: kTextLargeSize.sp),
+          style: kTextNormalStyle.copyWith(fontSize: kTextLargeSize),
         ),
         accept: "확인",
         cancel: "취소",

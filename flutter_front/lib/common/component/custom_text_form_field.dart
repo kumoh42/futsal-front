@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_front/common/styles/colors.dart';
 import 'package:flutter_front/common/styles/sizes.dart';
 import 'package:flutter_front/common/styles/text_styles.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomTextFormField extends StatelessWidget {
   final String? labelText;
@@ -32,7 +31,7 @@ class CustomTextFormField extends StatelessWidget {
     double? contentPadding,
     this.backgroundColor,
   }) : super(key: key) {
-    this.contentPadding = contentPadding ?? kPaddingMiddleSize.w;
+    this.contentPadding = contentPadding ?? kPaddingMiddleSize;
   }
 
   @override
@@ -49,14 +48,14 @@ class CustomTextFormField extends StatelessWidget {
               if (prefixIcon != null)
                 Icon(
                   prefixIcon,
-                  size: kIconSmallSize.w,
+                  size: kIconSmallSize,
                   color: kSubColor,
                 ),
-              if (prefixIcon != null) SizedBox(width: kPaddingSmallSize.w),
+              if (prefixIcon != null) SizedBox(width: kPaddingSmallSize),
               if (labelText != null)
                 Text(
                   labelText!,
-                  style: kTextMainStyle.copyWith(fontSize: kTextSmallSize.sp),
+                  style: kTextMainStyle.copyWith(fontSize: kTextSmallSize),
                 ),
             ],
           ),
@@ -69,7 +68,7 @@ class CustomTextFormField extends StatelessWidget {
             obscureText: keyboardType == TextInputType.visiblePassword,
             style: textStyle ??
                 kTextMainStyle.copyWith(
-                  fontSize: kTextMiddleSize.sp,
+                  fontSize: kTextMiddleSize,
                 ),
             inputFormatters: [
               FilteringTextInputFormatter.deny(RegExp(r'\s')), // 공백 입력 방지
@@ -82,7 +81,7 @@ class CustomTextFormField extends StatelessWidget {
                     color: kTextMainColor.withOpacity(0.5),
                   ) ??
                   kTextMainStyle.copyWith(
-                    fontSize: kTextMiddleSize.sp,
+                    fontSize: kTextMiddleSize,
                     color: kTextMainColor.withOpacity(0.5),
                   ),
               filled: true,

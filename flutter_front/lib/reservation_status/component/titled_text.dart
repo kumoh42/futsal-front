@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_front/common/styles/sizes.dart';
 import 'package:flutter_front/common/styles/text_styles.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class TitledText extends StatelessWidget {
   final String title;
@@ -20,11 +19,11 @@ class TitledText extends StatelessWidget {
       children: [
         Text(
           title,
-          style: kTextDisabledStyle.copyWith(fontSize: kTextMiddleSize.sp),
+          style: kTextDisabledStyle.copyWith(fontSize: kTextMiddleSize),
         ),
         Text(
           text,
-          style: kTextDisabledStyle.copyWith(fontSize: kTextMiddleSize.sp),
+          style: kTextMainStyle.copyWith(fontSize: kTextMiddleSize),
         ),
       ],
     );

@@ -9,7 +9,6 @@ import 'package:flutter_front/reservation_status/component/titled_text.dart';
 import 'package:flutter_front/reservation_status/viewmodel/pre_reservation_viewmodel/pre_reservation_setting_viewmodel.dart';
 import 'package:flutter_front/reservation_status/viewmodel/pre_reservation_viewmodel/progress_reservation_viewmodel.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class PreReservationSettingView extends ConsumerStatefulWidget {
   const PreReservationSettingView({super.key});
@@ -70,7 +69,7 @@ class _PreReservationSettingViewState
                       ? '${toFirstDay(progressViewmodel.progressReservationStatus?.date)} ~ ${toNextMonth(progressViewmodel.progressReservationStatus?.date)}'
                       : '-',
                 ),
-                SizedBox(height: kPaddingMiddleSize.w),
+                SizedBox(height: kPaddingMiddleSize),
                 TitledText(
                   title: '사전 예약',
                   text: progressViewmodel.progressReservationStatus != null &&
@@ -78,7 +77,7 @@ class _PreReservationSettingViewState
                       ? '${toCurrentDay(progressViewmodel.progressReservationStatus?.date, progressViewmodel.progressReservationStatus?.time)} ~ ${toNextMonth(progressViewmodel.progressReservationStatus?.date)}'
                       : '-',
                 ),
-                SizedBox(height: kPaddingMiddleSize.w),
+                SizedBox(height: kPaddingMiddleSize),
                 Row(
                   children: [
                     DesignedButton(
@@ -87,14 +86,14 @@ class _PreReservationSettingViewState
                       onPressed: () =>
                           progressViewmodel.stopPreReservation(context),
                     ),
-                    SizedBox(width: kPaddingMiddleSize.w),
+                    SizedBox(width: kPaddingMiddleSize),
                     DesignedButton(
                       icon: Icons.play_arrow,
                       text: "예약 재개",
                       onPressed: () =>
                           progressViewmodel.restartPreReservation(context),
                     ),
-                    SizedBox(width: kPaddingMiddleSize.w),
+                    SizedBox(width: kPaddingMiddleSize),
                     DesignedButton(
                       icon: Icons.refresh,
                       text: "예약 내역 초기화",
@@ -119,7 +118,7 @@ class _PreReservationSettingViewState
                 actions: [
                   IconButton(
                     onPressed: () => preViewmodel.setPreReservation(context),
-                    icon: Icon(Icons.edit, size: kIconMiddleSize.w),
+                    icon: Icon(Icons.edit, size: kIconMiddleSize),
                   ),
                 ],
                 child: Column(
@@ -130,7 +129,7 @@ class _PreReservationSettingViewState
                           preViewmodel.preReservationStatus?.date,
                           preViewmodel.preReservationStatus?.time),
                     ),
-                    SizedBox(height: kPaddingMiddleSize.w),
+                    SizedBox(height: kPaddingMiddleSize),
                     TitledText(
                       title: '종료 일시',
                       text: toNextMonth(preViewmodel.preReservationStatus?.date),
@@ -138,14 +137,14 @@ class _PreReservationSettingViewState
                   ],
                 ),
               ),
-              SizedBox(height: kPaddingLargeSize.w),
+              SizedBox(height: kPaddingLargeSize),
               Text(
                 " ·  사전 예약은 하나만 설정 가능 합니다.",
-                style: kTextMainStyle.copyWith(fontSize: kTextSmallSize.sp),
+                style: kTextMainStyle.copyWith(fontSize: kTextSmallSize),
               ),
               Text(
                 " ·  정식 예약은 매월 1월 00시에 자동으로 시작됩니다.",
-                style: kTextMainStyle.copyWith(fontSize: kTextSmallSize.sp),
+                style: kTextMainStyle.copyWith(fontSize: kTextSmallSize),
               ),
             ],
           ),

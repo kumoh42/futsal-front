@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_front/common/styles/colors.dart';
 import 'package:flutter_front/common/styles/sizes.dart';
 import 'package:flutter_front/common/styles/text_styles.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class DesignedButton extends StatelessWidget {
   final VoidCallback? onPressed;
@@ -29,19 +28,19 @@ class DesignedButton extends StatelessWidget {
         ),
         elevation: 0.0,
         padding: EdgeInsets.symmetric(
-          horizontal: kPaddingMiddleSize.w,
-          vertical: kPaddingLargeSize.w,
+          horizontal: kPaddingMiddleSize,
+          vertical: kPaddingLargeSize,
         ),
       ),
       child: Row(
         children: [
           Transform.translate(
             offset: const Offset(-5, 0),
-            child: Icon(icon, size: kIconMiddleSize.w, color: kTextReverseColor),
+            child: Icon(icon, size: kIconMiddleSize, color: kTextReverseColor),
           ),
           Text(
             text,
-            style: kTextReverseStyle.copyWith(fontSize: kTextMiddleSize.sp),
+            style: kTextReverseStyle.copyWith(fontSize: kTextMiddleSize),
           ),
         ],
       ),

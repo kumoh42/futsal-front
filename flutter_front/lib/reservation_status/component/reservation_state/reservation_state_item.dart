@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_front/common/component/custom_donut_paint.dart';
 import 'package:flutter_front/common/component/custom_listview_background_paint.dart';
@@ -31,34 +33,34 @@ class ReservationStateItem extends StatelessWidget {
       builder: (context, constraints) => Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(width: kPaddingSmallSize.w),
+          SizedBox(width: kPaddingSmallSize),
           CustomPaint(
             // 도넛 모양의 크기 설정
-            size: Size(kIconMiddleSize.w, constraints.maxHeight),
+            size: Size(kIconMiddleSize, constraints.maxHeight),
             painter: CustomDonutPainter(isLast: isLast),
           ),
-          SizedBox(width: kPaddingMiniSize.w),
+          SizedBox(width: kPaddingMiniSize),
           Padding(
-            padding: EdgeInsets.only(left: kPaddingMiddleSize.w),
+            padding: EdgeInsets.only(left: kPaddingMiddleSize),
             child: Text(
               DataUtils.intToTimeRange(entity.time, 2),
               textAlign: TextAlign.center,
-              style: kTextMainStyle.copyWith(fontSize: kTextSmallSize.sp),
+              style: kTextMainStyle.copyWith(fontSize: kTextSmallSize),
             ),
           ),
-          SizedBox(width: kPaddingMiniSize.w),
+          SizedBox(width: kPaddingMiniSize),
           Expanded(
             child: CustomPaint(
               painter: CustomListViewBackgroundPaint(
                 color: index % 2 == 0 ? kMainColor : kBackgroundMainColor,
               ),
               child: Padding(
-                padding: EdgeInsets.only(right: kPaddingMiddleSize.w),
+                padding: EdgeInsets.only(right: kPaddingMiddleSize),
                 child: Row(
                   children: [
                     Expanded(
                       flex: 2,
-                      child: SizedBox(width: kPaddingLargeSize.w),
+                      child: SizedBox(width: kPaddingLargeSize),
                     ),
                     Expanded(
                       flex: 10,
@@ -79,7 +81,7 @@ class ReservationStateItem extends StatelessWidget {
                                         child: Text(
                                           "예약 불가능",
                                           style: kTextNormalStyle.copyWith(
-                                            fontSize: kTextMiddleSize.sp,
+                                            fontSize: kTextMiddleSize,
                                             color: textColor,
                                             fontWeight: FontWeight.w600,
                                           ),
@@ -96,7 +98,7 @@ class ReservationStateItem extends StatelessWidget {
                                         child: Text(
                                           "예약 가능",
                                           style: kTextNormalStyle.copyWith(
-                                            fontSize: kTextMiddleSize.sp,
+                                            fontSize: kTextMiddleSize,
                                             color: textColor,
                                             fontWeight: FontWeight.w600,
                                           ),
@@ -117,16 +119,16 @@ class ReservationStateItem extends StatelessWidget {
                                       Text(
                                         entity.circle ?? "개인",
                                         style: kTextMainStyle.copyWith(
-                                          fontSize: kTextLargeSize.sp,
+                                          fontSize: kTextLargeSize,
                                           color: textColor,
                                           fontWeight: FontWeight.w600,
                                         ),
                                       ),
-                                      SizedBox(width: kPaddingMiniSize.w),
+                                      SizedBox(width: kPaddingMiniSize),
                                       Text(
                                         entity.major ?? '',
                                         style: kTextReverseStyle.copyWith(
-                                          fontSize: kTextMiniSize.sp,
+                                          fontSize: kTextMiniSize,
                                           color: textColor,
                                           fontWeight: FontWeight.normal,
                                         ),
@@ -139,7 +141,7 @@ class ReservationStateItem extends StatelessWidget {
                     ),
                     if (entity.major != null)
                       Transform.scale(
-                        scale: 1.3,
+                        scale: min(1.3, 1.3.w),
                         child: Checkbox(
                           value: isChecked,
                           onChanged: onPressed,
@@ -155,7 +157,7 @@ class ReservationStateItem extends StatelessWidget {
                         ),
                       ),
                     if (entity.major == null)
-                      SizedBox(width: kPaddingMiddleSize.w),
+                      SizedBox(width: kPaddingMiddleSize),
                   ],
                 ),
               ),

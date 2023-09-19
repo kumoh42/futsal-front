@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_front/common/styles/colors.dart';
 import 'package:flutter_front/common/styles/sizes.dart';
 import 'package:flutter_front/common/styles/text_styles.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class TitledText extends StatelessWidget {
   final String? title;
@@ -19,13 +20,8 @@ class TitledText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
-        border: Border(
-          bottom: BorderSide(
-            color: kMainColor,
-            width: 1.0,
-          ),
-        ),
+      decoration: BoxDecoration(
+        border: Border(bottom: BorderSide(color: kMainColor, width: 1.0.w)),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,

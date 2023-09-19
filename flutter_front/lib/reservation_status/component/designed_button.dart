@@ -33,6 +33,7 @@ class DesignedButton extends StatelessWidget {
         ),
       ),
       child: Row(
+        mainAxisSize: MainAxisSize.min,
         children: [
           Transform.translate(
             offset: const Offset(-5, 0),

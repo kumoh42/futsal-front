@@ -52,6 +52,10 @@ class _CustomTimeTableState extends ConsumerState<CustomTimeTable> {
           rightChevronPadding: EdgeInsets.zero,
           leftChevronMargin: EdgeInsets.zero,
           rightChevronMargin: EdgeInsets.zero,
+          headerPadding: EdgeInsets.all(kPaddingSmallSize)
+              .copyWith(top: kPaddingLargeSize),
+          leftChevronIcon: Icon(Icons.chevron_left, size: kIconMiddleSize),
+          rightChevronIcon: Icon(Icons.chevron_right, size: kIconMiddleSize),
         ),
         rangeStartDay: controller.startDay,
         rangeEndDay: controller.endDay,
@@ -115,7 +119,7 @@ class _CustomTimeTableState extends ConsumerState<CustomTimeTable> {
         child: Container(
           decoration: BoxDecoration(
             color: color,
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(kBorderRadiusSize),
             border: border,
           ),
           width: textSize * 2,

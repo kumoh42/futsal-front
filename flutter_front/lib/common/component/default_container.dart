@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_front/common/styles/colors.dart';
 import 'package:flutter_front/common/styles/sizes.dart';
 import 'package:flutter_front/common/styles/text_styles.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class DefaultContainer extends StatelessWidget {
   final Color backgroundColor;
@@ -29,6 +30,16 @@ class DefaultContainer extends StatelessWidget {
       appBar: title == null
           ? null
           : _DefaultLayoutAppBar(title: title!, actions: actions),
+      endDrawer: ResponsiveData.kIsMobile
+          ? Drawer(
+              child: ListView(
+                children: actions
+                        ?.map((e) => SizedBox(height: 50, child: e))
+                        .toList() ??
+                    [],
+              ),
+            )
+          : null,
       body: SafeArea(
         child: LayoutBuilder(
           builder: (context, constraints) => SingleChildScrollView(
@@ -39,8 +50,12 @@ class DefaultContainer extends StatelessWidget {
                 ),
                 height: (isExpanded
                         ? constraints.maxHeight
-                        : min(constraints.maxWidth * 8 / 15, 850)) -
-                    kPaddingMiddleSize * 2,
+                        : min(
+                            ResponsiveData.kIsMobile
+                                ? constraints.maxWidth * 2
+                                : constraints.maxWidth * 8 / 15,
+                            850)) -
+                    kLayoutMarginSize * 2,
                 child: body,
               ),
             ),
@@ -58,7 +73,7 @@ class _DefaultLayoutContainer extends Container {
             maxWidth: kLayoutMaxSize,
             maxHeight: height,
           ),
-          padding: const EdgeInsets.symmetric(horizontal: kLayoutMarginSize),
+          padding: EdgeInsets.symmetric(horizontal: kLayoutMarginSize),
         );
 }
 
@@ -75,35 +90,45 @@ class _DefaultLayoutAppBar extends StatelessWidget
 
   @override
   Widget build(BuildContext context) {
+    final appbarHeight =
+        ResponsiveData.kIsMobile ? kToolbarHeight - 10 : kToolbarHeight;
     return Container(
       padding: EdgeInsets.only(bottom: kPaddingSmallSize),
       decoration: BoxDecoration(
-        border: const Border(
-          bottom: BorderSide(color: kDisabledColor, width: 1.0),
-        ),
+        border: Border(bottom: BorderSide(color: kDisabledColor, width: 1.0.w)),
         color: color,
       ),
       child: Center(
         child: _DefaultLayoutContainer(
-          height: kToolbarHeight,
+          height: appbarHeight,
           child: AppBar(
             automaticallyImplyLeading: false,
             centerTitle: false,
             backgroundColor: color,
             titleSpacing: 0,
             leading: Transform.translate(
-              offset: const Offset(-7.5, 3),
+              offset: Offset(-7.5.w, 3.w),
               child: Image.asset(
                 'assets/image/black_logo.png',
-                fit: BoxFit.cover,
+                fit: BoxFit.fitHeight,
               ),
             ),
             elevation: 0,
             title: Text(
               title,
               style: kTextMainStyle.copyWith(fontSize: kTextTitleSize),
+              textAlign: ResponsiveData.kIsMobile ? TextAlign.center : null,
             ),
-            actions: actions?.expand(_addPadding).toList(),
+            actions: ResponsiveData.kIsMobile
+                ? [
+                    IconButton(
+                      padding: EdgeInsets.zero,
+                      splashRadius: kIconLargeSize / 2,
+                      onPressed: () => Scaffold.of(context).openEndDrawer(),
+                      icon: Icon(Icons.menu, size: kIconLargeSize),
+                    )
+                  ]
+                : actions?.expand(_addPadding).toList(),
             foregroundColor: Colors.black,
           ),
         ),
@@ -115,5 +140,6 @@ class _DefaultLayoutAppBar extends StatelessWidget
       [SizedBox(width: kPaddingMiddleSize), element];
 
   @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+  Size get preferredSize => Size.fromHeight(
+      ResponsiveData.kIsMobile ? kToolbarHeight - 10 : kToolbarHeight);
 }

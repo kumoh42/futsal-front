@@ -38,10 +38,14 @@ class _ReservationStateListState extends ConsumerState<ReservationStateList> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Image(image: AssetImage("assets/image/black_logo.png")),
+              Image(
+                image: const AssetImage("assets/image/black_logo.png"),
+                width: kIconLargeSize * 5,
+                height: kIconLargeSize * 5,
+              ),
               Text(
                 "아직 예약이 오픈되지 않았습니다.",
-                style: kTextMainStyle.copyWith(fontSize: kTextMiddleSize),
+                style: kTextMainStyle.copyWith(fontSize: kTextLargeSize),
               ),
               SizedBox(height: kPaddingMiddleSize),
             ],

@@ -1,7 +1,6 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_front/common/component/container/designed_container_title_bar.dart';
+import 'package:flutter_front/common/component/container/responsive_container.dart';
 import 'package:flutter_front/common/styles/sizes.dart';
 import 'package:flutter_front/common/styles/text_styles.dart';
 import 'package:flutter_front/common/utils/date_utils.dart';
@@ -66,17 +65,20 @@ class _ReservationBlockDialogState
   Widget build(BuildContext context) {
     controller = ref.watch(widget.provider);
 
-    final width = MediaQuery.of(context).size.width;
-    final height = MediaQuery.of(context).size.height;
     return Center(
       child: SingleChildScrollView(
         child: AlertDialog(
+          titlePadding: EdgeInsets.all(kPaddingXLargeSize).copyWith(bottom: 0),
+          contentPadding: EdgeInsets.all(kPaddingXLargeSize).copyWith(top: 0),
           title: DesignedContainerTitleBar(
             title: '예약 불가 기간 설정',
             actions: [
               IconButton(
                 onPressed: () => Navigator.of(context).pop(),
                 icon: Icon(Icons.close, size: kIconMiddleSize),
+                padding: EdgeInsets.zero,
+                constraints: const BoxConstraints(),
+                splashRadius: kIconMiddleSize / 1.2,
               )
             ],
           ),
@@ -84,74 +86,67 @@ class _ReservationBlockDialogState
             borderRadius: BorderRadius.all(Radius.circular(kBorderRadiusSize)),
           ),
           content: SizedBox(
-            height: max(width / 2, 850) * 8 / 15,
-            width: max(width / 2, 850),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
+            height: ResponsiveData.kIsMobile
+                ? ResponsiveSize.M(900)
+                : ResponsiveSize.W(500),
+            width: ResponsiveSize.W(850),
+            child: ResponsiveContainer(
               children: [
-                Expanded(
-                  flex: 5,
+                ResponsiveWidget(
+                  wFlex: 1,
+                  mFlex: 1,
                   child: CustomTimeTable(
                     controller: controller,
                     textSize: kTextMiddleSize,
                   ),
                 ),
-                SizedBox(width: kPaddingMiddleSize),
-                Container(
-                  decoration: BoxDecoration(
-                    border: Border(
-                      left: BorderSide(
-                        width: 1,
-                        color: Colors.black.withOpacity(0.3),
+                ResponsiveSizedBox(size: kPaddingMiddleSize),
+                const ResponsiveDivider(),
+                ResponsiveSizedBox(size: kPaddingMiddleSize),
+                ResponsiveWidget(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      SizedBox(height: kPaddingLargeSize),
+                      buildDateTimeSelector(
+                        title: "시작 일시",
+                        content: regDateFormatK.format(
+                          controller.selectedDay,
+                        ),
+                        selectedTime: _selectedStartTime,
+                        times: _startTimes,
+                        onChanged: (value) {
+                          setState(() => _selectedStartTime = value!);
+                        },
                       ),
-                    ),
-                  ),
-                  child: Padding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: kPaddingLargeSize),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        SizedBox(height: kPaddingLargeSize),
-                        buildDateTimeSelector(
-                          title: "시작 일시",
-                          content: regDateFormatK.format(
-                            controller.selectedDay,
-                          ),
-                          selectedTime: _selectedStartTime,
-                          times: _startTimes,
-                          onChanged: (value) {
-                            setState(() => _selectedStartTime = value!);
-                          },
+                      buildDateTimeSelector(
+                        title: "종료 일시",
+                        content: toNextMonth(
+                          regDateMonthFormat.format(controller.selectedDay),
                         ),
-                        buildDateTimeSelector(
-                          title: "종료 일시",
-                          content: toNextMonth(
-                            regDateMonthFormat.format(controller.selectedDay),
-                          ),
-                          selectedTime: _selectedEndTime,
-                          times: _endTimes,
-                          onChanged: (value) {
-                            setState(() => _selectedEndTime = value!);
-                          },
-                        ),
-                        const Spacer(),
-                        DesignedButton(
-                          text: '저장',
-                          icon: Icons.save,
-                          onPressed: () async {
-                            await widget.onPressed(ProgressReservationEntity(
+                        selectedTime: _selectedEndTime,
+                        times: _endTimes,
+                        onChanged: (value) {
+                          setState(() => _selectedEndTime = value!);
+                        },
+                      ),
+                      DesignedButton(
+                        text: '저장',
+                        icon: Icons.save,
+                        onPressed: () async {
+                          await widget.onPressed(
+                            ProgressReservationEntity(
                               isPre: true,
                               date: defaultDateFormat.format(
                                 controller.selectedDay,
                               ),
                               time: _selectedStartTime.substring(0, 2),
-                            ));
-                            if (context.mounted) Navigator.of(context).pop();
-                          },
-                        ),
-                      ],
-                    ),
+                            ),
+                          );
+                          if (context.mounted) Navigator.of(context).pop();
+                        },
+                      ),
+                    ],
                   ),
                 ),
               ],

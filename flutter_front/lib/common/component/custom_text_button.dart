@@ -17,18 +17,19 @@ class CustomTextButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final fontSize = ResponsiveData.kIsMobile ? ResponsiveSize.M(kWTextLargeSize) : kWTextSmallSize;
     return TextButton(
       onPressed: onPressed,
       style: TextButton.styleFrom(
         alignment: Alignment.centerLeft,
-        minimumSize: Size.fromHeight(kTextSmallSize),
+        minimumSize: Size.fromHeight(fontSize),
         padding: EdgeInsets.zero,
         tapTargetSize: MaterialTapTargetSize.shrinkWrap,
       ),
       child: Text(
         text,
         textAlign: textAlign,
-        style: kTextDisabledStyle.copyWith(fontSize: kTextSmallSize),
+        style: kTextDisabledStyle.copyWith(fontSize: fontSize),
       ),
     );
   }

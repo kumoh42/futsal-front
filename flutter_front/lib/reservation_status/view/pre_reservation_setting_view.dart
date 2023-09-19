@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_front/common/component/container/designed_container.dart';
+import 'package:flutter_front/common/component/container/responsive_container.dart';
 import 'package:flutter_front/common/styles/colors.dart';
 import 'package:flutter_front/common/styles/sizes.dart';
 import 'package:flutter_front/common/styles/text_styles.dart';
@@ -53,11 +54,10 @@ class _PreReservationSettingViewState
     final preViewmodel = ref.watch(preReservationSettingViewModelProvider);
     final progressViewmodel = ref.watch(progressReservationViewModelProvider);
 
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    return ResponsiveContainer(
       children: [
-        Expanded(
-          flex: 7,
+        ResponsiveWidget(
+          wFlex: 7,
           child: DesignedContainer(
             title: "진행 중인 예약",
             child: Column(
@@ -107,9 +107,9 @@ class _PreReservationSettingViewState
             ),
           ),
         ),
-        const SizedBox(width: kLayoutGutterSize),
-        Expanded(
-          flex: 5,
+        ResponsiveSizedBox(size: kLayoutGutterSize),
+        ResponsiveWidget(
+          wFlex: 5,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -119,6 +119,9 @@ class _PreReservationSettingViewState
                   IconButton(
                     onPressed: () => preViewmodel.setPreReservation(context),
                     icon: Icon(Icons.edit, size: kIconMiddleSize),
+                    padding: EdgeInsets.zero,
+                    constraints: const BoxConstraints(),
+                    splashRadius: kIconMiddleSize / 1.2,
                   ),
                 ],
                 child: Column(

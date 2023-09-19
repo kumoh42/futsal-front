@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_front/common/component/custom_donut_paint.dart';
 import 'package:flutter_front/common/component/custom_listview_background_paint.dart';
@@ -8,7 +6,6 @@ import 'package:flutter_front/common/styles/sizes.dart';
 import 'package:flutter_front/common/styles/text_styles.dart';
 import 'package:flutter_front/common/utils/data_utils.dart';
 import 'package:flutter_front/reservation_status/model/entity/reservation_entity.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ReservationStateItem extends StatelessWidget {
   final ReservationStatusEntity entity;
@@ -141,7 +138,7 @@ class ReservationStateItem extends StatelessWidget {
                     ),
                     if (entity.major != null)
                       Transform.scale(
-                        scale: min(1.3, 1.3.w),
+                        scale: ResponsiveSize.S(1.3),
                         child: Checkbox(
                           value: isChecked,
                           onChanged: onPressed,

@@ -9,7 +9,6 @@ import 'package:flutter_front/common/state/state.dart';
 import 'package:flutter_front/auth/viewmodel/login_viewmodel.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class LoginView extends ConsumerStatefulWidget {
   static String get routeName => 'login';
@@ -38,23 +37,32 @@ class _LoginViewState extends ConsumerState<LoginView> {
               color: kBackgroundMainColor,
               borderRadius: BorderRadius.circular(kBorderRadiusSize),
             ),
-            constraints: BoxConstraints(maxWidth: 500.w, maxHeight: 500.w),
+            constraints: ResponsiveData.kIsMobile
+                ? BoxConstraints(
+                    maxWidth: ResponsiveSize.M(750),
+                    maxHeight: ResponsiveSize.M(750),
+                  )
+                : const BoxConstraints(maxWidth: 500, maxHeight: 500),
             child: Padding(
-              padding: EdgeInsets.all(kPaddingXLargeSize).copyWith(top: 0),
+              padding: EdgeInsets.all(
+                ResponsiveData.kIsMobile
+                    ? ResponsiveSize.S(kWPaddingXLargeSize)
+                    : kWPaddingXLargeSize,
+              ).copyWith(top: 0),
               child: Form(
                 key: viewModel.loginKey,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     _Title(),
-                    SizedBox(height: kPaddingLargeSize),
+                    const SizedBox(height: kWPaddingLargeSize),
                     CustomTextFormField(
                       labelText: "아이디",
                       hintText: '아이디를 입력해주세요',
                       controller: viewModel.idTextController,
                       validator: validateId,
                     ),
-                    SizedBox(height: kPaddingLargeSize),
+                    const SizedBox(height: kWPaddingLargeSize),
                     CustomTextFormField(
                       labelText: "비밀번호",
                       hintText: '비밀번호를 입력해주세요',
@@ -62,12 +70,17 @@ class _LoginViewState extends ConsumerState<LoginView> {
                       controller: viewModel.passwordTextController,
                       validator: validatePassword,
                     ),
-                    SizedBox(height: kPaddingXLargeSize),
+                    const SizedBox(height: kWPaddingXLargeSize),
                     if (viewModel.state is LoadingState)
                       SizedBox(
-                        width: 76.w,
-                        height: 76.w,
-                        child: const CircularProgressIndicator(color: kMainColor),
+                        width: ResponsiveData.kIsMobile
+                            ? ResponsiveSize.M(76)
+                            : 76,
+                        height: ResponsiveData.kIsMobile
+                            ? ResponsiveSize.M(76)
+                            : 76,
+                        child:
+                            const CircularProgressIndicator(color: kMainColor),
                       )
                     else
                       Row(
@@ -84,7 +97,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
                                   text: 'ID / PW 찾기',
                                   textAlign: TextAlign.left,
                                 ),
-                                SizedBox(height: kPaddingSmallSize),
+                                const SizedBox(height: kWPaddingSmallSize),
                                 CustomTextButton(
                                   onPressed: () async {
                                     viewModel
@@ -93,7 +106,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
                                   text: '금오사이 회원가입',
                                   textAlign: TextAlign.left,
                                 ),
-                                SizedBox(height: kPaddingSmallSize),
+                                const SizedBox(height: kWPaddingSmallSize),
                               ],
                             ),
                           ),
@@ -101,17 +114,26 @@ class _LoginViewState extends ConsumerState<LoginView> {
                             onPressed: viewModel.login,
                             style: ElevatedButton.styleFrom(
                               backgroundColor: kMainColor,
-                              minimumSize: Size(176.w, 60.w),
+                              minimumSize: Size(
+                                ResponsiveData.kIsMobile
+                                    ? ResponsiveSize.M(200)
+                                    : 176,
+                                ResponsiveData.kIsMobile
+                                    ? ResponsiveSize.M(80)
+                                    : 60,
+                              ),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(
-                                  kBorderRadiusSize,
+                                  kWBorderRadiusSize,
                                 ),
                               ),
                             ),
                             child: Text(
                               '로그인',
                               style: kTextReverseStyle.copyWith(
-                                fontSize: kTextSmallSize,
+                                fontSize: ResponsiveData.kIsMobile
+                                    ? ResponsiveSize.M(kWTextLargeSize)
+                                    : kWTextMiddleSize,
                               ),
                             ),
                           ),
@@ -129,26 +151,26 @@ class _LoginViewState extends ConsumerState<LoginView> {
 }
 
 class _Title extends StatelessWidget {
-  _Title({Key? key}) : super(key: key);
+  const _Title({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        SizedBox(
-          width: 100.w,
-          height: 100.w,
-          child: const Image(
-            image: AssetImage("assets/image/black_logo.png"),
-            fit: BoxFit.cover,
-          ),
+        Image(
+          image: const AssetImage("assets/image/black_logo.png"),
+          width: ResponsiveData.kIsMobile ? ResponsiveSize.M(150) : 100,
+          height: ResponsiveData.kIsMobile ? ResponsiveSize.M(150) : 100,
+          fit: BoxFit.cover,
         ),
         Expanded(
           child: Text(
             'Administrator Login\n- 체육시설 예약 시스템 -',
             textAlign: TextAlign.center,
             style: TextStyle(
-              fontSize: kTextMiddleSize,
+              fontSize: ResponsiveData.kIsMobile
+                  ? ResponsiveSize.M(kWTextLargeSize)
+                  : kWTextMiddleSize,
               fontWeight: FontWeight.bold,
               color: Colors.black,
             ),

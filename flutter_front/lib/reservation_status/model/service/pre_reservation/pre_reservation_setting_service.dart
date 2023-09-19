@@ -25,7 +25,7 @@ class PreReservationSettingService
     state = PreReservationSettingStateLoading();
     try {
       await repository.setPreReservation(progressReservationEntity);
-      await getPreReservationList();
+      await getPreReservation();
     } on DioException {
       state = PreReservationSettingStateError("서버와의 통신이 끊겼습니다.");
     } catch (e) {
@@ -33,10 +33,10 @@ class PreReservationSettingService
     }
   }
 
-  Future getPreReservationList() async {
+  Future getPreReservation() async {
     try {
       state = PreReservationSettingListStateLoading();
-      final resp = await repository.getPreReservationList();
+      final resp = await repository.getPreReservation();
       state = PreReservationSettingStateSuccess(resp);
     } on DioException {
       state = PreReservationSettingStateError("서버에서 우선예약 정보를 가져올 수 없습니다. ");
@@ -50,7 +50,7 @@ class PreReservationSettingService
     try {
       state = PreReservationSettingStateLoading();
       await repository.cancelPreReservation(preReservationStatusEntity);
-      await getPreReservationList();
+      await getPreReservation();
     } on DioException {
       state = PreReservationSettingStateError("서버에서 예약 정보를 가져올 수 없습니다. ");
     } catch (e) {

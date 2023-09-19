@@ -33,7 +33,7 @@ class PreReservationSettingViewModel extends ChangeNotifier {
   void getPreReservationStatusList() async {
     await ref
         .read(preReservationSettingServiceProvider.notifier)
-        .getPreReservationList();
+        .getPreReservation();
   }
 
   void setTimePicker(BuildContext context) {

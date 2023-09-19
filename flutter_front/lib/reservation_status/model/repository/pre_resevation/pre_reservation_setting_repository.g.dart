@@ -45,7 +45,7 @@ class _PreReservationSettingRepository
   }
 
   @override
-  Future<PreReservationStatusEntity> getPreReservationList() async {
+  Future<PreReservationStatusEntity> getPreReservation() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'accessToken': 'true'};

@@ -36,6 +36,7 @@ class _ReservationBlockDialogState
     "16시",
     "18시",
     "20시",
+    "22시",
   ];
   final _startTimes = [
     "08시",
@@ -44,6 +45,7 @@ class _ReservationBlockDialogState
     "14시",
     "16시",
     "18시",
+    "20시",
   ];
 
   String _selectedStartTime = '';

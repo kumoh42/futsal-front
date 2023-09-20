@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_front/common/component/titled_text.dart';
-import 'package:flutter_front/common/styles/styles.dart';
+import 'package:flutter_front/common/styles/colors.dart';
+import 'package:flutter_front/common/styles/sizes.dart';
+import 'package:flutter_front/common/styles/text_styles.dart';
 import 'package:flutter_front/common/utils/date_utils.dart';
 import 'package:flutter_front/reservation_status/model/entity/reservation_entity.dart';
 
@@ -8,7 +10,7 @@ class ReservationCancelDialog extends StatelessWidget {
   final List<ReservationStatusEntity> entities;
   final Future Function(ReservationStatusEntity) onPressed;
 
-  ReservationCancelDialog({
+  const ReservationCancelDialog({
     Key? key,
     required this.entities,
     required this.onPressed,
@@ -28,8 +30,8 @@ class ReservationCancelDialog extends StatelessWidget {
           )
         ],
       ),
-      titleTextStyle: kTextMainStyleLarge,
-      shape: const RoundedRectangleBorder(
+      titleTextStyle: kTextMainStyle.copyWith(fontSize: kTextLargeSize),
+      shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.all(
           Radius.circular(kBorderRadiusSize),
         ),
@@ -65,9 +67,7 @@ class ReservationCancelDialog extends StatelessWidget {
                       title: '예약 날짜',
                       text: defaultDateFormat.format(e.date),
                     ),
-                    SizedBox(
-                      width: kPaddingLargeSize
-                    ),
+                    SizedBox(width: kPaddingLargeSize),
                     TitledText(
                       title: '예약 시간',
                       text: '${e.time}시~${e.time + 2}시',
@@ -75,11 +75,14 @@ class ReservationCancelDialog extends StatelessWidget {
                   ],
                 ),
               SizedBox(height: kPaddingMiddleSize),
-              Text('예약을 취소하시겠습니까?', style: kTextMainStyleSmall),
+              Text(
+                '예약을 취소하시겠습니까?',
+                style: kTextMainStyle.copyWith(fontSize: kTextSmallSize),
+              ),
               SizedBox(height: kPaddingMiddleSize),
               Text(
                 '사전 안내 없이 임의로 취소하여 문제가 발생할 경우\n\'금오사이\'에서는 챔임지지 않습니다.',
-                style: kTextMainStyleSmall,
+                style: kTextMainStyle.copyWith(fontSize: kTextSmallSize),
               ),
             ],
           ),
@@ -92,7 +95,7 @@ class ReservationCancelDialog extends StatelessWidget {
             if (context.mounted) Navigator.of(context).pop();
           },
           style: ElevatedButton.styleFrom(
-            backgroundColor: CustomColor.mainColor,
+            backgroundColor: kMainColor,
             shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(
                 Radius.circular(50),
@@ -110,7 +113,8 @@ class ReservationCancelDialog extends StatelessWidget {
                 child: Center(
                   child: Text(
                     '확인 및 예약 취소',
-                    style: kTextMainStyleMiddle.copyWith(
+                    style: kTextMainStyle.copyWith(
+                      fontSize: kTextMiddleSize,
                       color: Colors.white,
                     ),
                   ),

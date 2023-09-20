@@ -1,23 +1,23 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_front/common/const_styles/colors.dart';
-import 'package:flutter_front/common/const_styles/sizes.dart';
-import 'package:flutter_front/common/const_styles/text_styles.dart';
-import 'package:flutter_front/common/utils/date_utils.dart';
+import 'package:flutter_front/common/styles/colors.dart';
+import 'package:flutter_front/common/styles/sizes.dart';
+import 'package:flutter_front/common/styles/text_styles.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class CustomTimeTable extends ConsumerStatefulWidget {
   late final ChangeNotifierProvider<CustomTimeTableController> provider;
-  final double rowHeight;
-  final double? textSize;
+  late final double textSize;
 
   CustomTimeTable({
     Key? key,
     required CustomTimeTableController controller,
-    required this.rowHeight,
-    this.textSize,
+    double? textSize,
   }) : super(key: key) {
     provider = ChangeNotifierProvider((ref) => controller);
+    this.textSize = textSize ?? kTextLargeSize;
   }
 
   @override
@@ -30,82 +30,82 @@ class _CustomTimeTableState extends ConsumerState<CustomTimeTable> {
   @override
   Widget build(BuildContext context) {
     controller = ref.watch(widget.provider);
-    return TableCalendar(
-      locale: 'ko_KR',
-      daysOfWeekStyle: DaysOfWeekStyle(
-        decoration: BoxDecoration(
-          border: Border(
-            bottom: BorderSide(
-              width: 1,
-              color: kBorderColor,
+    return LayoutBuilder(builder: (context, constraints) {
+      final rowHeight = min(constraints.maxWidth, constraints.maxHeight) / 8;
+      return TableCalendar(
+        locale: 'ko_KR',
+        sixWeekMonthsEnforced: true,
+        daysOfWeekStyle: DaysOfWeekStyle(
+          decoration: const BoxDecoration(
+            border: Border(
+              bottom: BorderSide(color: kDisabledColor, width: 0.5),
             ),
           ),
+          weekendStyle: kTextNormalStyle.copyWith(fontSize: widget.textSize),
+          weekdayStyle: kTextNormalStyle.copyWith(fontSize: widget.textSize),
         ),
-        weekendStyle: kTextNormalStyleLarge,
-        weekdayStyle: kTextNormalStyleLarge,
-      ),
-      headerStyle: const HeaderStyle(
-        titleCentered: true,
-        formatButtonVisible: false,
-        titleTextStyle: kTextMainStyleLarge,
-      ),
-      rangeStartDay: controller.startDay,
-      rangeEndDay: controller.endDay,
-      rowHeight: widget.rowHeight,
-      daysOfWeekHeight: widget.rowHeight,
-      firstDay: controller.firstDay,
-      lastDay: controller.lastDay,
-      focusedDay: controller.focusedDay,
-      onDaySelected: controller.onDaySelected,
-      selectedDayPredicate: controller.selectedDayPredicate,
-      calendarBuilders: CalendarBuilders(
-        defaultBuilder: (context, dateTime, _) {
-          final date = getDayOfWeek(dateTime);
-          if (date == "토요일") {
+        headerStyle: HeaderStyle(
+          titleCentered: true,
+          formatButtonVisible: false,
+          titleTextStyle: kTextMainStyle.copyWith(fontSize: widget.textSize),
+          leftChevronPadding: EdgeInsets.zero,
+          rightChevronPadding: EdgeInsets.zero,
+          leftChevronMargin: EdgeInsets.zero,
+          rightChevronMargin: EdgeInsets.zero,
+          headerPadding: EdgeInsets.all(kPaddingSmallSize)
+              .copyWith(top: kPaddingLargeSize),
+          leftChevronIcon: Icon(Icons.chevron_left, size: kIconMiddleSize),
+          rightChevronIcon: Icon(Icons.chevron_right, size: kIconMiddleSize),
+        ),
+        rangeStartDay: controller.startDay,
+        rangeEndDay: controller.endDay,
+        rowHeight: rowHeight,
+        daysOfWeekHeight: rowHeight,
+        firstDay: controller.firstDay,
+        lastDay: controller.lastDay,
+        focusedDay: controller.focusedDay,
+        onDaySelected: controller.onDaySelected,
+        selectedDayPredicate: controller.selectedDayPredicate,
+        calendarBuilders: CalendarBuilders(
+          defaultBuilder: (context, dateTime, _) {
             return _cellBuilder(
               date: dateTime.day.toString(),
-              textColor: Colors.blue,
+              textColor: dateTime.weekday == 6
+                  ? Colors.blue
+                  : dateTime.weekday == 7
+                      ? Colors.red
+                      : null,
               textSize: widget.textSize,
             );
-          }
-          if (date == "일요일") {
-            return _cellBuilder(
-              date: dateTime.day.toString(),
-              textColor: Colors.red,
-              textSize: widget.textSize,
-            );
-          }
-          return _cellBuilder(
-            date: dateTime.day.toString(),
-            textSize: widget.textSize,
-          );
-        },
-        outsideBuilder: (context, dateTime, _) => _cellBuilder(
-          textSize: widget.textSize,
-          textColor: Colors.black.withOpacity(0.5),
-          date: dateTime.day.toString(),
-        ),
+          },
 
-        // 오늘 날짜 셀의 빌더 함수
-        todayBuilder: (context, dateTime, _) => _cellBuilder(
-          textSize: widget.textSize,
-          color: kBackgroundMainColor,
-          date: dateTime.day.toString(),
-          border: Border.all(
-            color: kTextMainColor,
-            width: 2,
+          outsideBuilder: (context, dateTime, _) => _cellBuilder(
+            textSize: widget.textSize,
+            textColor: Colors.black.withOpacity(0.5),
+            date: dateTime.day.toString(),
+          ),
+
+          // 오늘 날짜 셀의 빌더 함수
+          todayBuilder: (context, dateTime, _) => _cellBuilder(
+            textSize: widget.textSize,
+            color: kBackgroundMainColor,
+            date: dateTime.day.toString(),
+            border: Border.all(
+              color: kTextMainColor,
+              width: 2,
+            ),
+          ),
+          // 선택된 날짜 셀의 빌더 함수
+          selectedBuilder: (context, dateTime, _) => _cellBuilder(
+            color: kMainColor,
+            date: dateTime.day.toString(),
+            textColor: kTextReverseColor,
+            textSize: widget.textSize,
           ),
         ),
-        // 선택된 날짜 셀의 빌더 함수
-        selectedBuilder: (context, dateTime, _) => _cellBuilder(
-          color: kMainColor,
-          date: dateTime.day.toString(),
-          textColor: kTextReverseColor,
-          textSize: widget.textSize,
-        ),
-      ),
-      onPageChanged: controller.onPageChanged,
-    );
+        onPageChanged: controller.onPageChanged,
+      );
+    });
   }
 
   Widget _cellBuilder({
@@ -113,24 +113,26 @@ class _CustomTimeTableState extends ConsumerState<CustomTimeTable> {
     required String date,
     Color? textColor,
     BoxBorder? border,
-    double? textSize,
+    required double textSize,
   }) =>
-      Container(
-        decoration: BoxDecoration(
-          color: color,
-          borderRadius: BorderRadius.circular(10),
-          border: border,
-        ),
-        width: 50,
-        height: 50,
-        child: Center(
-          child: Text(
-            date,
-            style: kTextNormalStyleLarge.copyWith(
-              color: textColor,
-              fontSize: textSize ?? kTextLargeSize,
+      Center(
+        child: Container(
+          decoration: BoxDecoration(
+            color: color,
+            borderRadius: BorderRadius.circular(kBorderRadiusSize),
+            border: border,
+          ),
+          width: textSize * 2,
+          height: textSize * 2,
+          child: Center(
+            child: Text(
+              date,
+              style: kTextNormalStyle.copyWith(
+                color: textColor,
+                fontSize: textSize,
+              ),
+              softWrap: false,
             ),
-            softWrap: false,
           ),
         ),
       );

@@ -3,7 +3,7 @@ import 'package:flutter_front/common/state/state.dart';
 import 'package:flutter_front/common/utils/date_utils.dart';
 import 'package:flutter_front/common/utils/snack_bar_util.dart';
 import 'package:flutter_front/reservation_status/component/custom_table_calendar.dart';
-import 'package:flutter_front/reservation_status/component/reservation_block_dialog.dart';
+import 'package:flutter_front/reservation_status/component/dialog/reservation_block_dialog.dart';
 import 'package:flutter_front/reservation_status/component/reservation_cancel_dialog.dart';
 import 'package:flutter_front/reservation_status/component/reservation_state/reservation_state_list.dart';
 import 'package:flutter_front/reservation_status/model/entity/reservation_entity.dart';
@@ -17,10 +17,11 @@ final reservationStatusViewModelProvider =
 
 class ReservationStatusViewModel extends ChangeNotifier {
   final Ref ref;
+
   // statusState = reservationStatusServiceProvider
   late ReservationStatusListState statusState;
   late final CustomTimeTableController customTimeTableController;
-  late final CustomCancelListController cancelListcontroller;
+  late final CustomCancelListController cancelListController;
   late final CustomTimeTableController blockReservationController;
 
   get reservationStatusList => statusState is ReservationStatusListStateSuccess
@@ -36,11 +37,11 @@ class ReservationStatusViewModel extends ChangeNotifier {
     customTimeTableController = CustomTimeTableController(
       onDayChange: getReservationStatusList,
     );
-    cancelListcontroller = CustomCancelListController();
+    cancelListController = CustomCancelListController();
     blockReservationController = CustomTimeTableController(useRange: true);
 
     statusState = ref.read(reservationStatusServiceProvider);
-    /* 
+    /*
     프로바이더의 상태 변경을 감지하고, 변경 사항이 있을 때마다 특정 동작을 수행하는 부분
     두 번째 매개변수로는 변경 이전의 상태(previous)와 변경 후의 상태(next)를 받음
     */
@@ -54,9 +55,8 @@ class ReservationStatusViewModel extends ChangeNotifier {
       }
     });
   }
-  void blockReservation(
-    BuildContext context,
-  ) async {
+
+  void blockReservation(BuildContext context) async {
     await showDialog(
       context: context,
       builder: (context) => ReservationBlockDialog(
@@ -75,7 +75,7 @@ class ReservationStatusViewModel extends ChangeNotifier {
     await ref
         .read(reservationStatusServiceProvider.notifier)
         .getReservationStatusList(date: customTimeTableController.selectedDay);
-    cancelListcontroller.reset();
+    cancelListController.reset();
     notifyListeners();
   }
 
@@ -84,7 +84,7 @@ class ReservationStatusViewModel extends ChangeNotifier {
   ) async {
     final List<ReservationStatusEntity> cancelList = [];
 
-    for (int entityId in cancelListcontroller.cancelIdList) {
+    for (int entityId in cancelListController.cancelIdList) {
       for (ReservationStatusEntity entity in reservationStatusList) {
         if (entity.reservationId == entityId) {
           cancelList.add(entity);
@@ -103,6 +103,6 @@ class ReservationStatusViewModel extends ChangeNotifier {
       ),
     );
 
-    cancelListcontroller.reset();
+    cancelListController.reset();
   }
 }

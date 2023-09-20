@@ -1,77 +1,89 @@
-import 'package:flutter/material.dart';
+import 'dart:math';
 
-const double _kResponsiveTrigger1920 = 1920;
-const double _kResponsiveTrigger1300 = 1300;
-const double _kResponsiveTrigger768 = 768;
-const double _kResponsiveTrigger586 = 586;
-const double _kResponsiveTrigger360 = 360;
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-double displayWidth = 1920;
+const double kWLayoutMaxSize = 1440;
+const double kWLayoutMarginSize = 36.0;
+const double kWLayoutGutterSize = 12.0;
 
-bool get kIsWeb => displayWidth > _kResponsiveTrigger1300;
+const double kMobileTrigger = 768;
 
-bool get kIsTab => !kIsWeb && displayWidth > _kResponsiveTrigger586;
+const double kMLayoutMaxSize = 400;
+const double kMLayoutMarginSize = 12.0;
+const double kMLayoutGutterSize = 10.0;
 
-bool get kIsMobile => displayWidth <= _kResponsiveTrigger586;
+double get kLayoutMaxSize =>
+    ResponsiveData.kIsMobile ? kMLayoutMaxSize : kWLayoutMaxSize;
 
-double get kLayoutWidthSize => displayWidth > _kResponsiveTrigger1920
-    ? _kResponsiveTrigger1920
-    : displayWidth > _kResponsiveTrigger768
-    ? displayWidth
-    : displayWidth > _kResponsiveTrigger586
-    ? _kResponsiveTrigger768
-    : displayWidth > _kResponsiveTrigger360
-    ? displayWidth
-    : _kResponsiveTrigger360;
+double get kLayoutMarginSize =>
+    ResponsiveData.kIsMobile ? kMLayoutMarginSize : kWLayoutMarginSize;
 
-double get kMainPageContainerHeightSize =>
-    850 / _kResponsiveTrigger1920 * displayWidth > 850
-        ? 850 / _kResponsiveTrigger1920 * displayWidth
-        : !kIsMobile ? 850 : 900;
+double get kLayoutGutterSize =>
+    ResponsiveData.kIsMobile ? kMLayoutGutterSize : kWLayoutGutterSize;
 
-double get kNavigationRailSize => !kIsMobile ? 100 : 0;
+abstract class ResponsiveData {
+  static bool kIsMobile = false;
+  static const double _kMWRatio = 0.5;
+  static const double _kWMRatio2 = 6.0;
+}
 
-double get kAppbarHeight => !kIsMobile ? 75 : 50;
+abstract class ResponsiveSize {
+  static double W(double size) => min(size, size.sp);
 
-double get kContainerWidthSize => !kIsMobile ? 400 : 280;
-double get kContainerHeightSize => !kIsMobile ? 461 : 350;
+  static double M(double size) => min(
+        size * ResponsiveData._kMWRatio,
+        (size * ResponsiveData._kMWRatio * ResponsiveData._kWMRatio2).sp,
+      );
 
-const double kBorderRadiusSize = 12.0;
-const double kBorderRadiusMiniSize = 5.0;
-const double kBorderSideWidth = 0.5;
+  static double S(double size) => ResponsiveData.kIsMobile ? M(size) : W(size);
+}
 
-Size kOutlinedButtonSize = Size.fromHeight(kTextLargeSize * 2);
-Size kOutlinedSmallButtonSize = Size(kTextMiddleSize, kTextMiddleSize);
-Size kTextButtonSize = Size.fromHeight(kTextSmallSize);
+const double kWTextTitleSize = 30.0;
+const double kWTextLargeSize = 28.0;
+const double kWTextMiddleSize = 21.0;
+const double kWTextSmallSize = 18.0;
+const double kWTextMiniSize = 14.0;
 
-const double kIconMainSize = 28.0;
-const double kIconMiddleSize = 24.0;
-const double kIconSmallSize = 20.0;
-const double kIconMiniSize = 16.0;
+double get kTextTitleSize => ResponsiveSize.S(kWTextTitleSize);
 
-double get kPaddingXLargeSize => !kIsMobile ? 64.0 : 28.0;
+double get kTextLargeSize => ResponsiveSize.S(kWTextLargeSize);
 
-double get kPaddingLargeSize => !kIsMobile ? 32.0 : 14.0;
+double get kTextMiddleSize => ResponsiveSize.S(kWTextMiddleSize);
 
-double get kPaddingMiddleSize => !kIsMobile ? 16.0 : 7.0;
+double get kTextSmallSize => ResponsiveSize.S(kWTextSmallSize);
 
-double get kPaddingSmallSize => !kIsMobile ? 8.0 : 3.5;
+double get kTextMiniSize => ResponsiveSize.S(kWTextMiniSize);
 
-double get kPaddingMiniSize => !kIsMobile ? 4.0 : 1.75;
+const double kWPaddingXLargeSize = 32.0;
+const double kWPaddingLargeSize = 16.0;
+const double kWPaddingMiddleSize = 12.0;
+const double kWPaddingSmallSize = 8.0;
+const double kWPaddingMiniSize = 4.0;
 
-double get kTextXLargeSize => !kIsMobile ? 44.0 : 28.0;
+double get kPaddingXLargeSize => ResponsiveSize.S(kWPaddingXLargeSize);
 
-double get kTextLargeSize => !kIsMobile ? 28.0 : 21.0;
+double get kPaddingLargeSize => ResponsiveSize.S(kWPaddingLargeSize);
 
-double get kTextMiddleSize => !kIsMobile ? 21.0 : 16.0;
+double get kPaddingMiddleSize => ResponsiveSize.S(kWPaddingMiddleSize);
 
-double get kTextSmallSize => !kIsMobile ? 14.0 : 10.5;
+double get kPaddingSmallSize => ResponsiveSize.S(kWPaddingSmallSize);
 
-double get kTextMiniSize => !kIsMobile ? 10.5 : 7.0;
+double get kPaddingMiniSize => ResponsiveSize.S(kWPaddingMiniSize);
 
-const double kLineLargeSize = 5.0;
-const double kLineSmallSize = 2.0;
+const double kWIconLargeSize = 41.0;
+const double kWIconMiddleSize = 28.0;
+const double kWIconSmallSize = 20.0;
+const double kWIconMiniSize = 16.0;
 
-const double kTextHeight = 1.4;
+double get kIconLargeSize => ResponsiveSize.S(kWIconLargeSize);
 
-double get kSubPageContainerHeightSize => !kIsMobile ? 250 : 200;
+double get kIconMiddleSize => ResponsiveSize.S(kWIconMiddleSize);
+
+double get kIconSmallSize => ResponsiveSize.S(kWIconSmallSize);
+
+double get kIconMiniSize => ResponsiveSize.S(kWIconMiniSize);
+
+const double kWBorderRadiusSize = 10.0;
+const double kMBorderRadiusSize = 5.0;
+
+double get kBorderRadiusSize => ResponsiveData.kIsMobile ? kMBorderRadiusSize : kWBorderRadiusSize;

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_front/common/styles/styles.dart';
+import 'package:flutter_front/common/styles/sizes.dart';
+import 'package:flutter_front/common/styles/text_styles.dart';
 import 'package:flutter_front/common/utils/custom_dialog_utils.dart';
-import 'package:flutter_front/common/utils/date_utils.dart';
 import 'package:flutter_front/reservation_status/component/custom_table_calendar.dart';
+import 'package:flutter_front/reservation_status/component/dialog/pre_reservation_setting_dialog.dart';
 import 'package:flutter_front/reservation_status/model/entity/pre_reservation/pre_reservation_status_entity.dart';
-import 'package:flutter_front/reservation_status/model/entity/pre_reservation/progress_reservation_entity.dart';
 import 'package:flutter_front/reservation_status/model/service/pre_reservation/pre_reservation_setting_service.dart';
 import 'package:flutter_front/reservation_status/model/state/pre_reservation/pre_reservation_setting_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -25,15 +25,15 @@ class PreReservationSettingViewModel extends ChangeNotifier {
     minute = DateTime.now().minute;
     statusState = ref.watch(preReservationSettingServiceProvider);
   }
-  get preReservationStatusList =>
-      statusState is PreReservationSettingListStateSuccess
-          ? (statusState as PreReservationSettingListStateSuccess).data
+  PreReservationStatusEntity? get preReservationStatus =>
+      statusState is PreReservationSettingStateSuccess
+          ? (statusState as PreReservationSettingStateSuccess).data
           : null;
 
   void getPreReservationStatusList() async {
     await ref
         .read(preReservationSettingServiceProvider.notifier)
-        .getPreReservationList();
+        .getPreReservation();
   }
 
   void setTimePicker(BuildContext context) {
@@ -58,53 +58,28 @@ class PreReservationSettingViewModel extends ChangeNotifier {
   }
 
   void setPreReservation(BuildContext context) async {
-    final dates =
-        defaultDateFormat.format(customTimeTableController.focusedDay);
-    final times =
-        '${hour.toString().padLeft(2, "0")}:${minute.toString().padLeft(2, "0")}';
-
-    final entity = PreReservationStatusEntity(date: dates, time: times);
-
-    CustomDialogUtil.showCustomDialog(
-      dialog: CustomDialog(
-        title: Text(
-          '우선예약 설정 확인',
-          style: kTextMainStyleMiddle,
-        ),
-        content: Text(
-          ' $dates ${times.replaceFirst("-", "시 ")}분',
-          style: kTextNormalStyleLarge,
-        ),
-        accept: "확인",
-        cancel: "취소",
-        onPressed: () async {
-          await ref
-              .read(preReservationSettingServiceProvider.notifier)
-              .setPreReservation(
-                progressReservationEntity: ProgressReservationEntity(
-                  isPre: true,
-                  date: entity.date,
-                  time: entity.time,
-                ),
-              );
-          Navigator.of(context).pop();
-        },
-      ),
+    await showDialog(
       context: context,
+      builder: (context) => PreReservationSettingDialog(
+        controller: customTimeTableController,
+        onPressed: (e) => ref
+            .read(preReservationSettingServiceProvider.notifier)
+            .setPreReservation(progressReservationEntity: e),
+      ),
     );
   }
 
-  void canclePreReservation(
+  void cancelPreReservation(
       BuildContext context, PreReservationStatusEntity entity) async {
     CustomDialogUtil.showCustomDialog(
       dialog: CustomDialog(
         title: Text(
           '우선예약 설정 취소',
-          style: kTextMainStyleMiddle,
+          style: kTextMainStyle.copyWith(fontSize: kTextMiddleSize),
         ),
         content: Text(
           ' ${entity.date} ${entity.time}',
-          style: kTextNormalStyleLarge,
+          style: kTextNormalStyle.copyWith(fontSize: kTextLargeSize),
         ),
         accept: "확인",
         cancel: "취소",
@@ -112,7 +87,7 @@ class PreReservationSettingViewModel extends ChangeNotifier {
           await ref
               .read(preReservationSettingServiceProvider.notifier)
               .cancelPreReservation(preReservationStatusEntity: entity);
-          Navigator.of(context).pop();
+          if(context.mounted) Navigator.of(context).pop();
         },
       ),
       context: context,

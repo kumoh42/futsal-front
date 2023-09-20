@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_front/common/styles/styles.dart';
+import 'package:flutter_front/common/styles/colors.dart';
+import 'package:flutter_front/common/styles/sizes.dart';
+import 'package:flutter_front/common/styles/text_styles.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomTextFormField extends StatelessWidget {
   final String? labelText;
@@ -29,14 +32,17 @@ class CustomTextFormField extends StatelessWidget {
     double? contentPadding,
     this.backgroundColor,
   }) : super(key: key) {
-    this.contentPadding = contentPadding ?? kPaddingMiddleSize;
+    this.contentPadding = contentPadding ?? kWPaddingMiddleSize;
   }
 
   @override
   Widget build(BuildContext context) {
+    final fontSize = ResponsiveData.kIsMobile
+        ? ResponsiveSize.M(kWTextLargeSize)
+        : kWTextMiddleSize;
     return Container(
       decoration: BoxDecoration(
-        color: backgroundColor ?? CustomColor.backgroundMainColor,
+        color: backgroundColor ?? kBackgroundMainColor,
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -46,14 +52,14 @@ class CustomTextFormField extends StatelessWidget {
               if (prefixIcon != null)
                 Icon(
                   prefixIcon,
-                  size: kIconSmallSize,
-                  color: CustomColor.subColor,
+                  size: kWIconSmallSize,
+                  color: kSubColor,
                 ),
-              if (prefixIcon != null) SizedBox(width: kPaddingSmallSize),
+              if (prefixIcon != null) const SizedBox(width: kWPaddingSmallSize),
               if (labelText != null)
                 Text(
                   labelText!,
-                  style: kTextMainStyleSmall,
+                  style: kTextMainStyle.copyWith(fontSize: fontSize),
                 ),
             ],
           ),
@@ -61,10 +67,10 @@ class CustomTextFormField extends StatelessWidget {
           TextFormField(
             controller: controller,
             validator: validator,
-            cursorColor: CustomColor.textMainColor,
+            cursorColor: kTextMainColor,
             keyboardType: keyboardType,
             obscureText: keyboardType == TextInputType.visiblePassword,
-            style: textStyle ?? kTextMainStyleMiddle,
+            style: textStyle ?? kTextMainStyle.copyWith(fontSize: fontSize),
             inputFormatters: [
               FilteringTextInputFormatter.deny(RegExp(r'\s')), // 공백 입력 방지
             ],
@@ -72,13 +78,17 @@ class CustomTextFormField extends StatelessWidget {
               isDense: true,
               contentPadding: EdgeInsets.only(bottom: contentPadding),
               hintText: hintText,
+              border:
+                  UnderlineInputBorder(borderSide: BorderSide(width: 1.0.w)),
               hintStyle: textStyle?.copyWith(
-                color: CustomColor.textMainColor.withOpacity(0.5),
-              ) ?? kTextMainStyleMiddle.copyWith(
-                color: CustomColor.textMainColor.withOpacity(0.5),
-              ),
+                    color: kTextMainColor.withOpacity(0.5),
+                  ) ??
+                  kTextMainStyle.copyWith(
+                    fontSize: fontSize,
+                    color: kTextMainColor.withOpacity(0.5),
+                  ),
               filled: true,
-              fillColor: backgroundColor ?? CustomColor.backgroundMainColor,
+              fillColor: backgroundColor ?? kBackgroundMainColor,
             ),
           ),
         ],

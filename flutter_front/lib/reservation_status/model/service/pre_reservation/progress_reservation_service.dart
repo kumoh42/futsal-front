@@ -39,11 +39,8 @@ class ProgressReservationService
       state = ProgressReservationStateLoading();
 
       final data = await repository.getProgressReservation();
-      if (data.isEmpty) {
-        state = ProgressReservationStateError("서버로부터 진행중인 예약을 가져오지 못했습니다.");
-      }
 
-      state = ProgressReservationStateSuccess(data[0]);
+      state = ProgressReservationStateSuccess(data);
     } on DioException {
       state = ProgressReservationStateError("서버로부터 진행중인 예약을 가져오지 못했습니다.");
     } catch (e) {

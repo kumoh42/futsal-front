@@ -25,7 +25,7 @@ abstract class PreReservationSettingRepository {
 
   @GET('/reservation/pre/time-list')
   @Headers({'accessToken': 'true'})
-  Future<List<PreReservationStatusEntity>> getPreReservationList();
+  Future<PreReservationStatusEntity> getPreReservation();
 
   @PATCH('/reservation/pre/time-delete')
   @Headers({'accessToken': 'true'})

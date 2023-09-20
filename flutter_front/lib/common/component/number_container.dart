@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_front/common/styles/sizes.dart';
 import 'package:flutter_front/common/styles/text_styles.dart';
 
 class NumberContainer extends StatelessWidget {
@@ -6,7 +7,7 @@ class NumberContainer extends StatelessWidget {
   final double width;
   final double height;
 
-  NumberContainer({
+  const NumberContainer({
     super.key,
     required this.content,
     required this.height,
@@ -18,16 +19,11 @@ class NumberContainer extends StatelessWidget {
     return Container(
       width: width,
       height: height,
-      decoration: BoxDecoration(
-        border: Border.all(
-          color: Colors.black,
-          width: 1,
-        ),
-      ),
+      decoration: BoxDecoration(border: Border.all(color: Colors.black)),
       child: Center(
         child: Text(
           content,
-          style: kTextMainStyleMiddle,
+          style: kTextMainStyle.copyWith(fontSize: kTextMiddleSize),
         ),
       ),
     );

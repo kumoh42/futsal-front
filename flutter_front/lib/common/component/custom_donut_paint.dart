@@ -1,12 +1,13 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_front/common/const_styles/colors.dart';
-import 'package:flutter_front/common/const_styles/sizes.dart';
+import 'package:flutter_front/common/styles/colors.dart';
 
 class CustomDonutPainter extends CustomPainter {
   final bool isLast;
-  CustomDonutPainter({this.isLast = false});
+
+  const CustomDonutPainter({this.isLast = false});
+
   @override
   void paint(Canvas canvas, Size size) {
     final Paint paint = Paint()
@@ -16,9 +17,9 @@ class CustomDonutPainter extends CustomPainter {
     final double centerX = size.width / 2;
     final double centerY = size.height / 2;
     final double radius = min(centerX, centerY); // 도넛의 반지름
-    final double ringRadius = radius * 3 / 5; // 도넛 중심 원의 반지름
-    final double rectangleWidth = radius / 2; // 직사각형의 가로 길이
-    const double rectangleHeight = kListViewTileHeightSize; // 직사각형의 세로 길이
+    final double ringRadius = radius * 2 / 3; // 도넛 중심 원의 반지름
+    final double rectangleWidth = radius / 3; // 직사각형의 가로 길이
+    final double rectangleHeight = size.height; // 직사각형의 세로 길이
 
     if (!isLast) {
       // 직사각형 그리기

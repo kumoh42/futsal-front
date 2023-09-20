@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter_front/common/styles/sizes.dart';
 import 'package:flutter_front/common/utils/validation_util.dart';
-import 'package:flutter_front/common/styles/styles.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class MessagingBox extends ConsumerStatefulWidget {
@@ -42,15 +41,14 @@ class _MessagingBoxState extends ConsumerState<MessagingBox> {
     controller = ref.watch(widget.provider);
     return Material(
       elevation: 5,
-      borderRadius: const BorderRadius.all(Radius.circular(kBorderRadiusSize)),
+      borderRadius: BorderRadius.all(Radius.circular(kBorderRadiusSize)),
       child: AnimatedContainer(
-        width:
-            controller.isHorizontalExpanded ? kContainerWidthSize : 70,
-        height: controller.isVerticalExpanded ? kContainerHeightSize : 70,
+        width: controller.isHorizontalExpanded ? 400 : 70,
+        height: controller.isVerticalExpanded ? 461 : 70,
         duration: controller.duration,
         curve: Curves.fastEaseInToSlowEaseOut,
         decoration: BoxDecoration(
-          borderRadius: const BorderRadius.all(
+          borderRadius: BorderRadius.all(
             Radius.circular(kBorderRadiusSize),
           ),
           color: widget.backgroundColor,
@@ -95,7 +93,7 @@ class _DefaultWidget extends StatelessWidget {
   final String title;
   final TextStyle? textStyle;
 
-  _DefaultWidget(
+  const _DefaultWidget(
     this.controller,
     this.textStyle,
     this.title, {
@@ -129,7 +127,7 @@ class _TitleBar extends StatelessWidget {
   final TextStyle? textStyle;
   final String title;
 
-  _TitleBar(this.title, this.textStyle, this.controller, {Key? key})
+  const _TitleBar(this.title, this.textStyle, this.controller, {Key? key})
       : super(key: key);
 
   @override
@@ -158,7 +156,7 @@ class _MessageTextFormField extends StatelessWidget {
   final Color? textFieldColor;
   final TextStyle? textFiledTextStyle;
 
-  _MessageTextFormField(
+  const _MessageTextFormField(
     this.controller,
     this.backgroundColor,
     this.bodyTextStyle,
@@ -177,7 +175,7 @@ class _MessageTextFormField extends StatelessWidget {
         SingleChildScrollView(
           child: Container(
             decoration: BoxDecoration(
-              borderRadius: const BorderRadius.only(
+              borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(kBorderRadiusSize),
                 bottomRight: Radius.circular(kBorderRadiusSize),
               ),
@@ -268,7 +266,7 @@ class _CustomTextField extends StatelessWidget {
 
   final String? Function(String?)? validator;
 
-  _CustomTextField({
+  const _CustomTextField({
     Key? key,
     required this.controller,
     this.bodyTextStyle,
@@ -377,7 +375,8 @@ class MessagingBoxController extends ChangeNotifier {
 
   bool get isHorizontalExpanded => state >= MessagingBoxState.horizontalExpand;
 
-  bool get isHorizontalExpanding => state >= MessagingBoxState.horizontalExpanding;
+  bool get isHorizontalExpanding =>
+      state >= MessagingBoxState.horizontalExpanding;
 
   bool get isVerticalExpanded => state >= MessagingBoxState.verticalExpand;
 

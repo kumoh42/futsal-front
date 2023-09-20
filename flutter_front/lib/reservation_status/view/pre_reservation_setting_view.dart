@@ -10,7 +10,6 @@ import 'package:flutter_front/reservation_status/component/titled_text.dart';
 import 'package:flutter_front/reservation_status/viewmodel/pre_reservation_viewmodel/pre_reservation_setting_viewmodel.dart';
 import 'package:flutter_front/reservation_status/viewmodel/pre_reservation_viewmodel/progress_reservation_viewmodel.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class PreReservationSettingView extends ConsumerStatefulWidget {
   const PreReservationSettingView({super.key});

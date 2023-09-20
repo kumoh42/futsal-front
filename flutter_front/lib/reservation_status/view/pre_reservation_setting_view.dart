@@ -27,7 +27,7 @@ class _PreReservationSettingViewState
     // UI가 빌드된 후 실행
     Future(() => ref
         .read(preReservationSettingViewModelProvider)
-        .getPreReservationStatusList());
+        .getPreReservationStatus());
   }
 
   String toFirstDay(String? date) {
@@ -60,6 +60,15 @@ class _PreReservationSettingViewState
           wFlex: 7,
           child: DesignedContainer(
             title: "진행 중인 예약",
+            actions: [
+              IconButton(
+                onPressed: progressViewmodel.getProgressReservation,
+                icon: Icon(Icons.refresh, size: kIconMiddleSize),
+                padding: EdgeInsets.zero,
+                constraints: const BoxConstraints(),
+                splashRadius: kIconMiddleSize / 1.2,
+              ),
+            ],
             child: Column(
               children: [
                 TitledText(
@@ -117,6 +126,14 @@ class _PreReservationSettingViewState
                 title: "사전 예약 설정 현황",
                 actions: [
                   IconButton(
+                    onPressed: preViewmodel.getPreReservationStatus,
+                    icon: Icon(Icons.refresh, size: kIconMiddleSize),
+                    padding: EdgeInsets.zero,
+                    constraints: const BoxConstraints(),
+                    splashRadius: kIconMiddleSize / 1.2,
+                  ),
+                  const SizedBox(width: kWPaddingMiddleSize),
+                  IconButton(
                     onPressed: () => preViewmodel.setPreReservation(context),
                     icon: Icon(Icons.edit, size: kIconMiddleSize),
                     padding: EdgeInsets.zero,
@@ -129,13 +146,15 @@ class _PreReservationSettingViewState
                     TitledText(
                       title: '시작 일시',
                       text: toCurrentDay(
-                          preViewmodel.preReservationStatus?.date,
-                          preViewmodel.preReservationStatus?.time),
+                        preViewmodel.preReservationStatus?.date,
+                        preViewmodel.preReservationStatus?.time,
+                      ),
                     ),
                     SizedBox(height: kPaddingMiddleSize),
                     TitledText(
                       title: '종료 일시',
-                      text: toNextMonth(preViewmodel.preReservationStatus?.date),
+                      text:
+                          toNextMonth(preViewmodel.preReservationStatus?.date),
                     ),
                   ],
                 ),

@@ -7,7 +7,6 @@ import 'package:flutter_front/common/utils/snack_bar_util.dart';
 import 'package:flutter_front/reservation_status/model/entity/pre_reservation/progress_reservation_entity.dart';
 import 'package:flutter_front/reservation_status/model/service/pre_reservation/progress_reservation_service.dart';
 import 'package:flutter_front/reservation_status/model/state/pre_reservation/progress_reservation_state.dart';
-import 'package:flutter_front/reservation_status/viewmodel/pre_reservation_viewmodel/pre_reservation_setting_viewmodel.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final progressReservationViewModelProvider =
@@ -30,13 +29,6 @@ class ProgressReservationViewModel extends ChangeNotifier {
     await ref
         .read(progressResrvationServiceProvider.notifier)
         .getProgressReservation();
-  }
-
-  void refreshProgressReservation() async {
-    ref
-        .read(preReservationSettingViewModelProvider.notifier)
-        .getPreReservationStatusList();
-    getProgressReservation();
   }
 
   void stopPreReservation(BuildContext context) async {

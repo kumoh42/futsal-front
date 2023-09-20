@@ -16,7 +16,9 @@ class ProgressReservationService
   final ProgressReservationRepository repository;
 
   ProgressReservationService(this.repository)
-      : super(ProgressReservationStateNone());
+      : super(ProgressReservationStateNone()) {
+    getProgressReservation();
+  }
 
   Future stopPreReservation() async {
     try {

@@ -18,7 +18,9 @@ class PreReservationSettingService
   final PreReservationSettingRepository repository;
 
   PreReservationSettingService(this.repository)
-      : super(PreReservationSettingStateNone());
+      : super(PreReservationSettingStateNone()) {
+    getPreReservation();
+  }
 
   Future setPreReservation(
       {required ProgressReservationEntity progressReservationEntity}) async {

@@ -25,12 +25,13 @@ class PreReservationSettingViewModel extends ChangeNotifier {
     minute = DateTime.now().minute;
     statusState = ref.watch(preReservationSettingServiceProvider);
   }
+
   PreReservationStatusEntity? get preReservationStatus =>
       statusState is PreReservationSettingStateSuccess
           ? (statusState as PreReservationSettingStateSuccess).data
           : null;
 
-  void getPreReservationStatusList() async {
+  void getPreReservationStatus() async {
     await ref
         .read(preReservationSettingServiceProvider.notifier)
         .getPreReservation();
@@ -87,7 +88,7 @@ class PreReservationSettingViewModel extends ChangeNotifier {
           await ref
               .read(preReservationSettingServiceProvider.notifier)
               .cancelPreReservation(preReservationStatusEntity: entity);
-          if(context.mounted) Navigator.of(context).pop();
+          if (context.mounted) Navigator.of(context).pop();
         },
       ),
       context: context,

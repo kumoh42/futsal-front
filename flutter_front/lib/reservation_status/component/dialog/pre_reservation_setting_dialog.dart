@@ -71,7 +71,7 @@ class _ReservationBlockDialogState
           titlePadding: EdgeInsets.all(kPaddingXLargeSize).copyWith(bottom: 0),
           contentPadding: EdgeInsets.all(kPaddingXLargeSize).copyWith(top: 0),
           title: DesignedContainerTitleBar(
-            title: '예약 불가 기간 설정',
+            title: '사전 예약 기간 설정',
             actions: [
               IconButton(
                 onPressed: () => Navigator.of(context).pop(),

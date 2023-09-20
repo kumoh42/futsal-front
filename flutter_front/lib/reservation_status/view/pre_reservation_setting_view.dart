@@ -67,7 +67,7 @@ class _PreReservationSettingViewState
                 icon: Icon(Icons.refresh, size: kIconMiddleSize),
                 padding: EdgeInsets.zero,
                 constraints: const BoxConstraints(),
-                splashRadius: kIconMiddleSize / 1.2.w,
+                splashRadius: kIconMiddleSize / 1.2,
               ),
             ],
             child: Column(
@@ -131,14 +131,15 @@ class _PreReservationSettingViewState
                     icon: Icon(Icons.refresh, size: kIconMiddleSize),
                     padding: EdgeInsets.zero,
                     constraints: const BoxConstraints(),
-                    splashRadius: kIconMiddleSize / 1.2.w,
+                    splashRadius: kIconMiddleSize / 1.2,
                   ),
+                  const SizedBox(width: kWPaddingMiddleSize),
                   IconButton(
                     onPressed: () => preViewmodel.setPreReservation(context),
                     icon: Icon(Icons.edit, size: kIconMiddleSize),
                     padding: EdgeInsets.zero,
                     constraints: const BoxConstraints(),
-                    splashRadius: kIconMiddleSize / 1.2.w,
+                    splashRadius: kIconMiddleSize / 1.2,
                   ),
                 ],
                 child: Column(

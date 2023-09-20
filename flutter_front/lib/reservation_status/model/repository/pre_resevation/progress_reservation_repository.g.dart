@@ -61,14 +61,14 @@ class _ProgressReservationRepository implements ProgressReservationRepository {
   }
 
   @override
-  Future<List<ProgressReservationEntity>> getProgressReservation() async {
+  Future<ProgressReservationEntity> getProgressReservation() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'accessToken': 'true'};
     _headers.removeWhere((k, v) => v == null);
     final Map<String, dynamic>? _data = null;
-    final _result = await _dio.fetch<List<dynamic>>(
-        _setStreamType<List<ProgressReservationEntity>>(Options(
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ProgressReservationEntity>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -80,10 +80,7 @@ class _ProgressReservationRepository implements ProgressReservationRepository {
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    var value = _result.data!
-        .map((dynamic i) =>
-            ProgressReservationEntity.fromJson(i as Map<String, dynamic>))
-        .toList();
+    final value = ProgressReservationEntity.fromJson(_result.data!);
     return value;
   }
 

@@ -6,12 +6,14 @@ import 'package:flutter_front/common/styles/text_styles.dart';
 import 'package:flutter_front/common/utils/date_utils.dart';
 import 'package:flutter_front/reservation_status/component/custom_table_calendar.dart';
 import 'package:flutter_front/reservation_status/component/designed_button.dart';
-import 'package:flutter_front/reservation_status/model/entity/block_reservation_entity.dart';
-import 'package:flutter_front/reservation_status/model/entity/pre_reservation/progress_reservation_entity.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class CalendarSelectDialog<T> extends ConsumerStatefulWidget {
-  final Future Function(dynamic) onPressed;
+class CalendarSelectDialog extends ConsumerStatefulWidget {
+  final Future Function(
+    CustomTimeTableController controller,
+    String startTime,
+    String endTime,
+  ) onPressed;
   late final ChangeNotifierProvider<CustomTimeTableController> provider;
   final List<String> startTimes;
   final List<String> endTimes;
@@ -30,7 +32,7 @@ class CalendarSelectDialog<T> extends ConsumerStatefulWidget {
 
   @override
   ConsumerState<CalendarSelectDialog> createState() =>
-      _ReservationBlockDialogState<T>();
+      _ReservationBlockDialogState();
 }
 
 class _ReservationBlockDialogState<T>
@@ -137,40 +139,11 @@ class _ReservationBlockDialogState<T>
                         text: '저장',
                         icon: Icons.save,
                         onPressed: () async {
-                          if (T == ProgressReservationEntity) {
-                            await widget.onPressed(
-                              ProgressReservationEntity(
-                                isPre: true,
-                                date: defaultDateFormat.format(
-                                  controller.selectedDay,
-                                ),
-                                time: _selectedStartTime.substring(0, 2),
-                              ),
-                            );
-                          }
-                          if (T == BlockReservationEntity) {
-                            final startDate =
-                                controller.startDay.toString().split(" ")[0];
-                            final endDate = controller.endDay == null
-                                ? startDate
-                                : controller.endDay.toString().split(" ")[0];
-                            if (startDate == endDate) {
-                              if (_selectedStartTime.substring(0, 2).compareTo(
-                                      _selectedEndTime.substring(0, 2)) >=
-                                  0) {
-                                return;
-                              }
-                            }
-                            await widget.onPressed(
-                              BlockReservationEntity(
-                                startDate:
-                                    '${startDate}T${_selectedStartTime.substring(0, 2)}',
-                                endDate:
-                                    '${endDate}T${_selectedEndTime.substring(0, 2)}',
-                              ),
-                            );
-                          }
-                          if (context.mounted) Navigator.of(context).pop();
+                          await widget.onPressed(
+                            controller,
+                            _selectedStartTime,
+                            _selectedEndTime,
+                          );
                         },
                       ),
                     ],

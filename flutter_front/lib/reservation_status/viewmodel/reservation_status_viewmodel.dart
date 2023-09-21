@@ -57,14 +57,29 @@ class ReservationStatusViewModel extends ChangeNotifier {
   void blockReservation(BuildContext context) async {
     await showDialog(
       context: context,
-      builder: (context) => CalendarSelectDialog<BlockReservationEntity>(
-        onPressed: (e) async {
+      builder: (context) => CalendarSelectDialog(
+        onPressed: (controller, startTime, endTime) async {
+          final startDate = controller.startDay == null
+              ? defaultDateFormat.format(controller.selectedDay)
+              : controller.startDay.toString().split(" ")[0];
+          final endDate = controller.endDay == null
+              ? startDate
+              : controller.endDay.toString().split(" ")[0];
+          if (startDate == endDate) {
+            if (startTime.substring(0, 2).compareTo(endTime.substring(0, 2)) >=
+                0) {
+              SnackBarUtil.showError("시작 시간이 종료 시간보다 빨라야 합니다.");
+              return;
+            }
+          }
+
           await ref
               .read(preReservationSettingServiceProvider.notifier)
               .blockReservation(
-                start: e.startDate,
-                end: e.endDate,
+                start: '${startDate}T${startTime.substring(0, 2)}',
+                end: '${endDate}T${endTime.substring(0, 2)}',
               );
+          if (context.mounted) Navigator.of(context).pop();
         },
         controller: blockReservationController,
         endTimes: const [

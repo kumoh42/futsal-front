@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_front/common/styles/sizes.dart';
 import 'package:flutter_front/common/styles/text_styles.dart';
 import 'package:flutter_front/common/utils/custom_dialog_utils.dart';
+import 'package:flutter_front/common/utils/date_utils.dart';
 import 'package:flutter_front/reservation_status/component/custom_table_calendar.dart';
 import 'package:flutter_front/reservation_status/component/dialog/calendar_select_dialog.dart';
 import 'package:flutter_front/reservation_status/model/entity/pre_reservation/pre_reservation_status_entity.dart';
@@ -62,11 +63,20 @@ class PreReservationSettingViewModel extends ChangeNotifier {
   void setPreReservation(BuildContext context) async {
     await showDialog(
       context: context,
-      builder: (context) => CalendarSelectDialog<ProgressReservationEntity>(
-        onPressed: (e) async {
+      builder: (context) => CalendarSelectDialog(
+        onPressed: (controller, startTime, endTime) async {
+          final entity = ProgressReservationEntity(
+            isPre: true,
+            date: defaultDateFormat.format(
+              controller.selectedDay,
+            ),
+            time: startTime.substring(0, 2),
+          );
           await ref
               .read(preReservationSettingServiceProvider.notifier)
-              .setPreReservation(progressReservationEntity: e);
+              .setPreReservation(progressReservationEntity: entity);
+
+          if (context.mounted) Navigator.of(context).pop();
         },
         controller: customTimeTableController,
         startTimes: const [

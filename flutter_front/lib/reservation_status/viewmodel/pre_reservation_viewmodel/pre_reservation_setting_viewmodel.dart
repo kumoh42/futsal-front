@@ -3,8 +3,9 @@ import 'package:flutter_front/common/styles/sizes.dart';
 import 'package:flutter_front/common/styles/text_styles.dart';
 import 'package:flutter_front/common/utils/custom_dialog_utils.dart';
 import 'package:flutter_front/reservation_status/component/custom_table_calendar.dart';
-import 'package:flutter_front/reservation_status/component/dialog/pre_reservation_setting_dialog.dart';
+import 'package:flutter_front/reservation_status/component/dialog/calendar_select_dialog.dart';
 import 'package:flutter_front/reservation_status/model/entity/pre_reservation/pre_reservation_status_entity.dart';
+import 'package:flutter_front/reservation_status/model/entity/pre_reservation/progress_reservation_entity.dart';
 import 'package:flutter_front/reservation_status/model/service/pre_reservation/pre_reservation_setting_service.dart';
 import 'package:flutter_front/reservation_status/model/state/pre_reservation/pre_reservation_setting_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -61,11 +62,24 @@ class PreReservationSettingViewModel extends ChangeNotifier {
   void setPreReservation(BuildContext context) async {
     await showDialog(
       context: context,
-      builder: (context) => PreReservationSettingDialog(
+      builder: (context) => CalendarSelectDialog<ProgressReservationEntity>(
+        onPressed: (e) async {
+          await ref
+              .read(preReservationSettingServiceProvider.notifier)
+              .setPreReservation(progressReservationEntity: e);
+        },
         controller: customTimeTableController,
-        onPressed: (e) => ref
-            .read(preReservationSettingServiceProvider.notifier)
-            .setPreReservation(progressReservationEntity: e),
+        startTimes: const [
+          "18시",
+          "19시",
+          "20시",
+          "21시",
+          "22시",
+        ],
+        endTimes: const [
+          "00시",
+        ],
+        title: "사전 예약 기간 설정",
       ),
     );
   }

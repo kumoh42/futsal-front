@@ -3,9 +3,10 @@ import 'package:flutter_front/common/state/state.dart';
 import 'package:flutter_front/common/utils/date_utils.dart';
 import 'package:flutter_front/common/utils/snack_bar_util.dart';
 import 'package:flutter_front/reservation_status/component/custom_table_calendar.dart';
-import 'package:flutter_front/reservation_status/component/dialog/reservation_block_dialog.dart';
+import 'package:flutter_front/reservation_status/component/dialog/calendar_select_dialog.dart';
 import 'package:flutter_front/reservation_status/component/reservation_cancel_dialog.dart';
 import 'package:flutter_front/reservation_status/component/reservation_state/reservation_state_list.dart';
+import 'package:flutter_front/reservation_status/model/entity/block_reservation_entity.dart';
 import 'package:flutter_front/reservation_status/model/entity/reservation_entity.dart';
 import 'package:flutter_front/reservation_status/model/service/pre_reservation/pre_reservation_setting_service.dart';
 import 'package:flutter_front/reservation_status/model/service/reservation_status_service.dart';
@@ -41,10 +42,7 @@ class ReservationStatusViewModel extends ChangeNotifier {
     blockReservationController = CustomTimeTableController(useRange: true);
 
     statusState = ref.read(reservationStatusServiceProvider);
-    /*
-    프로바이더의 상태 변경을 감지하고, 변경 사항이 있을 때마다 특정 동작을 수행하는 부분
-    두 번째 매개변수로는 변경 이전의 상태(previous)와 변경 후의 상태(next)를 받음
-    */
+
     ref.listen(reservationStatusServiceProvider, (previous, next) {
       if (previous != next) {
         statusState = next;
@@ -59,14 +57,35 @@ class ReservationStatusViewModel extends ChangeNotifier {
   void blockReservation(BuildContext context) async {
     await showDialog(
       context: context,
-      builder: (context) => ReservationBlockDialog(
+      builder: (context) => CalendarSelectDialog<BlockReservationEntity>(
+        onPressed: (e) async {
+          await ref
+              .read(preReservationSettingServiceProvider.notifier)
+              .blockReservation(
+                start: e.startDate,
+                end: e.endDate,
+              );
+        },
         controller: blockReservationController,
-        onPressed: (e) => ref
-            .read(preReservationSettingServiceProvider.notifier)
-            .blockReservation(
-              start: e.startDate,
-              end: e.endDate,
-            ),
+        endTimes: const [
+          "10시",
+          "12시",
+          "14시",
+          "16시",
+          "18시",
+          "20시",
+          "22시",
+        ],
+        startTimes: const [
+          "08시",
+          "10시",
+          "12시",
+          "14시",
+          "16시",
+          "18시",
+          "20시",
+        ],
+        title: "예약 불가 기간 설정",
       ),
     );
   }

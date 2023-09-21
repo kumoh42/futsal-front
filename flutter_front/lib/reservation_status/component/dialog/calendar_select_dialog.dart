@@ -7,56 +7,52 @@ import 'package:flutter_front/common/utils/date_utils.dart';
 import 'package:flutter_front/reservation_status/component/custom_table_calendar.dart';
 import 'package:flutter_front/reservation_status/component/designed_button.dart';
 import 'package:flutter_front/reservation_status/model/entity/block_reservation_entity.dart';
+import 'package:flutter_front/reservation_status/model/entity/pre_reservation/progress_reservation_entity.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ReservationBlockDialog extends ConsumerStatefulWidget {
-  final Future Function(BlockReservationEntity) onPressed;
+class CalendarSelectDialog<T> extends ConsumerStatefulWidget {
+  final Future Function(dynamic) onPressed;
   late final ChangeNotifierProvider<CustomTimeTableController> provider;
+  final List<String> startTimes;
+  final List<String> endTimes;
+  final String title;
 
-  ReservationBlockDialog({
+  CalendarSelectDialog({
     Key? key,
     required this.onPressed,
     required CustomTimeTableController controller,
+    required this.endTimes,
+    required this.startTimes,
+    required this.title,
   }) : super(key: key) {
     provider = ChangeNotifierProvider((ref) => controller);
   }
 
   @override
-  ConsumerState<ReservationBlockDialog> createState() =>
-      _ReservationBlockDialogState();
+  ConsumerState<CalendarSelectDialog> createState() =>
+      _ReservationBlockDialogState<T>();
 }
 
-class _ReservationBlockDialogState
-    extends ConsumerState<ReservationBlockDialog> {
+class _ReservationBlockDialogState<T>
+    extends ConsumerState<CalendarSelectDialog> {
   late CustomTimeTableController controller;
-  final _endTimes = [
-    "10시",
-    "12시",
-    "14시",
-    "16시",
-    "18시",
-    "20시",
-    "22시",
-  ];
-  final _startTimes = [
-    "08시",
-    "10시",
-    "12시",
-    "14시",
-    "16시",
-    "18시",
-    "20시",
-  ];
 
   String _selectedStartTime = '';
   String _selectedEndTime = '';
+
+  String toNextMonth(String? date) {
+    if (date == null) return '-';
+    DateTime dateTime = regDateMonthFormat.parse(date);
+    DateTime result = DateTime(dateTime.year, dateTime.month + 1, 1);
+    return regDateFormatK.format(result);
+  }
 
   @override
   void initState() {
     super.initState();
     setState(() {
-      _selectedStartTime = _startTimes[0];
-      _selectedEndTime = _endTimes[0];
+      _selectedStartTime = widget.startTimes[0];
+      _selectedEndTime = widget.endTimes[0];
     });
   }
 
@@ -70,7 +66,7 @@ class _ReservationBlockDialogState
           titlePadding: EdgeInsets.all(kPaddingXLargeSize).copyWith(bottom: 0),
           contentPadding: EdgeInsets.all(kPaddingXLargeSize).copyWith(top: 0),
           title: DesignedContainerTitleBar(
-            title: '예약 불가 기간 설정',
+            title: widget.title,
             actions: [
               IconButton(
                 onPressed: () => Navigator.of(context).pop(),
@@ -109,42 +105,71 @@ class _ReservationBlockDialogState
                       SizedBox(height: kPaddingLargeSize),
                       buildDateTimeSelector(
                         title: "시작 일시",
-                        content: regDateFormatK.format(
-                          controller.startDay ?? controller.selectedDay,
-                        ),
+                        content: controller.useRange
+                            ? regDateFormatK.format(
+                                controller.startDay ?? controller.selectedDay,
+                              )
+                            : regDateFormatK.format(
+                                controller.selectedDay,
+                              ),
                         selectedTime: _selectedStartTime,
-                        times: _startTimes,
+                        times: widget.startTimes,
                         onChanged: (value) {
                           setState(() => _selectedStartTime = value!);
                         },
                       ),
                       buildDateTimeSelector(
                         title: "종료 일시",
-                        content: regDateFormatK.format(
-                          controller.endDay ?? controller.selectedDay,
-                        ),
+                        content: controller.useRange
+                            ? regDateFormatK.format(
+                                controller.endDay ?? controller.selectedDay)
+                            : toNextMonth(
+                                regDateMonthFormat
+                                    .format(controller.selectedDay),
+                              ),
                         selectedTime: _selectedEndTime,
-                        times: _endTimes,
+                        times: widget.endTimes,
                         onChanged: (value) {
-                          setState(
-                            () {
-                              _selectedEndTime = value!;
-                            },
-                          );
+                          setState(() => _selectedEndTime = value!);
                         },
                       ),
                       DesignedButton(
                         text: '저장',
                         icon: Icons.save,
                         onPressed: () async {
-                          await widget.onPressed(
-                            BlockReservationEntity(
-                              startDate:
-                                  '${controller.startDay.toString().split(" ")[0]}T${_selectedStartTime.substring(0, 2)}',
-                              endDate:
-                                  '${controller.endDay.toString().split(" ")[0]}T${_selectedEndTime.substring(0, 2)}',
-                            ),
-                          );
+                          if (T == ProgressReservationEntity) {
+                            await widget.onPressed(
+                              ProgressReservationEntity(
+                                isPre: true,
+                                date: defaultDateFormat.format(
+                                  controller.selectedDay,
+                                ),
+                                time: _selectedStartTime.substring(0, 2),
+                              ),
+                            );
+                          }
+                          if (T == BlockReservationEntity) {
+                            final startDate =
+                                controller.startDay.toString().split(" ")[0];
+                            final endDate = controller.endDay == null
+                                ? startDate
+                                : controller.endDay.toString().split(" ")[0];
+                            if (startDate == endDate) {
+                              if (_selectedStartTime.substring(0, 2).compareTo(
+                                      _selectedEndTime.substring(0, 2)) >=
+                                  0) {
+                                return;
+                              }
+                            }
+                            await widget.onPressed(
+                              BlockReservationEntity(
+                                startDate:
+                                    '${startDate}T${_selectedStartTime.substring(0, 2)}',
+                                endDate:
+                                    '${endDate}T${_selectedEndTime.substring(0, 2)}',
+                              ),
+                            );
+                          }
                           if (context.mounted) Navigator.of(context).pop();
                         },
                       ),

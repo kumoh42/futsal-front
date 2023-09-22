@@ -7,6 +7,7 @@ import 'designed_container_title_bar.dart';
 class DesignedContainer extends StatelessWidget {
   final String title;
   final List<Widget>? actions;
+  final bool isChildInfinity;
   final Widget child;
 
   const DesignedContainer({
@@ -14,6 +15,7 @@ class DesignedContainer extends StatelessWidget {
     required this.title,
     this.actions,
     required this.child,
+    this.isChildInfinity = false,
   }) : super(key: key);
 
   @override
@@ -33,7 +35,7 @@ class DesignedContainer extends StatelessWidget {
             children: [
               DesignedContainerTitleBar(title: title, actions: actions),
               SizedBox(height: kPaddingMiddleSize),
-              child,
+              isChildInfinity ? Expanded(child: child) : child,
             ],
           ),
         ),

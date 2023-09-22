@@ -21,6 +21,7 @@ class UserManagementScreen extends StatelessWidget {
           wFlex: 8,
           child: DesignedContainer(
             title: "사용자 목록",
+            isChildInfinity: true,
             actions: [
               IconButton(
                 splashRadius: 20,

@@ -24,14 +24,19 @@ class DesignedContainer extends StatelessWidget {
         border: Border.all(color: kDisabledColor, width: 3),
         borderRadius: BorderRadius.all(Radius.circular(kBorderRadiusSize)),
       ),
-      padding: EdgeInsets.all(kPaddingLargeSize),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          DesignedContainerTitleBar(title: title, actions: actions),
-          SizedBox(height: kPaddingMiddleSize),
-          child,
-        ],
+      child: Material(
+        borderRadius: BorderRadius.all(Radius.circular(kBorderRadiusSize)),
+        child: Padding(
+          padding: EdgeInsets.all(kPaddingLargeSize),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              DesignedContainerTitleBar(title: title, actions: actions),
+              SizedBox(height: kPaddingMiddleSize),
+              child,
+            ],
+          ),
+        ),
       ),
     );
   }

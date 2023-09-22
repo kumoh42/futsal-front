@@ -53,8 +53,9 @@ class SearchRowView extends StatelessWidget {
                     padding: EdgeInsets.only(
                       right: kPaddingMiddleSize,
                     ),
+                    splashRadius: 1,
                     onPressed: () {},
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.search,
                     ),
                   ),

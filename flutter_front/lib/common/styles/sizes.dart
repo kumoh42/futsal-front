@@ -43,6 +43,7 @@ const double kWTextLargeSize = 28.0;
 const double kWTextMiddleSize = 21.0;
 const double kWTextSmallSize = 18.0;
 const double kWTextMiniSize = 14.0;
+const double kWTextSuperMiniSize = 10.0;
 
 double get kTextTitleSize => ResponsiveSize.S(kWTextTitleSize);
 
@@ -53,6 +54,8 @@ double get kTextMiddleSize => ResponsiveSize.S(kWTextMiddleSize);
 double get kTextSmallSize => ResponsiveSize.S(kWTextSmallSize);
 
 double get kTextMiniSize => ResponsiveSize.S(kWTextMiniSize);
+
+double get kTextSuperMiniSize => ResponsiveSize.S(kWTextSuperMiniSize);
 
 const double kWPaddingXLargeSize = 32.0;
 const double kWPaddingLargeSize = 16.0;
@@ -86,4 +89,5 @@ double get kIconMiniSize => ResponsiveSize.S(kWIconMiniSize);
 const double kWBorderRadiusSize = 10.0;
 const double kMBorderRadiusSize = 5.0;
 
-double get kBorderRadiusSize => ResponsiveData.kIsMobile ? kMBorderRadiusSize : kWBorderRadiusSize;
+double get kBorderRadiusSize =>
+    ResponsiveData.kIsMobile ? kMBorderRadiusSize : kWBorderRadiusSize;

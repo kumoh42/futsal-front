@@ -4,6 +4,7 @@ import 'package:flutter_front/common/component/container/responsive_container.da
 import 'package:flutter_front/common/styles/sizes.dart';
 import 'package:flutter_front/common/styles/text_styles.dart';
 import 'package:flutter_front/user_management/view/search_row_view.dart';
+import 'package:flutter_front/user_management/view/user_info_container.dart';
 import 'package:flutter_front/user_management/view/user_listview.dart';
 
 class UserManagementScreen extends StatelessWidget {
@@ -19,66 +20,58 @@ class UserManagementScreen extends StatelessWidget {
       children: [
         ResponsiveWidget(
           wFlex: 8,
+          mFlex: 2,
           child: DesignedContainer(
             title: "사용자 목록",
             isChildInfinity: true,
             actions: [
               IconButton(
-                splashRadius: 20,
-                icon: Icon(
-                  Icons.add,
-                  size: kIconMiddleSize,
-                ),
-                onPressed: () {
-                  print("hi!");
-                },
+                onPressed: () {},
+                icon: Icon(Icons.add, size: kIconMiddleSize),
+                padding: EdgeInsets.zero,
+                constraints: const BoxConstraints(),
+                splashRadius: kIconMiddleSize / 1.2,
               ),
             ],
-            child: Container(
-              clipBehavior: Clip.hardEdge,
-              decoration: BoxDecoration(
-                  border: Border.all(width: 1, color: Colors.red)),
-              child: Column(
-                children: [
-                  const SearchRowView(),
-                  ResponsiveSizedBox(
-                    size: kPaddingMiddleSize,
+            child: Column(
+              children: [
+                const SearchRowView(),
+                ResponsiveSizedBox(
+                  size: kPaddingMiddleSize,
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: kPaddingLargeSize),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(child: Text("ID", style: textStyle)),
+                      Expanded(child: Text("이름", style: textStyle)),
+                      Expanded(child: Text("닉네임", style: textStyle)),
+                      Expanded(child: Text("소속", style: textStyle)),
+                      Expanded(child: Text("권한", style: textStyle)),
+                      ResponsiveSizedBox(size: kIconMiddleSize),
+                    ],
                   ),
-                  Padding(
+                ),
+                ResponsiveSizedBox(
+                  size: kPaddingMiddleSize,
+                ),
+                Expanded(
+                  child: Padding(
                     padding:
                         EdgeInsets.symmetric(horizontal: kPaddingLargeSize),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text("ID", style: textStyle),
-                        Text("이름", style: textStyle),
-                        Text("닉네임", style: textStyle),
-                        Text("소속", style: textStyle),
-                        Text("권한", style: textStyle),
-                        const SizedBox(),
-                      ],
-                    ),
+                    child: const UserListView(),
                   ),
-                  ResponsiveSizedBox(
-                    size: kPaddingMiddleSize,
-                  ),
-                  const Expanded(child: UserListView()),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),
         ResponsiveSizedBox(size: kLayoutGutterSize),
         const ResponsiveWidget(
           wFlex: 4,
-          child: DesignedContainer(
-            title: "사용자 정보",
-            child: Column(
-              children: [
-                Text("hi"),
-              ],
-            ),
-          ),
+          mFlex: 1,
+          child: UserInfoContainer(),
         ),
       ],
     );

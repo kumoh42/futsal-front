@@ -43,21 +43,6 @@ class ReservationCancelDialog extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              // TitledText(title: '아이디', text: entity.member.id),
-              // const SizedBox(height: kPaddingMiddleSize),
-              // TitledText(title: '이름', text: entity.member.name),
-              // const SizedBox(height: kPaddingMiddleSize),
-              // Row(
-              //   children: [
-              //     Expanded(
-              //         child:
-              //             TitledText(title: '연락처', text: entity.member.phone)),
-              //     const SizedBox(width: kPaddingMiddleSize),
-              //     Expanded(
-              //         child:
-              //             TitledText(title: '이메일', text: entity.member.email)),
-              //   ],
-              // ),
               SizedBox(height: kPaddingMiddleSize),
               for (var e in entities)
                 Row(

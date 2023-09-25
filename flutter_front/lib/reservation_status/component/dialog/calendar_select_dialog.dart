@@ -6,6 +6,7 @@ import 'package:flutter_front/common/styles/text_styles.dart';
 import 'package:flutter_front/common/utils/date_utils.dart';
 import 'package:flutter_front/reservation_status/component/custom_table_calendar.dart';
 import 'package:flutter_front/reservation_status/component/designed_button.dart';
+import 'package:flutter_front/common/component/base_dialog.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class CalendarSelectDialog extends ConsumerStatefulWidget {
@@ -62,96 +63,75 @@ class _ReservationBlockDialogState<T>
   Widget build(BuildContext context) {
     controller = ref.watch(widget.provider);
 
-    return Center(
-      child: SingleChildScrollView(
-        child: AlertDialog(
-          titlePadding: EdgeInsets.all(kPaddingXLargeSize).copyWith(bottom: 0),
-          contentPadding: EdgeInsets.all(kPaddingXLargeSize).copyWith(top: 0),
-          title: DesignedContainerTitleBar(
-            title: widget.title,
-            actions: [
-              IconButton(
-                onPressed: () => Navigator.of(context).pop(),
-                icon: Icon(Icons.close, size: kIconMiddleSize),
-                padding: EdgeInsets.zero,
-                constraints: const BoxConstraints(),
-                splashRadius: kIconMiddleSize / 1.2,
-              )
-            ],
-          ),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(kBorderRadiusSize)),
-          ),
-          content: SizedBox(
-            height: ResponsiveData.kIsMobile
-                ? ResponsiveSize.M(900)
-                : ResponsiveSize.W(500),
-            width: ResponsiveSize.W(850),
-            child: ResponsiveContainer(
-              children: [
-                ResponsiveWidget(
-                  wFlex: 1,
-                  mFlex: 1,
-                  child: CustomTimeTable(
-                    controller: controller,
-                    textSize: kTextMiddleSize,
-                  ),
-                ),
-                ResponsiveSizedBox(size: kPaddingMiddleSize),
-                const ResponsiveDivider(),
-                ResponsiveSizedBox(size: kPaddingMiddleSize),
-                ResponsiveWidget(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      SizedBox(height: kPaddingLargeSize),
-                      buildDateTimeSelector(
-                        title: "시작 일시",
-                        content: controller.useRange
-                            ? regDateFormatK.format(
-                                controller.startDay ?? controller.selectedDay,
-                              )
-                            : regDateFormatK.format(
-                                controller.selectedDay,
-                              ),
-                        selectedTime: _selectedStartTime,
-                        times: widget.startTimes,
-                        onChanged: (value) {
-                          setState(() => _selectedStartTime = value!);
-                        },
-                      ),
-                      buildDateTimeSelector(
-                        title: "종료 일시",
-                        content: controller.useRange
-                            ? regDateFormatK.format(
-                                controller.endDay ?? controller.selectedDay)
-                            : toNextMonth(
-                                regDateMonthFormat
-                                    .format(controller.selectedDay),
-                              ),
-                        selectedTime: _selectedEndTime,
-                        times: widget.endTimes,
-                        onChanged: (value) {
-                          setState(() => _selectedEndTime = value!);
-                        },
-                      ),
-                      DesignedButton(
-                        text: '저장',
-                        icon: Icons.save,
-                        onPressed: () async {
-                          await widget.onPressed(
-                            controller,
-                            _selectedStartTime,
-                            _selectedEndTime,
-                          );
-                        },
-                      ),
-                    ],
-                  ),
-                ),
-              ],
+    return BaseDialog(
+      title: widget.title,
+      child: SizedBox(
+        height: ResponsiveData.kIsMobile
+            ? ResponsiveSize.M(900)
+            : ResponsiveSize.W(500),
+        width: ResponsiveSize.W(850),
+        child: ResponsiveContainer(
+          children: [
+            ResponsiveWidget(
+              wFlex: 1,
+              mFlex: 1,
+              child: CustomTimeTable(
+                controller: controller,
+                textSize: kTextMiddleSize,
+              ),
             ),
-          ),
+            ResponsiveSizedBox(size: kPaddingMiddleSize),
+            const ResponsiveDivider(),
+            ResponsiveSizedBox(size: kPaddingMiddleSize),
+            ResponsiveWidget(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  SizedBox(height: kPaddingLargeSize),
+                  buildDateTimeSelector(
+                    title: "시작 일시",
+                    content: controller.useRange
+                        ? regDateFormatK.format(
+                            controller.startDay ?? controller.selectedDay,
+                          )
+                        : regDateFormatK.format(
+                            controller.selectedDay,
+                          ),
+                    selectedTime: _selectedStartTime,
+                    times: widget.startTimes,
+                    onChanged: (value) {
+                      setState(() => _selectedStartTime = value!);
+                    },
+                  ),
+                  buildDateTimeSelector(
+                    title: "종료 일시",
+                    content: controller.useRange
+                        ? regDateFormatK
+                            .format(controller.endDay ?? controller.selectedDay)
+                        : toNextMonth(
+                            regDateMonthFormat.format(controller.selectedDay),
+                          ),
+                    selectedTime: _selectedEndTime,
+                    times: widget.endTimes,
+                    onChanged: (value) {
+                      setState(() => _selectedEndTime = value!);
+                    },
+                  ),
+                  DesignedButton(
+                    text: '저장',
+                    icon: Icons.save,
+                    onPressed: () async {
+                      await widget.onPressed(
+                        controller,
+                        _selectedStartTime,
+                        _selectedEndTime,
+                      );
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );

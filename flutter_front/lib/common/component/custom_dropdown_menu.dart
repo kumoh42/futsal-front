@@ -7,12 +7,14 @@ class CustomDropDownMenu extends ConsumerStatefulWidget {
   late final ChangeNotifierProvider<CustomDropDownMenuController> provider;
   final String title;
   final double? titleSize;
+  final TextStyle? menuTextStyle;
 
   CustomDropDownMenu({
     super.key,
     required CustomDropDownMenuController controller,
     required this.title,
     this.titleSize,
+    this.menuTextStyle,
   }) {
     provider = ChangeNotifierProvider((ref) => controller);
   }
@@ -34,7 +36,9 @@ class _CustomDropDownMenuState extends ConsumerState<CustomDropDownMenu> {
         Text(
           widget.title,
           style: kTextDisabledStyle.copyWith(
-              fontSize: widget.titleSize ?? kTextMiniSize),
+            fontSize: widget.titleSize ?? kTextMiniSize,
+            fontWeight: FontWeight.w600,
+          ),
         ),
         DropdownButton(
           isExpanded: true,
@@ -46,9 +50,10 @@ class _CustomDropDownMenuState extends ConsumerState<CustomDropDownMenu> {
                   value: e,
                   child: Text(
                     e,
-                    style: kTextMainStyle.copyWith(
-                      fontSize: kTextMiddleSize,
-                    ),
+                    style: widget.menuTextStyle ??
+                        kTextMainStyle.copyWith(
+                          fontSize: kTextMiddleSize,
+                        ),
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),

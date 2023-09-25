@@ -13,77 +13,83 @@ class UserInfoContainer extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final viewmodel = ref.watch(userListViewmodelProvider);
     return DesignedContainer(
-      title: "사용자 정보",
-      actions: [
-        IconButton(
-          onPressed: () => viewmodel.state is UserListStateSuccess
-              ? viewmodel.showUserInfoEditDialog(context)
-              : null,
-          icon: Icon(Icons.edit, size: kIconMiddleSize),
-          padding: EdgeInsets.zero,
-          constraints: const BoxConstraints(),
-          splashRadius: kIconMiddleSize / 1.2,
-        ),
-      ],
-      child: viewmodel.state is UserListStateSuccess
-          ? Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: kWPaddingSmallSize,
-                vertical: kWPaddingMiniSize,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  CustomTitledText(
-                    title: "아이디",
-                    content: viewmodel.userList![viewmodel.selectedIndex].id,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        child: CustomTitledText(
-                          title: "이름",
+        title: "사용자 정보",
+        actions: [
+          IconButton(
+            onPressed: () => viewmodel.state is UserListStateSuccess
+                ? viewmodel.userList!.isNotEmpty
+                    ? viewmodel.showUserInfoEditDialog(context)
+                    : null
+                : null,
+            icon: Icon(Icons.edit, size: kIconMiddleSize),
+            padding: EdgeInsets.zero,
+            constraints: const BoxConstraints(),
+            splashRadius: kIconMiddleSize / 1.2,
+          ),
+        ],
+        child: viewmodel.state is UserListStateSuccess
+            ? viewmodel.userList!.isNotEmpty
+                ? Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: kWPaddingSmallSize,
+                      vertical: kWPaddingMiniSize,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        CustomTitledText(
+                          title: "아이디",
                           content:
-                              viewmodel.userList![viewmodel.selectedIndex].name,
+                              viewmodel.userList![viewmodel.selectedIndex].id,
                         ),
-                      ),
-                      Expanded(
-                        child: CustomTitledText(
-                          title: "권한",
-                          content: viewmodel
-                              .userList![viewmodel.selectedIndex].authority,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              child: CustomTitledText(
+                                title: "이름",
+                                content: viewmodel
+                                    .userList![viewmodel.selectedIndex].name,
+                              ),
+                            ),
+                            Expanded(
+                              child: CustomTitledText(
+                                title: "권한",
+                                content: viewmodel
+                                    .userList![viewmodel.selectedIndex]
+                                    .authority,
+                              ),
+                            ),
+                            const SizedBox(),
+                          ],
                         ),
-                      ),
-                      const SizedBox(),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        child: CustomTitledText(
-                          title: "닉네임  ",
-                          content: viewmodel
-                              .userList![viewmodel.selectedIndex].nickName,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              child: CustomTitledText(
+                                title: "닉네임  ",
+                                content: viewmodel
+                                    .userList![viewmodel.selectedIndex]
+                                    .nickName,
+                              ),
+                            ),
+                            Expanded(
+                              child: CustomTitledText(
+                                title: "소속",
+                                content: viewmodel
+                                    .userList![viewmodel.selectedIndex].major,
+                              ),
+                            ),
+                            const SizedBox(),
+                          ],
                         ),
-                      ),
-                      Expanded(
-                        child: CustomTitledText(
-                          title: "소속",
-                          content: viewmodel
-                              .userList![viewmodel.selectedIndex].major,
-                        ),
-                      ),
-                      const SizedBox(),
-                    ],
-                  ),
-                ],
-              ),
-            )
-          : const Center(
-              child: CircularProgressIndicator(),
-            ),
-    );
+                      ],
+                    ),
+                  )
+                : Container()
+            : const Center(
+                child: CircularProgressIndicator(),
+              ));
   }
 }

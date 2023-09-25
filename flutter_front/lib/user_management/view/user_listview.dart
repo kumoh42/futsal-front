@@ -22,7 +22,7 @@ class _UserListViewState extends ConsumerState<UserListView> {
     if (ref.read(userListViewmodelProvider.notifier).state
         is! UserListStateSuccess) {
       Future(
-        () => ref.read(userListViewmodelProvider).getUserList(),
+        () => ref.read(userListViewmodelProvider.notifier).getUserList(),
       );
     }
   }
@@ -30,24 +30,37 @@ class _UserListViewState extends ConsumerState<UserListView> {
   @override
   Widget build(BuildContext context) {
     final viewmodel = ref.watch(userListViewmodelProvider);
-    return viewmodel.state is UserListStateSuccess
-        ? ListView.separated(
-            shrinkWrap: true,
-            itemBuilder: (context, index) {
-              return userListItemContainer(
-                userInfo: viewmodel.userList![index],
-                onTap: () => viewmodel.selectedItem(index),
-                isSelected: viewmodel.selectedIndex == index,
+    switch (viewmodel.state.runtimeType) {
+      case UserListStateSuccess:
+        return viewmodel.userList!.isNotEmpty
+            ? ListView.separated(
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  return userListItemContainer(
+                    userInfo: viewmodel.userList![index],
+                    onTap: () => viewmodel.selectedItem(index),
+                    isSelected: viewmodel.selectedIndex == index,
+                  );
+                },
+                separatorBuilder: (context, index) => const SizedBox(
+                  height: kWPaddingMiniSize,
+                ),
+                itemCount: viewmodel.userList!.length,
+              )
+            : Center(
+                child: Text(
+                  "사용자가 없습니다",
+                  style: kTextMainStyle.copyWith(
+                    fontSize: kTextTitleSize,
+                  ),
+                ),
               );
-            },
-            separatorBuilder: (context, index) => const SizedBox(
-              height: kWPaddingMiniSize,
-            ),
-            itemCount: viewmodel.userList!.length,
-          )
-        : const Center(
-            child: CircularProgressIndicator(),
-          );
+      case UserListStateLoading:
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
+    }
+    return Container();
   }
 }
 

@@ -4,6 +4,7 @@ import 'package:flutter_front/common/component/custom_dropdown_menu.dart';
 import 'package:flutter_front/common/styles/colors.dart';
 import 'package:flutter_front/common/styles/sizes.dart';
 import 'package:flutter_front/common/styles/text_styles.dart';
+import 'package:flutter_front/user_management/common/info_list.dart';
 
 class SearchRowView extends StatelessWidget {
   const SearchRowView({super.key});
@@ -11,10 +12,10 @@ class SearchRowView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final authorityController = CustomDropDownMenuController(
-      menuList: ["일반", "관리자", "사용자"],
+      menuList: authList,
     );
     final departmentController = CustomDropDownMenuController(
-      menuList: ["컴퓨터공학과", "컴퓨터소프트웨어공학과", "전자공학과"],
+      menuList: majorList,
     );
     return !ResponsiveData.kIsMobile
         ? IntrinsicHeight(

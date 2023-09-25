@@ -17,11 +17,12 @@ class UserListService extends StateNotifier<UserListState> {
 
   Future getUserList() async {
     state = UserListStateLoading();
+
     await Future.delayed(const Duration(seconds: 1));
     try {
       // final resp = await repository.getUserList();
       final resp = List.generate(
-        10,
+        50,
         (index) => UserInfo(
           authority: "관리자",
           id: index % 2 == 0 ? "20200284" : "20191203",
@@ -34,6 +35,24 @@ class UserListService extends StateNotifier<UserListState> {
       );
       state = UserListStateSuccess(resp);
     } on DioException {
+      state = UserListStateError("서버에서 사용자 목록을 불러 올 수 없습니다.");
+    } catch (e) {
+      state = UserListStateError("알 수 없는 에러가 발생했습니다.");
+    }
+  }
+
+  Future removeUser() async {
+    await Future.delayed(const Duration(seconds: 1));
+    try {} on DioException {
+      state = UserListStateError("서버에서 사용자 목록을 불러 올 수 없습니다.");
+    } catch (e) {
+      state = UserListStateError("알 수 없는 에러가 발생했습니다.");
+    }
+  }
+
+  Future editUser() async {
+    await Future.delayed(const Duration(seconds: 1));
+    try {} on DioException {
       state = UserListStateError("서버에서 사용자 목록을 불러 올 수 없습니다.");
     } catch (e) {
       state = UserListStateError("알 수 없는 에러가 발생했습니다.");

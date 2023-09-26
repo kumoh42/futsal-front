@@ -18,19 +18,17 @@ class UserListService extends StateNotifier<UserListState> {
   Future getUserList() async {
     state = UserListStateLoading();
 
-    await Future.delayed(const Duration(seconds: 1));
     try {
-      // final resp = await repository.getUserList();
+      //   final resp = await repository.getUserList();
       final resp = List.generate(
         50,
         (index) => UserInfo(
-          authority: "관리자",
-          id: index % 2 == 0 ? "20200284" : "20191203",
-          major: "컴퓨터소프트웨어공학과",
-          name: index % 2 == 0 ? "김정현" : "최혜민",
-          nickName: index % 2 == 0
-              ? "sadknadslnadsnlkasdnlasdnkladslknasdklnd"
-              : "바보",
+          member_member_srl: index % 2 == 0 ? "12599" : "12333",
+          member_user_name: "박준민",
+          member_phone_number: "010-5240-5085",
+          member_permission: index % 2 == 0 ? "user" : "admin",
+          circle_circle_name: "아키",
+          major_major_name: index % 2 == 0 ? "건축학부" : "컴퓨터공학과",
         ),
       );
       state = UserListStateSuccess(resp);
@@ -41,7 +39,17 @@ class UserListService extends StateNotifier<UserListState> {
     }
   }
 
-  Future removeUser() async {
+  Future removeUser(String id) async {
+    try {
+      await repository.removeUser(id);
+    } on DioException {
+      state = UserListStateError("서버와의 통신이 끊겼습니다.");
+    } catch (e) {
+      state = UserListStateError("알 수 없는 에러가 발생했습니다.");
+    }
+  }
+
+  Future editUser(UserInfo user) async {
     await Future.delayed(const Duration(seconds: 1));
     try {} on DioException {
       state = UserListStateError("서버에서 사용자 목록을 불러 올 수 없습니다.");
@@ -50,7 +58,7 @@ class UserListService extends StateNotifier<UserListState> {
     }
   }
 
-  Future editUser() async {
+  Future createUser(UserInfo user) async {
     await Future.delayed(const Duration(seconds: 1));
     try {} on DioException {
       state = UserListStateError("서버에서 사용자 목록을 불러 올 수 없습니다.");

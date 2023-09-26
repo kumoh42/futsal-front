@@ -59,6 +59,10 @@ class _UserListViewState extends ConsumerState<UserListView> {
         return const Center(
           child: CircularProgressIndicator(),
         );
+      case UserListStateError:
+        return const Center(
+          child: Text("에러가 발생했습니다"),
+        );
     }
     return Container();
   }
@@ -83,11 +87,16 @@ Widget userListItemContainer({
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          renderInfoContainer(info: userInfo.id, isSelected: isSelected),
-          renderInfoContainer(info: userInfo.name, isSelected: isSelected),
-          renderInfoContainer(info: userInfo.nickName, isSelected: isSelected),
-          renderInfoContainer(info: userInfo.major, isSelected: isSelected),
-          renderInfoContainer(info: userInfo.authority, isSelected: isSelected),
+          renderInfoContainer(
+              info: userInfo.member_member_srl, isSelected: isSelected),
+          renderInfoContainer(
+              info: userInfo.member_user_name, isSelected: isSelected),
+          renderInfoContainer(
+              info: userInfo.circle_circle_name, isSelected: isSelected),
+          renderInfoContainer(
+              info: userInfo.major_major_name, isSelected: isSelected),
+          renderInfoContainer(
+              info: userInfo.member_permission, isSelected: isSelected),
           Icon(
             Icons.keyboard_arrow_right_outlined,
             size: kIconMiddleSize,

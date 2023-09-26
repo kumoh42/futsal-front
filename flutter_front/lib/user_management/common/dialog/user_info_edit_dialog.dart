@@ -8,6 +8,7 @@ import 'package:flutter_front/common/styles/text_styles.dart';
 import 'package:flutter_front/reservation_status/component/designed_button.dart';
 import 'package:flutter_front/common/component/base_dialog.dart';
 import 'package:flutter_front/user_management/common/info_list.dart';
+import 'package:flutter_front/user_management/model/entity/user_info_entity.dart';
 import 'package:flutter_front/user_management/viewmodel/user_list_viewmodel.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -17,6 +18,13 @@ class UserInfoEditDialog extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final viewmodel = ref.watch(userListViewmodelProvider);
+    final selectedUser = viewmodel.userList![viewmodel.selectedIndex];
+
+    final authController = CustomDropDownMenuController(
+        menuList: authList, selected: selectedUser.member_permission);
+    final majorController = CustomDropDownMenuController(
+        menuList: majorList, selected: selectedUser.major_major_name);
+
     return BaseDialog(
       title: "사용자 정보 수정",
       child: SizedBox(
@@ -28,8 +36,13 @@ class UserInfoEditDialog extends ConsumerWidget {
             children: [
               ResponsiveSizedBox(size: kPaddingLargeSize),
               CustomTitledText(
-                title: "아이디",
-                content: viewmodel.userList![viewmodel.selectedIndex].id,
+                title: info[0],
+                content: Text(
+                  selectedUser.member_member_srl,
+                  style: kTextNormalStyle.copyWith(
+                    fontSize: kTextMiddleSize,
+                  ),
+                ),
               ),
               ResponsiveSizedBox(size: kPaddingLargeSize),
               Row(
@@ -37,21 +50,23 @@ class UserInfoEditDialog extends ConsumerWidget {
                 children: [
                   Expanded(
                     child: CustomTitledText(
-                      title: "이름",
-                      content:
-                          viewmodel.userList![viewmodel.selectedIndex].name,
+                      title: info[1],
+                      content: Text(
+                        selectedUser.member_user_name,
+                        style: kTextNormalStyle.copyWith(
+                          fontSize: kTextMiddleSize,
+                        ),
+                      ),
                     ),
                   ),
                   ResponsiveSizedBox(size: kPaddingLargeSize),
                   Expanded(
                     child: CustomDropDownMenu(
-                      title: "권한",
+                      title: info[4],
                       menuTextStyle: kTextNormalStyle.copyWith(
                         fontSize: kTextMiddleSize,
                       ),
-                      controller: CustomDropDownMenuController(
-                        menuList: authList,
-                      ),
+                      controller: authController,
                       titleSize: kTextMiniSize,
                     ),
                   ),
@@ -64,21 +79,23 @@ class UserInfoEditDialog extends ConsumerWidget {
                 children: [
                   Expanded(
                     child: CustomTitledText(
-                      title: "닉네임",
-                      content:
-                          viewmodel.userList![viewmodel.selectedIndex].nickName,
+                      title: info[2],
+                      content: Text(
+                        selectedUser.circle_circle_name,
+                        style: kTextNormalStyle.copyWith(
+                          fontSize: kTextMiddleSize,
+                        ),
+                      ),
                     ),
                   ),
                   ResponsiveSizedBox(size: kPaddingLargeSize),
                   Expanded(
                     child: CustomDropDownMenu(
-                      title: "소속",
+                      title: info[3],
                       menuTextStyle: kTextNormalStyle.copyWith(
                         fontSize: kTextMiddleSize,
                       ),
-                      controller: CustomDropDownMenuController(
-                        menuList: majorList,
-                      ),
+                      controller: majorController,
                       titleSize: kTextMiniSize,
                     ),
                   ),
@@ -102,7 +119,23 @@ class UserInfoEditDialog extends ConsumerWidget {
                     text: '저장',
                     icon: Icons.save,
                     onPressed: () {
-                      viewmodel.editUser(context);
+                      viewmodel.editUser(
+                        context,
+                        UserInfo(
+                          circle_circle_name: selectedUser.circle_circle_name,
+                          major_major_name: majorController.selected,
+                          member_member_srl: selectedUser.member_member_srl,
+                          member_user_name: selectedUser.member_user_name,
+                          member_permission: authController.selected,
+                          member_phone_number: "010-8441-7112",
+                          // authority: authController.selected,
+                          // id: selectedUser.id,
+                          // major: majorController.selected,
+                          // name: selectedUser.name,
+                          // nickName: selectedUser.nickName,
+                        ),
+                      );
+
                       if (context.mounted) Navigator.of(context).pop();
                     },
                   ),

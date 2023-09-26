@@ -4,7 +4,7 @@ import 'package:flutter_front/common/styles/text_styles.dart';
 
 class CustomTitledText extends StatelessWidget {
   final String title;
-  final String content;
+  final Widget content;
   const CustomTitledText({
     super.key,
     required this.content,
@@ -23,12 +23,7 @@ class CustomTitledText extends StatelessWidget {
             fontSize: kTextMiniSize,
           ),
         ),
-        Text(
-          content,
-          style: kTextNormalStyle.copyWith(
-            fontSize: kTextMiddleSize,
-          ),
-        ),
+        content,
       ],
     );
   }

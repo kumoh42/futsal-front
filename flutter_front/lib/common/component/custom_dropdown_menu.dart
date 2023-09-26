@@ -41,8 +41,8 @@ class _CustomDropDownMenuState extends ConsumerState<CustomDropDownMenu> {
           ),
         ),
         DropdownButton(
+          borderRadius: BorderRadius.circular(10),
           isExpanded: true,
-          isDense: true,
           value: controller.selected,
           items: controller.menuList
               .map(
@@ -70,19 +70,17 @@ class _CustomDropDownMenuState extends ConsumerState<CustomDropDownMenu> {
 
 class CustomDropDownMenuController extends ChangeNotifier {
   final List<String> menuList;
-  late String _selected;
+  late String selected;
   CustomDropDownMenuController({
     required this.menuList,
+    this.selected = "",
   }) {
-    if (menuList.isEmpty) {
-      _selected = "";
-    } else {
-      _selected = menuList[0];
+    if (!menuList.contains(selected)) {
+      selected = menuList[0];
     }
   }
-  String get selected => _selected;
   void onChanged(String value) {
-    _selected = value;
+    selected = value;
     notifyListeners();
   }
 }

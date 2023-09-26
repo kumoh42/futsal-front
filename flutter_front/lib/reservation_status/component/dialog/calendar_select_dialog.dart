@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_front/common/component/container/designed_container_title_bar.dart';
 import 'package:flutter_front/common/component/container/responsive_container.dart';
 import 'package:flutter_front/common/styles/sizes.dart';
 import 'package:flutter_front/common/styles/text_styles.dart';

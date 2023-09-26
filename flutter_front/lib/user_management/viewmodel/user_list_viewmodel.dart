@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_front/common/styles/sizes.dart';
 import 'package:flutter_front/common/styles/text_styles.dart';
+import 'package:flutter_front/user_management/common/dialog/user_create_dialog.dart';
 import 'package:flutter_front/user_management/common/dialog/user_info_edit_dialog.dart';
+import 'package:flutter_front/user_management/common/info_list.dart';
 import 'package:flutter_front/user_management/model/entity/user_info_entity.dart';
 import 'package:flutter_front/user_management/model/state/user_list_state.dart';
 import 'package:flutter_front/user_management/service/user_list_service.dart';
@@ -41,6 +43,19 @@ class UserListViewModel extends ChangeNotifier {
     );
   }
 
+  void showCreateUserDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return UserCreateDialog(
+          onPressed: (user) async {
+            await ref.read(userListServiceProvider.notifier).createUser(user);
+          },
+        );
+      },
+    );
+  }
+
   Future<bool> removeUser(BuildContext context) async {
     bool isRemove = false;
     await showDialog(
@@ -59,8 +74,11 @@ class UserListViewModel extends ChangeNotifier {
             TextButton(
               onPressed: () async {
                 isRemove = true;
-                await ref.read(userListServiceProvider.notifier).removeUser();
-                Navigator.of(context).pop();
+                await ref
+                    .read(userListServiceProvider.notifier)
+                    .removeUser(userList![selectedIndex].member_member_srl);
+                selectedIndex--;
+                if (context.mounted) Navigator.of(context).pop();
               },
               child: Text(
                 '예',
@@ -69,7 +87,7 @@ class UserListViewModel extends ChangeNotifier {
             ),
             TextButton(
               onPressed: () {
-                Navigator.of(context).pop();
+                if (context.mounted) Navigator.of(context).pop();
               },
               child: Text(
                 '아니요',
@@ -83,7 +101,7 @@ class UserListViewModel extends ChangeNotifier {
     return isRemove;
   }
 
-  void editUser(BuildContext context) async {
-    await ref.read(userListServiceProvider.notifier).editUser();
+  void editUser(BuildContext context, UserInfo user) async {
+    await ref.read(userListServiceProvider.notifier).editUser(user);
   }
 }

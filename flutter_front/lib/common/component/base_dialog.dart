@@ -22,7 +22,9 @@ class BaseDialog extends StatelessWidget {
             title: title,
             actions: [
               IconButton(
-                onPressed: () => Navigator.of(context).pop(),
+                onPressed: () {
+                  if (context.mounted) Navigator.of(context).pop();
+                },
                 icon: Icon(Icons.close, size: kIconMiddleSize),
                 padding: EdgeInsets.zero,
                 constraints: const BoxConstraints(),

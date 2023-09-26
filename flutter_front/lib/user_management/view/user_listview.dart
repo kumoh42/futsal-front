@@ -3,6 +3,7 @@ import 'package:flutter_front/common/component/container/responsive_container.da
 import 'package:flutter_front/common/styles/colors.dart';
 import 'package:flutter_front/common/styles/sizes.dart';
 import 'package:flutter_front/common/styles/text_styles.dart';
+import 'package:flutter_front/user_management/common/info_list.dart';
 import 'package:flutter_front/user_management/model/entity/user_info_entity.dart';
 import 'package:flutter_front/user_management/model/state/user_list_state.dart';
 import 'package:flutter_front/user_management/viewmodel/user_list_viewmodel.dart';
@@ -33,20 +34,39 @@ class _UserListViewState extends ConsumerState<UserListView> {
     switch (viewmodel.state.runtimeType) {
       case UserListStateSuccess:
         return viewmodel.userList!.isNotEmpty
-            ? ListView.separated(
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  return userListItemContainer(
-                    userInfo: viewmodel.userList![index],
-                    onTap: () => viewmodel.selectedItem(index),
-                    isSelected: viewmodel.selectedIndex == index,
-                  );
-                },
-                separatorBuilder: (context, index) => const SizedBox(
-                  height: kWPaddingMiniSize,
-                ),
-                itemCount: viewmodel.userList!.length,
-              )
+            ? viewmodel.searchPermission == authListForSearch[0]
+                ? ListView.separated(
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) {
+                      return userListItemContainer(
+                        userInfo: viewmodel.userList![index],
+                        onTap: () => viewmodel.selectedItem(index),
+                        isSelected: viewmodel.selectedIndex == index,
+                      );
+                    },
+                    separatorBuilder: (context, index) => const SizedBox(
+                      height: kWPaddingMiniSize,
+                    ),
+                    itemCount: viewmodel.userList!.length,
+                  )
+                : ListView.separated(
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) {
+                      if (viewmodel.userList![index].member_permission ==
+                          viewmodel.searchPermission) {
+                        return userListItemContainer(
+                          userInfo: viewmodel.userList![index],
+                          onTap: () => viewmodel.selectedItem(index),
+                          isSelected: viewmodel.selectedIndex == index,
+                        );
+                      } else {
+                        return const SizedBox();
+                      }
+                    },
+                    separatorBuilder: (context, index) => const SizedBox(
+                          height: kWPaddingMiniSize,
+                        ),
+                    itemCount: viewmodel.userList!.length)
             : Center(
                 child: Text(
                   "사용자가 없습니다",

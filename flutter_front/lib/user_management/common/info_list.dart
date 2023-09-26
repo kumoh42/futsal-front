@@ -22,6 +22,10 @@ const authList = [
   'user',
   'admin',
 ];
+const authListForSearch = [
+  'all',
+  ...authList,
+];
 
 const info = [
   'ID',

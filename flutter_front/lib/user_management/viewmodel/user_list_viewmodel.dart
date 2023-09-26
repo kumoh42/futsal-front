@@ -16,9 +16,11 @@ class UserListViewModel extends ChangeNotifier {
   late int selectedIndex;
   final Ref ref;
   late UserListState state;
+  late String searchPermission;
   UserListViewModel(this.ref) {
-    selectedIndex = 0;
+    selectedIndex = -1;
     state = ref.watch(userListServiceProvider);
+    searchPermission = authListForSearch[0];
   }
   List<UserInfo>? get userList => state is UserListStateSuccess
       ? (state as UserListStateSuccess).data
@@ -29,7 +31,17 @@ class UserListViewModel extends ChangeNotifier {
   }
 
   void selectedItem(int index) {
-    selectedIndex = index;
+    if (selectedIndex == index) {
+      selectedIndex = -1;
+    } else {
+      selectedIndex = index;
+    }
+
+    notifyListeners();
+  }
+
+  void selectedSearchPermission(String permission) {
+    searchPermission = permission;
 
     notifyListeners();
   }

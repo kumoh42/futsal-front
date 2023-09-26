@@ -5,18 +5,25 @@ import 'package:flutter_front/common/styles/colors.dart';
 import 'package:flutter_front/common/styles/sizes.dart';
 import 'package:flutter_front/common/styles/text_styles.dart';
 import 'package:flutter_front/user_management/common/info_list.dart';
+import 'package:flutter_front/user_management/viewmodel/user_list_viewmodel.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class SearchRowView extends StatelessWidget {
+class SearchRowView extends ConsumerWidget {
   const SearchRowView({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final authorityController = CustomDropDownMenuController(
-      menuList: authList,
-    );
-    final departmentController = CustomDropDownMenuController(
-      menuList: majorList,
-    );
+  Widget build(BuildContext context, WidgetRef ref) {
+    final authorityController =
+        CustomDropDownMenuController(menuList: authListForSearch);
+    authorityController.addListener(() {
+      ref
+          .read(userListViewmodelProvider)
+          .selectedSearchPermission(authorityController.selected);
+    });
+
+    final departmentController =
+        CustomDropDownMenuController(menuList: majorList);
+
     return !ResponsiveData.kIsMobile
         ? IntrinsicHeight(
             child: Row(
@@ -77,7 +84,11 @@ class SearchRowView extends StatelessWidget {
                   child: CustomDropDownMenu(
                     title: "권한",
                     controller: authorityController,
-                    titleSize: kWTextSuperMiniSize,
+                    titleTextStyle: kTextDisabledStyle.copyWith(
+                      fontSize: kTextMiniSize,
+                      fontWeight: FontWeight.w400,
+                      color: kTextMainColor,
+                    ),
                   ),
                 ),
                 ResponsiveSizedBox(size: kPaddingMiddleSize),
@@ -86,7 +97,11 @@ class SearchRowView extends StatelessWidget {
                   child: CustomDropDownMenu(
                     title: "소속",
                     controller: departmentController,
-                    titleSize: kWTextSuperMiniSize,
+                    titleTextStyle: kTextDisabledStyle.copyWith(
+                      fontSize: kTextMiniSize,
+                      fontWeight: FontWeight.w400,
+                      color: kTextMainColor,
+                    ),
                   ),
                 ),
               ],
@@ -153,7 +168,10 @@ class SearchRowView extends StatelessWidget {
                       child: CustomDropDownMenu(
                         title: "권한",
                         controller: authorityController,
-                        titleSize: kWTextSuperMiniSize,
+                        titleTextStyle: kTextDisabledStyle.copyWith(
+                          fontSize: kTextMiniSize,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                     ),
                     ResponsiveSizedBox(size: kPaddingMiddleSize),
@@ -162,7 +180,10 @@ class SearchRowView extends StatelessWidget {
                       child: CustomDropDownMenu(
                         title: "소속",
                         controller: departmentController,
-                        titleSize: kWTextSuperMiniSize,
+                        titleTextStyle: kTextDisabledStyle.copyWith(
+                          fontSize: kTextMiniSize,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                     ),
                   ],

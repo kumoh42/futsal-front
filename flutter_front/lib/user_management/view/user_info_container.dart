@@ -14,15 +14,13 @@ class UserInfoContainer extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final viewmodel = ref.watch(userListViewmodelProvider);
+    final isShow = viewmodel.selectedIndex >= 0;
     return DesignedContainer(
       title: "사용자 정보",
       actions: [
         IconButton(
-          onPressed: () => viewmodel.state is UserListStateSuccess
-              ? viewmodel.userList!.isNotEmpty
-                  ? viewmodel.showUserInfoEditDialog(context)
-                  : null
-              : null,
+          onPressed: () =>
+              isShow ? viewmodel.showUserInfoEditDialog(context) : null,
           icon: Icon(Icons.edit, size: kIconMiddleSize),
           padding: EdgeInsets.zero,
           constraints: const BoxConstraints(),
@@ -39,73 +37,78 @@ class UserInfoContainer extends ConsumerWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      CustomTitledText(
-                        title: info[0],
-                        content: Text(
-                          viewmodel.userList![viewmodel.selectedIndex]
-                              .member_member_srl,
-                          style: kTextNormalStyle.copyWith(
-                            fontSize: kTextMiddleSize,
+                      if (isShow)
+                        CustomTitledText(
+                          title: info[0],
+                          content: Text(
+                            viewmodel.userList![viewmodel.selectedIndex]
+                                .member_member_srl,
+                            style: kTextNormalStyle.copyWith(
+                              fontSize: kTextMiddleSize,
+                            ),
                           ),
                         ),
-                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Expanded(
-                            child: CustomTitledText(
-                              title: info[1],
-                              content: Text(
-                                viewmodel.userList![viewmodel.selectedIndex]
-                                    .member_user_name,
-                                style: kTextNormalStyle.copyWith(
-                                  fontSize: kTextMiddleSize,
+                          if (isShow)
+                            Expanded(
+                              child: CustomTitledText(
+                                title: info[1],
+                                content: Text(
+                                  viewmodel.userList![viewmodel.selectedIndex]
+                                      .member_user_name,
+                                  style: kTextNormalStyle.copyWith(
+                                    fontSize: kTextMiddleSize,
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                          Expanded(
-                            child: CustomTitledText(
-                              title: info[4],
-                              content: Text(
-                                viewmodel.userList![viewmodel.selectedIndex]
-                                    .member_permission,
-                                style: kTextNormalStyle.copyWith(
-                                  fontSize: kTextMiddleSize,
+                          if (isShow)
+                            Expanded(
+                              child: CustomTitledText(
+                                title: info[4],
+                                content: Text(
+                                  viewmodel.userList![viewmodel.selectedIndex]
+                                      .member_permission,
+                                  style: kTextNormalStyle.copyWith(
+                                    fontSize: kTextMiddleSize,
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
                           const SizedBox(),
                         ],
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Expanded(
-                            child: CustomTitledText(
-                              title: info[2],
-                              content: Text(
-                                viewmodel.userList![viewmodel.selectedIndex]
-                                    .circle_circle_name,
-                                style: kTextNormalStyle.copyWith(
-                                  fontSize: kTextMiddleSize,
+                          if (isShow)
+                            Expanded(
+                              child: CustomTitledText(
+                                title: info[2],
+                                content: Text(
+                                  viewmodel.userList![viewmodel.selectedIndex]
+                                      .circle_circle_name,
+                                  style: kTextNormalStyle.copyWith(
+                                    fontSize: kTextMiddleSize,
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                          Expanded(
-                            child: CustomTitledText(
-                              title: info[3],
-                              content: Text(
-                                viewmodel.userList![viewmodel.selectedIndex]
-                                    .major_major_name,
-                                style: kTextNormalStyle.copyWith(
-                                  fontSize: kTextMiddleSize,
+                          if (isShow)
+                            Expanded(
+                              child: CustomTitledText(
+                                title: info[3],
+                                content: Text(
+                                  viewmodel.userList![viewmodel.selectedIndex]
+                                      .major_major_name,
+                                  style: kTextNormalStyle.copyWith(
+                                    fontSize: kTextMiddleSize,
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
                           const SizedBox(),
                         ],
                       ),

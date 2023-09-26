@@ -6,15 +6,15 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class CustomDropDownMenu extends ConsumerStatefulWidget {
   late final ChangeNotifierProvider<CustomDropDownMenuController> provider;
   final String title;
-  final double? titleSize;
   final TextStyle? menuTextStyle;
+  final TextStyle? titleTextStyle;
 
   CustomDropDownMenu({
     super.key,
     required CustomDropDownMenuController controller,
     required this.title,
-    this.titleSize,
     this.menuTextStyle,
+    this.titleTextStyle,
   }) {
     provider = ChangeNotifierProvider((ref) => controller);
   }
@@ -35,10 +35,11 @@ class _CustomDropDownMenuState extends ConsumerState<CustomDropDownMenu> {
       children: [
         Text(
           widget.title,
-          style: kTextDisabledStyle.copyWith(
-            fontSize: widget.titleSize ?? kTextMiniSize,
-            fontWeight: FontWeight.w600,
-          ),
+          style: widget.titleTextStyle ??
+              kTextDisabledStyle.copyWith(
+                fontSize: kTextMiniSize,
+                fontWeight: FontWeight.w600,
+              ),
         ),
         DropdownButton(
           borderRadius: BorderRadius.circular(10),

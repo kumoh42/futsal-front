@@ -33,7 +33,7 @@ class _UserListRepository implements UserListRepository {
     )
             .compose(
               _dio.options,
-              '/',
+              '/members',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -58,7 +58,34 @@ class _UserListRepository implements UserListRepository {
     )
         .compose(
           _dio.options,
-          '/${id}',
+          '/members/${id}',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = _result.data;
+    return value;
+  }
+
+  @override
+  Future<dynamic> editUser(
+    String id,
+    UserInfo user,
+  ) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'accessToken': 'true'};
+    _headers.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    _data.addAll(user.toJson());
+    final _result = await _dio.fetch(_setStreamType<dynamic>(Options(
+      method: 'PATCH',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          '/members/${id}',
           queryParameters: queryParameters,
           data: _data,
         )

@@ -8,18 +8,22 @@ part 'user_list_repository.g.dart';
 
 final userListRepositoryProvider = Provider((ref) {
   final dio = ref.watch(dioProvider);
-  return UserListRepository(dio, baseUrl: '/members');
+  return UserListRepository(dio);
 });
 
 @RestApi()
 abstract class UserListRepository {
   factory UserListRepository(Dio dio, {String baseUrl}) = _UserListRepository;
 
-  @GET('/')
+  @GET('/members')
   @Headers(({'accessToken': 'true'}))
   Future<List<UserInfo>> getUserList();
 
-  @DELETE('/{id}')
+  @DELETE('/members/{id}')
   @Headers(({'accessToken': 'true'}))
   Future removeUser(@Path('id') String id);
+
+  @PATCH('/members/{id}')
+  @Headers(({'accessToken': 'true'}))
+  Future editUser(@Path('id') String id, @Body() UserInfo user);
 }

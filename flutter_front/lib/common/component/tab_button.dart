@@ -18,8 +18,10 @@ class TabButton extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final currentIndex = ref.watch(rootTabIndexProvider);
     return TextButton(
-      onPressed: () =>
-          ref.read(rootTabIndexProvider.notifier).state = TABS.indexOf(tabInfo),
+      onPressed: () {
+        ref.read(rootTabIndexProvider.notifier).state = TABS.indexOf(tabInfo);
+        if (ResponsiveData.kIsMobile) Navigator.of(context).pop();
+      },
       style: TextButton.styleFrom(
         minimumSize: Size.zero,
         padding: EdgeInsets.zero,

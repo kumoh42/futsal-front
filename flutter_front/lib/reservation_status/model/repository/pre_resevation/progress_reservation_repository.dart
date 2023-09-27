@@ -31,4 +31,16 @@ abstract class ProgressReservationRepository {
   @DELETE("/reservation/pre/reset")
   @Headers({'accessToken': 'true'})
   Future<void> reset();
+
+  @PUT("reservation/pre-set?state=stop")
+  @Headers({'accessToken': 'true'})
+  Future<void> progressReservationStateStop();
+
+  @PUT("reservation/pre-set?state=reopen")
+  @Headers({'accessToken': 'true'})
+  Future<void> progressReservationStateReStart();
+
+  @PUT("reservation/pre-set?state=reset")
+  @Headers({'accessToken': 'true'})
+  Future<void> progressReservationStateReset();
 }

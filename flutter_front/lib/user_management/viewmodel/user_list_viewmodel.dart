@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_front/common/styles/sizes.dart';
 import 'package:flutter_front/common/styles/text_styles.dart';
 import 'package:flutter_front/user_management/common/dialog/user_create_dialog.dart';
-import 'package:flutter_front/user_management/common/dialog/user_info_edit_dialog.dart';
 import 'package:flutter_front/user_management/common/info_list.dart';
 import 'package:flutter_front/user_management/model/entity/user_info_entity.dart';
 import 'package:flutter_front/user_management/model/state/user_list_state.dart';
@@ -16,11 +15,16 @@ class UserListViewModel extends ChangeNotifier {
   late int selectedIndex;
   final Ref ref;
   late UserListState state;
-  late String searchPermission;
+  late String searchCircle;
+  late String searchMajor;
+  late String searchName;
+
   UserListViewModel(this.ref) {
     selectedIndex = -1;
     state = ref.watch(userListServiceProvider);
-    searchPermission = authListForSearch[0];
+    searchCircle = circleListForSearch[0];
+    searchMajor = majorListForSearch[0];
+    searchName = "";
   }
   List<UserInfo>? get userList => state is UserListStateSuccess
       ? (state as UserListStateSuccess).data
@@ -40,28 +44,60 @@ class UserListViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void selectedSearchPermission(String permission) {
-    searchPermission = permission;
+  void selectedSearchCircle(String circle) {
+    searchCircle = circle;
+
+    notifyListeners();
+  }
+
+  void selectedSearchname(String name) {
+    searchName = name;
+
+    notifyListeners();
+  }
+
+  void selectedSearchMajor(String major) {
+    searchMajor = major;
 
     notifyListeners();
   }
 
   void showUserInfoEditDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return const UserInfoEditDialog();
-      },
-    );
-  }
-
-  void showCreateUserDialog(BuildContext context) {
+    if (selectedIndex < 0 || userList == null) {
+      return;
+    }
     showDialog(
       context: context,
       builder: (context) {
         return UserCreateDialog(
+          user: userList![selectedIndex],
           onPressed: (user) async {
-            await ref.read(userListServiceProvider.notifier).createUser(user);
+            ref.read(userListServiceProvider.notifier).editUser(user);
+          },
+        );
+      },
+    );
+  }
+
+  void showCreateUserDialog(
+      {required BuildContext context, bool isEdit = false}) {
+    if (userList == null) {
+      return;
+    }
+    showDialog(
+      context: context,
+      builder: (context) {
+        return UserCreateDialog(
+          isEdit: isEdit,
+          user: userList![selectedIndex < 0 ? 0 : selectedIndex],
+          onPressed: (user) async {
+            isEdit
+                ? await ref
+                    .read(userListServiceProvider.notifier)
+                    .editUser(user)
+                : await ref
+                    .read(userListServiceProvider.notifier)
+                    .createUser(user);
           },
         );
       },

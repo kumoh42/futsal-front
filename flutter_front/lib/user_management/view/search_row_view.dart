@@ -13,16 +13,27 @@ class SearchRowView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final authorityController =
-        CustomDropDownMenuController(menuList: authListForSearch);
-    authorityController.addListener(() {
+    final searchTextFieldController = TextEditingController();
+    searchTextFieldController.addListener(() {
       ref
           .read(userListViewmodelProvider)
-          .selectedSearchPermission(authorityController.selected);
+          .selectedSearchname(searchTextFieldController.text.trim());
+    });
+    final circleController =
+        CustomDropDownMenuController(menuList: circleListForSearch);
+    circleController.addListener(() {
+      ref
+          .read(userListViewmodelProvider)
+          .selectedSearchCircle(circleController.selected);
     });
 
-    final departmentController =
-        CustomDropDownMenuController(menuList: majorList);
+    final majorController =
+        CustomDropDownMenuController(menuList: majorListForSearch);
+    majorController.addListener(() {
+      ref
+          .read(userListViewmodelProvider)
+          .selectedSearchMajor(majorController.selected);
+    });
 
     return !ResponsiveData.kIsMobile
         ? IntrinsicHeight(
@@ -53,6 +64,7 @@ class SearchRowView extends ConsumerWidget {
                               horizontal: kPaddingMiddleSize,
                             ),
                             child: TextField(
+                              controller: searchTextFieldController,
                               decoration: InputDecoration(
                                 border: InputBorder.none,
                                 hintText: 'search',
@@ -64,16 +76,6 @@ class SearchRowView extends ConsumerWidget {
                             ),
                           ),
                         ),
-                        IconButton(
-                          padding: EdgeInsets.only(
-                            right: kPaddingMiddleSize,
-                          ),
-                          splashRadius: 1,
-                          onPressed: () {},
-                          icon: const Icon(
-                            Icons.search,
-                          ),
-                        ),
                       ],
                     ),
                   ),
@@ -82,8 +84,8 @@ class SearchRowView extends ConsumerWidget {
                 Expanded(
                   flex: 1,
                   child: CustomDropDownMenu(
-                    title: "권한",
-                    controller: authorityController,
+                    title: "동아리",
+                    controller: circleController,
                     titleTextStyle: kTextDisabledStyle.copyWith(
                       fontSize: kTextMiniSize,
                       fontWeight: FontWeight.w400,
@@ -96,7 +98,7 @@ class SearchRowView extends ConsumerWidget {
                   flex: 2,
                   child: CustomDropDownMenu(
                     title: "소속",
-                    controller: departmentController,
+                    controller: majorController,
                     titleTextStyle: kTextDisabledStyle.copyWith(
                       fontSize: kTextMiniSize,
                       fontWeight: FontWeight.w400,
@@ -167,7 +169,7 @@ class SearchRowView extends ConsumerWidget {
                       flex: 1,
                       child: CustomDropDownMenu(
                         title: "권한",
-                        controller: authorityController,
+                        controller: circleController,
                         titleTextStyle: kTextDisabledStyle.copyWith(
                           fontSize: kTextMiniSize,
                           fontWeight: FontWeight.w600,
@@ -179,7 +181,7 @@ class SearchRowView extends ConsumerWidget {
                       flex: 2,
                       child: CustomDropDownMenu(
                         title: "소속",
-                        controller: departmentController,
+                        controller: majorController,
                         titleTextStyle: kTextDisabledStyle.copyWith(
                           fontSize: kTextMiniSize,
                           fontWeight: FontWeight.w600,

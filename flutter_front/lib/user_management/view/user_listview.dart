@@ -34,39 +34,30 @@ class _UserListViewState extends ConsumerState<UserListView> {
     switch (viewmodel.state.runtimeType) {
       case UserListStateSuccess:
         return viewmodel.userList!.isNotEmpty
-            ? viewmodel.searchPermission == authListForSearch[0]
-                ? ListView.separated(
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      return userListItemContainer(
-                        userInfo: viewmodel.userList![index],
-                        onTap: () => viewmodel.selectedItem(index),
-                        isSelected: viewmodel.selectedIndex == index,
-                      );
-                    },
-                    separatorBuilder: (context, index) => const SizedBox(
-                      height: kWPaddingMiniSize,
-                    ),
-                    itemCount: viewmodel.userList!.length,
-                  )
-                : ListView.separated(
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      if (viewmodel.userList![index].member_permission ==
-                          viewmodel.searchPermission) {
-                        return userListItemContainer(
-                          userInfo: viewmodel.userList![index],
-                          onTap: () => viewmodel.selectedItem(index),
-                          isSelected: viewmodel.selectedIndex == index,
-                        );
-                      } else {
-                        return const SizedBox();
-                      }
-                    },
-                    separatorBuilder: (context, index) => const SizedBox(
-                          height: kWPaddingMiniSize,
-                        ),
-                    itemCount: viewmodel.userList!.length)
+            ? ListView.builder(
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  if ((viewmodel.searchCircle == circleListForSearch[0] ||
+                          viewmodel.userList![index].circle_circle_name ==
+                              viewmodel.searchCircle) &&
+                      (viewmodel.searchMajor == majorListForSearch[0] ||
+                          viewmodel.userList![index].major_major_name ==
+                              viewmodel.searchMajor) &&
+                      (viewmodel.searchName == "" ||
+                          viewmodel.userList![index].member_user_name
+                              .contains(viewmodel.searchName))) {
+                    return userListItemContainer(
+                      userInfo: viewmodel.userList![index],
+                      onTap: () => viewmodel.selectedItem(index),
+                      isSelected: viewmodel.selectedIndex == index,
+                    );
+                  } else {
+                    return Container(
+                      height: 0,
+                    );
+                  }
+                },
+                itemCount: viewmodel.userList!.length)
             : Center(
                 child: Text(
                   "사용자가 없습니다",
@@ -93,36 +84,40 @@ Widget userListItemContainer({
   required VoidCallback onTap,
   bool isSelected = false,
 }) {
-  return GestureDetector(
-    onTap: onTap,
-    child: Container(
-      padding: const EdgeInsets.symmetric(
-        vertical: kWPaddingMiniSize,
-        horizontal: kWPaddingSmallSize,
-      ),
-      decoration: BoxDecoration(
-        color: isSelected ? kMainColor : kBackgroundMainColor,
-        borderRadius: BorderRadius.circular(kBorderRadiusSize),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          renderInfoContainer(
-              info: userInfo.member_member_srl, isSelected: isSelected),
-          renderInfoContainer(
-              info: userInfo.member_user_name, isSelected: isSelected),
-          renderInfoContainer(
-              info: userInfo.circle_circle_name, isSelected: isSelected),
-          renderInfoContainer(
-              info: userInfo.major_major_name, isSelected: isSelected),
-          renderInfoContainer(
-              info: userInfo.member_permission, isSelected: isSelected),
-          Icon(
-            Icons.keyboard_arrow_right_outlined,
-            size: kIconMiddleSize,
-            color: isSelected ? kBackgroundMainColor : kTextMainColor,
-          ),
-        ],
+  return Padding(
+    padding: EdgeInsets.only(
+      bottom: kPaddingMiniSize,
+    ),
+    child: GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: EdgeInsets.symmetric(
+          vertical: kPaddingMiniSize,
+        ),
+        decoration: BoxDecoration(
+          color: isSelected ? kMainColor : kBackgroundMainColor,
+          borderRadius: BorderRadius.circular(kBorderRadiusSize),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            renderInfoContainer(
+                info: userInfo.member_member_srl, isSelected: isSelected),
+            renderInfoContainer(
+                info: userInfo.member_user_name, isSelected: isSelected),
+            renderInfoContainer(
+                info: userInfo.circle_circle_name, isSelected: isSelected),
+            renderInfoContainer(
+                info: userInfo.major_major_name, isSelected: isSelected),
+            renderInfoContainer(
+                info: userInfo.member_phone_number, isSelected: isSelected),
+            Icon(
+              Icons.keyboard_arrow_right_outlined,
+              size: kIconMiddleSize,
+              color: isSelected ? kBackgroundMainColor : kTextMainColor,
+            ),
+          ],
+        ),
       ),
     ),
   );

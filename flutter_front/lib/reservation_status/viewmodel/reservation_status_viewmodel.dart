@@ -6,7 +6,6 @@ import 'package:flutter_front/reservation_status/component/custom_table_calendar
 import 'package:flutter_front/reservation_status/component/dialog/calendar_select_dialog.dart';
 import 'package:flutter_front/reservation_status/component/reservation_cancel_dialog.dart';
 import 'package:flutter_front/reservation_status/component/reservation_state/reservation_state_list.dart';
-import 'package:flutter_front/reservation_status/model/entity/block_reservation_entity.dart';
 import 'package:flutter_front/reservation_status/model/entity/reservation_entity.dart';
 import 'package:flutter_front/reservation_status/model/service/pre_reservation/pre_reservation_setting_service.dart';
 import 'package:flutter_front/reservation_status/model/service/reservation_status_service.dart';

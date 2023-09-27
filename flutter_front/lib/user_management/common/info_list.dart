@@ -18,6 +18,19 @@ const majorList = [
   '화학공학과',
   '환경공학과',
 ];
+const majorListForSearch = [
+  "전체",
+  ...majorList,
+];
+const circleList = [
+  '소프트',
+  '아키',
+  '메소드',
+];
+const circleListForSearch = [
+  '전체',
+  ...circleList,
+];
 const authList = [
   'user',
   'admin',
@@ -32,5 +45,5 @@ const info = [
   '이름',
   '동아리',
   '소속',
-  '권한',
+  '전화번호',
 ];

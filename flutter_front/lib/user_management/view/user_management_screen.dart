@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_front/common/component/container/designed_container.dart';
 import 'package:flutter_front/common/component/container/responsive_container.dart';
+import 'package:flutter_front/common/component/custome_icon_button.dart';
 import 'package:flutter_front/common/styles/colors.dart';
 import 'package:flutter_front/common/styles/sizes.dart';
 import 'package:flutter_front/common/styles/text_styles.dart';
@@ -30,12 +31,11 @@ class UserManagementScreen extends ConsumerWidget {
             title: "사용자 목록",
             isChildInfinity: true,
             actions: [
-              IconButton(
-                onPressed: () => viewmodel.showCreateUserDialog(context),
-                icon: Icon(Icons.add, size: kIconMiddleSize),
-                padding: EdgeInsets.zero,
-                constraints: const BoxConstraints(),
-                splashRadius: kIconMiddleSize / 1.2,
+              CustomIconButton(
+                icon: Icons.add,
+                onPressed: () =>
+                    viewmodel.showCreateUserDialog(context: context),
+                hintMessage: "사용자 추가",
               ),
             ],
             child: Container(

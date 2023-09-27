@@ -4,32 +4,47 @@ import 'package:flutter_front/common/component/base_dialog.dart';
 import 'package:flutter_front/common/component/container/responsive_container.dart';
 import 'package:flutter_front/common/component/custom_dropdown_menu.dart';
 import 'package:flutter_front/common/component/custome_titled_text.dart';
+import 'package:flutter_front/common/styles/colors.dart';
 import 'package:flutter_front/common/styles/sizes.dart';
 import 'package:flutter_front/common/styles/text_styles.dart';
 import 'package:flutter_front/reservation_status/component/designed_button.dart';
 import 'package:flutter_front/user_management/common/info_list.dart';
 import 'package:flutter_front/user_management/model/entity/user_info_entity.dart';
+import 'package:flutter_front/user_management/viewmodel/user_list_viewmodel.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class UserCreateDialog extends StatelessWidget {
+class UserCreateDialog extends ConsumerWidget {
   final Future Function(UserInfo user) onPressed;
+  final bool isEdit;
+  final UserInfo user;
   const UserCreateDialog({
     super.key,
     required this.onPressed,
+    this.isEdit = false,
+    required this.user,
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final viewmodel = ref.watch(userListViewmodelProvider);
     final formKey = GlobalKey<FormState>();
     final idTextController = TextEditingController();
     final nameTextController = TextEditingController();
-    final circleTextController = TextEditingController();
-    final authController = CustomDropDownMenuController(menuList: authList);
+    final circleTextController =
+        CustomDropDownMenuController(menuList: circleList);
+    final phoneNumController = TextEditingController();
     final majorController = CustomDropDownMenuController(menuList: majorList);
+    if (isEdit) {
+      nameTextController.text = user.member_user_name;
+      circleTextController.selected = user.circle_circle_name;
+      phoneNumController.text = user.member_phone_number;
+      majorController.selected = user.major_major_name;
+    }
 
     return Form(
       key: formKey,
       child: BaseDialog(
-        title: "사용자 추가",
+        title: isEdit ? "사용자 정보 수정" : "사용자 추가",
         child: SizedBox(
           width: ResponsiveSize.W(500),
           child: Padding(
@@ -40,7 +55,11 @@ class UserCreateDialog extends StatelessWidget {
                 ResponsiveSizedBox(size: kPaddingLargeSize),
                 CustomTitledText(
                   title: info[0],
-                  content: customTextField(controller: idTextController),
+                  content: isEdit
+                      ? Text(
+                          user.member_member_srl,
+                        )
+                      : customTextField(controller: idTextController),
                 ),
                 ResponsiveSizedBox(size: kPaddingLargeSize),
                 Row(
@@ -55,12 +74,10 @@ class UserCreateDialog extends StatelessWidget {
                     ),
                     ResponsiveSizedBox(size: kPaddingLargeSize),
                     Expanded(
-                      child: CustomDropDownMenu(
+                      child: CustomTitledText(
                         title: info[4],
-                        menuTextStyle: kTextNormalStyle.copyWith(
-                          fontSize: kTextMiddleSize,
-                        ),
-                        controller: authController,
+                        content:
+                            customTextField(controller: phoneNumController),
                       ),
                     ),
                     const SizedBox(),
@@ -71,10 +88,12 @@ class UserCreateDialog extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Expanded(
-                      child: CustomTitledText(
+                      child: CustomDropDownMenu(
                         title: info[2],
-                        content:
-                            customTextField(controller: circleTextController),
+                        menuTextStyle: kTextNormalStyle.copyWith(
+                          fontSize: kTextMiddleSize,
+                        ),
+                        controller: circleTextController,
                       ),
                     ),
                     ResponsiveSizedBox(size: kPaddingLargeSize),
@@ -94,6 +113,19 @@ class UserCreateDialog extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
+                    if (isEdit)
+                      DesignedButton(
+                        text: '삭제',
+                        icon: Icons.delete_outline,
+                        color: kPointColor,
+                        onPressed: () async {
+                          final res = await viewmodel.removeUser(context);
+                          if (res && context.mounted) {
+                            Navigator.of(context).pop();
+                          }
+                        },
+                      ),
+                    if (isEdit) ResponsiveSizedBox(size: kPaddingMiddleSize),
                     DesignedButton(
                       text: '저장',
                       icon: Icons.save,
@@ -102,12 +134,13 @@ class UserCreateDialog extends StatelessWidget {
                           if (context.mounted) {
                             onPressed(
                               UserInfo(
-                                circle_circle_name: circleTextController.text,
+                                circle_circle_name:
+                                    circleTextController.selected,
                                 major_major_name: majorController.selected,
                                 member_member_srl: idTextController.text,
-                                member_permission: authController.selected,
+                                member_permission: phoneNumController.text,
                                 member_user_name: nameTextController.text,
-                                member_phone_number: "010-1234-1234",
+                                member_phone_number: phoneNumController.text,
                               ),
                             );
                             Navigator.of(context).pop();
@@ -126,7 +159,7 @@ class UserCreateDialog extends StatelessWidget {
   }
 }
 
-Widget customTextField({TextEditingController? controller}) {
+Widget customTextField({TextEditingController? controller, String? defalut}) {
   return TextFormField(
     validator: (value) {
       if (value!.isEmpty) {

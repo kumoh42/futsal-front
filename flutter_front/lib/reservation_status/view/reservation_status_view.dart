@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_front/common/component/container/responsive_container.dart';
 import 'package:flutter_front/common/component/container/stack_container.dart';
+import 'package:flutter_front/common/component/custome_icon_button.dart';
 import 'package:flutter_front/common/styles/sizes.dart';
 import 'package:flutter_front/common/styles/text_styles.dart';
 import 'package:flutter_front/common/utils/date_utils.dart';
@@ -44,23 +45,18 @@ class ReservationStatusView extends ConsumerWidget {
                       style: kTextMainStyle.copyWith(fontSize: kTextLargeSize),
                     ),
                   ),
-                  IconButton(
-                    icon: const Icon(Icons.settings),
-                    iconSize: kIconMiddleSize,
-                    splashRadius: kIconMiddleSize,
-                    onPressed: () {
-                      viewmodel.blockReservation(context);
-                    },
+                  CustomIconButton(
+                    icon: Icons.settings,
+                    onPressed: () => viewmodel.blockReservation(context),
+                    hintMessage: "예약 불가 기간 설정",
                   ),
-                  IconButton(
-                    icon: const Icon(Icons.delete),
-                    iconSize: kIconMiddleSize,
-                    splashRadius: kIconMiddleSize,
-                    onPressed: () {
-                      viewmodel.cancelReservationStatus(context);
-                    },
+                  ResponsiveSizedBox(size: kPaddingMiddleSize),
+                  CustomIconButton(
+                    icon: Icons.delete,
+                    onPressed: () => viewmodel.cancelReservationStatus(context),
+                    hintMessage: "예약 삭제",
                   ),
-                  const SizedBox(width: 5.0),
+                  ResponsiveSizedBox(size: kPaddingMiddleSize),
                 ],
               ),
               SizedBox(height: kPaddingLargeSize),

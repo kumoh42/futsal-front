@@ -3,6 +3,7 @@ import 'package:flutter_front/common/styles/sizes.dart';
 import 'package:flutter_front/common/styles/text_styles.dart';
 import 'package:flutter_front/common/utils/custom_dialog_utils.dart';
 import 'package:flutter_front/common/utils/date_utils.dart';
+import 'package:flutter_front/common/utils/snack_bar_util.dart';
 import 'package:flutter_front/reservation_status/component/custom_table_calendar.dart';
 import 'package:flutter_front/reservation_status/component/dialog/calendar_select_dialog.dart';
 import 'package:flutter_front/reservation_status/model/entity/pre_reservation/pre_reservation_status_entity.dart';
@@ -37,6 +38,14 @@ class PreReservationSettingViewModel extends ChangeNotifier {
     await ref
         .read(preReservationSettingServiceProvider.notifier)
         .getPreReservation();
+  }
+
+  void deletePreReservation() async {
+    if (preReservationStatus != null) {
+      await ref
+          .read(preReservationSettingServiceProvider.notifier)
+          .deletePreReservation(preReservationStatus!);
+    }
   }
 
   void setTimePicker(BuildContext context) {
@@ -94,16 +103,18 @@ class PreReservationSettingViewModel extends ChangeNotifier {
     );
   }
 
-  void cancelPreReservation(
-      BuildContext context, PreReservationStatusEntity entity) async {
+  void cancelPreReservation(BuildContext context) async {
+    if (preReservationStatus != null) {
+      return;
+    }
     CustomDialogUtil.showCustomDialog(
       dialog: CustomDialog(
         title: Text(
-          '우선예약 설정 취소',
+          '사전예약 설정 취소',
           style: kTextMainStyle.copyWith(fontSize: kTextMiddleSize),
         ),
         content: Text(
-          ' ${entity.date} ${entity.time}',
+          ' ${preReservationStatus!.date} ${preReservationStatus!.time}시',
           style: kTextNormalStyle.copyWith(fontSize: kTextLargeSize),
         ),
         accept: "확인",
@@ -111,7 +122,9 @@ class PreReservationSettingViewModel extends ChangeNotifier {
         onPressed: () async {
           await ref
               .read(preReservationSettingServiceProvider.notifier)
-              .cancelPreReservation(preReservationStatusEntity: entity);
+              .cancelPreReservation(
+                  preReservationStatusEntity: preReservationStatus!);
+          SnackBarUtil.showSuccess("예약 설정을 취소했습니다.");
           if (context.mounted) Navigator.of(context).pop();
         },
       ),

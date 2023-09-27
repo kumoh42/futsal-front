@@ -6,9 +6,11 @@ part 'pre_reservation_status_entity.g.dart';
 class PreReservationStatusEntity {
   String date;
   String time;
+  bool isPre;
   PreReservationStatusEntity({
     required this.date,
     required this.time,
+    required this.isPre,
   });
   Map<String, dynamic> toJson() => _$PreReservationStatusEntityToJson(this);
 

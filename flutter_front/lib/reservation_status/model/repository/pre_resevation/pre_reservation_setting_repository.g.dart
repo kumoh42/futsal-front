@@ -45,14 +45,14 @@ class _PreReservationSettingRepository
   }
 
   @override
-  Future<PreReservationStatusEntity> getPreReservation() async {
+  Future<List<PreReservationStatusEntity>> getPreReservation() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'accessToken': 'true'};
     _headers.removeWhere((k, v) => v == null);
     final Map<String, dynamic>? _data = null;
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<PreReservationStatusEntity>(Options(
+    final _result = await _dio.fetch<List<dynamic>>(
+        _setStreamType<List<PreReservationStatusEntity>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -64,7 +64,10 @@ class _PreReservationSettingRepository
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = PreReservationStatusEntity.fromJson(_result.data!);
+    var value = _result.data!
+        .map((dynamic i) =>
+            PreReservationStatusEntity.fromJson(i as Map<String, dynamic>))
+        .toList();
     return value;
   }
 
@@ -116,6 +119,28 @@ class _PreReservationSettingRepository
         .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = _result.data;
     return value;
+  }
+
+  @override
+  Future<void> deletePreReservation(PreReservationStatusEntity entity) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'accessToken': 'true'};
+    _headers.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    _data.addAll(entity.toJson());
+    await _dio.fetch<void>(_setStreamType<void>(Options(
+      method: 'PATCH',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          'reservation/pre/time-delete',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
   }
 
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {

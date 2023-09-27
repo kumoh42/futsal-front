@@ -38,8 +38,20 @@ class PreReservationSettingService
   Future getPreReservation() async {
     try {
       state = PreReservationSettingListStateLoading();
+
       final resp = await repository.getPreReservation();
-      state = PreReservationSettingStateSuccess(resp);
+
+      state = PreReservationSettingStateSuccess(resp[0]);
+    } on DioException {
+      state = PreReservationSettingStateError("서버에서 우선예약 정보를 가져올 수 없습니다. ");
+    } catch (e) {
+      state = PreReservationSettingStateError("알 수 없는 에러가 발생했습니다.");
+    }
+  }
+
+  Future deletePreReservation(PreReservationStatusEntity entity) async {
+    try {
+      await repository.deletePreReservation(entity);
     } on DioException {
       state = PreReservationSettingStateError("서버에서 우선예약 정보를 가져올 수 없습니다. ");
     } catch (e) {

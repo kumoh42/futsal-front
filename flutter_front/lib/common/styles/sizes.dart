@@ -91,3 +91,7 @@ const double kMBorderRadiusSize = 5.0;
 
 double get kBorderRadiusSize =>
     ResponsiveData.kIsMobile ? kMBorderRadiusSize : kWBorderRadiusSize;
+
+const double kWBorderWidth = 5.0;
+
+double get kBorderWidth => ResponsiveSize.S(kWBorderWidth);

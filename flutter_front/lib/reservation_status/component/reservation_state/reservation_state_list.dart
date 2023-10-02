@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_front/common/styles/colors.dart';
 import 'package:flutter_front/common/styles/sizes.dart';
 import 'package:flutter_front/common/styles/text_styles.dart';
-import 'package:flutter_front/reservation_status/component/reservation_state/reservation_state_item.dart';
+import 'package:flutter_front/reservation_status/component/reservation_state/reservation_state_item_2.dart';
 import 'package:flutter_front/reservation_status/model/entity/reservation_entity.dart';
 import 'package:flutter_front/reservation_status/model/state/reservation_list_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -60,14 +61,42 @@ class _ReservationStateListState extends ConsumerState<ReservationStateList> {
               .entries
               .map(
                 (e) => Expanded(
-                  child: ReservationStateItem(
-                    index: e.key,
-                    entity: e.value,
-                    isChecked: controller.isChecked(e.value.reservationId),
-                    onPressed: (value) {
-                      controller.clickedCheckBox(e.value.reservationId);
-                    },
-                    isLast: widget.reservationStatusList!.length - 1 == e.key,
+                  child: Stack(
+                    children: [
+                      if (widget.reservationStatusList!.length - 1 != e.key)
+                        Positioned(
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                              left: kPaddingLargeSize +
+                                  (kIconMiddleSize - kBorderWidth) / 2,
+                            ),
+                            child: Container(
+                              color: kMainColor,
+                              width: kBorderWidth,
+                            ),
+                          ),
+                        ),
+                      Column(
+                        children: [
+                          Expanded(
+                            child: ReservationStateItem2(
+                              index: e.key,
+                              entity: e.value,
+                              isChecked:
+                                  controller.isChecked(e.value.reservationId),
+                              onPressed: (value) {
+                                controller
+                                    .clickedCheckBox(e.value.reservationId);
+                              },
+                              isLast:
+                                  widget.reservationStatusList!.length - 1 ==
+                                      e.key,
+                            ),
+                          ),
+                          SizedBox(height: kPaddingLargeSize),
+                        ],
+                      )
+                    ],
                   ),
                 ),
               )

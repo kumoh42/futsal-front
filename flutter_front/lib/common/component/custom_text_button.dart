@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_front/common/styles/styles.dart';
+import 'package:flutter_front/common/styles/sizes.dart';
+import 'package:flutter_front/common/styles/text_styles.dart';
 
 class CustomTextButton extends StatelessWidget {
   final void Function()? onPressed;
@@ -16,18 +17,19 @@ class CustomTextButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final fontSize = ResponsiveData.kIsMobile ? ResponsiveSize.M(kWTextLargeSize) : kWTextSmallSize;
     return TextButton(
       onPressed: onPressed,
       style: TextButton.styleFrom(
         alignment: Alignment.centerLeft,
-        minimumSize: kTextButtonSize,
+        minimumSize: Size.fromHeight(fontSize),
         padding: EdgeInsets.zero,
         tapTargetSize: MaterialTapTargetSize.shrinkWrap,
       ),
       child: Text(
         text,
         textAlign: textAlign,
-        style: kTextSubStyleSmall,
+        style: kTextDisabledStyle.copyWith(fontSize: fontSize),
       ),
     );
   }

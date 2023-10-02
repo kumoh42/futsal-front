@@ -1,7 +1,7 @@
 import 'package:flutter_front/auth/provider/auth_provider.dart';
+import 'package:flutter_front/auth/view/login_view.dart';
 import 'package:flutter_front/common/view/root_tab.dart';
 import 'package:flutter_front/common/view/splash_screen.dart';
-import 'package:flutter_front/auth/view/login_screen.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -22,8 +22,8 @@ final routerProvider = Provider<GoRouter>((ref) {
       ),
       GoRoute(
         path: '/login',
-        name: LoginScreen.routeName,
-        builder: (context, state) => const LoginScreen(),
+        name: LoginView.routeName,
+        builder: (context, state) => const LoginView(),
       ),
     ],
     refreshListenable: provider,

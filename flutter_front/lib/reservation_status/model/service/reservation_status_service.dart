@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_front/common/state/state.dart';
 import 'package:flutter_front/common/utils/date_utils.dart';
+import 'package:flutter_front/reservation_status/model/entity/reservation_cancel_entity.dart';
 import 'package:flutter_front/reservation_status/model/entity/reservation_entity.dart';
 import 'package:flutter_front/reservation_status/model/repository/reservation_status_repository.dart';
 import 'package:flutter_front/reservation_status/model/state/reservation_list_state.dart';
@@ -33,7 +34,7 @@ class ReservationStatusService
       final temp = state;
       state = ReservationStatusListStateLoading();
       final data = await repository.getReservationStatusList(
-        defaultDateFormat.format(
+        regDateMonthFormat.format(
           date ?? (temp as ReservationStatusListStateSuccess).data.first.date,
         ),
       );
@@ -49,12 +50,22 @@ class ReservationStatusService
     }
   }
 
-  Future cancelReservation({required ReservationStatusEntity entity}) async {
+  // 예약삭제
+  Future cancelReservation({
+    required List<ReservationStatusEntity> entities,
+  }) async {
     try {
       state = ReservationStatusListStateLoading();
-//      await repository.cancelReservation(entity.reservationId);
+      final timeList = entities.map((e) => e.time).toList();
+      final entity = ReservationCancelEntity(
+        date: regDateFormat.format(entities.first.date),
+        isPre: entities.first.isPre,
+        times: timeList,
+      );
+
+      await repository.cancelReservation(entity);
       final data = await repository.getReservationStatusList(
-        defaultDateFormat.format(entity.date),
+        defaultDateFormat.format(entities[0].date),
       );
       state = ReservationStatusListStateSuccess(data);
     } catch (e) {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_front/common/styles/styles.dart';
+import 'package:flutter_front/common/styles/colors.dart';
 
 class SnackBarUtil {
   static GlobalKey<ScaffoldMessengerState> key =
@@ -8,19 +8,19 @@ class SnackBarUtil {
   static void showError(String message) {
     key.currentState!
       ..hideCurrentSnackBar()
-      ..showSnackBar(drawSnackBar(message, CustomColor.pointColor));
+      ..showSnackBar(drawSnackBar(message, kPointColor));
   }
 
   static void showMessage(String message) {
     key.currentState!
       ..hideCurrentSnackBar()
-      ..showSnackBar(drawSnackBar(message, CustomColor.subColor));
+      ..showSnackBar(drawSnackBar(message, kSubColor));
   }
 
   static void showSuccess(String message) {
     key.currentState!
       ..hideCurrentSnackBar()
-      ..showSnackBar(drawSnackBar(message, CustomColor.mainColor));
+      ..showSnackBar(drawSnackBar(message, kMainColor));
   }
 
   static SnackBar drawSnackBar(String message, Color color) {

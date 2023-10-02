@@ -1,8 +1,7 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_front/common/layout/default_layout.dart';
+import 'package:flutter_front/common/component/default_container.dart';
 import 'package:flutter_front/common/styles/colors.dart';
+import 'package:flutter_front/common/styles/sizes.dart';
 
 class SplashScreen extends StatelessWidget {
   static String get routeName => 'splash';
@@ -11,28 +10,23 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
-    final height = MediaQuery.of(context).size.height;
-    return DefaultLayout(
-      backgroundColor: CustomColor.mainColor,
-      child: SizedBox(
-        width: width,
-        height: height,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset(
-              'assets/image/white_logo.png',
-              width: min(
-                    MediaQuery.of(context).size.width,
-                    MediaQuery.of(context).size.height,
-                  ) /
-                  2,
-            ),
-            const SizedBox(height: 16.0),
-            const CircularProgressIndicator(color: Colors.white),
-          ],
-        ),
+    return DefaultContainer(
+      isExpanded: true,
+      backgroundColor: kMainColor,
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Image.asset(
+            'assets/image/white_logo.png',
+            width: ResponsiveSize.S(500),
+          ),
+          SizedBox(height: kPaddingLargeSize),
+          SizedBox(
+            width: ResponsiveSize.S(100),
+            height: ResponsiveSize.S(100),
+            child: const CircularProgressIndicator(color: kTextReverseColor),
+          ),
+        ],
       ),
     );
   }

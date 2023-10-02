@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_front/common/styles/styles.dart';
+import 'package:flutter_front/common/styles/colors.dart';
+import 'package:flutter_front/common/styles/sizes.dart';
+import 'package:flutter_front/common/styles/text_styles.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomTextFormField extends StatelessWidget {
   final String? labelText;
@@ -13,7 +16,11 @@ class CustomTextFormField extends StatelessWidget {
   final String? Function(String?)? validator;
   final TextEditingController? controller;
 
-  const CustomTextFormField({
+  final TextStyle? textStyle;
+  late final double contentPadding;
+  final Color? backgroundColor;
+
+  CustomTextFormField({
     Key? key,
     this.labelText,
     this.hintText,
@@ -21,56 +28,67 @@ class CustomTextFormField extends StatelessWidget {
     this.keyboardType = TextInputType.text,
     this.validator,
     this.controller,
-  }) : super(key: key);
+    this.textStyle,
+    double? contentPadding,
+    this.backgroundColor,
+  }) : super(key: key) {
+    this.contentPadding = contentPadding ?? kWPaddingMiddleSize;
+  }
 
   @override
   Widget build(BuildContext context) {
+    final fontSize = ResponsiveData.kIsMobile
+        ? ResponsiveSize.M(kWTextLargeSize)
+        : kWTextMiddleSize;
     return Container(
-      decoration: const BoxDecoration(color: CustomColor.backgroundMainColor),
+      decoration: BoxDecoration(
+        color: backgroundColor ?? kBackgroundMainColor,
+      ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           Row(
             children: [
               if (prefixIcon != null)
-                Padding(
-                  padding: const EdgeInsets.all(kPaddingMiddleSize),
-                  child: Icon(
-                    prefixIcon,
-                    size: kIconMiddleSize,
-                    color: CustomColor.subColor,
-                  ),
+                Icon(
+                  prefixIcon,
+                  size: kWIconSmallSize,
+                  color: kSubColor,
                 ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: kPaddingMiddleSize),
-                child: Text(
-                  labelText ?? "",
-                  style: kTextMainStyleSmall,
+              if (prefixIcon != null) const SizedBox(width: kWPaddingSmallSize),
+              if (labelText != null)
+                Text(
+                  labelText!,
+                  style: kTextMainStyle.copyWith(fontSize: fontSize),
                 ),
-              ),
             ],
           ),
+          SizedBox(height: contentPadding),
           TextFormField(
             controller: controller,
             validator: validator,
-            cursorColor: CustomColor.textMainColor,
+            cursorColor: kTextMainColor,
             keyboardType: keyboardType,
             obscureText: keyboardType == TextInputType.visiblePassword,
-            style: kTextMainStyleMiddle,
+            style: textStyle ?? kTextMainStyle.copyWith(fontSize: fontSize),
             inputFormatters: [
               FilteringTextInputFormatter.deny(RegExp(r'\s')), // 공백 입력 방지
             ],
             decoration: InputDecoration(
               isDense: true,
-              contentPadding: const EdgeInsets.only(
-                bottom: kPaddingMiddleSize,
-              ),
+              contentPadding: EdgeInsets.only(bottom: contentPadding),
               hintText: hintText,
-              hintStyle: kTextMainStyleMiddle.copyWith(
-                color: CustomColor.textMainColor.withOpacity(0.5),
-              ),
+              border:
+                  UnderlineInputBorder(borderSide: BorderSide(width: 1.0.w)),
+              hintStyle: textStyle?.copyWith(
+                    color: kTextMainColor.withOpacity(0.5),
+                  ) ??
+                  kTextMainStyle.copyWith(
+                    fontSize: fontSize,
+                    color: kTextMainColor.withOpacity(0.5),
+                  ),
               filled: true,
-              fillColor: CustomColor.backgroundMainColor,
+              fillColor: backgroundColor ?? kBackgroundMainColor,
             ),
           ),
         ],

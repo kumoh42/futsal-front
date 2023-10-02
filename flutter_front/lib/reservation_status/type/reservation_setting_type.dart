@@ -7,16 +7,16 @@ enum ReservationSettingType {
 
 extension ReservationSettingTypeParsing on ReservationSettingType {
   get color {
-    switch(this) {
+    switch (this) {
       case ReservationSettingType.started:
-        return CustomColor.mainColor;
+        return kMainColor;
       case ReservationSettingType.closed:
-        return CustomColor.pointColor;
+        return kPointColor;
     }
   }
-  
+
   get value {
-    switch(this) {
+    switch (this) {
       case ReservationSettingType.started:
         return "시작됨";
       case ReservationSettingType.closed:

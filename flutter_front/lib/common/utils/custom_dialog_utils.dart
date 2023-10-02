@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_front/common/styles/sizes.dart';
 import 'package:flutter_front/common/styles/text_styles.dart';
 
 class CustomDialogUtil {
@@ -38,14 +39,14 @@ class CustomDialog extends StatelessWidget {
           },
           child: Text(
             cancel ?? "cancel",
-            style: kTextMainStyleSmall,
+            style: kTextMainStyle.copyWith(fontSize: kTextSmallSize),
           ),
         ),
         TextButton(
           onPressed: onPressed,
           child: Text(
             accept ?? "ok",
-            style: kTextMainStyleSmall,
+            style: kTextMainStyle.copyWith(fontSize: kTextSmallSize),
           ),
         ),
       ],

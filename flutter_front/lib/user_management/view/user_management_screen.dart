@@ -38,41 +38,37 @@ class UserManagementScreen extends ConsumerWidget {
                 hintMessage: "사용자 추가",
               ),
             ],
-            child: Container(
-              color: kBackgroundMainColor,
-              child: Column(
-                children: [
-                  const SearchRowView(),
-                  ResponsiveSizedBox(
-                    size: kPaddingMiddleSize,
+            child: Column(
+              children: [
+                const SearchRowView(),
+                ResponsiveSizedBox(
+                  size: kPaddingMiddleSize,
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: kPaddingLargeSize),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(child: Text(info[0], style: textStyle)),
+                      Expanded(child: Text(info[1], style: textStyle)),
+                      Expanded(child: Text(info[2], style: textStyle)),
+                      Expanded(child: Text(info[3], style: textStyle)),
+                      Expanded(child: Text(info[4], style: textStyle)),
+                      ResponsiveSizedBox(size: kIconMiddleSize),
+                    ],
                   ),
-                  Padding(
+                ),
+                ResponsiveSizedBox(
+                  size: kPaddingMiddleSize,
+                ),
+                Expanded(
+                  child: Padding(
                     padding:
                         EdgeInsets.symmetric(horizontal: kPaddingLargeSize),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(child: Text(info[0], style: textStyle)),
-                        Expanded(child: Text(info[1], style: textStyle)),
-                        Expanded(child: Text(info[2], style: textStyle)),
-                        Expanded(child: Text(info[3], style: textStyle)),
-                        Expanded(child: Text(info[4], style: textStyle)),
-                        ResponsiveSizedBox(size: kIconMiddleSize),
-                      ],
-                    ),
+                    child: const UserListView(),
                   ),
-                  ResponsiveSizedBox(
-                    size: kPaddingMiddleSize,
-                  ),
-                  Expanded(
-                    child: Padding(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: kPaddingLargeSize),
-                      child: const UserListView(),
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),

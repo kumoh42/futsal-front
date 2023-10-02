@@ -79,16 +79,8 @@ class UserListViewModel extends ChangeNotifier {
                 ? await ref.read(userListServiceProvider.notifier).editUser(
                       user.member_member_srl,
                       UserEditEntity(
-                          circleSrl: circleListWithId
-                              .firstWhere((element) =>
-                                  element.keys.first == user.circle_circle_name)
-                              .values
-                              .first,
-                          majorSrl: majorListWithId
-                              .firstWhere((element) =>
-                                  element.keys.first == user.major_major_name)
-                              .values
-                              .first,
+                          circleSrl: circleListWithId[user.circle_circle_name]!,
+                          majorSrl: majorListWithId[user.major_major_name]!,
                           memberName: user.member_user_name,
                           phoneNumber: user.member_phone_number),
                     )

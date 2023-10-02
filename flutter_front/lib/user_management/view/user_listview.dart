@@ -95,7 +95,7 @@ Widget userListItemContainer({
           vertical: kPaddingMiniSize,
         ),
         decoration: BoxDecoration(
-          color: isSelected ? kMainColor : kBackgroundMainColor,
+          color: isSelected ? kMainColor : null,
           borderRadius: BorderRadius.circular(kBorderRadiusSize),
         ),
         child: Row(

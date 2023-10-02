@@ -136,7 +136,7 @@ class SearchRowView extends ConsumerWidget {
                             horizontal: kPaddingMiddleSize,
                           ),
                           child: TextField(
-                            style: TextStyle(fontSize: kTextMiddleSize),
+                            controller: searchTextFieldController,
                             decoration: InputDecoration(
                               border: InputBorder.none,
                               hintText: 'search',
@@ -148,17 +148,6 @@ class SearchRowView extends ConsumerWidget {
                           ),
                         ),
                       ),
-                      IconButton(
-                        padding: EdgeInsets.only(
-                          right: kPaddingMiddleSize,
-                        ),
-                        splashRadius: 1,
-                        onPressed: () {},
-                        icon: Icon(
-                          Icons.search,
-                          size: kIconMiddleSize,
-                        ),
-                      ),
                     ],
                   ),
                 ),
@@ -168,11 +157,12 @@ class SearchRowView extends ConsumerWidget {
                     Expanded(
                       flex: 1,
                       child: CustomDropDownMenu(
-                        title: "권한",
+                        title: "동아리",
                         controller: circleController,
                         titleTextStyle: kTextDisabledStyle.copyWith(
                           fontSize: kTextMiniSize,
-                          fontWeight: FontWeight.w600,
+                          fontWeight: FontWeight.w400,
+                          color: kTextMainColor,
                         ),
                       ),
                     ),
@@ -184,7 +174,8 @@ class SearchRowView extends ConsumerWidget {
                         controller: majorController,
                         titleTextStyle: kTextDisabledStyle.copyWith(
                           fontSize: kTextMiniSize,
-                          fontWeight: FontWeight.w600,
+                          fontWeight: FontWeight.w400,
+                          color: kTextMainColor,
                         ),
                       ),
                     ),

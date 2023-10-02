@@ -3,6 +3,7 @@ import 'package:flutter_front/common/styles/sizes.dart';
 import 'package:flutter_front/common/styles/text_styles.dart';
 import 'package:flutter_front/user_management/common/dialog/user_create_dialog.dart';
 import 'package:flutter_front/user_management/common/info_list.dart';
+import 'package:flutter_front/user_management/model/entity/user_edit_entity.dart';
 import 'package:flutter_front/user_management/model/entity/user_info_entity.dart';
 import 'package:flutter_front/user_management/model/state/user_list_state.dart';
 import 'package:flutter_front/user_management/service/user_list_service.dart';
@@ -62,23 +63,6 @@ class UserListViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void showUserInfoEditDialog(BuildContext context) {
-    if (selectedIndex < 0 || userList == null) {
-      return;
-    }
-    showDialog(
-      context: context,
-      builder: (context) {
-        return UserCreateDialog(
-          user: userList![selectedIndex],
-          onPressed: (user) async {
-            ref.read(userListServiceProvider.notifier).editUser(user);
-          },
-        );
-      },
-    );
-  }
-
   void showCreateUserDialog(
       {required BuildContext context, bool isEdit = false}) {
     if (userList == null) {
@@ -92,9 +76,22 @@ class UserListViewModel extends ChangeNotifier {
           user: userList![selectedIndex < 0 ? 0 : selectedIndex],
           onPressed: (user) async {
             isEdit
-                ? await ref
-                    .read(userListServiceProvider.notifier)
-                    .editUser(user)
+                ? await ref.read(userListServiceProvider.notifier).editUser(
+                      user.member_member_srl,
+                      UserEditEntity(
+                          circleSrl: circleListWithId
+                              .firstWhere((element) =>
+                                  element.keys.first == user.circle_circle_name)
+                              .values
+                              .first,
+                          majorSrl: majorListWithId
+                              .firstWhere((element) =>
+                                  element.keys.first == user.major_major_name)
+                              .values
+                              .first,
+                          memberName: user.member_user_name,
+                          phoneNumber: user.member_phone_number),
+                    )
                 : await ref
                     .read(userListServiceProvider.notifier)
                     .createUser(user);
@@ -147,9 +144,5 @@ class UserListViewModel extends ChangeNotifier {
       },
     );
     return isRemove;
-  }
-
-  void editUser(BuildContext context, UserInfo user) async {
-    await ref.read(userListServiceProvider.notifier).editUser(user);
   }
 }

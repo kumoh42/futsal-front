@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart' hide Headers;
 import 'package:flutter_front/common/dio/dio.dart';
+import 'package:flutter_front/user_management/model/entity/user_edit_entity.dart';
 import 'package:flutter_front/user_management/model/entity/user_info_entity.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:retrofit/retrofit.dart';
@@ -25,5 +26,5 @@ abstract class UserListRepository {
 
   @PATCH('/members/{id}')
   @Headers(({'accessToken': 'true'}))
-  Future editUser(@Path('id') String id, @Body() UserInfo user);
+  Future editUser(@Path('id') String id, @Body() UserEditEntity user);
 }

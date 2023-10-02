@@ -70,14 +70,13 @@ class _UserListRepository implements UserListRepository {
   @override
   Future<dynamic> editUser(
     String id,
-    UserInfo user,
+    UserEditEntity user,
   ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'accessToken': 'true'};
     _headers.removeWhere((k, v) => v == null);
-    final _data = <String, dynamic>{};
-    _data.addAll(user.toJson());
+    final _data = user;
     final _result = await _dio.fetch(_setStreamType<dynamic>(Options(
       method: 'PATCH',
       headers: _headers,

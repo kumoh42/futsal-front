@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_front/user_management/model/entity/user_edit_entity.dart';
 import 'package:flutter_front/user_management/model/entity/user_info_entity.dart';
 import 'package:flutter_front/user_management/model/repository/user_list_repository.dart';
 import 'package:flutter_front/user_management/model/state/user_list_state.dart';
@@ -39,9 +40,9 @@ class UserListService extends StateNotifier<UserListState> {
     }
   }
 
-  Future editUser(UserInfo user) async {
+  Future editUser(String member_srl, UserEditEntity user) async {
     try {
-      await repository.editUser(user.member_member_srl, user);
+      await repository.editUser(member_srl, user);
       await getUserList();
     } on DioException {
       state = UserListStateError("서버에서 사용자 목록을 불러 올 수 없습니다.");
@@ -51,9 +52,7 @@ class UserListService extends StateNotifier<UserListState> {
   }
 
   Future createUser(UserInfo user) async {
-    try {
-      //TODO create api연결
-    } on DioException {
+    try {} on DioException {
       state = UserListStateError("서버에서 사용자 목록을 불러 올 수 없습니다.");
     } catch (e) {
       state = UserListStateError("알 수 없는 에러가 발생했습니다.");

@@ -121,9 +121,13 @@ class UserInfoContainer extends ConsumerWidget {
                   ),
                 )
               : Container()
-          : const Center(
-              child: CircularProgressIndicator(),
-            ),
+          : viewmodel.state is UserListStateError
+              ? const Center(
+                  child: Text("에러가 발생했습니다"),
+                )
+              : const Center(
+                  child: CircularProgressIndicator(),
+                ),
     );
   }
 }

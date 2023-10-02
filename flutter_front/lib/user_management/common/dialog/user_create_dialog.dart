@@ -137,7 +137,7 @@ class UserCreateDialog extends ConsumerWidget {
                                 circle_circle_name:
                                     circleTextController.selected,
                                 major_major_name: majorController.selected,
-                                member_member_srl: idTextController.text,
+                                member_member_srl: user.member_member_srl,
                                 member_permission: phoneNumController.text,
                                 member_user_name: nameTextController.text,
                                 member_phone_number: phoneNumController.text,

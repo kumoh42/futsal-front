@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'pre_reservation_setting_repository.dart';
+part of 'user_list_repository.dart';
 
 // **************************************************************************
 // RetrofitGenerator
@@ -8,9 +8,8 @@ part of 'pre_reservation_setting_repository.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers
 
-class _PreReservationSettingRepository
-    implements PreReservationSettingRepository {
-  _PreReservationSettingRepository(
+class _UserListRepository implements UserListRepository {
+  _UserListRepository(
     this._dio, {
     this.baseUrl,
   });
@@ -20,74 +19,46 @@ class _PreReservationSettingRepository
   String? baseUrl;
 
   @override
-  Future<dynamic> setPreReservation(
-      ProgressReservationEntity progressReservationEntity) async {
-    const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{r'accessToken': 'true'};
-    _headers.removeWhere((k, v) => v == null);
-    final _data = <String, dynamic>{};
-    _data.addAll(progressReservationEntity.toJson());
-    final _result = await _dio.fetch(_setStreamType<dynamic>(Options(
-      method: 'POST',
-      headers: _headers,
-      extra: _extra,
-    )
-        .compose(
-          _dio.options,
-          '/reservation/pre/time-setting',
-          queryParameters: queryParameters,
-          data: _data,
-        )
-        .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = _result.data;
-    return value;
-  }
-
-  @override
-  Future<List<PreReservationStatusEntity>> getPreReservation() async {
+  Future<List<UserInfo>> getUserList() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'accessToken': 'true'};
     _headers.removeWhere((k, v) => v == null);
     final Map<String, dynamic>? _data = null;
-    final _result = await _dio.fetch<List<dynamic>>(
-        _setStreamType<List<PreReservationStatusEntity>>(Options(
+    final _result =
+        await _dio.fetch<List<dynamic>>(_setStreamType<List<UserInfo>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              '/reservation/pre/time-list',
+              '/members',
               queryParameters: queryParameters,
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     var value = _result.data!
-        .map((dynamic i) =>
-            PreReservationStatusEntity.fromJson(i as Map<String, dynamic>))
+        .map((dynamic i) => UserInfo.fromJson(i as Map<String, dynamic>))
         .toList();
     return value;
   }
 
   @override
-  Future<dynamic> cancelPreReservation(
-      PreReservationStatusEntity preReservationStatusEntity) async {
+  Future<dynamic> removeUser(String id) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'accessToken': 'true'};
     _headers.removeWhere((k, v) => v == null);
-    final _data = <String, dynamic>{};
-    _data.addAll(preReservationStatusEntity.toJson());
+    final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch(_setStreamType<dynamic>(Options(
-      method: 'PATCH',
+      method: 'DELETE',
       headers: _headers,
       extra: _extra,
     )
         .compose(
           _dio.options,
-          '/reservation/pre/time-delete',
+          '/members/${id}',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -97,50 +68,29 @@ class _PreReservationSettingRepository
   }
 
   @override
-  Future<dynamic> blockReservation(
-      BlockReservationEntity blockReservation) async {
+  Future<dynamic> editUser(
+    String id,
+    UserEditEntity user,
+  ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'accessToken': 'true'};
     _headers.removeWhere((k, v) => v == null);
-    final _data = <String, dynamic>{};
-    _data.addAll(blockReservation.toJson());
+    final _data = user;
     final _result = await _dio.fetch(_setStreamType<dynamic>(Options(
-      method: 'POST',
-      headers: _headers,
-      extra: _extra,
-    )
-        .compose(
-          _dio.options,
-          '/reservation/block',
-          queryParameters: queryParameters,
-          data: _data,
-        )
-        .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = _result.data;
-    return value;
-  }
-
-  @override
-  Future<void> deletePreReservation(PreReservationStatusEntity entity) async {
-    const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{r'accessToken': 'true'};
-    _headers.removeWhere((k, v) => v == null);
-    final _data = <String, dynamic>{};
-    _data.addAll(entity.toJson());
-    await _dio.fetch<void>(_setStreamType<void>(Options(
       method: 'PATCH',
       headers: _headers,
       extra: _extra,
     )
         .compose(
           _dio.options,
-          'reservation/pre/time-delete',
+          '/members/${id}',
           queryParameters: queryParameters,
           data: _data,
         )
         .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = _result.data;
+    return value;
   }
 
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {

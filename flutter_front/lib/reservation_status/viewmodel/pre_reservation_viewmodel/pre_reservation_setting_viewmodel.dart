@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_front/common/styles/sizes.dart';
 import 'package:flutter_front/common/styles/text_styles.dart';
 import 'package:flutter_front/common/utils/custom_dialog_utils.dart';
+import 'package:flutter_front/common/utils/date_utils.dart';
+import 'package:flutter_front/common/utils/snack_bar_util.dart';
 import 'package:flutter_front/reservation_status/component/custom_table_calendar.dart';
-import 'package:flutter_front/reservation_status/component/dialog/pre_reservation_setting_dialog.dart';
+import 'package:flutter_front/reservation_status/component/dialog/calendar_select_dialog.dart';
 import 'package:flutter_front/reservation_status/model/entity/pre_reservation/pre_reservation_status_entity.dart';
+import 'package:flutter_front/reservation_status/model/entity/pre_reservation/progress_reservation_entity.dart';
 import 'package:flutter_front/reservation_status/model/service/pre_reservation/pre_reservation_setting_service.dart';
 import 'package:flutter_front/reservation_status/model/state/pre_reservation/pre_reservation_setting_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -37,6 +40,14 @@ class PreReservationSettingViewModel extends ChangeNotifier {
         .getPreReservation();
   }
 
+  void deletePreReservation() async {
+    if (preReservationStatus != null) {
+      await ref
+          .read(preReservationSettingServiceProvider.notifier)
+          .deletePreReservation(preReservationStatus!);
+    }
+  }
+
   void setTimePicker(BuildContext context) {
     Future<TimeOfDay?> selectedTime = showTimePicker(
       initialEntryMode: TimePickerEntryMode.input,
@@ -61,25 +72,49 @@ class PreReservationSettingViewModel extends ChangeNotifier {
   void setPreReservation(BuildContext context) async {
     await showDialog(
       context: context,
-      builder: (context) => PreReservationSettingDialog(
+      builder: (context) => CalendarSelectDialog(
+        onPressed: (controller, startTime, endTime) async {
+          final entity = ProgressReservationEntity(
+            isPre: true,
+            date: defaultDateFormat.format(
+              controller.selectedDay,
+            ),
+            time: startTime.substring(0, 2),
+          );
+          await ref
+              .read(preReservationSettingServiceProvider.notifier)
+              .setPreReservation(progressReservationEntity: entity);
+
+          if (context.mounted) Navigator.of(context).pop();
+        },
         controller: customTimeTableController,
-        onPressed: (e) => ref
-            .read(preReservationSettingServiceProvider.notifier)
-            .setPreReservation(progressReservationEntity: e),
+        startTimes: const [
+          "18시",
+          "19시",
+          "20시",
+          "21시",
+          "22시",
+        ],
+        endTimes: const [
+          "00시",
+        ],
+        title: "사전 예약 기간 설정",
       ),
     );
   }
 
-  void cancelPreReservation(
-      BuildContext context, PreReservationStatusEntity entity) async {
+  void cancelPreReservation(BuildContext context) async {
+    if (preReservationStatus == null) {
+      return;
+    }
     CustomDialogUtil.showCustomDialog(
       dialog: CustomDialog(
         title: Text(
-          '우선예약 설정 취소',
+          '사전예약 설정 취소',
           style: kTextMainStyle.copyWith(fontSize: kTextMiddleSize),
         ),
         content: Text(
-          ' ${entity.date} ${entity.time}',
+          ' ${preReservationStatus!.date} ${preReservationStatus!.time}시',
           style: kTextNormalStyle.copyWith(fontSize: kTextLargeSize),
         ),
         accept: "확인",
@@ -87,7 +122,9 @@ class PreReservationSettingViewModel extends ChangeNotifier {
         onPressed: () async {
           await ref
               .read(preReservationSettingServiceProvider.notifier)
-              .cancelPreReservation(preReservationStatusEntity: entity);
+              .cancelPreReservation(
+                  preReservationStatusEntity: preReservationStatus!);
+          SnackBarUtil.showSuccess("예약 설정을 취소했습니다.");
           if (context.mounted) Navigator.of(context).pop();
         },
       ),

@@ -41,7 +41,7 @@ class ProgressReservationViewModel extends ChangeNotifier {
     CustomDialogUtil.showCustomDialog(
         dialog: CustomDialog(
           title: Text(
-            "우선예약 중단 확인",
+            "사전예약 중단 확인",
             style: kTextMainStyle.copyWith(fontSize: kTextMiddleSize),
           ),
           content: Text(
@@ -52,40 +52,47 @@ class ProgressReservationViewModel extends ChangeNotifier {
             await ref
                 .read(progressResrvationServiceProvider.notifier)
                 .stopPreReservation();
+
+            SnackBarUtil.showSuccess("예약을 중단하였습니다!");
+
             if (context.mounted) Navigator.of(context).pop();
           },
         ),
         context: context);
-    SnackBarUtil.showSuccess("예약을 중단하였습니다!");
   }
 
   void restartPreReservation(BuildContext context) async {
-    if (state is! ProgressReservationStateSuccess) return;
-    if (!(state as ProgressReservationStateSuccess).data.isPre) {
-      SnackBarUtil.showError("정규예약은 재개 할 수 없습니다!");
-      return;
+    if (state is ProgressReservationStateSuccess) {
+      if (!(state as ProgressReservationStateSuccess).data.isPre) {
+        SnackBarUtil.showError("정규예약은 재개 할 수 없습니다!");
+        return;
+      }
     }
+    await ref
+        .read(progressResrvationServiceProvider.notifier)
+        .restartPreReservation();
 
-    CustomDialogUtil.showCustomDialog(
-        dialog: CustomDialog(
-          title: Text(
-            "우선예약 재개 확인",
-            style: kTextMainStyle.copyWith(fontSize: kTextMiddleSize),
-          ),
-          content: Text(
-            '${(state as ProgressReservationStateSuccess).data.date} ${(state as ProgressReservationStateSuccess).data.time}\n예약을 재개하시겠습니까?',
-            style: kTextNormalStyle.copyWith(fontSize: kTextLargeSize),
-          ),
-          onPressed: () async {
-            await ref
-                .read(progressResrvationServiceProvider.notifier)
-                .restartPreReservation();
-            if (context.mounted) Navigator.of(context).pop();
-          },
-        ),
-        context: context);
+    // CustomDialogUtil.showCustomDialog(
+    //     dialog: CustomDialog(
+    //       title: Text(
+    //         "우선예약 재개 확인",
+    //         style: kTextMainStyle.copyWith(fontSize: kTextMiddleSize),
+    //       ),
+    //       content: Text(
+    //         '${(state as ProgressReservationStateSuccess).data.date} ${(state as ProgressReservationStateSuccess).data.time}\n예약을 재개하시겠습니까?',
+    //         style: kTextNormalStyle.copyWith(fontSize: kTextLargeSize),
+    //       ),
+    //       onPressed: () async {
+    //         await ref
+    //             .read(progressResrvationServiceProvider.notifier)
+    //             .restartPreReservation();
 
-    SnackBarUtil.showSuccess("예약을 재개하였습니다!");
+    //         SnackBarUtil.showSuccess("예약을 재개하였습니다!");
+
+    //         if (context.mounted) Navigator.of(context).pop();
+    //       },
+    //     ),
+    //     context: context);
   }
 
   void resetPreReservation(BuildContext context) async {
@@ -98,17 +105,18 @@ class ProgressReservationViewModel extends ChangeNotifier {
     CustomDialogUtil.showCustomDialog(
         dialog: CustomDialog(
           content: Text(
-            '${(state as ProgressReservationStateSuccess).data.date} ${(state as ProgressReservationStateSuccess).data.time} 에 시작된\n우선예약 중 예약된 내역을 \n모두 삭제하시겠습니까?',
+            '${(state as ProgressReservationStateSuccess).data.date} ${(state as ProgressReservationStateSuccess).data.time}시에 시작된\n우선예약 중 예약된 내역을 \n모두 삭제하시겠습니까?',
             style: kTextNormalStyle.copyWith(fontSize: kTextLargeSize),
           ),
           onPressed: () async {
             await ref
                 .read(progressResrvationServiceProvider.notifier)
                 .resetPreReservation();
+            SnackBarUtil.showSuccess("예약을 초기화하였습니다!");
+
             if (context.mounted) Navigator.of(context).pop();
           },
         ),
         context: context);
-    SnackBarUtil.showSuccess("예약을 초기화하였습니다!");
   }
 }

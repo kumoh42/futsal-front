@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_front/common/component/container/designed_container.dart';
 import 'package:flutter_front/common/component/container/responsive_container.dart';
+import 'package:flutter_front/common/component/custome_icon_button.dart';
 import 'package:flutter_front/common/styles/colors.dart';
 import 'package:flutter_front/common/styles/sizes.dart';
 import 'package:flutter_front/common/styles/text_styles.dart';
@@ -25,9 +26,12 @@ class _PreReservationSettingViewState
   void initState() {
     super.initState();
     // UI가 빌드된 후 실행
-    Future(() => ref
-        .read(preReservationSettingViewModelProvider)
-        .getPreReservationStatus());
+    Future(() {
+      ref
+          .read(preReservationSettingViewModelProvider)
+          .getPreReservationStatus();
+      ref.read(progressReservationViewModelProvider).getProgressReservation();
+    });
   }
 
   String toFirstDay(String? date) {
@@ -59,14 +63,12 @@ class _PreReservationSettingViewState
         ResponsiveWidget(
           wFlex: 7,
           child: DesignedContainer(
-            title: "진행 중인 예약",
+            title: "진행중인 예약",
             actions: [
-              IconButton(
+              CustomIconButton(
+                icon: Icons.refresh,
                 onPressed: progressViewmodel.getProgressReservation,
-                icon: Icon(Icons.refresh, size: kIconMiddleSize),
-                padding: EdgeInsets.zero,
-                constraints: const BoxConstraints(),
-                splashRadius: kIconMiddleSize / 1.2,
+                hintMessage: "진행중인 예약 새로고침",
               ),
             ],
             child: Column(
@@ -125,20 +127,22 @@ class _PreReservationSettingViewState
               DesignedContainer(
                 title: "사전 예약 설정 현황",
                 actions: [
-                  IconButton(
-                    onPressed: preViewmodel.getPreReservationStatus,
-                    icon: Icon(Icons.refresh, size: kIconMiddleSize),
-                    padding: EdgeInsets.zero,
-                    constraints: const BoxConstraints(),
-                    splashRadius: kIconMiddleSize / 1.2,
+                  CustomIconButton(
+                    icon: Icons.delete_forever,
+                    onPressed: () => preViewmodel.cancelPreReservation(context),
+                    hintMessage: "사전 예약 설정을 취소",
                   ),
                   const SizedBox(width: kWPaddingMiddleSize),
-                  IconButton(
+                  CustomIconButton(
+                    icon: Icons.refresh,
+                    onPressed: preViewmodel.getPreReservationStatus,
+                    hintMessage: "사전 예약 설정 새로고침",
+                  ),
+                  const SizedBox(width: kWPaddingMiddleSize),
+                  CustomIconButton(
+                    icon: Icons.edit,
                     onPressed: () => preViewmodel.setPreReservation(context),
-                    icon: Icon(Icons.edit, size: kIconMiddleSize),
-                    padding: EdgeInsets.zero,
-                    constraints: const BoxConstraints(),
-                    splashRadius: kIconMiddleSize / 1.2,
+                    hintMessage: "사전 예약 설정",
                   ),
                 ],
                 child: Column(
@@ -165,7 +169,7 @@ class _PreReservationSettingViewState
                 style: kTextMainStyle.copyWith(fontSize: kTextSmallSize),
               ),
               Text(
-                " ·  정식 예약은 매월 1월 00시에 자동으로 시작됩니다.",
+                " ·  정식 예약은 매월 1일 00시에 자동으로 시작됩니다.",
                 style: kTextMainStyle.copyWith(fontSize: kTextSmallSize),
               ),
             ],

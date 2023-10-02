@@ -7,6 +7,7 @@ import 'designed_container_title_bar.dart';
 class DesignedContainer extends StatelessWidget {
   final String title;
   final List<Widget>? actions;
+  final bool isChildInfinity;
   final Widget child;
 
   const DesignedContainer({
@@ -14,6 +15,7 @@ class DesignedContainer extends StatelessWidget {
     required this.title,
     this.actions,
     required this.child,
+    this.isChildInfinity = false,
   }) : super(key: key);
 
   @override
@@ -24,14 +26,19 @@ class DesignedContainer extends StatelessWidget {
         border: Border.all(color: kDisabledColor, width: 3),
         borderRadius: BorderRadius.all(Radius.circular(kBorderRadiusSize)),
       ),
-      padding: EdgeInsets.all(kPaddingLargeSize),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          DesignedContainerTitleBar(title: title, actions: actions),
-          SizedBox(height: kPaddingMiddleSize),
-          child,
-        ],
+      child: Material(
+        borderRadius: BorderRadius.all(Radius.circular(kBorderRadiusSize)),
+        child: Padding(
+          padding: EdgeInsets.all(kPaddingLargeSize),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              DesignedContainerTitleBar(title: title, actions: actions),
+              SizedBox(height: kPaddingMiddleSize),
+              isChildInfinity ? Expanded(child: child) : child,
+            ],
+          ),
+        ),
       ),
     );
   }

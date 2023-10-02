@@ -11,6 +11,7 @@ PreReservationStatusEntity _$PreReservationStatusEntityFromJson(
     PreReservationStatusEntity(
       date: json['date'] as String,
       time: json['time'] as String,
+      isPre: json['isPre'] as bool,
     );
 
 Map<String, dynamic> _$PreReservationStatusEntityToJson(
@@ -18,4 +19,5 @@ Map<String, dynamic> _$PreReservationStatusEntityToJson(
     <String, dynamic>{
       'date': instance.date,
       'time': instance.time,
+      'isPre': instance.isPre,
     };

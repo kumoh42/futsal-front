@@ -169,7 +169,7 @@ class _PreReservationSettingViewState
                 style: kTextMainStyle.copyWith(fontSize: kTextSmallSize),
               ),
               Text(
-                " ·  정식 예약은 매월 1월 00시에 자동으로 시작됩니다.",
+                " ·  정식 예약은 매월 1일 00시에 자동으로 시작됩니다.",
                 style: kTextMainStyle.copyWith(fontSize: kTextSmallSize),
               ),
             ],

@@ -104,7 +104,7 @@ class PreReservationSettingViewModel extends ChangeNotifier {
   }
 
   void cancelPreReservation(BuildContext context) async {
-    if (preReservationStatus != null) {
+    if (preReservationStatus == null) {
       return;
     }
     CustomDialogUtil.showCustomDialog(

@@ -62,33 +62,37 @@ class ProgressReservationViewModel extends ChangeNotifier {
   }
 
   void restartPreReservation(BuildContext context) async {
-    if (state is! ProgressReservationStateSuccess) return;
-    if (!(state as ProgressReservationStateSuccess).data.isPre) {
-      SnackBarUtil.showError("정규예약은 재개 할 수 없습니다!");
-      return;
+    if (state is ProgressReservationStateSuccess) {
+      if (!(state as ProgressReservationStateSuccess).data.isPre) {
+        SnackBarUtil.showError("정규예약은 재개 할 수 없습니다!");
+        return;
+      }
     }
+    await ref
+        .read(progressResrvationServiceProvider.notifier)
+        .restartPreReservation();
 
-    CustomDialogUtil.showCustomDialog(
-        dialog: CustomDialog(
-          title: Text(
-            "우선예약 재개 확인",
-            style: kTextMainStyle.copyWith(fontSize: kTextMiddleSize),
-          ),
-          content: Text(
-            '${(state as ProgressReservationStateSuccess).data.date} ${(state as ProgressReservationStateSuccess).data.time}\n예약을 재개하시겠습니까?',
-            style: kTextNormalStyle.copyWith(fontSize: kTextLargeSize),
-          ),
-          onPressed: () async {
-            await ref
-                .read(progressResrvationServiceProvider.notifier)
-                .restartPreReservation();
+    // CustomDialogUtil.showCustomDialog(
+    //     dialog: CustomDialog(
+    //       title: Text(
+    //         "우선예약 재개 확인",
+    //         style: kTextMainStyle.copyWith(fontSize: kTextMiddleSize),
+    //       ),
+    //       content: Text(
+    //         '${(state as ProgressReservationStateSuccess).data.date} ${(state as ProgressReservationStateSuccess).data.time}\n예약을 재개하시겠습니까?',
+    //         style: kTextNormalStyle.copyWith(fontSize: kTextLargeSize),
+    //       ),
+    //       onPressed: () async {
+    //         await ref
+    //             .read(progressResrvationServiceProvider.notifier)
+    //             .restartPreReservation();
 
-            SnackBarUtil.showSuccess("예약을 재개하였습니다!");
+    //         SnackBarUtil.showSuccess("예약을 재개하였습니다!");
 
-            if (context.mounted) Navigator.of(context).pop();
-          },
-        ),
-        context: context);
+    //         if (context.mounted) Navigator.of(context).pop();
+    //       },
+    //     ),
+    //     context: context);
   }
 
   void resetPreReservation(BuildContext context) async {

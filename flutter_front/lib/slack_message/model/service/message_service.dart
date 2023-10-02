@@ -5,7 +5,7 @@ import 'package:flutter_front/slack_message/model/state/message_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final messageServiceProvider =
-    StateNotifierProvider<MessageService, MessageState>((ref) {
+StateNotifierProvider<MessageService, MessageState>((ref) {
   final messageRepository = ref.watch(messageRepositoryProvider);
   return MessageService(messageRepository);
 });

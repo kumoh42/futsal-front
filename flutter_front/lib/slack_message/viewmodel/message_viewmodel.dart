@@ -7,7 +7,7 @@ import 'package:flutter_front/slack_message/model/state/message_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final messageViewModelProvider =
-    ChangeNotifierProvider((ref) => MessageViewModel(ref));
+ChangeNotifierProvider((ref) => MessageViewModel(ref));
 
 class MessageViewModel extends ChangeNotifier {
   final Ref ref;

@@ -34,7 +34,7 @@ class ReservationStatusService
       final temp = state;
       state = ReservationStatusListStateLoading();
       final data = await repository.getReservationStatusList(
-        defaultDateFormat.format(
+        regDateMonthFormat.format(
           date ?? (temp as ReservationStatusListStateSuccess).data.first.date,
         ),
       );

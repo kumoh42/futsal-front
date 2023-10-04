@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_front/common/component/container/designed_container.dart';
 import 'package:flutter_front/common/component/container/responsive_container.dart';
-import 'package:flutter_front/common/component/custome_icon_button.dart';
-import 'package:flutter_front/common/styles/colors.dart';
+import 'package:flutter_front/common/component/custom_icon_button.dart';
 import 'package:flutter_front/common/styles/sizes.dart';
 import 'package:flutter_front/common/styles/text_styles.dart';
 import 'package:flutter_front/user_management/common/info_list.dart';
@@ -37,6 +36,11 @@ class UserManagementScreen extends ConsumerWidget {
                     viewmodel.showCreateUserDialog(context: context),
                 hintMessage: "사용자 추가",
               ),
+              CustomIconButton(
+                icon: Icons.add,
+                onPressed: () => viewmodel.showAwaitingList(context: context),
+                hintMessage: "승인 대기 명단",
+              )
             ],
             child: Column(
               children: [

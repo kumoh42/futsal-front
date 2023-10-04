@@ -78,6 +78,24 @@ class _CustomTimeTableState extends ConsumerState<CustomTimeTable> {
               textSize: widget.textSize,
             );
           },
+          rangeStartBuilder: (context, dateTime, focusedDay) => _cellBuilder(
+            color: kMainColor,
+            date: dateTime.day.toString(),
+            textColor: kTextReverseColor,
+            textSize: widget.textSize,
+          ),
+
+          withinRangeBuilder: (context, dateTime, focusedDay) => _cellBuilder(
+            textSize: widget.textSize,
+            textColor: kMainColor,
+            date: dateTime.day.toString(),
+          ),
+          rangeEndBuilder: (context, dateTime, focusedDay) => _cellBuilder(
+            color: kMainColor,
+            date: dateTime.day.toString(),
+            textColor: kTextReverseColor,
+            textSize: widget.textSize,
+          ),
 
           outsideBuilder: (context, dateTime, _) => _cellBuilder(
             textSize: widget.textSize,

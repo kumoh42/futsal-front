@@ -170,15 +170,19 @@ Widget customTextField(
       if (isPhonNum ?? false) {
         RegExp regExp = RegExp(r'^\d+-\d+-\d+$');
         if (!regExp.hasMatch(value)) {
-          return "전화번호 형식은 x-x-x입니다";
+          return "형식은 x-x-x입니다";
         }
       }
 
       return null;
     },
     controller: controller,
-    decoration: const InputDecoration(
+    decoration: InputDecoration(
       isDense: true,
+      errorStyle: kTextNormalStyle.copyWith(
+        fontSize: kTextSmallSize,
+        color: kPointColor,
+      ),
     ),
     style: kTextNormalStyle.copyWith(
       fontSize: kTextMiddleSize,

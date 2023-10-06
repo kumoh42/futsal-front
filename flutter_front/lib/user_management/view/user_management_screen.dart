@@ -31,13 +31,7 @@ class UserManagementScreen extends ConsumerWidget {
             isChildInfinity: true,
             actions: [
               CustomIconButton(
-                icon: Icons.add,
-                onPressed: () =>
-                    viewmodel.showCreateUserDialog(context: context),
-                hintMessage: "사용자 추가",
-              ),
-              CustomIconButton(
-                icon: Icons.add,
+                icon: Icons.list,
                 onPressed: () => viewmodel.showAwaitingList(context: context),
                 hintMessage: "승인 대기 명단",
               )

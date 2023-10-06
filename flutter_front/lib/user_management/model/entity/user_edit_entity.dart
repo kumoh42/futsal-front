@@ -14,5 +14,5 @@ class UserEditEntity {
     required this.memberName,
     required this.phoneNumber,
   });
-  Map<String, dynamic> toJson() => _$UserEditToJson(this);
+  Map<String, dynamic> toJson() => _$UserEditEntityToJson(this);
 }

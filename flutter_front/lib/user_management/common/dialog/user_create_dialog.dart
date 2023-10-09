@@ -38,6 +38,7 @@ class UserCreateDialog extends ConsumerWidget {
       nameTextController.text = user.member_user_name;
       circleTextController.selected = user.circle_circle_name;
       phoneNumController.text = user.member_phone_number;
+
       majorController.selected = user.major_major_name;
     }
 
@@ -76,8 +77,8 @@ class UserCreateDialog extends ConsumerWidget {
                     Expanded(
                       child: CustomTitledText(
                         title: info[4],
-                        content:
-                            customTextField(controller: phoneNumController),
+                        content: customTextField(
+                            controller: phoneNumController, isPhonNum: true),
                       ),
                     ),
                     const SizedBox(),
@@ -159,18 +160,29 @@ class UserCreateDialog extends ConsumerWidget {
   }
 }
 
-Widget customTextField({TextEditingController? controller, String? defalut}) {
+Widget customTextField(
+    {TextEditingController? controller, String? defalut, bool? isPhonNum}) {
   return TextFormField(
     validator: (value) {
       if (value!.isEmpty) {
         return '값을 입력해주세요';
       }
+      if (isPhonNum ?? false) {
+        RegExp regExp = RegExp(r'^\d+-\d+-\d+$');
+        if (!regExp.hasMatch(value)) {
+          return "형식은 x-x-x입니다";
+        }
+      }
 
       return null;
     },
     controller: controller,
-    decoration: const InputDecoration(
+    decoration: InputDecoration(
       isDense: true,
+      errorStyle: kTextNormalStyle.copyWith(
+        fontSize: kTextSmallSize,
+        color: kPointColor,
+      ),
     ),
     style: kTextNormalStyle.copyWith(
       fontSize: kTextMiddleSize,

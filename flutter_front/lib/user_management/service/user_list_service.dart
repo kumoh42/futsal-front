@@ -20,7 +20,6 @@ class UserListService extends StateNotifier<UserListState> {
 
     try {
       final resp = await repository.getUserList();
-
       state = UserListStateSuccess(resp);
     } on DioException {
       state = UserListStateError("서버에서 사용자 목록을 불러 올 수 없습니다.");

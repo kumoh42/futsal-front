@@ -42,11 +42,14 @@ class _RootTabState extends ConsumerState<RootTab>
       title: "풋살장 예약 시스템 관리자 페이지",
       actions: [
         ...TABS.map((e) => TabButton(tabInfo: e)),
-        IconButton(
-          padding: EdgeInsets.zero,
-          splashRadius: kIconLargeSize / 2,
-          onPressed: () => ref.read(authProvider.notifier).logout(),
-          icon: Icon(Icons.person, size: kIconLargeSize),
+        Tooltip(
+          message: "로그아웃",
+          child: IconButton(
+            padding: EdgeInsets.zero,
+            splashRadius: kIconLargeSize / 2,
+            onPressed: () => ref.read(authProvider.notifier).logout(),
+            icon: Icon(Icons.person, size: kIconLargeSize),
+          ),
         )
       ],
       body: TabBarView(

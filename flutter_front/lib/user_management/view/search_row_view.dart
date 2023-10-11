@@ -64,6 +64,10 @@ class SearchRowView extends ConsumerWidget {
                               horizontal: kPaddingMiddleSize,
                             ),
                             child: TextField(
+                              style: kTextNormalStyle.copyWith(
+                                fontSize: kTextMiddleSize,
+                                fontWeight: FontWeight.w400,
+                              ),
                               controller: searchTextFieldController,
                               decoration: InputDecoration(
                                 border: InputBorder.none,
@@ -137,7 +141,15 @@ class SearchRowView extends ConsumerWidget {
                           ),
                           child: TextField(
                             controller: searchTextFieldController,
+                            style: kTextNormalStyle.copyWith(
+                              fontSize: kTextMiddleSize,
+                              fontWeight: FontWeight.w400,
+                            ),
                             decoration: InputDecoration(
+                              contentPadding: EdgeInsets.symmetric(
+                                vertical: kPaddingXLargeSize,
+                              ),
+                              isDense: true,
                               border: InputBorder.none,
                               hintText: 'search',
                               hintStyle: kTextDisabledStyle.copyWith(

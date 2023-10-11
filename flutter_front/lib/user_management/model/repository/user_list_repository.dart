@@ -27,4 +27,12 @@ abstract class UserListRepository {
   @PATCH('/members/{id}')
   @Headers(({'accessToken': 'true'}))
   Future editUser(@Path('id') String id, @Body() UserEditEntity user);
+
+  @GET('/members/pending')
+  @Headers(({'accessToken': 'true'}))
+  Future<List<UserInfo>> getAwaitingUserList();
+
+  @POST('/members/{id}')
+  @Headers(({'accessToken': 'true'}))
+  Future approveUser(@Path('id') String id);
 }

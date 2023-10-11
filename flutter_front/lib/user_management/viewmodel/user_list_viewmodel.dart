@@ -6,7 +6,10 @@ import 'package:flutter_front/user_management/common/info_list.dart';
 import 'package:flutter_front/user_management/model/entity/user_edit_entity.dart';
 import 'package:flutter_front/user_management/model/entity/user_info_entity.dart';
 import 'package:flutter_front/user_management/model/state/user_list_state.dart';
+import 'package:flutter_front/user_management/model/state/wating_user_list_state.dart';
 import 'package:flutter_front/user_management/service/user_list_service.dart';
+import 'package:flutter_front/user_management/service/waiting_user_list_service.dart';
+import 'package:flutter_front/user_management/view/awaiting_approval_list_dialog.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final userListViewmodelProvider =
@@ -19,6 +22,7 @@ class UserListViewModel extends ChangeNotifier {
   late String searchCircle;
   late String searchMajor;
   late String searchName;
+  late WatingUserListState watingState;
 
   UserListViewModel(this.ref) {
     selectedIndex = -1;
@@ -26,6 +30,7 @@ class UserListViewModel extends ChangeNotifier {
     searchCircle = circleListForSearch[0];
     searchMajor = majorListForSearch[0];
     searchName = "";
+    watingState = ref.watch(watingUserListServiceProvider);
   }
   List<UserInfo>? get userList => state is UserListStateSuccess
       ? (state as UserListStateSuccess).data
@@ -33,6 +38,98 @@ class UserListViewModel extends ChangeNotifier {
 
   void getUserList() async {
     await ref.read(userListServiceProvider.notifier).getUserList();
+  }
+
+  List<UserInfo>? get awaitingUsers => watingState is WatingUserListStateSuccess
+      ? (watingState as WatingUserListStateSuccess).data
+      : null;
+
+  void getAwaitingUserList() async {
+    await ref
+        .read(watingUserListServiceProvider.notifier)
+        .getAwaitingUserList();
+  }
+
+  void approve(UserInfo user, BuildContext context) async {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(
+            '승인 확인',
+            style: kTextMainStyle.copyWith(fontSize: kTextMiddleSize),
+          ),
+          content: Text(
+            '정말 승인하시겠습니까?',
+            style: kTextNormalStyle.copyWith(fontSize: kTextMiddleSize),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () async {
+                if (context.mounted) Navigator.of(context).pop();
+                await ref
+                    .read(watingUserListServiceProvider.notifier)
+                    .approveUser(user.member_member_srl);
+              },
+              child: Text(
+                '예',
+                style: kTextMainStyle.copyWith(fontSize: kTextSmallSize),
+              ),
+            ),
+            TextButton(
+              onPressed: () {
+                if (context.mounted) Navigator.of(context).pop();
+              },
+              child: Text(
+                '아니요',
+                style: kTextMainStyle.copyWith(fontSize: kTextSmallSize),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void reject(UserInfo user, BuildContext context) async {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(
+            '거절 확인',
+            style: kTextMainStyle.copyWith(fontSize: kTextMiddleSize),
+          ),
+          content: Text(
+            '정말 거절하시겠습니까?',
+            style: kTextNormalStyle.copyWith(fontSize: kTextMiddleSize),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () async {
+                if (context.mounted) Navigator.of(context).pop();
+                await ref
+                    .read(watingUserListServiceProvider.notifier)
+                    .removeUser(user.member_member_srl);
+              },
+              child: Text(
+                '예',
+                style: kTextMainStyle.copyWith(fontSize: kTextSmallSize),
+              ),
+            ),
+            TextButton(
+              onPressed: () {
+                if (context.mounted) Navigator.of(context).pop();
+              },
+              child: Text(
+                '아니요',
+                style: kTextMainStyle.copyWith(fontSize: kTextSmallSize),
+              ),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   void selectedItem(int index) {
@@ -61,6 +158,16 @@ class UserListViewModel extends ChangeNotifier {
     searchMajor = major;
 
     notifyListeners();
+  }
+
+  void showAwaitingList({required BuildContext context}) async {
+    await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return const AwaitingApprovalListDialog();
+      },
+    );
+    getUserList();
   }
 
   void showCreateUserDialog(

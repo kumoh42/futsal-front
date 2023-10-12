@@ -35,6 +35,8 @@ class _UserListViewState extends ConsumerState<UserListView> {
       case UserListStateSuccess:
         return viewmodel.userList!.isNotEmpty
             ? ListView.builder(
+                primary: false,
+                padding: EdgeInsets.only(bottom: kPaddingMiddleSize),
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
                   if ((viewmodel.searchCircle == circleListForSearch[0] ||
@@ -101,8 +103,6 @@ Widget userListItemContainer({
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            renderInfoContainer(
-                info: userInfo.member_member_srl, isSelected: isSelected),
             renderInfoContainer(
                 info: userInfo.member_user_name, isSelected: isSelected),
             renderInfoContainer(

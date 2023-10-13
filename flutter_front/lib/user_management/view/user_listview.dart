@@ -35,8 +35,6 @@ class _UserListViewState extends ConsumerState<UserListView> {
       case UserListStateSuccess:
         return viewmodel.userList!.isNotEmpty
             ? ListView.builder(
-                primary: false,
-                padding: EdgeInsets.only(bottom: kPaddingMiddleSize),
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
                   if ((viewmodel.searchCircle == circleListForSearch[0] ||

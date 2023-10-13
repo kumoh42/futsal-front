@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_front/common/component/custom_icon_button.dart';
 import 'package:flutter_front/common/component/titled_text.dart';
 import 'package:flutter_front/common/styles/colors.dart';
 import 'package:flutter_front/common/styles/sizes.dart';
@@ -24,10 +25,10 @@ class ReservationCancelDialog extends StatelessWidget {
       title: Row(
         children: [
           const Expanded(child: Text('예약 취소 확인')),
-          IconButton(
+          CustomIconButton(
+            icon: Icons.close,
             onPressed: () => Navigator.of(context).pop(),
-            icon: const Icon(Icons.close),
-          )
+          ),
         ],
       ),
       titleTextStyle: kTextMainStyle.copyWith(fontSize: kTextLargeSize),

@@ -59,13 +59,13 @@ class ReservationStatusService
       final timeList = entities.map((e) => e.time).toList();
       final entity = ReservationCancelEntity(
         date: regDateFormat.format(entities.first.date),
-        isPre: entities.first.isPre,
+        isPre: false,
         times: timeList,
       );
 
       await repository.cancelReservation(entity);
       final data = await repository.getReservationStatusList(
-        defaultDateFormat.format(entities[0].date),
+        regDateMonthFormat.format(entities[0].date),
       );
       state = ReservationStatusListStateSuccess(data);
     } catch (e) {

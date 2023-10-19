@@ -54,15 +54,6 @@ class UserCreateDialog extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 ResponsiveSizedBox(size: kPaddingLargeSize),
-                CustomTitledText(
-                  title: info[0],
-                  content: isEdit
-                      ? Text(
-                          user.member_member_srl,
-                        )
-                      : customTextField(controller: idTextController),
-                ),
-                ResponsiveSizedBox(size: kPaddingLargeSize),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [

@@ -20,16 +20,6 @@ class UserInfoContent extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (isShow)
-          CustomTitledText(
-            title: info[0],
-            content: Text(
-              user.member_member_srl,
-              style: kTextNormalStyle.copyWith(
-                fontSize: kTextMiddleSize,
-              ),
-            ),
-          ),
         ResponsiveSizedBox(size: kPaddingMiddleSize),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -102,8 +102,6 @@ Widget userListItemContainer({
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             renderInfoContainer(
-                info: userInfo.member_member_srl, isSelected: isSelected),
-            renderInfoContainer(
                 info: userInfo.member_user_name, isSelected: isSelected),
             renderInfoContainer(
                 info: userInfo.circle_circle_name, isSelected: isSelected),

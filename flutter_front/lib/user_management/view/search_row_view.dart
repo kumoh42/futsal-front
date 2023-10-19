@@ -45,14 +45,12 @@ class SearchRowView extends ConsumerWidget {
                     decoration: BoxDecoration(
                       color: kBackgroundMainColor,
                       borderRadius: BorderRadius.circular(20),
-                      border: Border.all(
-                        color: kBorderColor,
-                      ),
+                      border: Border.all(color: kBorderColor, width: 2),
                       boxShadow: const [
                         BoxShadow(
                           color: kShadowColor,
-                          blurRadius: 4,
-                          offset: Offset(0, 4),
+                          blurRadius: 0,
+                          offset: Offset(0, 2),
                         ),
                       ],
                     ),
@@ -127,8 +125,8 @@ class SearchRowView extends ConsumerWidget {
                     boxShadow: const [
                       BoxShadow(
                         color: kShadowColor,
-                        blurRadius: 4,
-                        offset: Offset(0, 4),
+                        blurRadius: 0,
+                        offset: Offset(0, 2),
                       ),
                     ],
                   ),

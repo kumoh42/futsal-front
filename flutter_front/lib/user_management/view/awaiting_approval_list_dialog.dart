@@ -34,7 +34,7 @@ class _AwaitingApprovalListDialogState
     final viewmodel = ref.watch(userListViewmodelProvider);
 
     return BaseDialog(
-      title: "사용자 승인 대기 명단",
+      title: "승인 대기 명단",
       child: SizedBox(
         width: ResponsiveData.kIsMobile
             ? ResponsiveSize.M(500)
@@ -97,7 +97,7 @@ class AwaitingUser extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DesignedContainer(
-      title: "사용자",
+      title: user.circle_circle_name == "개인" ? "개인" : "동아리",
       actions: [
         DesignedButton(
           onPressed: onPressedReject,

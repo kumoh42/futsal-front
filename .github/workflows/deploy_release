@@ -1,0 +1,53 @@
+name: Deploy Release
+on:
+  push:
+    branches: ["release"]
+
+jobs:
+  build:
+    name: Build Web
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./flutter_front
+    steps:
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+      - run: flutter config --enable-web
+      - name: Setting .env
+        run: |
+          echo "ACCESS_TOKEN_KEY=${{ secrets.ACCESS_TOKEN_KEY }}" >> .env
+          echo "IP=${{ secrets.IP_RELEASE }}" >> .env
+          echo "KUMOH42_FIND_ACCOUNT=${{ secrets.KUMOH42_FIND_ACCOUNT }}" >> .env
+          echo "KUMOH42_REGISTER=${{ secrets.KUMOH42_REGISTER }}" >> .env
+          echo "REFRESH_TOKEN_KEY=${{ secrets.REFRESH_TOKEN_KEY }}" >> .env
+          cat .env
+      - run: flutter pub get
+      - run: flutter build web --release
+      - name: Upload build file
+        uses: actions/upload-artifact@v3
+        with:
+          name: web-artifact
+          path: flutter_front/build/web
+          if-no-files-found: error
+  deploy:
+    name: Deploy Web to Aws S3
+    runs-on: ubuntu-latest
+    needs: build
+    env:
+      AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID}}
+      AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}}
+      AWS_EC2_METADATA_DISABLED: true
+    steps:
+      - name: Download build file
+        uses: actions/download-artifact@v3
+        with:
+          name: web-artifact
+          path: build/web
+      - name: Sync Bucket
+        run: aws s3 sync build/web ${{secrets.AWS_BUCKET_NAME_RELEASE}} --region ap-northeast-2 --delete
+      - name: Invalidate cache CloudFront
+        run: aws cloudfront create-invalidation --distribution-id ${{secrets.AWS_DISTRIBUTION_ID_RELEASE}} --paths "/*"
+        continue-on-error: true

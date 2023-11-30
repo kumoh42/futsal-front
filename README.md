@@ -48,16 +48,11 @@
   - timer_builder: ^2.0.0
 - URL launcher
   - url_launcher: ^6.1.12
-- Validators
-
-* validators:
-
 - Responsive
   - flutter_screenutil: ^5.9.0
   - auto_size_text: ^3.0.0
 - Icon Badges
-
-* badges: ^3.1.2
+  - badges: ^3.1.2
 
 ## 📌 주요 기능
 

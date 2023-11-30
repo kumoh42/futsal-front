@@ -75,7 +75,7 @@ class ProgressReservationViewModel extends ChangeNotifier {
     // CustomDialogUtil.showCustomDialog(
     //     dialog: CustomDialog(
     //       title: Text(
-    //         "우선예약 재개 확인",
+    //         "사전예약 재개 확인",
     //         style: kTextMainStyle.copyWith(fontSize: kTextMiddleSize),
     //       ),
     //       content: Text(
@@ -105,7 +105,7 @@ class ProgressReservationViewModel extends ChangeNotifier {
     CustomDialogUtil.showCustomDialog(
         dialog: CustomDialog(
           content: Text(
-            '${(state as ProgressReservationStateSuccess).data.date} ${(state as ProgressReservationStateSuccess).data.time}시에 시작된\n우선예약 중 예약된 내역을 \n모두 삭제하시겠습니까?',
+            '${(state as ProgressReservationStateSuccess).data.date} ${(state as ProgressReservationStateSuccess).data.time}시에 시작된\n사전예약 중 예약된 내역을 \n모두 삭제하시겠습니까?',
             style: kTextNormalStyle.copyWith(fontSize: kTextLargeSize),
           ),
           onPressed: () async {

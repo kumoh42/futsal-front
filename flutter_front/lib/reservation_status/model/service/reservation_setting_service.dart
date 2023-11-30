@@ -23,13 +23,13 @@ class ReservationSettingService extends StateNotifier<ReservationSettingState> {
       await repository.setPreReservationState("open");
       state = ReservationSettingStateSuccess(
         ReservationSettingType.started,
-        message: "우선예약이 오픈되었습니다.",
+        message: "사전예약이 오픈되었습니다.",
       );
     } on DioException catch (e) {
       if (e.response?.statusCode == 400) {
-        return state = ReservationSettingStateError("이미 우선예약이 진행중입니다.");
+        return state = ReservationSettingStateError("이미 사전예약이 진행중입니다.");
       }
-      state = ReservationSettingStateError("우선예약 오픈에 실패하였습니다.");
+      state = ReservationSettingStateError("사전예약 오픈에 실패하였습니다.");
     } catch (e) {
       state = ReservationSettingStateError("알 수 없는 에러가 발생했습니다.");
     }
@@ -41,10 +41,10 @@ class ReservationSettingService extends StateNotifier<ReservationSettingState> {
       await repository.setPreReservationState("close");
       state = ReservationSettingStateSuccess(
         ReservationSettingType.closed,
-        message: "우선예약이 중단되고 기존 예약 내역이 모두 삭제되었습니다.",
+        message: "사전예약이 중단되고 기존 예약 내역이 모두 삭제되었습니다.",
       );
     } on DioException {
-      state = ReservationSettingStateError("우선예약 중단에 실패하였습니다.");
+      state = ReservationSettingStateError("사전예약 중단에 실패하였습니다.");
     } catch (e) {
       state = ReservationSettingStateError("알 수 없는 에러가 발생했습니다.");
     }

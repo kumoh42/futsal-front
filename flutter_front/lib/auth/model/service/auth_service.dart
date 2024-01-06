@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_front/auth/model/dto/login_request_dto.dart';
 import 'package:flutter_front/auth/model/repository/auth_repository.dart';
 import 'package:flutter_front/auth/model/state/auth_state.dart';
+import 'package:flutter_front/common/env/env.dart';
 import 'package:flutter_front/common/local_storage/local_storage.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -28,6 +28,7 @@ class AuthService extends StateNotifier<AuthState> {
       await authRepository.login(LoginRequestDto(id: id, password: password));
       await _getUserInfo();
     } on DioException catch (e) {
+      if (e.message != null) return state = AuthStateError(e.message!);
       if (e.response?.statusCode == 400) {
         return state = AuthStateError("id 또는 password가 틀렸습니다.");
       }
@@ -47,9 +48,9 @@ class AuthService extends StateNotifier<AuthState> {
   }
 
   Future _getUserInfo() async {
-    final accessToken = await storage.read(key: dotenv.get('ACCESS_TOKEN_KEY'));
+    final accessToken = await storage.read(key: Env.ACCESS_TOKEN_KEY);
     final refreshToken = await storage.read(
-      key: dotenv.get('REFRESH_TOKEN_KEY'),
+      key: Env.REFRESH_TOKEN_KEY,
     );
 
     if (accessToken == null || refreshToken == null) {
@@ -74,8 +75,8 @@ class AuthService extends StateNotifier<AuthState> {
 
   Future _removeToken() async {
     Future.wait([
-      storage.delete(key: dotenv.get('ACCESS_TOKEN_KEY')),
-      storage.delete(key: dotenv.get('REFRESH_TOKEN_KEY')),
+      storage.delete(key: Env.ACCESS_TOKEN_KEY),
+      storage.delete(key: Env.REFRESH_TOKEN_KEY),
     ]);
   }
 }

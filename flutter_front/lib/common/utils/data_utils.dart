@@ -1,10 +1,10 @@
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_front/common/env/env.dart';
 
 class DataUtils {
-  static pathToUrl(String value) => '${dotenv.get('IP')}$value';
+  static pathToUrl(String value) => '${Env.IP}$value';
 
   static urlToPath(String value) =>
-      value.substring(7 + dotenv.env['IP']!.length);
+      value.substring(7 + Env.IP.length);
 
   static intToTimeRange(int value, int range) =>
       "${value.toString().padLeft(2, '0')}:00 ~ ${(value + range).toString().padLeft(2, '0')}:00";

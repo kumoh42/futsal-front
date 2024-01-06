@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_front/auth/viewmodel/login_viewmodel.dart';
+import 'package:flutter_front/common/component/custom_text_button.dart';
+import 'package:flutter_front/common/component/custom_text_form_field.dart';
+import 'package:flutter_front/common/env/env.dart';
+import 'package:flutter_front/common/state/state.dart';
 import 'package:flutter_front/common/styles/colors.dart';
 import 'package:flutter_front/common/styles/sizes.dart';
 import 'package:flutter_front/common/styles/text_styles.dart';
 import 'package:flutter_front/common/utils/validation_util.dart';
-import 'package:flutter_front/common/component/custom_text_button.dart';
-import 'package:flutter_front/common/component/custom_text_form_field.dart';
-import 'package:flutter_front/common/state/state.dart';
-import 'package:flutter_front/auth/viewmodel/login_viewmodel.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class LoginView extends ConsumerStatefulWidget {
   static String get routeName => 'login';
@@ -91,8 +91,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
                               children: [
                                 CustomTextButton(
                                   onPressed: () {
-                                    viewModel.launch(
-                                        dotenv.get("KUMOH42_FIND_ACCOUNT"));
+                                    viewModel.launch(Env.KUMOH42_FIND_ACCOUNT);
                                   },
                                   text: 'ID / PW 찾기',
                                   textAlign: TextAlign.left,
@@ -100,8 +99,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
                                 const SizedBox(height: kWPaddingSmallSize),
                                 CustomTextButton(
                                   onPressed: () async {
-                                    viewModel
-                                        .launch(dotenv.get('KUMOH42_REGISTER'));
+                                    viewModel.launch(Env.KUMOH42_REGISTER);
                                   },
                                   text: '금오사이 회원가입',
                                   textAlign: TextAlign.left,

@@ -1,7 +1,7 @@
 name: PR Test
 on:
   pull_request:
-    branches: ["main", "develop"]
+    branches: [ "main", "develop" ]
 
 jobs:
   test-build:
@@ -25,6 +25,7 @@ jobs:
           echo "REFRESH_TOKEN_KEY=${{ secrets.REFRESH_TOKEN_KEY }}" >> .env
           cat .env
       - run: flutter pub get
+      - run: flutter pub run build_runner build
       - run: flutter build web --release
       - name: if fail
         uses: actions/github-script@0.2.0

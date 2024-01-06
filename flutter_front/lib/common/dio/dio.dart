@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_front/auth/provider/auth_provider.dart';
+import 'package:flutter_front/common/env/env.dart';
 import 'package:flutter_front/common/local_storage/local_storage.dart';
 import 'package:flutter_front/common/utils/data_utils.dart';
 import 'package:flutter_front/common/utils/snack_bar_util.dart';
@@ -15,7 +15,7 @@ final dioProvider = Provider((ref) {
 });
 
 final options = BaseOptions(
-  baseUrl: dotenv.get("IP"),
+  baseUrl: Env.IP,
 );
 
 class CustomInterceptor extends Interceptor {
@@ -32,7 +32,7 @@ class CustomInterceptor extends Interceptor {
   ) async {
     if (options.headers['accessToken'] == 'true') {
       options.headers.remove('accessToken');
-      final token = await storage.read(key: dotenv.get('ACCESS_TOKEN_KEY'));
+      final token = await storage.read(key: Env.ACCESS_TOKEN_KEY);
       options.headers.addAll({
         'authorization': 'Bearer $token',
       });
@@ -40,7 +40,7 @@ class CustomInterceptor extends Interceptor {
 
     if (options.headers['refreshToken'] == 'true') {
       options.headers.remove('accessToken');
-      final token = await storage.read(key: dotenv.get('REFRESH_TOKEN_KEY'));
+      final token = await storage.read(key: Env.REFRESH_TOKEN_KEY);
       options.headers.addAll({
         'authorization': 'Bearer $token',
       });
@@ -66,8 +66,7 @@ class CustomInterceptor extends Interceptor {
   // 3) 에러가 났을떄
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) async {
-    final refreshToken =
-        await storage.read(key: dotenv.get('REFRESH_TOKEN_KEY'));
+    final refreshToken = await storage.read(key: Env.REFRESH_TOKEN_KEY);
 
     if (refreshToken == null) return handler.reject(err);
 
@@ -87,7 +86,7 @@ class CustomInterceptor extends Interceptor {
 
         await _saveToken(refreshResponse);
 
-        final token = await storage.read(key: dotenv.get('ACCESS_TOKEN_KEY'));
+        final token = await storage.read(key: Env.ACCESS_TOKEN_KEY);
         final options = err.requestOptions;
         options.headers.addAll({
           'authorization': 'Bearer $token',
@@ -105,10 +104,10 @@ class CustomInterceptor extends Interceptor {
   }
 
   Future _saveToken(Response response) async {
-    final accessToken = response.headers.value(dotenv.get('ACCESS_TOKEN_KEY'));
-    final refreshToken = response.headers.value(
-      dotenv.get('REFRESH_TOKEN_KEY'),
-    );
+    print(response.headers.toString());
+
+    final accessToken = response.headers.value(Env.ACCESS_TOKEN_KEY);
+    final refreshToken = response.headers.value(Env.REFRESH_TOKEN_KEY);
 
     if (accessToken == null || refreshToken == null) {
       throw DioException(
@@ -122,11 +121,11 @@ class CustomInterceptor extends Interceptor {
     try {
       Future.wait([
         storage.write(
-          key: dotenv.get('ACCESS_TOKEN_KEY'),
+          key: Env.ACCESS_TOKEN_KEY,
           value: accessToken.replaceFirst("Bearer ", ""),
         ),
         storage.write(
-          key: dotenv.get('REFRESH_TOKEN_KEY'),
+          key: Env.REFRESH_TOKEN_KEY,
           value: refreshToken.replaceFirst("Bearer ", ""),
         ),
       ]);

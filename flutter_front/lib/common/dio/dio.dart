@@ -104,8 +104,6 @@ class CustomInterceptor extends Interceptor {
   }
 
   Future _saveToken(Response response) async {
-    print(response.headers.toString());
-
     final accessToken = response.headers.value(Env.ACCESS_TOKEN_KEY);
     final refreshToken = response.headers.value(Env.REFRESH_TOKEN_KEY);
 

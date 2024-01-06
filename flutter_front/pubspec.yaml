@@ -32,7 +32,7 @@ dependencies:
   universal_html: ^2.2.3
 
   # dotenv
-  flutter_dotenv: ^5.1.0
+  envied: ^0.5.2
 
   # DI
   flutter_riverpod: ^2.3.6
@@ -66,9 +66,10 @@ dev_dependencies:
   flutter_lints: ^2.0.0
 
   # REST Api
-  build_runner: ^2.4.6
+  build_runner:
   retrofit_generator: ^6.0.0+3
   json_serializable: ^6.6.1
+  envied_generator: ^0.5.2
 
 flutter:
   uses-material-design: true

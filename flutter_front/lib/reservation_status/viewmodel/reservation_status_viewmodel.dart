@@ -91,6 +91,7 @@ class ReservationStatusViewModel extends ChangeNotifier {
                 start: '${startDate}T${startTime.substring(0, 2)}',
                 end: '${endDate}T${endTime.substring(0, 2)}',
               );
+          getReservationStatusList(force: true);
           if (context.mounted) Navigator.of(context).pop();
         },
         controller: blockReservationController,
@@ -117,10 +118,13 @@ class ReservationStatusViewModel extends ChangeNotifier {
     );
   }
 
-  void getReservationStatusList() async {
+  void getReservationStatusList({bool force = false}) async {
     await ref
         .read(reservationStatusServiceProvider.notifier)
-        .getReservationStatusList(date: customTimeTableController.selectedDay);
+        .getReservationStatusList(
+          date: customTimeTableController.selectedDay,
+          force: force,
+        );
     cancelListController.reset();
     notifyListeners();
   }

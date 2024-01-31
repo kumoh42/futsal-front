@@ -2,7 +2,7 @@ import 'package:envied/envied.dart';
 
 part 'env.g.dart';
 
-@Envied()
+@Envied(path: '.env')
 abstract class Env {
   @EnviedField(varName: 'ACCESS_TOKEN_KEY')
   static const String ACCESS_TOKEN_KEY = _Env.ACCESS_TOKEN_KEY;

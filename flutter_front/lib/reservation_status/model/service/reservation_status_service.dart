@@ -25,10 +25,10 @@ class ReservationStatusService
     getReservationStatusList(date: DateTime.now());
   }
 
-  Future getReservationStatusList({DateTime? date}) async {
-    if (state is SuccessState &&
+  Future getReservationStatusList({DateTime? date, bool force = false}) async {
+    if ((state is SuccessState &&
         (state as ReservationStatusListStateSuccess).data.first.date.month ==
-            date?.month) return;
+            date?.month) && !force) return;
     if (date == null && state is NoneState) return;
     try {
       final temp = state;

@@ -20,7 +20,9 @@ abstract class ReservationStatusRepository {
   @GET('/reservation/{date}')
   @Headers({'accessToken': 'true'})
   Future<List<ReservationStatusEntity>> getReservationStatusList(
-      @Path() String date);
+    @Path() String date,
+    @Query("state") String state,
+  );
 
   @PATCH('/reservation/delete-one')
   @Headers({'accessToken': 'true'})

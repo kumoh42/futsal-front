@@ -72,6 +72,11 @@ class PreReservationSettingViewModel extends ChangeNotifier {
   }
 
   void setPreReservation(BuildContext context) async {
+    if (preReservationStatus != null) {
+      SnackBarUtil.showError("이미 설정된 사전예약이 존재합니다!");
+      return;
+    }
+
     await showDialog(
       context: context,
       builder: (context) => CalendarSelectDialog(

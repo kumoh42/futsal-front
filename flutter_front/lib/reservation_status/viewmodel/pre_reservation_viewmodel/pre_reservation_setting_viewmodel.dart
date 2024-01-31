@@ -84,12 +84,13 @@ class PreReservationSettingViewModel extends ChangeNotifier {
             time: startTime.substring(0, 2),
           );
 
-          // await ref
-          //     .read(preReservationSettingServiceProvider.notifier)
-          //     .setPreReservation(progressReservationEntity: entity);
+          await ref
+              .read(preReservationSettingServiceProvider.notifier)
+              .setPreReservation(progressReservationEntity: entity);
 
           if (context.mounted) Navigator.of(context).pop();
 
+          // ignore: use_build_context_synchronously
           await showDialog(
             context: context,
             builder: (context) => AlertDialog(

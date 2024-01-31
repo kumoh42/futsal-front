@@ -45,7 +45,7 @@ class ProgressReservationViewModel extends ChangeNotifier {
             style: kTextMainStyle.copyWith(fontSize: kTextMiddleSize),
           ),
           content: Text(
-            '${(state as ProgressReservationStateSuccess).data.date} ${(state as ProgressReservationStateSuccess).data.time}\n예약을 중지하시겠습니까?',
+            '${(state as ProgressReservationStateSuccess).data.date} ${(state as ProgressReservationStateSuccess).data.time}시\n예약을 중지하시겠습니까?',
             style: kTextNormalStyle.copyWith(fontSize: kTextLargeSize),
           ),
           onPressed: () async {

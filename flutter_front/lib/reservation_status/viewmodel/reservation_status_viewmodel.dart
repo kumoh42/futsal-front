@@ -7,6 +7,7 @@ import 'package:flutter_front/reservation_status/component/dialog/calendar_selec
 import 'package:flutter_front/reservation_status/component/reservation_cancel_dialog.dart';
 import 'package:flutter_front/reservation_status/component/reservation_state/reservation_state_list.dart';
 import 'package:flutter_front/reservation_status/model/entity/reservation_entity.dart';
+import 'package:flutter_front/reservation_status/model/service/pre_reservation/pre_reservation_setting_service.dart';
 import 'package:flutter_front/reservation_status/model/service/reservation_status_service.dart';
 import 'package:flutter_front/reservation_status/model/state/reservation_list_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -79,13 +80,17 @@ class ReservationStatusViewModel extends ChangeNotifier {
             SnackBarUtil.showError("이미 지난 기간은 기간 설정이 불가능합니다.");
             return;
           }
+          if (statusState is ReservationStatusListStateNone) {
+            SnackBarUtil.showError("해당 기간에 예약이 열려있지 않습니다.");
+            return;
+          }
 
-          // await ref
-          //     .read(preReservationSettingServiceProvider.notifier)
-          //     .blockReservation(
-          //       start: '${startDate}T${startTime.substring(0, 2)}',
-          //       end: '${endDate}T${endTime.substring(0, 2)}',
-          //     );
+          await ref
+              .read(preReservationSettingServiceProvider.notifier)
+              .blockReservation(
+                start: '${startDate}T${startTime.substring(0, 2)}',
+                end: '${endDate}T${endTime.substring(0, 2)}',
+              );
           if (context.mounted) Navigator.of(context).pop();
         },
         controller: blockReservationController,

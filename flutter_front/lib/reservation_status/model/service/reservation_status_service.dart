@@ -33,24 +33,32 @@ class ReservationStatusService
     try {
       final temp = state;
       state = ReservationStatusListStateLoading();
-      final list = await repository.getReservationStatusList(
-        regDateMonthFormat.format(
-          date ?? (temp as ReservationStatusListStateSuccess).data.first.date,
-        ),
-        "pre",
-      );
-      final preList = await repository.getReservationStatusList(
-        regDateMonthFormat.format(
-          date ?? (temp as ReservationStatusListStateSuccess).data.first.date,
-        ),
-        "official",
-      );
-      final allList = (list + preList);
+      DateTime now = DateTime.now();
+      final nowMonth = regDateMonthFormat.format(now);
+      final listMonth = regDateMonthFormat.format(date ??
+          ((temp as ReservationStatusListStateSuccess).data.first.date));
 
-      if (allList.isEmpty) {
+      List<ReservationStatusEntity> list = [];
+      if (nowMonth.compareTo(listMonth) < 0) {
+        list = await repository.getReservationStatusList(
+          regDateMonthFormat.format(
+            date ?? (temp as ReservationStatusListStateSuccess).data.first.date,
+          ),
+          "pre",
+        );
+      } else {
+        list = await repository.getReservationStatusList(
+          regDateMonthFormat.format(
+            date ?? (temp as ReservationStatusListStateSuccess).data.first.date,
+          ),
+          "official",
+        );
+      }
+
+      if (list.isEmpty) {
         state = ReservationStatusListStateNone();
       } else {
-        state = ReservationStatusListStateSuccess(allList);
+        state = ReservationStatusListStateSuccess(list);
       }
     } on DioException {
       state = ReservationStatusListStateError("서버에서 예약 정보를 가져올 수 없습니다.");

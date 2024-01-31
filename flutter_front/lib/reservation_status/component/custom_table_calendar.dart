@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_front/common/styles/colors.dart';
 import 'package:flutter_front/common/styles/sizes.dart';
 import 'package:flutter_front/common/styles/text_styles.dart';
+import 'package:flutter_front/common/utils/date_utils.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -165,6 +166,8 @@ class CustomTimeTableController extends ChangeNotifier {
   late DateTime? _endDay;
   final Function()? onDayChange;
   final bool useRange;
+  late bool isSelectableBeforeTime;
+
   int count = 0;
   bool toggle = true;
 
@@ -182,6 +185,7 @@ class CustomTimeTableController extends ChangeNotifier {
 
   CustomTimeTableController({
     this.useRange = false,
+    this.isSelectableBeforeTime = true,
     DateTime? initDay,
     DateTime? firstDay,
     DateTime? lastDay,
@@ -195,7 +199,17 @@ class CustomTimeTableController extends ChangeNotifier {
         _startDay = null,
         _endDay = null;
 
-  void onDaySelected(DateTime selectedDay, DateTime focusedDay) {
+  void onDaySelected(
+    DateTime selectedDay,
+    DateTime focusedDay,
+  ) {
+    if (!isSelectableBeforeTime) {
+      DateTime dateTimeNow = DateTime.now();
+      String now = defaultDateFormat.format(dateTimeNow);
+      if (now.compareTo(defaultDateFormat.format(selectedDay)) > 0) {
+        return;
+      }
+    }
     _focusedDay = selectedDay;
     _selectedDay = selectedDay;
 
@@ -224,8 +238,10 @@ class CustomTimeTableController extends ChangeNotifier {
   bool selectedDayPredicate(DateTime? day) => isSameDay(_selectedDay, day);
 
   void onPageChanged(DateTime dateTime) {
-    _startDay = null;
-    _endDay = null;
-    onDaySelected(dateTime, dateTime);
+    if (isSelectableBeforeTime) {
+      _startDay = null;
+      _endDay = null;
+      onDaySelected(dateTime, dateTime);
+    }
   }
 }

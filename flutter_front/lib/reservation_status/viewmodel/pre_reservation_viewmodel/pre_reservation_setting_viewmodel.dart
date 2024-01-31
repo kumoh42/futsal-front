@@ -23,7 +23,9 @@ class PreReservationSettingViewModel extends ChangeNotifier {
   late PreReservationSettingState statusState;
 
   PreReservationSettingViewModel(this.ref) {
-    customTimeTableController = CustomTimeTableController();
+    customTimeTableController = CustomTimeTableController(
+      isSelectableBeforeTime: false,
+    );
     hour = DateTime.now().hour;
     minute = DateTime.now().minute;
     statusState = ref.watch(preReservationSettingServiceProvider);
@@ -81,11 +83,34 @@ class PreReservationSettingViewModel extends ChangeNotifier {
             ),
             time: startTime.substring(0, 2),
           );
-          await ref
-              .read(preReservationSettingServiceProvider.notifier)
-              .setPreReservation(progressReservationEntity: entity);
+
+          // await ref
+          //     .read(preReservationSettingServiceProvider.notifier)
+          //     .setPreReservation(progressReservationEntity: entity);
 
           if (context.mounted) Navigator.of(context).pop();
+
+          await showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              title: const Text(
+                '알림',
+                style: kTextMainStyle,
+              ),
+              content: const Text(
+                '사전 예약이 설정되었습니다.\n\n사전 예약을 한 번 설정해도 \n다음 달은 20시로 리셋됩니다.',
+                style: kTextNormalStyle,
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('확인'),
+                ),
+              ],
+            ),
+          );
         },
         controller: customTimeTableController,
         startTimes: const [

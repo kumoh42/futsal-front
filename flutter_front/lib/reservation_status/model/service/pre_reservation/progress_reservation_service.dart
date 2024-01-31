@@ -22,7 +22,7 @@ class ProgressReservationService
 
   Future stopPreReservation() async {
     try {
-      await repository.progressReservationStateStop();
+      await repository.setProgressReservationState("stop");
     } catch (e) {
       state = ProgressReservationStateError("알 수 없는 에러가 발생했습니다");
     }
@@ -30,7 +30,7 @@ class ProgressReservationService
 
   Future restartPreReservation() async {
     try {
-      await repository.progressReservationStateReStart();
+      await repository.setProgressReservationState("reopen");
       await getProgressReservation();
     } catch (e) {
       state = ProgressReservationStateError("알 수 없는 에러가 발생했습니다");
@@ -53,7 +53,7 @@ class ProgressReservationService
 
   Future resetPreReservation() async {
     try {
-      await repository.progressReservationStateReset();
+      await repository.setProgressReservationState("reset");
     } catch (e) {
       state = ProgressReservationStateError("예약 삭제를 실패했습니다.");
     }

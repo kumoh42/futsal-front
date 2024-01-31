@@ -38,7 +38,10 @@ class ReservationStatusViewModel extends ChangeNotifier {
       onDayChange: getReservationStatusList,
     );
     cancelListController = CustomCancelListController();
-    blockReservationController = CustomTimeTableController(useRange: true);
+    blockReservationController = CustomTimeTableController(
+      useRange: true,
+      isSelectableBeforeTime: false,
+    );
 
     statusState = ref.read(reservationStatusServiceProvider);
 
@@ -71,6 +74,16 @@ class ReservationStatusViewModel extends ChangeNotifier {
               return;
             }
           }
+          DateTime dateTimeNow = DateTime.now();
+          String now = defaultDateFormat.format(dateTimeNow);
+          if (now.compareTo(startDate) > 0 || now.compareTo(endDate) > 0) {
+            SnackBarUtil.showError("이미 지난 기간은 기간 설정이 불가능합니다.");
+            return;
+          }
+          if (statusState is ReservationStatusListStateNone) {
+            SnackBarUtil.showError("해당 기간에 예약이 열려있지 않습니다.");
+            return;
+          }
 
           await ref
               .read(preReservationSettingServiceProvider.notifier)
@@ -78,6 +91,7 @@ class ReservationStatusViewModel extends ChangeNotifier {
                 start: '${startDate}T${startTime.substring(0, 2)}',
                 end: '${endDate}T${endTime.substring(0, 2)}',
               );
+          getReservationStatusList(force: true);
           if (context.mounted) Navigator.of(context).pop();
         },
         controller: blockReservationController,
@@ -104,10 +118,13 @@ class ReservationStatusViewModel extends ChangeNotifier {
     );
   }
 
-  void getReservationStatusList() async {
+  void getReservationStatusList({bool force = false}) async {
     await ref
         .read(reservationStatusServiceProvider.notifier)
-        .getReservationStatusList(date: customTimeTableController.selectedDay);
+        .getReservationStatusList(
+          date: customTimeTableController.selectedDay,
+          force: force,
+        );
     cancelListController.reset();
     notifyListeners();
   }

@@ -25,23 +25,46 @@ class ReservationStatusService
     getReservationStatusList(date: DateTime.now());
   }
 
-  Future getReservationStatusList({DateTime? date}) async {
-    if (state is SuccessState &&
-        (state as ReservationStatusListStateSuccess).data.first.date.month ==
-            date?.month) return;
+  Future getReservationStatusList({DateTime? date, bool force = false}) async {
+    if ((state is SuccessState &&
+            (state as ReservationStatusListStateSuccess)
+                    .data
+                    .first
+                    .date
+                    .month ==
+                date?.month) &&
+        !force) return;
     if (date == null && state is NoneState) return;
     try {
       final temp = state;
       state = ReservationStatusListStateLoading();
-      final data = await repository.getReservationStatusList(
-        regDateMonthFormat.format(
-          date ?? (temp as ReservationStatusListStateSuccess).data.first.date,
-        ),
-      );
-      if (data.isEmpty) {
+      DateTime now = DateTime.now();
+      final nowMonth = regDateMonthFormat.format(now);
+      final listMonth = regDateMonthFormat.format(date ??
+          ((temp as ReservationStatusListStateSuccess).data.first.date));
+
+      List<ReservationStatusEntity> list = [];
+      if (nowMonth.compareTo(listMonth) < 0) {
+        list = await repository.getReservationStatusList(
+          regDateMonthFormat.format(
+            date ?? (temp as ReservationStatusListStateSuccess).data.first.date,
+          ),
+          "pre",
+        );
+      } else {
+        list = await repository.getReservationStatusList(
+          regDateMonthFormat.format(
+            date ?? (temp as ReservationStatusListStateSuccess).data.first.date,
+          ),
+          "official",
+        );
+        print(list);
+      }
+
+      if (list.isEmpty) {
         state = ReservationStatusListStateNone();
       } else {
-        state = ReservationStatusListStateSuccess(data);
+        state = ReservationStatusListStateSuccess(list);
       }
     } on DioException {
       state = ReservationStatusListStateError("서버에서 예약 정보를 가져올 수 없습니다.");
@@ -65,8 +88,7 @@ class ReservationStatusService
 
       await repository.cancelReservation(entity);
       final data = await repository.getReservationStatusList(
-        regDateMonthFormat.format(entities[0].date),
-      );
+          regDateMonthFormat.format(entities[0].date), "pre");
       state = ReservationStatusListStateSuccess(data);
     } catch (e) {
       state = ReservationStatusListStateError(e.toString());

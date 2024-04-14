@@ -24,14 +24,20 @@ class ReservationStatusViewModel extends ChangeNotifier {
   late final CustomCancelListController cancelListController;
   late final CustomTimeTableController blockReservationController;
 
-  get reservationStatusList => statusState is ReservationStatusListStateSuccess
-      ? (statusState as ReservationStatusListStateSuccess)
-          .data
-          .where((element) =>
-              defaultDateFormat.format(element.date) ==
-              defaultDateFormat.format(customTimeTableController.selectedDay))
-          .toList()
-      : null;
+  get reservationStatusList =>
+      statusState is ReservationStatusListStateSuccess ? sortList() : null;
+
+  List<ReservationStatusEntity> sortList() {
+    final data = (statusState as ReservationStatusListStateSuccess)
+        .data
+        .where((element) =>
+            defaultDateFormat.format(element.date) ==
+            defaultDateFormat.format(customTimeTableController.selectedDay))
+        .toList();
+    final sorted = List<ReservationStatusEntity>.from(data);
+    sorted.sort((a, b) => a.time.compareTo(b.time));
+    return sorted;
+  }
 
   ReservationStatusViewModel(this.ref) {
     customTimeTableController = CustomTimeTableController(

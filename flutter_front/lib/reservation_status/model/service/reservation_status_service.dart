@@ -58,7 +58,6 @@ class ReservationStatusService
           ),
           "official",
         );
-        print(list);
       }
 
       if (list.isEmpty) {

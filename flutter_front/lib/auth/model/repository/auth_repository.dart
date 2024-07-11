@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart' hide Headers;
 import 'package:flutter_front/auth/model/dto/login_request_dto.dart';
+import 'package:flutter_front/auth/model/entity/member_info_entity.dart';
 import 'package:flutter_front/auth/model/entity/user_entity.dart';
 import 'package:flutter_front/common/dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -20,6 +21,6 @@ abstract class AuthRepository {
   Future login(@Body() LoginRequestDto loginRequestDto);
 
   @GET('/user')
-  @Headers({'accessToken' : 'true'})
-  Future<UserEntity> getUserInfo();
+  @Headers({'accessToken': 'true'})
+  Future<MemberInfoEntity> getUserInfo();
 }

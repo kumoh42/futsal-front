@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_front/auth/model/dto/login_request_dto.dart';
+import 'package:flutter_front/auth/model/entity/user_entity.dart';
 import 'package:flutter_front/auth/model/repository/auth_repository.dart';
 import 'package:flutter_front/auth/model/state/auth_state.dart';
 import 'package:flutter_front/common/env/env.dart';
@@ -62,7 +63,11 @@ class AuthService extends StateNotifier<AuthState> {
 
     try {
       final data = await authRepository.getUserInfo();
-      state = AuthStateSuccess(data);
+      state = AuthStateSuccess(UserEntity(
+          memberSrl: data.member_srl,
+          userId: data.member_srl.toString(),
+          userName: data.user_name,
+          nickName: data.user_name));
     } on DioException catch (e) {
       if (e.response != null && e.response!.statusCode == 400) {
         state = AuthStateError(

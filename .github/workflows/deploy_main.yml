@@ -12,10 +12,19 @@ jobs:
         working-directory: ./flutter_front
     steps:
       - uses: actions/checkout@v3
+
+      # Flutter 버전 고정 (예: 3.19.6)
       - uses: subosito/flutter-action@v2
         with:
+          flutter-version: '3.19.6'
           channel: 'stable'
+
       - run: flutter config --enable-web
+
+      - name: Clean up cache and lock files
+        run: |
+          rm -rf .dart_tool/ pubspec.lock
+
       - name: Setting .env
         run: |
           echo "ACCESS_TOKEN_KEY=${{ secrets.ACCESS_TOKEN_KEY }}" >> .env
@@ -24,15 +33,22 @@ jobs:
           echo "KUMOH42_REGISTER=${{ secrets.KUMOH42_REGISTER }}" >> .env
           echo "REFRESH_TOKEN_KEY=${{ secrets.REFRESH_TOKEN_KEY }}" >> .env
           cat .env
+
       - run: flutter pub get
-      - run: flutter pub run build_runner build
+
+      # - run: flutter pub upgrade
+
+      - run: flutter pub run build_runner build --delete-conflicting-outputs
+
       - run: flutter build web --release
+
       - name: Upload build file
         uses: actions/upload-artifact@v3
         with:
           name: web-artifact
           path: flutter_front/build/web
           if-no-files-found: error
+
   deploy:
     name: Deploy Web to Aws S3
     runs-on: ubuntu-latest

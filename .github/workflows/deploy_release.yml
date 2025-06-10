@@ -28,7 +28,7 @@ jobs:
       - run: flutter pub run build_runner build
       - run: flutter build web --release
       - name: Upload build file
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: web-artifact
           path: flutter_front/build/web
@@ -43,7 +43,7 @@ jobs:
       AWS_EC2_METADATA_DISABLED: true
     steps:
       - name: Download build file
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: web-artifact
           path: build/web
